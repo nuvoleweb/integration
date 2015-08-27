@@ -1,0 +1,9 @@
+name = Integration UI
+description = Integration Layer user interface module.
+core = 7.x
+package = Integration
+version = 7.x-1.0-dev
+project = integration_ui
+
+dependencies[] = integration
+registry_autoload[] = PSR-4

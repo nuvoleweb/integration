@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Module file.
+ */
+
+include_once 'includes/integration_consumer.entity.inc';
+include_once 'includes/integration_consumer.hooks.inc';
+
+use Drupal\integration\Consumer\Configuration\ConsumerConfiguration;
+
+/**
+ * Load consumer entity given its machine name.
+ *
+ * @param string $machine_name
+ *    Consumer configuration entity machine name.
+ *
+ * @return ConsumerConfiguration
+ *    Consumer configuration entity.
+ */
+function integration_consumer_load_consumer($machine_name) {
+  return entity_load_single('integration_consumer', $machine_name);
+}
+
+/**
+ * Determines whether the given user can perform actions on an entity.
+ *
+ * @param string $op
+ *   Operation being performed: 'view', 'update', 'create' or 'delete'.
+ * @param ConsumerConfiguration|NULL $consumer
+ *   Optionally an entity to check access for.
+ * @param object|NULL $account
+ *   The user to check for. Leave it to NULL to check for the global user.
+ * @param string|NULL $entity_type
+ *   The entity type of the entity to check for.
+ *
+ * @return bool
+ *   Whether access is allowed or not.
+ *
+ * @see entity_type_supports()
+ * @see integration_consumer_entity_info()
+ */
+function integration_consumer_access($op, $consumer, $account, $entity_type) {
+  return user_access('administer consumers');
+}
+
+/**
+ * Collect and return list of mapping handler definitions.
+ *
+ * @return array
+ *    List of mapping handler definitions.
+ */
+function integration_consumer_get_mapping_handler_info() {
+  // @todo: Add validation on returned classes to be actual mapping handlers.
+  // We should probably apply a similar approach to other hooks too.
+  $info = module_invoke_all('integration_consumer_mapping_handler_info');
+  drupal_alter('integration_consumer_mapping_handler_info', $info);
+  return $info;
+}

@@ -1,0 +1,102 @@
+<?php
+
+/**
+ * @file
+ * Contains hook_install() and hook_update_N().
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function integration_consumer_schema() {
+
+  $schema['integration_consumer'] = array(
+    'description' => 'Stores integration layer consumer configuration.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The primary identifier for a consumer.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'The displayed name for a consumer.',
+        'type' => 'varchar',
+        'length' => 50,
+        'not null' => TRUE,
+      ),
+      'machine_name' => array(
+        'description' => 'The machine name for a consumer.',
+        'type' => 'varchar',
+        'length' => 50,
+        'not null' => TRUE,
+      ),
+      'description' => array(
+        'description' => 'The displayed description for a consumer.',
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
+      'backend' => array(
+        'description' => 'The machine name of the backend plugin to use.',
+        'type' => 'varchar',
+        'length' => 50,
+        'not null' => TRUE,
+      ),
+      'entity_type' => array(
+        'description' => 'Entity type machine name.',
+        'type' => 'varchar',
+        'length' => 50,
+        'not null' => TRUE,
+      ),
+      'entity_bundle' => array(
+        'description' => 'Entity bundle machine name.',
+        'type' => 'varchar',
+        'length' => 50,
+        'not null' => TRUE,
+      ),
+      'mapping' => array(
+        'description' => 'The field mapping used byt the consumer object.',
+        'type' => 'text',
+        'size' => 'medium',
+        'serialize' => TRUE,
+        'not null' => TRUE,
+      ),
+      'options' => array(
+        'description' => 'The options used to configure the consumer object.',
+        'type' => 'text',
+        'size' => 'medium',
+        'serialize' => TRUE,
+        'not null' => TRUE,
+      ),
+      'enabled' => array(
+        'description' => 'A flag indicating whether the consumer is enabled.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'status' => array(
+        'description' => 'The exportable status of the consumer.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0x01,
+        'size' => 'tiny',
+      ),
+      'module' => array(
+        'description' => 'The name of the providing module if the entity has been defined in code.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+    ),
+    'indexes' => array(
+      'enabled' => array('enabled'),
+    ),
+    'unique keys' => array(
+      'machine_name' => array('machine_name'),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}
