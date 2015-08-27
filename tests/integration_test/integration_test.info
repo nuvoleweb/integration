@@ -15,6 +15,7 @@ dependencies[] = migrate_ui
 dependencies[] = integration
 dependencies[] = integration_consumer
 dependencies[] = integration_producer
+dependencies[] = integration_ui
 dependencies[] = strongarm
 dependencies[] = taxonomy
 dependencies[] = text
