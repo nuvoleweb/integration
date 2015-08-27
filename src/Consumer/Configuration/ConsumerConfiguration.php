@@ -10,6 +10,7 @@ namespace Drupal\integration\Consumer\Configuration;
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
+use Drupal\integration\PluginManager;
 
 /**
  * Class ConsumerConfiguration.
@@ -117,6 +118,15 @@ class ConsumerConfiguration extends AbstractConfiguration {
   public function getMappingDestination($source_field) {
     $mapping = array_flip($this->mapping);
     return isset($mapping[$source_field]) ? $mapping[$source_field] : NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function form(array &$form, array &$form_state, $op) {
+    parent::form($form, $form_state, $op);
+    $plugin = PluginManager::getInstance('consumer');
+    $this->componentsForm($plugin, $form, $form_state, $op);
   }
 
 }

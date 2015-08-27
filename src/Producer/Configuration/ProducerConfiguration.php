@@ -8,6 +8,7 @@
 namespace Drupal\integration\Producer\Configuration;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\PluginManager;
 
 /**
  * Class ProducerConfiguration.
@@ -55,6 +56,15 @@ class ProducerConfiguration extends AbstractConfiguration {
    */
   public function getOptionValue($name) {
     return isset($this->options[$name]) ? $this->options[$name] : '';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function form(array &$form, array &$form_state, $op) {
+    parent::form($form, $form_state, $op);
+    $plugin = PluginManager::getInstance('producer');
+    $this->componentsForm($plugin, $form, $form_state, $op);
   }
 
 }
