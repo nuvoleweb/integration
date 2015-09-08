@@ -94,10 +94,9 @@ class Document implements DocumentInterface {
    */
   public function parse() {
 
-    $this->language = $this->getCurrentLanguage();
     $this->default_language = $this->getDefaultLanguage();
     foreach ($this->getFieldMachineNames() as $field_name) {
-      $this->{$field_name} = $this->getFieldValue($field_name, $this->language);
+      $this->{$field_name} = $this->getFieldValue($field_name);
     }
     return $this;
   }
@@ -126,9 +125,9 @@ class Document implements DocumentInterface {
   /**
    * {@inheritdoc}
    */
-  public function getFieldValue($field_name) {
+  public function getFieldValue($field_name, $language = NULL) {
     $fields = $this->getFields();
-    $language = $this->getCurrentLanguage();
+    $language = !$language ? $this->getCurrentLanguage() : $language;
 
     if (isset($fields->$field_name)) {
       $field = $fields->$field_name;

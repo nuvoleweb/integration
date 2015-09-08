@@ -67,13 +67,15 @@ interface DocumentInterface {
    *
    * @param string $field_name
    *    Document field name.
+   * @param string|NULL $language
+   *    Get field value in a specific language. Uses current language if NULL.
    *
    * @return mixed
    *    Field values in current language.
    *    If single-value field then it returns the only available value.
    *    If multi-value field then it returns the actual array of values.
    */
-  public function getFieldValue($field_name);
+  public function getFieldValue($field_name, $language = NULL);
 
   /**
    * Set current language for the document.
