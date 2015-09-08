@@ -15,6 +15,8 @@ use Drupal\integration\PluginManager;
  */
 abstract class AbstractConfiguration extends \Entity implements ConfigurationInterface, FormInterface {
 
+  use FormTrait;
+
   /**
    * Configuration human readable name.
    *
@@ -183,7 +185,7 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
         '#collapsible' => TRUE,
         '#group' => 'component',
       );
-      $form["component_$component"][$component] = $plugin->getFormRadios($label, '', TRUE);
+      $form["component_$component"][$component] = $this->getFormRadios($plugin, $label, '', TRUE);
 
       foreach ($plugin->getInfo() as $type => $info) {
         if ($plugin->isComponentConfigurable($type)) {

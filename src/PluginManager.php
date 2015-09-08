@@ -225,35 +225,6 @@ class PluginManager {
   }
 
   /**
-   * Format current info results as Form API radio buttons.
-   *
-   * @param string $title
-   *    Form element #title.
-   * @param mixed $default_value
-   *    Form element #default_value.
-   * @param bool|FALSE $required
-   *    Form element #required.
-   *
-   * @return array
-   *    Form API radio buttons element.
-   */
-  public function getFormRadios($title, $default_value, $required = FALSE) {
-    $options = $this->getFormOptions();
-
-    $element = array(
-      '#type' => 'radios',
-      '#title' => $title,
-      '#default_value' => $default_value,
-      '#options' => $options,
-      '#required' => $required,
-    );
-    foreach (array_keys($options) as $name) {
-      $element[$name] = array('#description' => $this->getDescription($name));
-    }
-    return $element;
-  }
-
-  /**
    * Build info getter name give current plugin and component machine name.
    *
    * @return string
