@@ -64,14 +64,14 @@ function integration_producer_entity_property_info() {
     'type' => array(
       'label' => t('Producer type'),
       'type' => 'text',
-      'description' => t('The id of the producer plugin to use.'),
+      'description' => t('Producer plugin ID, as returned by hook_integration_producer_info() implementations.'),
       'schema field' => 'type',
       'required' => TRUE,
     ),
     'producer_id' => array(
       'label' => t('Producer ID'),
       'type' => 'text',
-      'description' => t('The ID of the producer.'),
+      'description' => t('A unique identification string for the current producer.'),
       'schema field' => 'producer_id',
       'required' => TRUE,
     ),

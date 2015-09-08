@@ -12,12 +12,12 @@ function integration_producer_integration_producer_info() {
   return array(
     'node' => array(
       'label' => t('Node producer'),
-      'description' => t('Produces node entities.'),
+      'description' => t('Convert node entities into integration layer documents.'),
       'class' => 'Drupal\integration\Producer\NodeProducer',
     ),
     'taxonomy_term' => array(
       'label' => t('Taxonomy term producer'),
-      'description' => t('Produces taxonomy term entities.'),
+      'description' => t('Convert taxonomy term entities into integration layer documents.'),
       'class' => 'Drupal\integration\Producer\TaxonomyTermProducer',
     ),
   );

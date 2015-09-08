@@ -37,7 +37,7 @@ function integration_schema() {
         'not null' => FALSE,
       ),
       'type' => array(
-        'description' => 'The id of the backend plugin to use.',
+        'description' => 'Backend plugin ID, as returned by hook_integration_backend_info() implementations.',
         'type' => 'varchar',
         'length' => 50,
         'not null' => TRUE,

@@ -37,13 +37,13 @@ function integration_producer_schema() {
         'not null' => FALSE,
       ),
       'type' => array(
-        'description' => 'The id of the producer plugin to use.',
+        'description' => 'Producer plugin ID, as returned by hook_integration_producer_info() implementations.',
         'type' => 'varchar',
         'length' => 50,
         'not null' => TRUE,
       ),
       'producer_id' => array(
-        'description' => 'The id of the producer.',
+        'description' => 'A unique identification string for the current producer.',
         'type' => 'varchar',
         'length' => 50,
         'not null' => TRUE,

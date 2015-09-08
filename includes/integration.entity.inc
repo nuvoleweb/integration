@@ -64,7 +64,7 @@ function integration_entity_property_info() {
     'type' => array(
       'label' => t('Backend type'),
       'type' => 'text',
-      'description' => t('The ID of the backend plugin to use.'),
+      'description' => t('Backend plugin ID, as returned by hook_integration_backend_info() implementations.'),
       'schema field' => 'type',
       'required' => TRUE,
     ),
