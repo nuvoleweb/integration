@@ -81,26 +81,3 @@ function integration_producer_get_field_handler_info() {
   drupal_alter('integration_producer_field_handler_info', $field_handlers);
   return $field_handlers;
 }
-
-
-/**
- * Implements hook_integration_producer_document_build_alter().
- */
-function integration_producer_integration_producer_document_build_alter(EntityWrapper $entity_wrapper, DocumentInterface $document) {
-  // Make sure that we have full entity URL in generated document.
-  // @todo: this hook should actually be implemented by an external module.
-  $languages = language_list();
-  $entity_type = $entity_wrapper->type();
-  $entity = $entity_wrapper->value();
-  $uri = entity_uri($entity_type, $entity);
-
-  foreach ($document->getAvailableLanguages() as $code) {
-    $language = NULL;
-    $options = array('absolute' => TRUE);
-    if (isset($languages[$code])) {
-      $options['language'] = $languages[$code];
-    }
-    $document->setCurrentLanguage($code);
-    $document->setField('origin', url($uri['path'], $options));
-  }
-}
