@@ -51,6 +51,16 @@ class EntityWrapper extends \EntityDrupalWrapper implements EntityWrapperInterfa
   /**
    * {@inheritdoc}
    */
+  protected function setEntity($data) {
+    parent::setEntity($data);
+    if (is_object($data)) {
+      $this->translationHandler = entity_translation_get_handler($this->type, $data);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function isProperty($name) {
     return in_array($name, $this->getPropertyList());
   }

@@ -25,13 +25,11 @@ class ProducerFactory {
    *
    * @param string $machine_name
    *    Producer configuration machine name.
-   * @param object $entity
-   *    Entity object.
    *
-   * @return AbstractProducer
+   * @return \Drupal\integration\Producer\AbstractProducer
    *    Producer instance.
    */
-  static public function getInstance($machine_name, $entity) {
+  static public function getInstance($machine_name) {
     /** @var ProducerConfiguration $configuration */
     $configuration = self::loadConfiguration($machine_name);
 
@@ -42,7 +40,7 @@ class ProducerFactory {
       throw new \InvalidArgumentException("Class $producer_class does not exists");
     }
 
-    $entity_wrapper = new EntityWrapper\EntityWrapper($configuration->getType(), $entity);
+    $entity_wrapper = new EntityWrapper\EntityWrapper($configuration->getType());
     $document = new Document();
     return new $producer_class($configuration, $entity_wrapper, $document);
   }

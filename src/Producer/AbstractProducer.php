@@ -126,7 +126,8 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurableInterf
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build($entity) {
+    $this->getEntityWrapper()->set($entity);
 
     // Set document metadata.
     $this->getDocument()->setMetadata('type', $this->getDocumentType());

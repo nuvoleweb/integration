@@ -33,10 +33,10 @@ class BackendTest extends AbstractTest {
 
     // Get backend, producer and consumer instances.
     $backend = BackendFactory::getInstance('test_configuration');
-    $producer = ProducerFactory::getInstance('test_configuration', $node);
+    $producer = ProducerFactory::getInstance('test_configuration');
 
     // Build document: at this point it should not have a remote ID.
-    $document = $producer->build();
+    $document = $producer->build($node);
     $this->assertNull($document->getId());
 
     // Each backend is responsible for fetching a document's remote ID.

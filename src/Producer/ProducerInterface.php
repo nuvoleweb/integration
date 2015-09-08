@@ -76,9 +76,12 @@ interface ProducerInterface {
   /**
    * Build document object using the entity the producer was instantiated with.
    *
+   * @param object $entity
+   *    Raw Drupal entity object.
+   *
    * @return DocumentInterface
    *    Built document object.
    */
-  public function build();
+  public function build($entity);
 
 }

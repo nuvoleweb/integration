@@ -48,9 +48,9 @@ class ProducerTest extends AbstractTest {
    */
   public function testBuild($bundle, $id) {
     $node = $this->getExportedEntityFixture('node', $bundle, $id);
-    $producer = ProducerFactory::getInstance('test_configuration', $node);
+    $producer = ProducerFactory::getInstance('test_configuration');
 
-    $document = $producer->build();
+    $document = $producer->build($node);
 
     // Assert document metadata.
     $this->assertEquals($node->language, $document->getDefaultLanguage());

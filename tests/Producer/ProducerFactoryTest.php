@@ -25,7 +25,7 @@ class ProducerFactoryTest extends AbstractTest {
     $producer_info = integration_producer_get_producer_info();
     $producer_class = $producer_info[$this->producerConfiguration->getType()]['class'];
 
-    $producer = ProducerFactory::getInstance('test_configuration', $node);
+    $producer = ProducerFactory::getInstance('test_configuration');
 
     $reflection = new \ReflectionClass($producer);
     $this->assertEquals($producer_class, $reflection->getName());
