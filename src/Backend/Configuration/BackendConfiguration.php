@@ -9,6 +9,7 @@ namespace Drupal\integration\Backend\Configuration;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\AbstractComponentConfiguration;
+use Drupal\integration\Configuration\FormTrait;
 use Drupal\integration\PluginManager;
 
 /**
@@ -17,6 +18,8 @@ use Drupal\integration\PluginManager;
  * @package Drupal\integration\Backend
  */
 class BackendConfiguration extends AbstractConfiguration {
+
+  use FormTrait;
 
   /**
    * Backend type plugin.
@@ -112,7 +115,7 @@ class BackendConfiguration extends AbstractConfiguration {
     parent::form($form, $form_state, $op);
     $plugin = PluginManager::getInstance('backend');
 
-    $form['type'] = $plugin->getFormRadios(t('Backend type'), $this->getType(), TRUE);
+    $form['type'] = $this->getFormRadios($plugin, t('Backend type'), $this->getType(), TRUE);
     $this->componentsForm($plugin, $form, $form_state, $op);
   }
 
