@@ -6,13 +6,42 @@
  */
 
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration_ui\FormHandlerFactory;
 
 /**
  * Generates the profile type editing form.
  */
 function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $configuration, $op = 'edit') {
 
-  $configuration->form($form, $form_state, $op);
+  $form['name'] = array(
+    '#title' => t('Name'),
+    '#type' => 'textfield',
+    '#default_value' => ($op == 'clone') ? $configuration->getName() . ' clone' : $configuration->getName(),
+    '#required' => TRUE,
+  );
+  $form['machine_name'] = array(
+    '#type' => 'machine_name',
+    '#default_value' => $configuration->getMachineName(),
+    '#disabled' => $configuration->getEnabled(),
+    '#machine_name' => array(
+      'exists' => 'integration_load_backend',
+      'source' => array('name'),
+    ),
+    '#descripwtion' => t('A unique machine-readable name for this configuration object. It must only contain lowercase letters, numbers, and underscores.'),
+    '#required' => TRUE,
+  );
+  $form['enabled'] = array(
+    '#title' => t('Enabled'),
+    '#type' => 'checkbox',
+    '#default_value' => ($op == 'add') ? TRUE : $configuration->getEnabled(),
+  );
+  $form['status'] = array(
+    '#value' => ($op == 'add') ? ENTITY_CUSTOM : $configuration->getStatus(),
+  );
+
+//  $configuration->form($form, $form_state, $op);
+
+  $form_manager = FormHandlerFactory::getInstance($configuration);
 
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array(
