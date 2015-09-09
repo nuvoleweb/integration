@@ -39,10 +39,8 @@ function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $
     '#value' => ($op == 'add') ? ENTITY_CUSTOM : $configuration->getStatus(),
   );
 
-//  $configuration->form($form, $form_state, $op);
-
-  $form_manager = FormHandlerFactory::getInstance($configuration);
-
+  // $configuration->form($form, $form_state, $op);
+  // $form_manager = FormHandlerFactory::getInstance($configuration);
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array(
     '#type' => 'submit',

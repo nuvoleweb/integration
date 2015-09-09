@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\integration_ui\AbstractFormHandler
+ * Contains \Drupal\integration_ui\AbstractFormHandler.
  */
 
 namespace Drupal\integration_ui;
@@ -96,9 +96,8 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
 
           /** @var AbstractComponentConfiguration $component_configuration */
           $component_configuration = new $class($this);
-//          $component_configuration->form($element, $form_state, $op);
-
-          $form["component_$component"]["{$component}_configuration"] = $element;
+          // $component_configuration->form($element, $form_state, $op);
+          // $form["component_$component"]["{$component}_configuration"] = $element;
         }
       }
     }

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\integration_ui\Producer\ProducerFormHandler
+ * Contains \Drupal\integration_ui\Producer\ProducerFormHandler.
  */
 
 namespace Drupal\integration_ui\Producer;

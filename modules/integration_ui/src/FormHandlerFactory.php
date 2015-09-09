@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\integration_ui\FormHandlerFactory
+ * Contains \Drupal\integration_ui\FormHandlerFactory.
  */
 
 namespace Drupal\integration_ui;
@@ -22,8 +22,10 @@ class FormHandlerFactory {
    *
    * @param AbstractConfiguration $configuration
    *    Configuration entity object.
-   * @param null $plugin_type
-   * @param null $component
+   * @param string $plugin_type
+   *    Plugin type name.
+   * @param string $component
+   *    Component name.
    */
   static public function getInstance(AbstractConfiguration $configuration, $plugin_type = NULL, $component = NULL) {
     $plugin = str_replace('integration_', '', $configuration->entityType());
@@ -35,9 +37,6 @@ class FormHandlerFactory {
     elseif ($plugin_type) {
 
     }
-
-
-    return ;
   }
 
 }

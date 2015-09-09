@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\integration_ui\Consumer\ConsumerFormHandler
+ * Contains \Drupal\integration_ui\Consumer\ConsumerFormHandler.
  */
 
 namespace Drupal\integration_ui\Consumer;
