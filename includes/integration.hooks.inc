@@ -63,7 +63,6 @@ function integration_integration_backend_authentication_handler_info() {
       'label' => t('HTTP Authentication'),
       'description' => t('Provide basic HTTP authentication.'),
       'class' => 'Drupal\integration\Backend\Authentication\HttpAuthentication',
-      'configuration class' => 'Drupal\integration\Backend\Authentication\HttpAuthenticationConfiguration',
       'plugin types' => array('rest_backend'),
     ),
     'no_authentication' => array(
