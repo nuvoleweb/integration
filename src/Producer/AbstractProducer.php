@@ -7,7 +7,7 @@
 
 namespace Drupal\integration\Producer;
 
-use Drupal\integration\Configuration\ConfigurableInterface;
+use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
 
@@ -16,7 +16,7 @@ use Drupal\integration\Configuration\AbstractConfiguration;
  *
  * @package Drupal\integration\Producer
  */
-abstract class AbstractProducer implements ProducerInterface, ConfigurableInterface {
+abstract class AbstractProducer implements ProducerInterface, ConfigurablePluginInterface {
 
   /**
    * Current schema version.

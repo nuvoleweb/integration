@@ -8,7 +8,7 @@
 namespace Drupal\integration\Backend;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
-use Drupal\integration\Configuration\ConfigurableInterface;
+use Drupal\integration\ConfigurablePluginInterface;
 
 /**
  * Class AbstractBackend.

@@ -10,7 +10,7 @@ namespace Drupal\integration\Consumer;
 use Drupal\integration\Backend\BackendFactory;
 use Drupal\integration\Backend\BackendInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
-use Drupal\integration\Configuration\ConfigurableInterface;
+use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration\Consumer\Migrate\AbstractMigration;
@@ -25,7 +25,7 @@ use Drupal\integration\Consumer\Migrate\MigrateSourceBackend;
  *
  * @package Drupal\integration\Consumer
  */
-class Consumer extends AbstractMigration implements ConsumerInterface, ConfigurableInterface {
+class Consumer extends AbstractMigration implements ConsumerInterface, ConfigurablePluginInterface {
 
   /**
    * List supported entity destinations so far. To be expanded soon.
