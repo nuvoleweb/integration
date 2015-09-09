@@ -2,28 +2,28 @@
 
 /**
  * @file
- * Contains Drupal\integration\Consumer\Consumer.
+ * Contains Drupal\integration_consumer\Consumer.
  */
 
-namespace Drupal\integration\Consumer;
+namespace Drupal\integration_consumer;
 
 use Drupal\integration\Backend\BackendFactory;
 use Drupal\integration\Backend\BackendInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\ConfigurationFactory;
-use Drupal\integration\Consumer\Configuration\ConsumerConfiguration;
-use Drupal\integration\Consumer\Migrate\AbstractMigration;
-use Drupal\integration\Consumer\Migrate\DocumentWrapper;
-use Drupal\integration\Consumer\Migrate\MigrateItemJSON;
-use Drupal\integration\Consumer\Migrate\MigrateListJSON;
-use Drupal\integration\Consumer\MappingHandler\AbstractMappingHandler;
-use Drupal\integration\Consumer\Migrate\MigrateSourceBackend;
+use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
+use Drupal\integration_consumer\Migrate\AbstractMigration;
+use Drupal\integration_consumer\Migrate\DocumentWrapper;
+use Drupal\integration_consumer\Migrate\MigrateItemJSON;
+use Drupal\integration_consumer\Migrate\MigrateListJSON;
+use Drupal\integration_consumer\MappingHandler\AbstractMappingHandler;
+use Drupal\integration_consumer\Migrate\MigrateSourceBackend;
 
 /**
  * Interface ConsumerInterface.
  *
- * @package Drupal\integration\Consumer
+ * @package Drupal\integration_consumer
  */
 class Consumer extends AbstractMigration implements ConsumerInterface, ConfigurablePluginInterface {
 

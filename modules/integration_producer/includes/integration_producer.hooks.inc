@@ -26,12 +26,12 @@ function integration_producer_integration_producer_info() {
     'node' => array(
       'label' => t('Node producer'),
       'description' => t('Convert node entities into integration layer documents.'),
-      'class' => 'Drupal\integration\Producer\NodeProducer',
+      'class' => 'Drupal\integration_producer\NodeProducer',
     ),
     'taxonomy_term' => array(
       'label' => t('Taxonomy term producer'),
       'description' => t('Convert taxonomy term entities into integration layer documents.'),
-      'class' => 'Drupal\integration\Producer\TaxonomyTermProducer',
+      'class' => 'Drupal\integration_producer\TaxonomyTermProducer',
     ),
   );
 }
@@ -44,47 +44,47 @@ function integration_producer_integration_producer_field_handler_info() {
     'default' => array(
       'label' => t('Default field handler'),
       'description' => t('Not supported field types will fallback on the default field handler.'),
-      'class' => 'Drupal\integration\Producer\FieldHandlers\DefaultFieldHandler',
+      'class' => 'Drupal\integration_producer\FieldHandlers\DefaultFieldHandler',
     ),
     'text' => array(
       'label' => t('Text field handler'),
       'description' => t('Handler for "text" field type.'),
-      'class' => 'Drupal\integration\Producer\FieldHandlers\TextFieldHandler',
+      'class' => 'Drupal\integration_producer\FieldHandlers\TextFieldHandler',
     ),
     'text_long' => array(
       'label' => t('Long text field handler'),
       'description' => t('Handler for "long text" field type.'),
-      'class' => 'Drupal\integration\Producer\FieldHandlers\TextFieldHandler',
+      'class' => 'Drupal\integration_producer\FieldHandlers\TextFieldHandler',
     ),
     'text_with_summary' => array(
       'label' => t('Long text with summary field handler'),
       'description' => t('Handler for "text with summary" field type.'),
-      'class' => 'Drupal\integration\Producer\FieldHandlers\TextWithSummaryFieldHandler',
+      'class' => 'Drupal\integration_producer\FieldHandlers\TextWithSummaryFieldHandler',
     ),
     'date' => array(
       'label' => t('Date field handler'),
       'description' => t('Handler for "date" field type.'),
-      'class' => 'Drupal\integration\Producer\FieldHandlers\DateFieldHandler',
+      'class' => 'Drupal\integration_producer\FieldHandlers\DateFieldHandler',
     ),
     'datetime' => array(
       'label' => t('Datetime field handler'),
       'description' => t('Handler for "datetime" field type.'),
-      'class' => 'Drupal\integration\Producer\FieldHandlers\DateFieldHandler',
+      'class' => 'Drupal\integration_producer\FieldHandlers\DateFieldHandler',
     ),
     'datestamp' => array(
       'label' => t('Datestamp field handler'),
       'description' => t('Handler for "datestamp" field type.'),
-      'class' => 'Drupal\integration\Producer\FieldHandlers\DateFieldHandler',
+      'class' => 'Drupal\integration_producer\FieldHandlers\DateFieldHandler',
     ),
     'file' => array(
       'label' => t('file field handler'),
       'description' => t('Handler for "file" field type.'),
-      'class' => 'Drupal\integration\Producer\FieldHandlers\FileFieldHandler',
+      'class' => 'Drupal\integration_producer\FieldHandlers\FileFieldHandler',
     ),
     'image' => array(
       'label' => t('Image field handler'),
       'description' => t('Handler for "image" field type.'),
-      'class' => 'Drupal\integration\Producer\FieldHandlers\ImageFieldHandler',
+      'class' => 'Drupal\integration_producer\FieldHandlers\ImageFieldHandler',
     ),
   );
 }

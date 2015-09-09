@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Consumer\Migrate\MigrateListJSON.
+ * Contains \Drupal\integration_consumer\Migrate\MigrateListJSON.
  */
 
-namespace Drupal\integration\Consumer\Migrate;
+namespace Drupal\integration_consumer\Migrate;
 
 use Drupal\integration\Document\Document;
 
@@ -14,7 +14,7 @@ use Drupal\integration\Document\Document;
 /**
  * Class MigrateListJSON.
  *
- * @package Drupal\integration\Consumer\Migrate
+ * @package Drupal\integration_consumer\Migrate
  *
  * @todo: move this class under Backend namespace.
  */

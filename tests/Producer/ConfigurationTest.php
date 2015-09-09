@@ -7,7 +7,7 @@
 
 namespace Drupal\integration\Tests\Producer;
 
-use Drupal\integration\Producer\Configuration\ProducerConfiguration;
+use Drupal\integration_producer\Configuration\ProducerConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Tests\AbstractTest;
 
@@ -27,7 +27,7 @@ class ConfigurationTest extends AbstractTest {
    */
   public function testConfigurationEntityCrud($data) {
     $reflection = new \ReflectionClass($this->producerConfiguration);
-    $this->assertEquals('Drupal\integration\Producer\Configuration\ProducerConfiguration', $reflection->getName());
+    $this->assertEquals('Drupal\integration_producer\Configuration\ProducerConfiguration', $reflection->getName());
 
     $this->assertEquals($data->machine_name, $this->producerConfiguration->identifier());
     $this->assertEquals(ENTITY_CUSTOM, $this->producerConfiguration->getStatus());

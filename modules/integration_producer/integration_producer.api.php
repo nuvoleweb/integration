@@ -6,7 +6,7 @@
  */
 
 use Drupal\integration\Document\DocumentInterface;
-use Drupal\integration\Producer\EntityWrapper\EntityWrapper;
+use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 
 /**
  * Implements hook_integration_producer_info().
@@ -14,7 +14,7 @@ use Drupal\integration\Producer\EntityWrapper\EntityWrapper;
 function hook_integration_producer_info() {
   return array(
     'node' => array(
-      'class' => '\Drupal\integration\Producer\DefaultProducer',
+      'class' => '\Drupal\integration_producer\DefaultProducer',
     ),
   );
 }
@@ -32,7 +32,7 @@ function hook_integration_producer_info_alter(&$producers) {
 function hook_integration_producer_field_handler_info() {
   return array(
     'text' => array(
-      'class' => '\Drupal\integration\Producer\FieldHandlers\TextFieldHandler',
+      'class' => '\Drupal\integration_producer\FieldHandlers\TextFieldHandler',
       'alter' => TRUE,
     ),
   );

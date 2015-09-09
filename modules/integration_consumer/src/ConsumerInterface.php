@@ -2,19 +2,19 @@
 
 /**
  * @file
- * Contains Drupal\integration\Consumer\ConsumerInterface.
+ * Contains Drupal\integration_consumer\ConsumerInterface.
  */
 
-namespace Drupal\integration\Consumer;
+namespace Drupal\integration_consumer;
 
 use Drupal\integration\Backend\BackendInterface;
-use Drupal\integration\Consumer\Configuration\ConsumerConfigurationInterface;
+use Drupal\integration_consumer\Configuration\ConsumerConfigurationInterface;
 use Drupal\integration\Document\DocumentInterface;
 
 /**
  * Interface ConsumerInterface.
  *
- * @package Drupal\integration\Consumer
+ * @package Drupal\integration_consumer
  */
 interface ConsumerInterface {
 

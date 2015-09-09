@@ -5,18 +5,18 @@
  * Contains ProducerFactory.
  */
 
-namespace Drupal\integration\Producer;
+namespace Drupal\integration_producer;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Document\Document;
 use Drupal\integration\PluginManager;
-use Drupal\integration\Producer\Configuration\ProducerConfiguration;
+use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 /**
  * Interface ProducerFactory.
  *
- * @package Drupal\integration\Producer
+ * @package Drupal\integration_producer
  */
 class ProducerFactory {
 
@@ -26,7 +26,7 @@ class ProducerFactory {
    * @param string $machine_name
    *    Producer configuration machine name.
    *
-   * @return \Drupal\integration\Producer\AbstractProducer
+   * @return \Drupal\integration_producer\AbstractProducer
    *    Producer instance.
    */
   static public function getInstance($machine_name) {

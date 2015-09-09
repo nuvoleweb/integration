@@ -8,8 +8,8 @@
 namespace Drupal\integration\Tests;
 
 use Drupal\integration\Backend\BackendFactory;
-use Drupal\integration\Consumer\Consumer;
-use Drupal\integration\Producer\ProducerFactory;
+use Drupal\integration_consumer\Consumer;
+use Drupal\integration_producer\ProducerFactory;
 
 /**
  * Class IntegrationTest.

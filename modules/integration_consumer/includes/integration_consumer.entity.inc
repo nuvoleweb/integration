@@ -13,7 +13,7 @@ function integration_consumer_entity_info() {
     'label' => t('Integration layer consumer'),
     'controller class' => 'EntityAPIControllerExportable',
     'metadata controller class' => FALSE,
-    'entity class' => 'Drupal\integration\Consumer\Configuration\ConsumerConfiguration',
+    'entity class' => 'Drupal\integration_consumer\Configuration\ConsumerConfiguration',
     'base table' => 'integration_consumer',
     'uri callback' => 'integration_consumer_url',
     'access callback' => 'integration_consumer_access',

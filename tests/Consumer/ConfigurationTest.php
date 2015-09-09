@@ -8,7 +8,7 @@
 namespace Drupal\integration\Tests\Consumer;
 
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
-use Drupal\integration\Consumer\Configuration\ConsumerConfiguration;
+use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Tests\AbstractTest;
 
@@ -28,7 +28,7 @@ class ConfigurationTest extends AbstractTest {
    */
   public function testConfigurationEntityCrud($data) {
     $reflection = new \ReflectionClass($this->consumerConfiguration);
-    $this->assertEquals('Drupal\integration\Consumer\Configuration\ConsumerConfiguration', $reflection->getName());
+    $this->assertEquals('Drupal\integration_consumer\Configuration\ConsumerConfiguration', $reflection->getName());
 
     $this->assertEquals($data->machine_name, $this->consumerConfiguration->identifier());
     $this->assertEquals(ENTITY_CUSTOM, $this->consumerConfiguration->getStatus());

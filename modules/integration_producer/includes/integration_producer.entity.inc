@@ -13,7 +13,7 @@ function integration_producer_entity_info() {
     'label' => t('Integration layer producer'),
     'controller class' => 'EntityAPIControllerExportable',
     'metadata controller class' => FALSE,
-    'entity class' => 'Drupal\integration\Producer\Configuration\ProducerConfiguration',
+    'entity class' => 'Drupal\integration_producer\Configuration\ProducerConfiguration',
     'base table' => 'integration_producer',
     'uri callback' => 'integration_producer_url',
     'access callback' => 'integration_producer_access',

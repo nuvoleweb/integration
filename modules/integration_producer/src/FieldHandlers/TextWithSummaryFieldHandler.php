@@ -5,12 +5,12 @@
  * Contains TextWithSummaryFieldHandler.
  */
 
-namespace Drupal\integration\Producer\FieldHandlers;
+namespace Drupal\integration_producer\FieldHandlers;
 
 /**
  * Class TextWithSummaryFieldHandler.
  *
- * @package Drupal\integration\Producer\FieldHandlers
+ * @package Drupal\integration_producer\FieldHandlers
  */
 class TextWithSummaryFieldHandler extends AbstractFieldHandler {
 

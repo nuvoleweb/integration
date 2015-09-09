@@ -2,18 +2,18 @@
 
 /**
  * @file
- * Contains Drupal\integration\Producer\ProducerInterface.
+ * Contains Drupal\integration_producer\ProducerInterface.
  */
 
-namespace Drupal\integration\Producer;
+namespace Drupal\integration_producer;
 
 use Drupal\integration\Document\DocumentInterface;
-use Drupal\integration\Producer\EntityWrapper\EntityWrapper;
+use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 
 /**
  * Interface ProducerInterface.
  *
- * @package Drupal\integration\Producer
+ * @package Drupal\integration_producer
  */
 interface ProducerInterface {
 

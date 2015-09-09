@@ -8,8 +8,8 @@
 namespace Drupal\integration\Tests;
 
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
-use Drupal\integration\Consumer\Configuration\ConsumerConfiguration;
-use Drupal\integration\Producer\Configuration\ProducerConfiguration;
+use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
+use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 
 /**

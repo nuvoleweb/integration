@@ -21,8 +21,8 @@ class HooksTest extends \PHPUnit_Framework_TestCase {
 
     $hook_response = integration_producer_get_producer_info();
     $expected = array(
-      'node' => 'Drupal\integration\Producer\NodeProducer',
-      'taxonomy_term' => 'Drupal\integration\Producer\TaxonomyTermProducer',
+      'node' => 'Drupal\integration_producer\NodeProducer',
+      'taxonomy_term' => 'Drupal\integration_producer\TaxonomyTermProducer',
     );
     foreach ($expected as $key => $value) {
       $this->assertTrue(isset($hook_response[$key]));
@@ -84,9 +84,9 @@ class HooksTest extends \PHPUnit_Framework_TestCase {
 
     $hook_response = integration_producer_get_field_handler_info();
     $expected = array(
-      'default' => 'Drupal\integration\Producer\FieldHandlers\DefaultFieldHandler',
-      'text' => 'Drupal\integration\Producer\FieldHandlers\TextFieldHandler',
-      'text_long' => 'Drupal\integration\Producer\FieldHandlers\TextFieldHandler',
+      'default' => 'Drupal\integration_producer\FieldHandlers\DefaultFieldHandler',
+      'text' => 'Drupal\integration_producer\FieldHandlers\TextFieldHandler',
+      'text_long' => 'Drupal\integration_producer\FieldHandlers\TextFieldHandler',
     );
     foreach ($expected as $key => $value) {
       $this->assertTrue(isset($hook_response[$key]));
@@ -101,9 +101,9 @@ class HooksTest extends \PHPUnit_Framework_TestCase {
 
     $hook_response = integration_consumer_get_mapping_handler_info();
     $expected = array(
-      'title_mapping' => 'Drupal\integration\Consumer\MappingHandler\TitleMappingHandler',
-      'file_field_mapping' => 'Drupal\integration\Consumer\MappingHandler\FileFieldMappingHandler',
-      'text_with_summary_mapping' => 'Drupal\integration\Consumer\MappingHandler\TextWithSummaryMappingHandler',
+      'title_mapping' => 'Drupal\integration_consumer\MappingHandler\TitleMappingHandler',
+      'file_field_mapping' => 'Drupal\integration_consumer\MappingHandler\FileFieldMappingHandler',
+      'text_with_summary_mapping' => 'Drupal\integration_consumer\MappingHandler\TextWithSummaryMappingHandler',
     );
     foreach ($expected as $key => $value) {
       $this->assertTrue(isset($hook_response[$key]));

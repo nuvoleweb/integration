@@ -5,12 +5,12 @@
  * Contains DefaultFieldHandler.
  */
 
-namespace Drupal\integration\Producer\FieldHandlers;
+namespace Drupal\integration_producer\FieldHandlers;
 
 /**
  * Class DefaultFieldHandler.
  *
- * @package Drupal\integration\Producer\FieldHandlers
+ * @package Drupal\integration_producer\FieldHandlers
  */
 class DefaultFieldHandler extends AbstractFieldHandler {
 

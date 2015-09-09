@@ -5,12 +5,12 @@
  * Contains TextWithSummaryMappingHandler.
  */
 
-namespace Drupal\integration\Consumer\MappingHandler;
+namespace Drupal\integration_consumer\MappingHandler;
 
 /**
  * Class TextWithSummaryMappingHandler.
  *
- * @package Drupal\integration\Consumer\MappingHandler
+ * @package Drupal\integration_consumer\MappingHandler
  */
 class TextWithSummaryMappingHandler extends AbstractMappingHandler {
 

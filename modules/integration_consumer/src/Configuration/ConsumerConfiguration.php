@@ -5,7 +5,7 @@
  * Contains ConsumerConfiguration.
  */
 
-namespace Drupal\integration\Consumer\Configuration;
+namespace Drupal\integration_consumer\Configuration;
 
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Configuration\AbstractConfiguration;
@@ -15,7 +15,7 @@ use Drupal\integration\PluginManager;
 /**
  * Class ConsumerConfiguration.
  *
- * @package Drupal\integration\Consumer
+ * @package Drupal\integration_consumer
  */
 class ConsumerConfiguration extends AbstractConfiguration {
 

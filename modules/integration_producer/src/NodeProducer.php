@@ -2,15 +2,15 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Producer\NodeProducer.
+ * Contains \Drupal\integration_producer\NodeProducer.
  */
 
-namespace Drupal\integration\Producer;
+namespace Drupal\integration_producer;
 
 /**
  * Class NodeProducer.
  *
- * @package Drupal\integration\Producer
+ * @package Drupal\integration_producer
  */
 class NodeProducer extends AbstractProducer {
 

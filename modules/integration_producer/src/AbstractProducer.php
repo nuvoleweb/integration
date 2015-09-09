@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Producer\AbstractProducer.
+ * Contains \Drupal\integration_producer\AbstractProducer.
  */
 
-namespace Drupal\integration\Producer;
+namespace Drupal\integration_producer;
 
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Document\DocumentInterface;
@@ -14,7 +14,7 @@ use Drupal\integration\Configuration\AbstractConfiguration;
 /**
  * Class AbstractProducer.
  *
- * @package Drupal\integration\Producer
+ * @package Drupal\integration_producer
  */
 abstract class AbstractProducer implements ProducerInterface, ConfigurablePluginInterface {
 

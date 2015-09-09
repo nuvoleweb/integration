@@ -5,12 +5,12 @@
  * Contains TextFieldHandler.
  */
 
-namespace Drupal\integration\Producer\FieldHandlers;
+namespace Drupal\integration_producer\FieldHandlers;
 
 /**
  * Class TextFieldHandler.
  *
- * @package Drupal\integration\Producer\FieldHandlers
+ * @package Drupal\integration_producer\FieldHandlers
  */
 class TextFieldHandler extends AbstractFieldHandler {
 

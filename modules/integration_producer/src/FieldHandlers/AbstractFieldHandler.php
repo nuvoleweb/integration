@@ -5,15 +5,15 @@
  * Contains AbstractFieldHandler.
  */
 
-namespace Drupal\integration\Producer\FieldHandlers;
+namespace Drupal\integration_producer\FieldHandlers;
 
 use Drupal\integration\Document\DocumentInterface;
-use Drupal\integration\Producer\EntityWrapper\EntityWrapper;
+use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 
 /**
  * Class AbstractFieldHandler.
  *
- * @package Drupal\integration\Producer\FieldHandlers
+ * @package Drupal\integration_producer\FieldHandlers
  */
 abstract class AbstractFieldHandler implements FieldHandlerInterface {
 

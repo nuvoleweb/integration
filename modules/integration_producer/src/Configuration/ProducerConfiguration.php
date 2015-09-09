@@ -5,7 +5,7 @@
  * Contains ProducerConfiguration.
  */
 
-namespace Drupal\integration\Producer\Configuration;
+namespace Drupal\integration_producer\Configuration;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\PluginManager;
@@ -13,7 +13,7 @@ use Drupal\integration\PluginManager;
 /**
  * Class ProducerConfiguration.
  *
- * @package Drupal\integration\Producer
+ * @package Drupal\integration_producer
  */
 class ProducerConfiguration extends AbstractConfiguration {
 

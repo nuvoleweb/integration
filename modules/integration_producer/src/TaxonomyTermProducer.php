@@ -2,15 +2,15 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Producer\TaxonomyTermProducer.
+ * Contains \Drupal\integration_producer\TaxonomyTermProducer.
  */
 
-namespace Drupal\integration\Producer;
+namespace Drupal\integration_producer;
 
 /**
  * Class TaxonomyTermProducer.
  *
- * @package Drupal\integration\Producer
+ * @package Drupal\integration_producer
  */
 class TaxonomyTermProducer extends AbstractProducer {
 

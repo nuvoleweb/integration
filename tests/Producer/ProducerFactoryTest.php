@@ -7,7 +7,7 @@
 
 namespace Drupal\integration\Tests\Producer;
 
-use Drupal\integration\Producer\ProducerFactory;
+use Drupal\integration_producer\ProducerFactory;
 use Drupal\integration\Tests\AbstractTest;
 
 /**

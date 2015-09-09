@@ -8,7 +8,7 @@
 include_once 'includes/integration_consumer.entity.inc';
 include_once 'includes/integration_consumer.hooks.inc';
 
-use Drupal\integration\Consumer\Configuration\ConsumerConfiguration;
+use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 
 /**
  * Load consumer entity given its machine name.

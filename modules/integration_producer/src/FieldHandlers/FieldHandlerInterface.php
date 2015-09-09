@@ -5,16 +5,16 @@
  * Contains FieldHandlers.
  */
 
-namespace Drupal\integration\Producer\FieldHandlers;
+namespace Drupal\integration_producer\FieldHandlers;
 
 use Drupal\integration\Document\DocumentInterface;
-use Drupal\integration\Producer\EntityWrapper\EntityWrapper;
+use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 use Drupal\integration\Document\Document;
 
 /**
  * Interface FieldHandlerInterface.
  *
- * @package Drupal\integration\Producer\FieldHandlers
+ * @package Drupal\integration_producer\FieldHandlers
  */
 interface FieldHandlerInterface {
 

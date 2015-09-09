@@ -2,15 +2,15 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Consumer\Migrate\AbstractMigration.
+ * Contains \Drupal\integration_consumer\Migrate\AbstractMigration.
  */
 
-namespace Drupal\integration\Consumer\Migrate;
+namespace Drupal\integration_consumer\Migrate;
 
 /**
  * Class AbstractMigration.
  *
- * @package Drupal\integration\Consumer\Migrate
+ * @package Drupal\integration_consumer\Migrate
  *
  * Destination class implementing migration into translatable nodes.
  */
