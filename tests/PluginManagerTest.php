@@ -54,27 +54,27 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
 
     $manager = PluginManager::getInstance('backend');
     $data = integration_integration_backend_info();
-    $this->assertFromData($manager, $data);
+    $this->assertInfoData($manager, $data);
 
     $manager = PluginManager::getInstance('backend')->setComponent('response_handler');
     $data = integration_integration_backend_response_handler_info();
-    $this->assertFromData($manager, $data);
+    $this->assertInfoData($manager, $data);
 
     $manager = PluginManager::getInstance('backend')->setComponent('formatter_handler');
     $data = integration_integration_backend_formatter_handler_info();
-    $this->assertFromData($manager, $data);
+    $this->assertInfoData($manager, $data);
 
     $manager = PluginManager::getInstance('consumer')->setComponent('mapping_handler');
     $data = integration_consumer_integration_consumer_mapping_handler_info();
-    $this->assertFromData($manager, $data);
+    $this->assertInfoData($manager, $data);
 
     $manager = PluginManager::getInstance('producer');
     $data = integration_producer_get_producer_info();
-    $this->assertFromData($manager, $data);
+    $this->assertInfoData($manager, $data);
 
     $manager = PluginManager::getInstance('producer')->setComponent('field_handler');
     $data = integration_producer_integration_producer_field_handler_info();
-    $this->assertFromData($manager, $data);
+    $this->assertInfoData($manager, $data);
   }
 
   /**
@@ -85,7 +85,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
    * @param array $data
    *    Data to test our assertions against.
    */
-  public function assertFromData(PluginManager $manager, array $data) {
+  public function assertInfoData(PluginManager $manager, array $data) {
     foreach ($data as $name => $info) {
       $this->assertEquals($info['label'], $manager->getLabel($name));
       $this->assertEquals($info['class'], $manager->getClass($name));
