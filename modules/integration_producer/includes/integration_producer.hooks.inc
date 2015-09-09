@@ -11,8 +11,11 @@
 function integration_producer_integration_plugins() {
   return array(
     'producer' => array(
+      'label' => t('Producer'),
       'components' => array(
-        'field_handler' => t('Field handler'),
+        'field_handler' => array(
+          'label' => t('Field handler'),
+        ),
       ),
     ),
   );

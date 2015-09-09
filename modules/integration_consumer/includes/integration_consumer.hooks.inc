@@ -11,8 +11,11 @@
 function integration_consumer_integration_plugins() {
   return array(
     'consumer' => array(
+      'label' => t('Consumer'),
       'components' => array(
-        'mapping_handler' => t('Mapping handler'),
+        'mapping_handler' => array(
+          'label' => t('Mapping handler'),
+        ),
       ),
     ),
   );

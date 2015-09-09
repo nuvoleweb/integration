@@ -65,6 +65,49 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function formSubmit(array $form, array &$form_state) {
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function formValidate(array $form, array &$form_state) {
+
+  }
+
+  /**
+   * Format current PluginManager::getInfo() results as list of radio buttons.
+   *
+   * @param string $title
+   *    Form element #title.
+   * @param mixed $default_value
+   *    Form element #default_value.
+   * @param bool|FALSE $required
+   *    Form element #required.
+   *
+   * @return array
+   *    Form API radio buttons element.
+   */
+  protected function getFormRadios($title, $default_value, $required = FALSE) {
+    $options = $this->getPluginManager()->getFormOptions();
+
+    $element = array(
+      '#type' => 'radios',
+      '#title' => $title,
+      '#default_value' => $default_value,
+      '#options' => $options,
+      '#required' => $required,
+    );
+    foreach (array_keys($options) as $name) {
+      $element[$name] = array('#description' => $this->getPluginManager()->getDescription($name));
+    }
+    return $element;
+  }
+
+  /**
    * Return current plugin components form portion.
    *
    * @param array $form
@@ -74,7 +117,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
    * @param string $op
    *    Current form operation.
    */
-  public function componentsForm(array &$form, array &$form_state, $op) {
+  protected function componentsForm(array &$form, array &$form_state, $op) {
     $plugin = $this->getPluginManager();
 
     $form['component'] = array(
@@ -109,49 +152,6 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
         }
       }
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function formSubmit(array $form, array &$form_state) {
-
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function formValidate(array $form, array &$form_state) {
-
-  }
-
-  /**
-   * Format current PluginManager::getInfo() results as list of radio buttons.
-   *
-   * @param string $title
-   *    Form element #title.
-   * @param mixed $default_value
-   *    Form element #default_value.
-   * @param bool|FALSE $required
-   *    Form element #required.
-   *
-   * @return array
-   *    Form API radio buttons element.
-   */
-  public function getFormRadios($title, $default_value, $required = FALSE) {
-    $options = $this->getPluginManager()->getFormOptions();
-
-    $element = array(
-      '#type' => 'radios',
-      '#title' => $title,
-      '#default_value' => $default_value,
-      '#options' => $options,
-      '#required' => $required,
-    );
-    foreach (array_keys($options) as $name) {
-      $element[$name] = array('#description' => $this->getPluginManager()->getDescription($name));
-    }
-    return $element;
   }
 
 }

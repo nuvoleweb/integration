@@ -24,6 +24,8 @@ class FormHandlerFactory {
    *    Configuration entity object.
    * @param string $component
    *    Component name.
+   * @param string $type
+   *    Component type name.
    *
    * @return AbstractFormHandler|FALSE
    *    Form handler object if any, FALSE otherwise.

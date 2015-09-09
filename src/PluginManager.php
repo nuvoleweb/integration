@@ -93,13 +93,26 @@ class PluginManager {
   }
 
   /**
-   * Get provided human readable label of provided component.
+   * Get component label as per hook_integration_plugins() implementations.
+   *
+   * @param string $component
+   *    Component machine name.
    *
    * @return string
-   *    Component human readable label.
+   *    Component label.
    */
   public function getComponentLabel($component) {
-    return $this->definitions[$this->plugin]['components'][$component];
+    return $this->definitions[$this->plugin]['components'][$component]['label'];
+  }
+
+  /**
+   * Get plugin label as per hook_integration_plugins() implementations.
+   *
+   * @return string
+   *    Plugin label.
+   */
+  public function getPluginLabel() {
+    return $this->definitions[$this->plugin]['label'];
   }
 
   /**

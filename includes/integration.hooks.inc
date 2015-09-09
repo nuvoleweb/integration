@@ -11,10 +11,17 @@
 function integration_integration_plugins() {
   return array(
     'backend' => array(
+      'label' => t('Backend'),
       'components' => array(
-        'response_handler' => t('Response handler'),
-        'formatter_handler' => t('Formatter handler'),
-        'authentication_handler' => t('Authentication handler'),
+        'response_handler' => array(
+          'label' => t('Response handler'),
+        ),
+        'formatter_handler' => array(
+          'label' => t('Formatter handler'),
+        ),
+        'authentication_handler' => array(
+          'label' => t('Authentication handler'),
+        ),
       ),
     ),
   );
