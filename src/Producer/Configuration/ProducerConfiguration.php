@@ -58,13 +58,4 @@ class ProducerConfiguration extends AbstractConfiguration {
     return isset($this->options[$name]) ? $this->options[$name] : '';
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function form(array &$form, array &$form_state, $op) {
-    parent::form($form, $form_state, $op);
-    $plugin = PluginManager::getInstance('producer');
-    $this->componentsForm($plugin, $form, $form_state, $op);
-  }
-
 }

@@ -120,13 +120,4 @@ class ConsumerConfiguration extends AbstractConfiguration {
     return isset($mapping[$source_field]) ? $mapping[$source_field] : NULL;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function form(array &$form, array &$form_state, $op) {
-    parent::form($form, $form_state, $op);
-    $plugin = PluginManager::getInstance('consumer');
-    $this->componentsForm($plugin, $form, $form_state, $op);
-  }
-
 }

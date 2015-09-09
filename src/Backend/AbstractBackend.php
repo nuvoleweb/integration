@@ -15,7 +15,7 @@ use Drupal\integration\ConfigurablePluginInterface;
  *
  * @package Drupal\integration\Backend
  */
-abstract class AbstractBackend implements BackendInterface, ConfigurableInterface {
+abstract class AbstractBackend implements BackendInterface, ConfigurablePluginInterface {
 
   /**
    * Configuration object.
