@@ -2,17 +2,17 @@
 
 /**
  * @file
- * Contains \Drupal\integration_ui\ConfigurationEntityUiController.
+ * Contains \Drupal\integration_ui\Configuration\EntityUiController.
  */
 
-namespace Drupal\integration_ui;
+namespace Drupal\integration_ui\Configuration;
 
 /**
- * Class ConfigurationEntityUiController.
+ * Class EntityUiController.
  *
- * @package Drupal\integration_ui
+ * @package Drupal\integration_ui\Configuration
  */
-class ConfigurationEntityUiController extends \EntityDefaultUIController {
+class EntityUiController extends \EntityDefaultUIController {
 
   // @codingStandardsIgnoreStart
   /**

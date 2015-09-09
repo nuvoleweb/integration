@@ -12,7 +12,7 @@ include_once 'includes/integration_ui.admin.inc';
  */
 function integration_ui_entity_info_alter(&$info) {
   $defaults = array(
-    'controller class' => 'Drupal\integration_ui\ConfigurationEntityUiController',
+    'controller class' => 'Drupal\integration_ui\Configuration\EntityUiController',
   );
   $info['integration_backend']['admin ui'] = array(
     'path' => 'admin/config/services/integration/backend',
@@ -24,6 +24,15 @@ function integration_ui_entity_info_alter(&$info) {
     'path' => 'admin/config/services/integration/producer',
   ) + $defaults;
   return $info;
+}
+
+/**
+ * Implements hook_integration_backend_info().
+ */
+function integration_ui_integration_backend_info_alter(&$items) {
+  foreach ($items as $name => $info) {
+    $items[$name]['form handler'] = 'Drupal\integration_ui\Backend\BackendFormHandler';
+  }
 }
 
 /**
