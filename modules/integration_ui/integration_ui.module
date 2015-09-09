@@ -36,6 +36,13 @@ function integration_ui_integration_plugins_alter(&$items) {
 }
 
 /**
+ * Implements hook_integration_backend_authentication_handler_info().
+ */
+function integration_ui_integration_backend_authentication_handler_info_alter(&$items) {
+  $items['http_authentication']['form handler'] = 'Drupal\integration_ui\Backend\Authentication\HttpAuthenticationFormHandler';
+}
+
+/**
  * A wrapper around drupal_get_form() that helps building entity forms.
  *
  * @param string $entity_type

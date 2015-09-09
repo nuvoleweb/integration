@@ -41,6 +41,7 @@ function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $
 
   $form_manager = FormHandlerFactory::getInstance($configuration);
   $form_manager->form($form, $form_state, $op);
+
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array(
     '#type' => 'submit',

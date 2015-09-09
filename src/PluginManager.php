@@ -140,6 +140,20 @@ class PluginManager {
   }
 
   /**
+   * Get form handler class, if any.
+   *
+   * @param string $name
+   *    Plugin or component name.
+   *
+   * @return string
+   *    Form handler class, if any.
+   */
+  public function getFormHandler($name) {
+    $info = $this->getInfo();
+    return (isset($info[$name]['form handler'])) ? $info[$name]['form handler'] : FALSE;
+  }
+
+  /**
    * Get current plugin description.
    *
    * @param string $name
@@ -166,43 +180,6 @@ class PluginManager {
       $options[$name] = $definition['label'];
     }
     return $options;
-  }
-
-  /**
-   * Check weather the given component is configurable or not.
-   *
-   * @param string $type
-   *    Component type.
-   *
-   * @return bool
-   *    TRUE if the given component is configurable or not, FALSE otherwise.
-   */
-  public function isComponentConfigurable($type) {
-    $info = $this->getInfo();
-    if (isset($info[$type]['configuration class'])) {
-      if (!class_exists($info[$type]['configuration class'])) {
-        throw new \InvalidArgumentException(t('Component configuration class not found.'));
-      }
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  /**
-   * Get component configuration class.
-   *
-   * @param string $type
-   *    Component type.
-   *
-   * @return string|FALSE
-   *    Configuration class name if configurable, FALSE otherwise.
-   */
-  public function getComponentConfigurationClass($type) {
-    if ($this->isComponentConfigurable($type)) {
-      $info = $this->getInfo();
-      return $info[$type]['configuration class'];
-    }
-    return FALSE;
   }
 
   /**

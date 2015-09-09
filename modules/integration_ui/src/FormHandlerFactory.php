@@ -29,18 +29,21 @@ class FormHandlerFactory {
    * @return AbstractFormHandler|FALSE
    *    Form handler object if any, FALSE otherwise.
    */
-  static public function getInstance(AbstractConfiguration $configuration, $component = NULL) {
+  static public function getInstance(AbstractConfiguration $configuration, $component = NULL, $type = NULL) {
     $plugin_type = str_replace('integration_', '', $configuration->entityType());
     $plugin_manager = PluginManager::getInstance($plugin_type);
 
-    if (!$component) {
+    if (!$component && !$type) {
       $definition = $plugin_manager->getPluginDefinition();
+      if (isset($definition['form handler']) && class_exists($definition['form handler'])) {
+        return new $definition['form handler']($configuration, $plugin_manager);
+      }
     }
     else {
-      $definition = $plugin_manager->setComponent($component)->getInfo();
-    }
-    if (isset($definition['form handler']) && class_exists($definition['form handler'])) {
-      return new $definition['form handler']($configuration, $plugin_manager);
+      $class = $plugin_manager->setComponent($component)->getFormHandler($type);
+      if ($class && class_exists($class)) {
+        return new $class($configuration, $plugin_manager);
+      }
     }
     return FALSE;
   }

@@ -95,21 +95,17 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
       $form["component_$component"][$component] = $this->getFormRadios($label, '', TRUE);
 
       foreach ($plugin->getInfo() as $type => $info) {
-        if ($plugin->isComponentConfigurable($type)) {
-          $element = array(
-            '#type' => 'fieldset',
-            '#title' => t('@component options', array('@component' => $label)),
-            '#collapsible' => TRUE,
-            '#group' => "component_$component",
-          );
+        $element = array(
+          '#type' => 'fieldset',
+          '#title' => t('@component options', array('@component' => $label)),
+          '#collapsible' => TRUE,
+          '#group' => "component_$component",
+        );
 
-          // @todo: make a proper component configuration factory for this.
-          //          $class = $plugin->getComponentConfigurationClass($type);
-          //
-          //          /** @var AbstractComponentConfiguration $component_configuration */
-          //          $component_configuration = new $class($this);
-          // $component_configuration->form($element, $form_state, $op);
-          // $form["component_$component"]["{$component}_configuration"] = $element;
+        $form_manager = FormHandlerFactory::getInstance($this->getConfiguration(), $component, $type);
+        if ($form_manager) {
+          $form_manager->form($element, $form_state, $op);
+          $form["component_$component"]["{$component}_configuration"] = $element;
         }
       }
     }
