@@ -7,3 +7,5 @@ project = integration_consumer
 
 dependencies[] = migrate
 dependencies[] = integration
+dependencies[] = registry_autoload
+registry_autoload[] = PSR-4
