@@ -52,6 +52,16 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
     );
     $this->assertEquals($expected, array_keys($info));
 
+    $definitions = integration_get_integration_plugins();
+    foreach (array('backend', 'consumer', 'producer') as $name) {
+      $manager = PluginManager::getInstance($name);
+      $this->assertEquals($definitions[$name]['form handler'], $manager->getFormHandler());
+    }
+    foreach (array('integration_backend', 'integration_consumer', 'integration_producer') as $name) {
+      $manager = PluginManager::getInstance($name);
+      $this->assertEquals($definitions[str_replace('integration_', '', $name)]['form handler'], $manager->getFormHandler());
+    }
+
     $manager = PluginManager::getInstance('backend');
     $data = integration_integration_backend_info();
     $this->assertInfoData($manager, $data);

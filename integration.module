@@ -57,6 +57,18 @@ function integration_load_backend($machine_name) {
 }
 
 /**
+ * Get integration plugins definition.
+ *
+ * @return array
+ *    Plugin definitions.
+ */
+function integration_get_integration_plugins() {
+  $definitions = module_invoke_all('integration_plugins');
+  drupal_alter('integration_plugins', $definitions);
+  return $definitions;
+}
+
+/**
  * Collect and return list of backend definitions.
  *
  * @return array

@@ -51,13 +51,12 @@ class PluginManager {
   /**
    * PluginManager constructor.
    *
-   * @param string $plugin
-   *    Plugin machine name.
+   * @param string $name
+   *    Either a plugin name or its configuration entity type name.
    */
-  public function __construct($plugin) {
-    $this->plugin = $plugin;
-    $this->definitions = module_invoke_all('integration_plugins');
-    drupal_alter('integration_plugins', $this->definitions);
+  public function __construct($name) {
+    $this->plugin = str_replace('integration_', '', $name);
+    $this->definitions = integration_get_integration_plugins();
   }
 
   /**
