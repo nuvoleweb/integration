@@ -9,7 +9,6 @@ namespace Drupal\integration_ui;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\PluginManager;
-use Drupal\integration_ui\AbstractFormHandler;
 
 /**
  * Class FormHandlerFactory.
@@ -30,20 +29,12 @@ class FormHandlerFactory {
    *    Form handler object if any, FALSE otherwise.
    */
   static public function getInstance(AbstractConfiguration $configuration, $component = NULL, $type = NULL) {
-    $plugin_type = str_replace('integration_', '', $configuration->entityType());
-    $plugin_manager = PluginManager::getInstance($plugin_type);
+    $plugin_manager = PluginManager::getInstance($configuration->entityType());
 
-    if (!$component && !$type) {
-      $definition = $plugin_manager->getPluginDefinition();
-      if (isset($definition['form handler']) && class_exists($definition['form handler'])) {
-        return new $definition['form handler']($configuration, $plugin_manager);
-      }
-    }
-    else {
-      $class = $plugin_manager->setComponent($component)->getFormHandler($type);
-      if ($class && class_exists($class)) {
-        return new $class($configuration, $plugin_manager);
-      }
+    $is_plugin = !$component && !$type;
+    $class = $is_plugin ? $plugin_manager->getFormHandler() : $plugin_manager->setComponent($component)->getFormHandler($type);
+    if ($class && class_exists($class)) {
+      return new $class($configuration, $plugin_manager);
     }
     return FALSE;
   }

@@ -147,9 +147,15 @@ class PluginManager {
    * @return string
    *    Form handler class, if any.
    */
-  public function getFormHandler($name) {
-    $info = $this->getInfo();
-    return (isset($info[$name]['form handler'])) ? $info[$name]['form handler'] : FALSE;
+  public function getFormHandler($name = NULL) {
+    // If no name is provided then return current plugin form handler class.
+    if (!$name) {
+      return isset($this->definitions[$this->plugin]['form handler']) ? $this->definitions[$this->plugin]['form handler'] : FALSE;
+    }
+    else {
+      $info = $this->getInfo();
+      return (isset($info[$name]['form handler'])) ? $info[$name]['form handler'] : FALSE;
+    }
   }
 
   /**
