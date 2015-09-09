@@ -20,7 +20,8 @@ class BackendFormHandler extends AbstractFormHandler {
    * {@inheritdoc}
    */
   public function form(array &$form, array &$form_state, $op) {
-
+    $form['type'] = $this->getFormRadios(t('Backend type'), '', TRUE);
+    $this->componentsForm($form, $form_state, $op);
   }
 
 }

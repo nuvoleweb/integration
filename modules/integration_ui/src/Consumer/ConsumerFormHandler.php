@@ -16,4 +16,11 @@ use Drupal\integration_ui\AbstractFormHandler;
  */
 class ConsumerFormHandler extends AbstractFormHandler {
 
+  /**
+   * {@inheritdoc}
+   */
+  public function form(array &$form, array &$form_state, $op) {
+    $this->componentsForm($form, $form_state, $op);
+  }
+
 }

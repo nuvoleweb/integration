@@ -30,7 +30,7 @@ use \Drupal\integration\PluginManager;
  * @see integration_producer_integration_plugins()
  * @see integration_consumer_integration_plugins()
  * @see PluginManager::getInstance();
- * @see PluginManager::pluginDefinitions();
+ * @see PluginManager::getPluginsDefinition();
  */
 function hook_integration_plugins() {
   return array(

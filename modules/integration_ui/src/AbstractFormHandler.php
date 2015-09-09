@@ -25,13 +25,33 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
   protected $configuration = NULL;
 
   /**
+   * Plugin manager instance.
+   *
+   * @var PluginManager
+   */
+  protected $pluginManager = NULL;
+
+  /**
    * AbstractFormHandler constructor.
    *
    * @param AbstractConfiguration $configuration
    *    Configuration entity we are building the form for.
+   * @param PluginManager $plugin_manager
+   *    Plugin manager object instance.
    */
-  public function __construct(AbstractConfiguration $configuration) {
+  public function __construct(AbstractConfiguration $configuration, PluginManager $plugin_manager) {
     $this->configuration = $configuration;
+    $this->pluginManager = $plugin_manager;
+  }
+
+  /**
+   * Return plugin manager instance.
+   *
+   * @return PluginManager
+   *    Plugin manager instance.
+   */
+  public function getPluginManager() {
+    return $this->pluginManager;
   }
 
   /**
@@ -45,17 +65,8 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public function form(array &$form, array &$form_state, $op) {
-
-  }
-
-  /**
    * Return current plugin components form portion.
    *
-   * @param PluginManager $plugin
-   *    Current plugin manager being used.
    * @param array $form
    *    Form array.
    * @param array $form_state
@@ -63,7 +74,8 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
    * @param string $op
    *    Current form operation.
    */
-  public function componentsForm(PluginManager $plugin, array &$form, array &$form_state, $op) {
+  public function componentsForm(array &$form, array &$form_state, $op) {
+    $plugin = $this->getPluginManager();
 
     $form['component'] = array(
       '#type' => 'vertical_tabs',
@@ -80,7 +92,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
         '#collapsible' => TRUE,
         '#group' => 'component',
       );
-      $form["component_$component"][$component] = $this->getFormRadios($plugin, $label, '', TRUE);
+      $form["component_$component"][$component] = $this->getFormRadios($label, '', TRUE);
 
       foreach ($plugin->getInfo() as $type => $info) {
         if ($plugin->isComponentConfigurable($type)) {
@@ -92,10 +104,10 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
           );
 
           // @todo: make a proper component configuration factory for this.
-          $class = $plugin->getComponentConfigurationClass($type);
-
-          /** @var AbstractComponentConfiguration $component_configuration */
-          $component_configuration = new $class($this);
+          //          $class = $plugin->getComponentConfigurationClass($type);
+          //
+          //          /** @var AbstractComponentConfiguration $component_configuration */
+          //          $component_configuration = new $class($this);
           // $component_configuration->form($element, $form_state, $op);
           // $form["component_$component"]["{$component}_configuration"] = $element;
         }
@@ -120,8 +132,6 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
   /**
    * Format current PluginManager::getInfo() results as list of radio buttons.
    *
-   * @param PluginManager $plugin_manager
-   *    Current plugin manager instance.
    * @param string $title
    *    Form element #title.
    * @param mixed $default_value
@@ -132,8 +142,8 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
    * @return array
    *    Form API radio buttons element.
    */
-  public function getFormRadios(PluginManager $plugin_manager, $title, $default_value, $required = FALSE) {
-    $options = $plugin_manager->getFormOptions();
+  public function getFormRadios($title, $default_value, $required = FALSE) {
+    $options = $this->getPluginManager()->getFormOptions();
 
     $element = array(
       '#type' => 'radios',
@@ -143,7 +153,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
       '#required' => $required,
     );
     foreach (array_keys($options) as $name) {
-      $element[$name] = array('#description' => $plugin_manager->getDescription($name));
+      $element[$name] = array('#description' => $this->getPluginManager()->getDescription($name));
     }
     return $element;
   }

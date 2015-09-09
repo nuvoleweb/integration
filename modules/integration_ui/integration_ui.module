@@ -31,6 +31,8 @@ function integration_ui_entity_info_alter(&$info) {
  */
 function integration_ui_integration_plugins_alter(&$items) {
   $items['backend']['form handler'] = 'Drupal\integration_ui\Backend\BackendFormHandler';
+  $items['consumer']['form handler'] = 'Drupal\integration_ui\Consumer\ConsumerFormHandler';
+  $items['producer']['form handler'] = 'Drupal\integration_ui\Producer\ProducerFormHandler';
 }
 
 /**

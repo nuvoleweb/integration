@@ -19,7 +19,7 @@ class PluginManager {
    *
    * @var array
    */
-  private $plugins = array();
+  private $definitions = array();
 
   /**
    * Current plugin machine name.
@@ -55,20 +55,19 @@ class PluginManager {
    *    Plugin machine name.
    */
   public function __construct($plugin) {
-    $this->plugins = $this->pluginDefinitions();
     $this->plugin = $plugin;
+    $this->definitions = module_invoke_all('integration_plugins');
+    drupal_alter('integration_plugins', $this->definitions);
   }
 
   /**
-   * Return plugin definition array.
+   * Return current plugin definition array.
    *
    * @return array
-   *    Plugin definition array.
+   *    Current plugin definition array.
    */
-  private function pluginDefinitions() {
-    $data = module_invoke_all('integration_plugins');
-    drupal_alter('integration_plugins', $data);
-    return $data;
+  public function getPluginDefinition() {
+    return $this->definitions[$this->plugin];
   }
 
   /**
@@ -91,7 +90,7 @@ class PluginManager {
    *    List of current plugin components.
    */
   public function getComponents() {
-    return array_keys($this->plugins[$this->plugin]['components']);
+    return array_keys($this->definitions[$this->plugin]['components']);
   }
 
   /**
@@ -101,7 +100,7 @@ class PluginManager {
    *    Component human readable label.
    */
   public function getComponentLabel($component) {
-    return $this->plugins[$this->plugin]['components'][$component];
+    return $this->definitions[$this->plugin]['components'][$component];
   }
 
   /**
@@ -207,10 +206,10 @@ class PluginManager {
   }
 
   /**
-   * Build info getter name give current plugin and component machine name.
+   * Build info hook name give current plugin and component machine name.
    *
    * @return string
-   *    Full info getter name.
+   *    Full info hook name.
    */
   private function buildInfoHookName() {
     $parts = array('integration', $this->plugin, 'get');
