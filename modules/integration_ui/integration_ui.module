@@ -27,12 +27,10 @@ function integration_ui_entity_info_alter(&$info) {
 }
 
 /**
- * Implements hook_integration_backend_info().
+ * Implements hook_integration_plugins_alter().
  */
-function integration_ui_integration_backend_info_alter(&$items) {
-  foreach ($items as $name => $info) {
-    $items[$name]['form handler'] = 'Drupal\integration_ui\Backend\BackendFormHandler';
-  }
+function integration_ui_integration_plugins_alter(&$items) {
+  $items['backend']['form handler'] = 'Drupal\integration_ui\Backend\BackendFormHandler';
 }
 
 /**

@@ -66,27 +66,9 @@ class PluginManager {
    *    Plugin definition array.
    */
   private function pluginDefinitions() {
-    // @todo: this should be a hook defining plugins outside this class.
-    // we could use hook_views_plugins() as model and refactor the whole thing.
-    return array(
-      'backend' => array(
-        'components' => array(
-          'response_handler' => t('Response handler'),
-          'formatter_handler' => t('Formatter handler'),
-          'authentication_handler' => t('Authentication handler'),
-        ),
-      ),
-      'consumer' => array(
-        'components' => array(
-          'mapping_handler' => t('Mapping handler'),
-        ),
-      ),
-      'producer' => array(
-        'components' => array(
-          'field_handler' => t('Field handler'),
-        ),
-      ),
-    );
+    $data = module_invoke_all('integration_plugins');
+    drupal_alter('integration_plugins', $data);
+    return $data;
   }
 
   /**

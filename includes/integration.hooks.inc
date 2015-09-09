@@ -6,6 +6,21 @@
  */
 
 /**
+ * Implements hook_integration_plugins().
+ */
+function integration_integration_plugins() {
+  return array(
+    'backend' => array(
+      'components' => array(
+        'response_handler' => t('Response handler'),
+        'formatter_handler' => t('Formatter handler'),
+        'authentication_handler' => t('Authentication handler'),
+      ),
+    ),
+  );
+}
+
+/**
  * Implements hook_integration_backend_info().
  */
 function integration_integration_backend_info() {

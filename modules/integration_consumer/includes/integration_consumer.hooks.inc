@@ -6,6 +6,19 @@
  */
 
 /**
+ * Implements hook_integration_plugins().
+ */
+function integration_consumer_integration_plugins() {
+  return array(
+    'consumer' => array(
+      'components' => array(
+        'mapping_handler' => t('Mapping handler'),
+      ),
+    ),
+  );
+}
+
+/**
  * Implements hook_integration_consumer_mapping_handler_info().
  */
 function integration_consumer_integration_consumer_mapping_handler_info() {

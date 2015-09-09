@@ -6,6 +6,19 @@
  */
 
 /**
+ * Implements hook_integration_plugins().
+ */
+function integration_producer_integration_plugins() {
+  return array(
+    'producer' => array(
+      'components' => array(
+        'field_handler' => t('Field handler'),
+      ),
+    ),
+  );
+}
+
+/**
  * Implements hook_integration_producer_info().
  */
 function integration_producer_integration_producer_info() {
