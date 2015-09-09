@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Module file.
+ */
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function integration_consumer_ui_entity_info_alter(&$info) {
+  $info['integration_consumer']['admin ui'] = array(
+    'controller class' => 'Drupal\integration_ui\Configuration\EntityUiController',
+    'path' => 'admin/config/services/integration/consumer',
+  );
+  return $info;
+}
+
+/**
+ * Implements hook_integration_plugins_alter().
+ */
+function integration_consumer_ui_integration_plugins_alter(&$items) {
+  $items['consumer']['form handler'] = 'Drupal\integration_consumer_ui\ConsumerFormHandler';
+}

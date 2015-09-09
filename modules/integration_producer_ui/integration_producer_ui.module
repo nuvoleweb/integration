@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Module file.
+ */
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function integration_producer_ui_entity_info_alter(&$info) {
+  $info['integration_producer']['admin ui'] = array(
+    'controller class' => 'Drupal\integration_ui\Configuration\EntityUiController',
+    'path' => 'admin/config/services/integration/producer',
+  );
+  return $info;
+}
+
+/**
+ * Implements hook_integration_plugins_alter().
+ */
+function integration_producer_ui_integration_plugins_alter(&$items) {
+  $items['producer']['form handler'] = 'Drupal\integration_producer_ui\ProducerFormHandler';
+}

@@ -2,17 +2,17 @@
 
 /**
  * @file
- * Contains \Drupal\integration_ui\Consumer\ConsumerFormHandler.
+ * Contains \Drupal\integration_consumer_ui\ConsumerFormHandler.
  */
 
-namespace Drupal\integration_ui\Consumer;
+namespace Drupal\integration_consumer_ui;
 
 use Drupal\integration_ui\AbstractFormHandler;
 
 /**
  * Class ConsumerFormHandler.
  *
- * @package Drupal\integration_ui\Consumer
+ * @package Drupal\integration_consumer_ui
  */
 class ConsumerFormHandler extends AbstractFormHandler {
 

@@ -1,0 +1,11 @@
+name = Integration Producer UI
+description = Integration Layer Producer user interface module.
+core = 7.x
+package = Integration
+version = 7.x-1.0-dev
+project = integration_producer_ui
+
+dependencies[] = integration_producer
+dependencies[] = integration_ui
+dependencies[] = registry_autoload
+registry_autoload[] = PSR-4

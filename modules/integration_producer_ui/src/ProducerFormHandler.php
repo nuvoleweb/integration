@@ -2,17 +2,17 @@
 
 /**
  * @file
- * Contains \Drupal\integration_ui\Producer\ProducerFormHandler.
+ * Contains \Drupal\integration_producer_ui\ProducerFormHandler.
  */
 
-namespace Drupal\integration_ui\Producer;
+namespace Drupal\integration_producer_ui;
 
 use Drupal\integration_ui\AbstractFormHandler;
 
 /**
  * Class ProducerFormHandler.
  *
- * @package Drupal\integration_ui\Producer
+ * @package Drupal\integration_producer_ui
  */
 class ProducerFormHandler extends AbstractFormHandler {
 
