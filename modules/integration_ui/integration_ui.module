@@ -65,3 +65,43 @@ function integration_ui_get_form($entity_type, $entity, $op = 'edit', array $for
   $form_state['build_info']['args'] = array($entity, $op, $entity_type);
   return drupal_build_form('integration_ui_entity_form', $form_state);
 }
+
+
+/**
+ * Implements hook_theme().
+ */
+function integration_ui_theme() {
+  return array(
+    'integration_form_table' => array(
+      'render element' => 'form',
+    ),
+  );
+}
+
+/**
+ * Theme callback for the form table.
+ *
+ * @see integration_ui_theme()
+ * @link http://e9p.net/theming-drupal-7-form-elements-table
+ */
+function theme_integration_form_table(&$variables) {
+  $form = $variables['form'];
+  $rows = $form['rows'];
+  $header = $form['#header'];
+
+  $content = array(
+    '#theme' => 'table',
+    '#header' => $header,
+    '#rows' => array(),
+  );
+
+  foreach (element_children($rows) as $row_index) {
+    $row = array();
+    foreach (element_children($rows[$row_index]) as $col_index) {
+      $row[] = drupal_render($rows[$row_index][$col_index]);
+    }
+    $content['#rows'][] = $row;
+  }
+
+  return drupal_render($content);
+}

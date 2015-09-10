@@ -154,4 +154,130 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
     }
   }
 
+  /**
+   * Form API helper: return select element.
+   *
+   * @param string $label
+   *    Form element label.
+   * @param array $options
+   *    Form element options.
+   * @param mixed $default
+   *    Form element default value.
+   * @param bool|TRUE $required
+   *    Weather the form element is required or not.
+   *
+   * @return array
+   *    Form element array as expected by Drupal's Form API.
+   */
+  protected function getSelect($label, array $options, $default = NULL, $required = TRUE) {
+    return array(
+      '#type' => 'select',
+      '#title' => $label,
+      '#default_value' => $default,
+      '#options' => $options,
+      '#required' => $required,
+    );
+  }
+
+  /**
+   * Form API helper: return text field element.
+   *
+   * @param string $label
+   *    Form element label.
+   * @param mixed $default
+   *    Form element default value.
+   * @param bool|TRUE $required
+   *    Weather the form element is required or not.
+   *
+   * @return array
+   *    Form element array as expected by Drupal's Form API.
+   */
+  protected function getTextField($label, $default = NULL, $required = TRUE) {
+    return array(
+      '#type' => 'textfield',
+      '#title' => $label,
+      '#default_value' => $default,
+      '#required' => $required,
+    );
+  }
+
+  /**
+   * Form API helper: return form elements wrapped into a table.
+   *
+   * @param array $header
+   *    Table header.
+   * @param array $rows
+   *    Table rows as an array of Form API elements.
+   *
+   * @return array
+   *    Form element array as expected by Drupal's Form API.
+   *
+   * @see theme_integration_form_table()
+   */
+  protected function getFormTable(array $header, array $rows) {
+    return array(
+      '#theme' => 'integration_form_table',
+      '#header' => $header,
+      'rows' => $rows,
+    );
+  }
+
+  /**
+   * Form API helper: return fieldset element.
+   *
+   * @param string $label
+   *    Form element label.
+   * @param bool|FALSE $tree
+   *    Weather the form element is to be treated as a tree.
+   *
+   * @return array
+   *    Form element array as expected by Drupal's Form API.
+   */
+  protected function getFieldset($label, $tree = FALSE) {
+    return array(
+      '#type' => 'fieldset',
+      '#title' => $label,
+      '#collapsable' => TRUE,
+      '#collapsed' => TRUE,
+      '#tree' => $tree,
+    );
+  }
+
+  /**
+   * Get form value from $form_state['values'] array.
+   *
+   * @param array $form_state
+   *    Form state array.
+   * @param string $name
+   *    Form state value name.
+   *
+   * @return mixed|FALSE
+   *    Return form value if any, FALSE otherwise.
+   */
+  protected function getFormValue(array &$form_state, $name) {
+    if (isset($form_state['values'][$name])) {
+      return $form_state['values'][$name];
+    }
+    return FALSE;
+  }
+
+  /**
+   * Extract select options from a two-levels array.
+   *
+   * @param array $array
+   *    Two-levels array to extract select options from.
+   * @param string $label_key
+   *    Array key of array item to be used as label.
+   *
+   * @return array
+   *    Input array formatted to be consumable by a Form API select.
+   */
+  protected function extractSelectOptions(array $array, $label_key) {
+    $values = array();
+    foreach ($array as $key => $value) {
+      $values[$key] = $value[$label_key];
+    }
+    return $values;
+  }
+
 }
