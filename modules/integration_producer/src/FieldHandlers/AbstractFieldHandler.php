@@ -55,12 +55,22 @@ abstract class AbstractFieldHandler implements FieldHandlerInterface {
   protected $fieldInfo = array();
 
   /**
-   * Constructor.
+   * AbstractFieldHandler constructor.
    *
+   * Field handlers receives both the source entity and the target document,
+   * each handler will be responsible to process field values (e.g exploding
+   * them into "sub-values", polishing them, etc.) and to add them to the
+   * document object by calling DocumentInterface::addFieldValue() into their
+   * own FieldHandlerInterface::processField() implementation.
+   *
+   * @param string $field_name
+   *    Field name currently being handled.
+   * @param string $language
+   *    Language to extract values for.
    * @param EntityWrapper $entity_wrapper
-   *    Entity object.
+   *    Current field's entity wrapped by EntityWrapper class.
    * @param DocumentInterface $document
-   *    Document object.
+   *    Target document object to attach the field to.
    */
   public function __construct($field_name, $language, EntityWrapper $entity_wrapper, DocumentInterface $document) {
     $this->language = $language;
