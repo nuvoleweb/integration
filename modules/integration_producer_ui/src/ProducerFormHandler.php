@@ -25,29 +25,42 @@ class ProducerFormHandler extends AbstractFormHandler {
     $configuration = $this->getConfiguration();
 
     $options = $this->getPluginManager()->getFormOptions();
-    $form['type'] = $this->getSelect(t('Type'), $options);
+    $form['type'] = $this->formSelect(t('Type'), $options);
 
     if ($entity_type = $this->getFormValue($form_state, 'type')) {
-      $form['options'] = $this->getFieldset(t('Options'));
 
-      $info = entity_get_info($this->getFormValue($form_state, 'type'));
+      $info = entity_get_info($entity_type);
       $options = $this->extractSelectOptions($info['bundles'], 'label');
-      $form['options']['bundle'] = $this->getSelect(t('Bundle'), $options);
+      $form['bundle'] = $this->formSelect(t('Bundle'), $options);
     }
 
     if ($bundle = $this->getFormValue($form_state, 'bundle')) {
 
-      $rows = array();
       $fields = field_info_instances($entity_type, $bundle);
-      foreach ($fields as $field_name => $field) {
-        $row = array();
-        $row[$field_name . '_source'] = $this->getTextField($field['label']);
-        $row[$field_name . '_destination'] = $this->getTextField(t('Destination'));
-        $rows[$field_name . '_row'] = $row;
-      }
+      $options = $this->extractSelectOptions($fields, 'label');
 
-      $form['options']['fields'] = $this->getFormTable(array(t('Source'), t('Destination')), $rows);
+      $rows = array();
+      $row = array(
+        'source' => $this->formSelect('', $options),
+        'destination' => $this->formTextField(''),
+        'action' => array(
+          '#type' => 'button',
+          '#value' => t('Remove'),
+        ),
+      );
+      $rows[] = $row;
+
+      $header = array(t('Source'), t('Destination'), '');
+      $form['mapping'] = $this->formTable($header, $rows);
+      $form['mapping']['more'] = array(
+        '#type' => 'button',
+        '#value' => t('Add more'),
+      );
     }
+
+    // Set AJAX dependencies.
+    $this->setAjaxDependency($form, 'type', 'bundle');
+    $this->setAjaxDependency($form, 'bundle', 'mapping');
   }
 
 }

@@ -66,6 +66,13 @@ function integration_ui_get_form($entity_type, $entity, $op = 'edit', array $for
   return drupal_build_form('integration_ui_entity_form', $form_state);
 }
 
+/**
+ * Implements hook_action_info().
+ */
+function integration_ui_form_ajax_callback($form, $form_state) {
+  $target = $form_state['triggering_element']['#ajax']['target'];
+  return $form[$target];
+}
 
 /**
  * Implements hook_theme().

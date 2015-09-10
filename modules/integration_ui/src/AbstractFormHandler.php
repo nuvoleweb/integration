@@ -169,7 +169,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
    * @return array
    *    Form element array as expected by Drupal's Form API.
    */
-  protected function getSelect($label, array $options, $default = NULL, $required = TRUE) {
+  protected function formSelect($label, array $options, $default = NULL, $required = TRUE) {
     return array(
       '#type' => 'select',
       '#title' => $label,
@@ -192,7 +192,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
    * @return array
    *    Form element array as expected by Drupal's Form API.
    */
-  protected function getTextField($label, $default = NULL, $required = TRUE) {
+  protected function formTextField($label, $default = NULL, $required = TRUE) {
     return array(
       '#type' => 'textfield',
       '#title' => $label,
@@ -214,7 +214,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
    *
    * @see theme_integration_form_table()
    */
-  protected function getFormTable(array $header, array $rows) {
+  protected function formTable(array $header, array $rows) {
     return array(
       '#theme' => 'integration_form_table',
       '#header' => $header,
@@ -233,7 +233,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
    * @return array
    *    Form element array as expected by Drupal's Form API.
    */
-  protected function getFieldset($label, $tree = FALSE) {
+  protected function formFieldset($label, $tree = FALSE) {
     return array(
       '#type' => 'fieldset',
       '#title' => $label,
@@ -241,6 +241,27 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
       '#collapsed' => TRUE,
       '#tree' => $tree,
     );
+  }
+
+  /**
+   * Set the dependent field based on the dependee value via AJAX.
+   *
+   * @param array $form
+   *    Current form array.
+   * @param mixed $dependee
+   *    Dependee element name or array of parents + element name if nested.
+   * @param mixed $dependent
+   *    Target element name or array of parents + element name if nested.
+   */
+  protected function setAjaxDependency(array &$form, $dependee, $dependent) {
+
+    $form[$dependee]['#ajax'] = array(
+      'callback' => 'integration_ui_form_ajax_callback',
+      'wrapper' => 'integration-ui-ajax-wrapper-' . $dependent,
+      'target' => $dependent,
+    );
+    $form[$dependent]['#prefix'] = "<div id='integration-ui-ajax-wrapper-$dependent'>";
+    $form[$dependent]['#suffix'] = "</div>";
   }
 
   /**
