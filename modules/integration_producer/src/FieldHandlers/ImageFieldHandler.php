@@ -19,6 +19,16 @@ class ImageFieldHandler extends FileFieldHandler {
   /**
    * {@inheritdoc}
    */
+  public function getSubFieldList() {
+    return parent::getSubFieldList() + array(
+      'alt' => t('Image alt text'),
+      'title' => t('Image title'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function processField() {
     parent::processField();
 

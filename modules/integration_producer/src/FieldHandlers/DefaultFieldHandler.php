@@ -17,6 +17,13 @@ class DefaultFieldHandler extends AbstractFieldHandler {
   /**
    * {@inheritdoc}
    */
+  public function getSubFieldList() {
+    return array();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function processField() {
 
     foreach ($this->getFieldValues() as $value) {

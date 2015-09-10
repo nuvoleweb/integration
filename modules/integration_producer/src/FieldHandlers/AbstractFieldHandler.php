@@ -18,21 +18,21 @@ use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 abstract class AbstractFieldHandler implements FieldHandlerInterface {
 
   /**
-   * Field name the handler is instantiated with.
+   * Field name currently being handled.
    *
    * @var string
    */
   protected $fieldName = NULL;
 
   /**
-   * Language the handler is instantiated with.
+   * Language to extract values for.
    *
    * @var string
    */
   protected $language = NULL;
 
   /**
-   * Entity wrapper.
+   * Current field's entity wrapped by EntityWrapper class.
    *
    * @var EntityWrapper
    */
@@ -62,6 +62,13 @@ abstract class AbstractFieldHandler implements FieldHandlerInterface {
    * them into "sub-values", polishing them, etc.) and to add them to the
    * document object by calling DocumentInterface::addFieldValue() into their
    * own FieldHandlerInterface::processField() implementation.
+   *
+   * Each new field handler implementation must extend AbstractFieldHandler
+   * and provide its own FieldHandlerInterface::processField() implementation.
+   * Field handlers should walk through field values by using the provided
+   * FieldHandlerInterface::getFieldValues() method, which takes care of
+   * straightening out field values inconsistencies (e.g. cardinality) and to
+   * properly set the current field handler language.
    *
    * @param string $field_name
    *    Field name currently being handled.

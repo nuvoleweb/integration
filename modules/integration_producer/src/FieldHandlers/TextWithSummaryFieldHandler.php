@@ -17,6 +17,15 @@ class TextWithSummaryFieldHandler extends AbstractFieldHandler {
   /**
    * {@inheritdoc}
    */
+  public function getSubFieldList() {
+    return array(
+      'summary' => t('Summary text'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function processField() {
 
     foreach ($this->getFieldValues() as $value) {

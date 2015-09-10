@@ -17,6 +17,18 @@ class FileFieldHandler extends AbstractFieldHandler {
   /**
    * {@inheritdoc}
    */
+  public function getSubFieldList() {
+    return array(
+      'path' => t('File path'),
+      'size' => t('File size'),
+      'mime' => t('File mime'),
+      'status' => t('File status'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function processField() {
 
     foreach ($this->getFieldValues() as $value) {

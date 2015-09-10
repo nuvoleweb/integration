@@ -22,6 +22,17 @@ class DateFieldHandler extends AbstractFieldHandler {
   /**
    * {@inheritdoc}
    */
+  public function getSubFieldList() {
+    return array(
+      'start' => t('Start date'),
+      'end' => t('End date'),
+      'timezone' => t('Timezone'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function processField() {
 
     foreach ($this->getFieldValues() as $value) {
@@ -37,6 +48,7 @@ class DateFieldHandler extends AbstractFieldHandler {
       }
 
       // Set field values on document.
+      $this->getDocument()->addFieldValue($this->fieldName, $value['value']);
       $this->getDocument()->addFieldValue($this->fieldName . '_start', $value['value']);
       $this->getDocument()->addFieldValue($this->fieldName . '_end', $value['value2']);
       $this->getDocument()->addFieldValue($this->fieldName . '_timezone', $value['timezone']);
