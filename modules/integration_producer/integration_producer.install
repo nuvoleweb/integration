@@ -10,80 +10,27 @@
  */
 function integration_producer_schema() {
 
-  $schema['integration_producer'] = array(
-    'description' => 'Stores integration layer producer configuration.',
-    'fields' => array(
-      'id' => array(
-        'description' => 'The primary identifier for a producer.',
-        'type' => 'serial',
-        'unsigned' => TRUE,
-        'not null' => TRUE,
-      ),
-      'name' => array(
-        'description' => 'The displayed name for a producer.',
-        'type' => 'varchar',
-        'length' => 50,
-        'not null' => TRUE,
-      ),
-      'machine_name' => array(
-        'description' => 'The machine name for a producer.',
-        'type' => 'varchar',
-        'length' => 50,
-        'not null' => TRUE,
-      ),
-      'description' => array(
-        'description' => 'The displayed description for a producer.',
-        'type' => 'text',
-        'not null' => FALSE,
-      ),
-      'type' => array(
-        'description' => 'Producer plugin ID, as returned by hook_integration_producer_info() implementations.',
-        'type' => 'varchar',
-        'length' => 50,
-        'not null' => TRUE,
-      ),
-      'producer_id' => array(
-        'description' => 'A unique identification string for the current producer.',
-        'type' => 'varchar',
-        'length' => 50,
-        'not null' => TRUE,
-      ),
-      'options' => array(
-        'description' => 'The options used to configure the producer object.',
-        'type' => 'text',
-        'size' => 'medium',
-        'serialize' => TRUE,
-        'not null' => TRUE,
-      ),
-      'enabled' => array(
-        'description' => 'A flag indicating whether the producer is enabled.',
-        'type' => 'int',
-        'size' => 'tiny',
-        'not null' => TRUE,
-        'default' => 1,
-      ),
-      'status' => array(
-        'description' => 'The exportable status of the producer.',
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0x01,
-        'size' => 'tiny',
-      ),
-      'module' => array(
-        'description' => 'The name of the providing module if the entity has been defined in code.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => FALSE,
-      ),
+  $schema['integration_producer'] = integration_schema_defaults();
+  $schema['integration_producer']['fields'] += array(
+    'type' => array(
+      'description' => 'Producer plugin ID, as returned by hook_integration_producer_info() implementations.',
+      'type' => 'varchar',
+      'length' => 50,
+      'not null' => TRUE,
     ),
-    'indexes' => array(
-      'enabled' => array('enabled'),
+    'producer_id' => array(
+      'description' => 'A unique identification string for the current producer.',
+      'type' => 'varchar',
+      'length' => 50,
+      'not null' => TRUE,
     ),
-    'unique keys' => array(
-      'machine_name' => array('machine_name'),
+    'options' => array(
+      'description' => 'The options used to configure the producer object.',
+      'type' => 'text',
+      'size' => 'medium',
+      'serialize' => TRUE,
+      'not null' => TRUE,
     ),
-    'primary key' => array('id'),
   );
-
   return $schema;
 }
