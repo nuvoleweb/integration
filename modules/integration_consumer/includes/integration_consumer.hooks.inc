@@ -22,6 +22,20 @@ function integration_consumer_integration_plugins() {
 }
 
 /**
+ * Implements hook_integration_consumer_info().
+ */
+function integration_consumer_integration_consumer_info() {
+  return array(
+    'node_consumer' => array(
+      'label' => t('Node consumer'),
+      'description' => t('Create node entities by consuming data provided by a backend.'),
+      'class' => 'Drupal\integration_consumer\NodeConsumer',
+      'entity type' => 'node',
+    ),
+  );
+}
+
+/**
  * Implements hook_integration_consumer_mapping_handler_info().
  */
 function integration_consumer_integration_consumer_mapping_handler_info() {
