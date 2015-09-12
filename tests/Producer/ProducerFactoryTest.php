@@ -21,7 +21,6 @@ class ProducerFactoryTest extends AbstractTest {
    * Test create method.
    */
   public function testFactory() {
-    $node = $this->getExportedEntityFixture('node', 'integration_test', 1);
     $producer_info = integration_producer_get_producer_info();
     $producer_class = $producer_info[$this->producerConfiguration->getPlugin()]['class'];
 
