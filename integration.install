@@ -12,12 +12,6 @@ function integration_schema() {
 
   $schema['integration_backend'] = integration_schema_defaults();
   $schema['integration_backend']['fields'] += array(
-    'type' => array(
-      'description' => 'Backend plugin ID, as returned by hook_integration_backend_info() implementations.',
-      'type' => 'varchar',
-      'length' => 50,
-      'not null' => TRUE,
-    ),
     'response' => array(
       'description' => 'The id of the response plugin to use.',
       'type' => 'varchar',
@@ -74,6 +68,12 @@ function integration_schema_defaults() {
         'description' => 'Configuration entity description.',
         'type' => 'text',
         'not null' => FALSE,
+      ),
+      'plugin' => array(
+        'description' => 'Plugin name, as returned by hook_integration_PLUGIN_TYPE_info() implementations.',
+        'type' => 'varchar',
+        'length' => 50,
+        'not null' => TRUE,
       ),
       'enabled' => array(
         'description' => 'A flag indicating whether the configuration is enabled.',

@@ -27,13 +27,6 @@ function integration_entity_info() {
 function integration_entity_property_info() {
 
   $info['integration_backend']['properties'] = integration_entity_property_info_defaults() + array(
-    'type' => array(
-      'label' => t('Backend type'),
-      'type' => 'text',
-      'description' => t('Backend plugin ID, as returned by hook_integration_backend_info() implementations.'),
-      'schema field' => 'type',
-      'required' => TRUE,
-    ),
     'response' => array(
       'label' => t('Response'),
       'type' => 'text',
@@ -133,6 +126,13 @@ function integration_entity_property_info_defaults() {
       'description' => t('Configuration entity description.'),
       'schema field' => 'description',
       'sanitize' => 'filter_xss',
+    ),
+    'plugin' => array(
+      'label' => t('Plugin'),
+      'type' => 'text',
+      'description' => t('Plugin name, as returned by hook_integration_PLUGIN_TYPE_info() implementations.'),
+      'schema field' => 'plugin',
+      'required' => TRUE,
     ),
     'enabled' => array(
       'label' => t('Enabled'),
