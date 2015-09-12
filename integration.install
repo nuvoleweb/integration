@@ -10,73 +10,87 @@
  */
 function integration_schema() {
 
-  $schema['integration_backend'] = array(
-    'description' => 'Stores integration layer backend configuration.',
+  $schema['integration_backend'] = integration_schema_defaults();
+  $schema['integration_backend']['fields'] += array(
+    'type' => array(
+      'description' => 'Backend plugin ID, as returned by hook_integration_backend_info() implementations.',
+      'type' => 'varchar',
+      'length' => 50,
+      'not null' => TRUE,
+    ),
+    'response' => array(
+      'description' => 'The id of the response plugin to use.',
+      'type' => 'varchar',
+      'length' => 50,
+      'not null' => TRUE,
+    ),
+    'formatter' => array(
+      'description' => 'The id of the formatter plugin to use.',
+      'type' => 'varchar',
+      'length' => 50,
+      'not null' => TRUE,
+    ),
+    'options' => array(
+      'description' => 'The options used to configure the backend object.',
+      'type' => 'text',
+      'size' => 'medium',
+      'serialize' => TRUE,
+      'not null' => TRUE,
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Provides sensitive defaults for hook_entity_info() implementations.
+ *
+ * @return array
+ *    List of hook_schema() defaults.
+ *
+ * @see hook_schema()
+ */
+function integration_schema_defaults() {
+  return array(
     'fields' => array(
       'id' => array(
-        'description' => 'The primary identifier for a backend.',
+        'description' => 'Primary identifier.',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
       'name' => array(
-        'description' => 'The displayed name for a backend.',
+        'description' => 'Human readable configuration name.',
         'type' => 'varchar',
         'length' => 50,
         'not null' => TRUE,
       ),
       'machine_name' => array(
-        'description' => 'The machine name for a backend.',
+        'description' => 'Configuration machine name.',
         'type' => 'varchar',
         'length' => 50,
         'not null' => TRUE,
       ),
       'description' => array(
-        'description' => 'The displayed description for a backend.',
+        'description' => 'Configuration entity description.',
         'type' => 'text',
         'not null' => FALSE,
       ),
-      'type' => array(
-        'description' => 'Backend plugin ID, as returned by hook_integration_backend_info() implementations.',
-        'type' => 'varchar',
-        'length' => 50,
-        'not null' => TRUE,
-      ),
-      'response' => array(
-        'description' => 'The id of the response plugin to use.',
-        'type' => 'varchar',
-        'length' => 50,
-        'not null' => TRUE,
-      ),
-      'formatter' => array(
-        'description' => 'The id of the formatter plugin to use.',
-        'type' => 'varchar',
-        'length' => 50,
-        'not null' => TRUE,
-      ),
-      'options' => array(
-        'description' => 'The options used to configure the backend object.',
-        'type' => 'text',
-        'size' => 'medium',
-        'serialize' => TRUE,
-        'not null' => TRUE,
-      ),
       'enabled' => array(
-        'description' => 'A flag indicating whether the backend is enabled.',
+        'description' => 'A flag indicating whether the configuration is enabled.',
         'type' => 'int',
         'size' => 'tiny',
         'not null' => TRUE,
         'default' => 1,
       ),
       'status' => array(
-        'description' => 'The exportable status of the backend.',
+        'description' => 'The exportable status of the configuration entity.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0x01,
         'size' => 'tiny',
       ),
       'module' => array(
-        'description' => 'The name of the providing module if the entity has been defined in code.',
+        'description' => 'The name of the module from which this configuration entity originates.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => FALSE,
@@ -90,6 +104,4 @@ function integration_schema() {
     ),
     'primary key' => array('id'),
   );
-
-  return $schema;
 }

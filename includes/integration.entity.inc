@@ -9,22 +9,15 @@
  * Implements hook_entity_info().
  */
 function integration_entity_info() {
+
   $info['integration_backend'] = array(
     'label' => t('Integration layer backend'),
-    'controller class' => 'EntityAPIControllerExportable',
-    'metadata controller class' => FALSE,
     'entity class' => 'Drupal\integration\Backend\Configuration\BackendConfiguration',
     'base table' => 'integration_backend',
-    'uri callback' => 'integration_backend_url',
     'access callback' => 'integration_backend_access',
     'module' => 'integration',
-    'exportable' => TRUE,
-    'entity keys' => array(
-      'id' => 'id',
-      'label' => 'name',
-      'name' => 'machine_name',
-    ),
-  );
+  ) + integration_entity_info_defaults();
+
   return $info;
 }
 
@@ -32,35 +25,8 @@ function integration_entity_info() {
  * Implements hook_entity_property_info().
  */
 function integration_entity_property_info() {
-  $info['integration_backend']['properties'] = array(
-    'id' => array(
-      'label' => t('ID'),
-      'type' => 'integer',
-      'description' => t('The primary identifier for a backend.'),
-      'schema field' => 'id',
-      'validation callback' => 'entity_metadata_validate_integer_positive',
-    ),
-    'name' => array(
-      'label' => t('Name'),
-      'type' => 'text',
-      'description' => t('The displayed name for a backend.'),
-      'schema field' => 'name',
-      'required' => TRUE,
-    ),
-    'machine_name' => array(
-      'label' => t('Machine name'),
-      'type' => 'token',
-      'description' => t('The machine name for a backend.'),
-      'schema field' => 'machine_name',
-      'required' => TRUE,
-    ),
-    'description' => array(
-      'label' => t('Description'),
-      'type' => 'text',
-      'description' => t('The displayed description for a backend.'),
-      'schema field' => 'description',
-      'sanitize' => 'filter_xss',
-    ),
+
+  $info['integration_backend']['properties'] = integration_entity_property_info_defaults() + array(
     'type' => array(
       'label' => t('Backend type'),
       'type' => 'text',
@@ -82,26 +48,8 @@ function integration_entity_property_info() {
       'schema field' => 'formatter',
       'required' => TRUE,
     ),
-    'enabled' => array(
-      'label' => t('Enabled'),
-      'type' => 'boolean',
-      'description' => t('A flag indicating whether the backend is enabled.'),
-      'schema field' => 'enabled',
-    ),
-    'status' => array(
-      'label' => t('Status'),
-      'type' => 'integer',
-      'description' => t('The exportable status of the backend.'),
-      'schema field' => 'status',
-      'options list' => 'integration_configuration_status_options_list',
-    ),
-    'module' => array(
-      'label' => t('Module'),
-      'type' => 'text',
-      'description' => t('The name of the module from which this backend originates.'),
-      'schema field' => 'module',
-    ),
   );
+
   return $info;
 }
 
@@ -119,5 +67,91 @@ function integration_configuration_status_options_list() {
     ENTITY_IN_CODE => t('Default'),
     ENTITY_OVERRIDDEN => t('Overridden'),
     ENTITY_FIXED => t('Fixed'),
+  );
+}
+
+/**
+ * Provides sensitive defaults for hook_entity_info() implementations.
+ *
+ * @return array
+ *    Array of configuration entity info values.
+ *
+ * @see integration_entity_info()
+ * @see integration_consumer_entity_info()
+ * @see integration_producer_entity_info()
+ */
+function integration_entity_info_defaults() {
+  return array(
+    'controller class' => 'EntityAPIControllerExportable',
+    'metadata controller class' => FALSE,
+    'uri callback' => 'integration_uri_callback',
+    'exportable' => TRUE,
+    'entity keys' => array(
+      'id' => 'id',
+      'label' => 'name',
+      'name' => 'machine_name',
+    ),
+  );
+}
+
+/**
+ * Provides sensitive defaults for hook_entity_property_info() implementations.
+ *
+ * @return array
+ *    Array of configuration entity property default values.
+ *
+ * @see integration_entity_property_info()
+ * @see integration_consumer_entity_property_info()
+ * @see integration_producer_entity_property_info()
+ */
+function integration_entity_property_info_defaults() {
+  return array(
+    'id' => array(
+      'label' => t('ID'),
+      'type' => 'integer',
+      'description' => t('Primary identifier.'),
+      'schema field' => 'id',
+      'validation callback' => 'entity_metadata_validate_integer_positive',
+    ),
+    'name' => array(
+      'label' => t('Name'),
+      'type' => 'text',
+      'description' => t('Human readable configuration name.'),
+      'schema field' => 'name',
+      'required' => TRUE,
+    ),
+    'machine_name' => array(
+      'label' => t('Machine name'),
+      'type' => 'token',
+      'description' => t('Configuration machine name.'),
+      'schema field' => 'machine_name',
+      'required' => TRUE,
+    ),
+    'description' => array(
+      'label' => t('Description'),
+      'type' => 'text',
+      'description' => t('Configuration entity description.'),
+      'schema field' => 'description',
+      'sanitize' => 'filter_xss',
+    ),
+    'enabled' => array(
+      'label' => t('Enabled'),
+      'type' => 'boolean',
+      'description' => t('A flag indicating whether the configuration is enabled.'),
+      'schema field' => 'enabled',
+    ),
+    'status' => array(
+      'label' => t('Status'),
+      'type' => 'integer',
+      'description' => t('The exportable status of the configuration entity.'),
+      'schema field' => 'status',
+      'options list' => 'integration_configuration_status_options_list',
+    ),
+    'module' => array(
+      'label' => t('Module'),
+      'type' => 'text',
+      'description' => t('The name of the module from which this configuration entity originates.'),
+      'schema field' => 'module',
+    ),
   );
 }
