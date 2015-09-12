@@ -8,7 +8,8 @@
 namespace Drupal\integration\Tests;
 
 use Drupal\integration\Backend\BackendFactory;
-use Drupal\integration_consumer\Consumer;
+use Drupal\integration_consumer\AbstractConsumer;
+use Drupal\integration_consumer\ConsumerFactory;
 use Drupal\integration_producer\ProducerFactory;
 
 /**
@@ -25,7 +26,7 @@ class IntegrationTest extends AbstractTest {
 
     // Get backend, producer and consumer instances.
     $backend = BackendFactory::getInstance('test_configuration');
-    $consumer = Consumer::getInstance('test_configuration');
+    $consumer = ConsumerFactory::getInstance('test_configuration');
 
     // Make sure we have no test leftovers.
     // @todo: remove rollback from test execution.

@@ -45,4 +45,12 @@ interface ConsumerInterface {
    */
   public function getDestinationEntity($id);
 
+  /**
+   * Return destination class name for current consumer plugin.
+   *
+   * @return string
+   *    Destination class name, such as "\MigrateDestinationNode", etc.
+   */
+  public function getDestinationClass();
+
 }

@@ -9,8 +9,9 @@ namespace Drupal\integration\Tests\Consumer;
 
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
-use Drupal\integration_consumer\Consumer;
+use Drupal\integration_consumer\AbstractConsumer;
 use Drupal\integration\Tests\AbstractTest;
+use Drupal\integration_consumer\ConsumerFactory;
 
 /**
  * Class ConsumerTest.
@@ -52,8 +53,7 @@ class ConsumerTest extends AbstractTest {
    */
   public function testConsumer() {
 
-    /** @var Consumer $migration */
-    $migration = Consumer::getInstance('test_configuration');
+    $migration = ConsumerFactory::getInstance('test_configuration');
 
     $this->assertNotNull($migration);
 
