@@ -26,15 +26,17 @@ function integration_producer_integration_plugins() {
  */
 function integration_producer_integration_producer_info() {
   return array(
-    'node' => array(
+    'node_producer' => array(
       'label' => t('Node producer'),
       'description' => t('Convert node entities into integration layer documents.'),
       'class' => 'Drupal\integration_producer\NodeProducer',
+      'entity type' => 'node',
     ),
-    'taxonomy_term' => array(
+    'taxonomy_term_producer' => array(
       'label' => t('Taxonomy term producer'),
       'description' => t('Convert taxonomy term entities into integration layer documents.'),
       'class' => 'Drupal\integration_producer\TaxonomyTermProducer',
+      'entity type' => 'taxonomy_term',
     ),
   );
 }

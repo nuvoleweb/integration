@@ -21,8 +21,8 @@ class HooksTest extends \PHPUnit_Framework_TestCase {
 
     $hook_response = integration_producer_get_producer_info();
     $expected = array(
-      'node' => 'Drupal\integration_producer\NodeProducer',
-      'taxonomy_term' => 'Drupal\integration_producer\TaxonomyTermProducer',
+      'node_producer' => 'Drupal\integration_producer\NodeProducer',
+      'taxonomy_term_producer' => 'Drupal\integration_producer\TaxonomyTermProducer',
     );
     foreach ($expected as $key => $value) {
       $this->assertTrue(isset($hook_response[$key]));
