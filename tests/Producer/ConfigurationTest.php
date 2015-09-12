@@ -19,6 +19,15 @@ use Drupal\integration\Tests\AbstractTest;
 class ConfigurationTest extends AbstractTest {
 
   /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp();
+    global $conf;
+    $conf['integration_producer_id'] = 'producer-id';
+  }
+
+  /**
    * Test configuration entity CRUD operations.
    *
    * @dataProvider configurationProvider
@@ -31,7 +40,7 @@ class ConfigurationTest extends AbstractTest {
 
     $this->assertEquals($data->machine_name, $this->producerConfiguration->identifier());
     $this->assertEquals(ENTITY_CUSTOM, $this->producerConfiguration->getStatus());
-    $this->assertEquals($data->producer_id, $this->producerConfiguration->getProducerId());
+    $this->assertEquals('producer-id', $this->producerConfiguration->getProducerId());
 
     $this->assertEquals($data->options['username'], $this->producerConfiguration->getOptionValue('username'));
     $this->assertEquals($data->options['password'], $this->producerConfiguration->getOptionValue('password'));

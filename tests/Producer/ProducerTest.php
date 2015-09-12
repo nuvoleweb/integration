@@ -24,6 +24,15 @@ use \Mockery as m;
 class ProducerTest extends AbstractTest {
 
   /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp();
+    global $conf;
+    $conf['integration_producer_id'] = 'producer-id';
+  }
+
+  /**
    * Test creation of a producer instance.
    */
   public function testInstance() {

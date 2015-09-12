@@ -26,13 +26,13 @@ class ProducerConfiguration extends AbstractConfiguration {
   public $options = array();
 
   /**
-   * Get producer ID setting parameter.
+   * Get current site's producer ID.
    *
    * @return string
    *    Producer ID.
    */
   public function getProducerId() {
-    return isset($this->producer_id) ? $this->producer_id : '';
+    return variable_get('integration_producer_id', '');
   }
 
   /**

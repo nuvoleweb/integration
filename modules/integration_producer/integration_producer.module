@@ -13,6 +13,52 @@ use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 /**
+ * Implements hook_permission().
+ */
+function integration_producer_permission() {
+  return array(
+    'administer producers' => array(
+      'title' => t('Administer integration layer producers'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function integration_producer_menu() {
+
+  $items['admin/config/services/integration/producer/settings'] = array(
+    'title' => 'Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('integration_producer_site_settings'),
+    'access arguments' => array('administer producers'),
+    'type' => MENU_LOCAL_TASK,
+  );
+  return $items;
+}
+
+/**
+ * Form builder: Site-wide backend settings.
+ *
+ * @see integration_producer_menu()
+ */
+function integration_producer_site_settings() {
+  $form['site_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Site settings'),
+  );
+  $form['site_settings']['integration_producer_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Producer ID'),
+    '#default_value' => variable_get('integration_producer_id', ''),
+    '#description' => t("Global producer ID for this site, set on all produced documents."),
+    '#required' => TRUE,
+  );
+  return system_settings_form($form);
+}
+
+/**
  * Load producer entity given its machine name.
  *
  * @param string $machine_name
@@ -23,17 +69,6 @@ use Drupal\integration_producer\Configuration\ProducerConfiguration;
  */
 function integration_producer_load_producer($machine_name) {
   return entity_load_single('integration_producer', $machine_name);
-}
-
-/**
- * Implements hook_permission().
- */
-function integration_producer_permission() {
-  return array(
-    'administer producers' => array(
-      'title' => t('Administer integration layer producers'),
-    ),
-  );
 }
 
 /**

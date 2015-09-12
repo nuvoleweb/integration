@@ -34,13 +34,6 @@ function integration_producer_entity_property_info() {
       'schema field' => 'type',
       'required' => TRUE,
     ),
-    'producer_id' => array(
-      'label' => t('Producer ID'),
-      'type' => 'text',
-      'description' => t('A unique identification string for the current producer.'),
-      'schema field' => 'producer_id',
-      'required' => TRUE,
-    ),
   );
 
   return $info;
