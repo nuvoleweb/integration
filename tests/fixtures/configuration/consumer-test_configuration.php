@@ -9,6 +9,7 @@ $export = new \stdClass();
 $export->name = 'Test configuration';
 $export->machine_name = 'test_configuration';
 $export->description = 'Test configuration description.';
+$export->plugin = 'node_consumer';
 $export->backend = 'test_configuration';
 $export->entity_type = 'node';
 $export->entity_bundle = 'integration_test';
