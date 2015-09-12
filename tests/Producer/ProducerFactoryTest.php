@@ -23,7 +23,7 @@ class ProducerFactoryTest extends AbstractTest {
   public function testFactory() {
     $node = $this->getExportedEntityFixture('node', 'integration_test', 1);
     $producer_info = integration_producer_get_producer_info();
-    $producer_class = $producer_info[$this->producerConfiguration->getType()]['class'];
+    $producer_class = $producer_info[$this->producerConfiguration->getPlugin()]['class'];
 
     $producer = ProducerFactory::getInstance('test_configuration');
 

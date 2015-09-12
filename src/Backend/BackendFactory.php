@@ -43,7 +43,7 @@ class BackendFactory {
       $configuration = self::loadConfiguration($machine_name);
 
       $plugin_manager = PluginManager::getInstance('backend');
-      $backend_class = $plugin_manager->getClass($configuration->getType());
+      $backend_class = $plugin_manager->getClass($configuration->getPlugin());
       $response_class = $plugin_manager->setComponent('response_handler')->getClass($configuration->getResponse());
       $formatter_class = $plugin_manager->setComponent('formatter_handler')->getClass($configuration->getFormatter());
 

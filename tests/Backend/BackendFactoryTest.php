@@ -22,7 +22,7 @@ class BackendFactoryTest extends AbstractTest {
    */
   public function testFactory() {
     $backend_info = integration_backend_get_backend_info();
-    $backend_class = $backend_info[$this->backendConfiguration->getType()]['class'];
+    $backend_class = $backend_info[$this->backendConfiguration->getPlugin()]['class'];
 
     $backend = BackendFactory::getInstance('test_configuration');
 

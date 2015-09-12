@@ -41,11 +41,9 @@ class ProducerFactory {
     $document = new Document();
 
     if (!class_exists($producer_class)) {
-      throw new \InvalidArgumentException("Class $producer_class does not exists");
+      throw new \InvalidArgumentException(t('Class @class does not exists', array('class' => $producer_class)));
     }
 
-    $entity_wrapper = new EntityWrapper\EntityWrapper($configuration->getType());
-    $document = new Document();
     return new $producer_class($configuration, $entity_wrapper, $document);
   }
 
