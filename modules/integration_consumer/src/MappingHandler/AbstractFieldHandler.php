@@ -7,7 +7,7 @@
 
 namespace Drupal\integration_consumer\MappingHandler;
 
-use Drupal\integration_consumer\Consumer;
+use Drupal\integration_consumer\AbstractConsumer;
 
 /**
  * Class AbstractMappingHandler.
@@ -19,17 +19,17 @@ abstract class AbstractMappingHandler implements MappingHandlerInterface {
   /**
    * Current consumer object.
    *
-   * @var Consumer
+   * @var AbstractConsumer
    */
   protected $consumer = NULL;
 
   /**
    * Constructor.
    *
-   * @param Consumer $consumer
+   * @param AbstractConsumer $consumer
    *    Consumer object.
    */
-  public function __construct(Consumer $consumer) {
+  public function __construct(AbstractConsumer $consumer) {
     $this->consumer = $consumer;
   }
 

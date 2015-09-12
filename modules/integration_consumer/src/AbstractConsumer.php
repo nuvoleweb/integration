@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Drupal\integration_consumer\Consumer.
+ * Contains Drupal\integration_consumer\AbstractConsumer.
  */
 
 namespace Drupal\integration_consumer;
@@ -12,30 +12,18 @@ use Drupal\integration\Backend\BackendInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\ConfigurationFactory;
+use Drupal\integration\PluginManager;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration_consumer\Migrate\AbstractMigration;
-use Drupal\integration_consumer\Migrate\DocumentWrapper;
-use Drupal\integration_consumer\Migrate\MigrateItemJSON;
-use Drupal\integration_consumer\Migrate\MigrateListJSON;
 use Drupal\integration_consumer\MappingHandler\AbstractMappingHandler;
 use Drupal\integration_consumer\Migrate\MigrateSourceBackend;
 
 /**
- * Interface ConsumerInterface.
+ * Class AbstractConsumer.
  *
  * @package Drupal\integration_consumer
  */
-class Consumer extends AbstractMigration implements ConsumerInterface, ConfigurablePluginInterface {
-
-  /**
-   * List supported entity destinations so far. To be expanded soon.
-   *
-   * @var array
-   */
-  protected $supportedDestinations = array(
-    'node' => '\MigrateDestinationNode',
-    'taxonomy_term' => '\MigrateDestinationTerm',
-  );
+abstract class AbstractConsumer extends AbstractMigration implements ConsumerInterface, ConfigurablePluginInterface {
 
   /**
    * Configuration object.
@@ -64,14 +52,13 @@ class Consumer extends AbstractMigration implements ConsumerInterface, Configura
     $this->setConfiguration($configuration);
 
     $this->setMap($this->getMapInstance());
-    $this->setDestination($this->getDestinationInstance());
+
+    $destination_class = $this->getDestinationClass();
+    $destination = new $destination_class($configuration->getEntityBundle());
+    $this->setDestination($destination);
 
     // Mapping default language is necessary for correct translation handling.
     $this->addFieldMapping('language', 'default_language');
-
-    // @todo: Make the following an option set via UI.
-    $this->addFieldMapping('promote')->defaultValue(FALSE);
-    $this->addFieldMapping('status')->defaultValue(NODE_NOT_PUBLISHED);
 
     // Apply mapping.
     foreach ($this->getConfiguration()->getMapping() as $destination => $source) {
@@ -120,8 +107,11 @@ class Consumer extends AbstractMigration implements ConsumerInterface, Configura
     $arguments = array();
     $arguments['consumer']['configuration'] = $configuration->getMachineName();
 
+    $plugin_manager = PluginManager::getInstance('consumer');
+    $plugin = $configuration->getPlugin();
+
     self::validateArguments($arguments);
-    \Migration::registerMigration(__CLASS__, $configuration->getMachineName(), $arguments);
+    \Migration::registerMigration($plugin_manager->getClass($plugin), $configuration->getMachineName(), $arguments);
   }
 
   /**
@@ -134,7 +124,7 @@ class Consumer extends AbstractMigration implements ConsumerInterface, Configura
    * @param array $arguments
    *    Deprecated: arguments are retrieved from migrate_status.
    *
-   * @return Consumer
+   * @return AbstractConsumer
    *    Consumer object instance.
    */
   static public function getInstance($machine_name, $class_name = NULL, array $arguments = array()) {
@@ -167,35 +157,8 @@ class Consumer extends AbstractMigration implements ConsumerInterface, Configura
    *    Map object instance.
    */
   protected function getMapInstance() {
-    /** @var \MigrateDestinationNode $destination_class */
     $destination_class = $this->getDestinationClass();
     return new \MigrateSQLMap($this->getMachineName(), $this->getSourceKey(), $destination_class::getKeySchema());
-  }
-
-  /**
-   * Get destination object instance depending on entity type setting.
-   *
-   * @return \MigrateDestination
-   *    Destination object instance.
-   */
-  protected function getDestinationInstance() {
-    $destination_class = $this->getDestinationClass();
-    $bundle = $this->getConfiguration()->getEntityBundle();
-    return new $destination_class($bundle);
-  }
-
-  /**
-   * Return migration destination class depending on entity type setting.
-   *
-   * @return string
-   *    Destination class name.
-   */
-  protected function getDestinationClass() {
-    $entity_type = $this->getConfiguration()->getEntityType();
-    if (isset($this->supportedDestinations[$entity_type])) {
-      return $this->supportedDestinations[$entity_type];
-    }
-    throw new \InvalidArgumentException("Entity destination $entity_type not supported.");
   }
 
   /**

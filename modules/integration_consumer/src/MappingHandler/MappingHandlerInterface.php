@@ -7,7 +7,7 @@
 
 namespace Drupal\integration_consumer\MappingHandler;
 
-use Drupal\integration_consumer\Consumer;
+use Drupal\integration_consumer\AbstractConsumer;
 
 /**
  * Interface MappingHandlerInterface.
@@ -29,7 +29,7 @@ interface MappingHandlerInterface {
   /**
    * Return consumer object instance the mapping handler was constructed with.
    *
-   * @return Consumer
+   * @return AbstractConsumer
    *    Consumer object.
    */
   public function getConsumer();
