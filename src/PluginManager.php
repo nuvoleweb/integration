@@ -152,6 +152,20 @@ class PluginManager {
   }
 
   /**
+   * Get current "entity type" property value, if any.
+   *
+   * @param string $name
+   *    Plugin or component name.
+   *
+   * @return string
+   *    Value of "entity type" property.
+   */
+  public function getEntityType($name) {
+    $info = $this->getInfo();
+    return isset($info[$name]['entity type']) ? $info[$name]['entity type'] : '';
+  }
+
+  /**
    * Get form handler class, if any.
    *
    * @param string $name

@@ -34,7 +34,11 @@ class ProducerFactory {
     $configuration = self::loadConfiguration($machine_name);
 
     $plugin_manager = PluginManager::getInstance('producer');
-    $producer_class = $plugin_manager->getClass($configuration->getType());
+    $plugin = $configuration->getPlugin();
+
+    $producer_class = $plugin_manager->getClass($plugin);
+    $entity_wrapper = new EntityWrapper\EntityWrapper($plugin_manager->getEntityType($plugin));
+    $document = new Document();
 
     if (!class_exists($producer_class)) {
       throw new \InvalidArgumentException("Class $producer_class does not exists");
