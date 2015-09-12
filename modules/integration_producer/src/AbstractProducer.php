@@ -19,11 +19,6 @@ use Drupal\integration\Configuration\AbstractConfiguration;
 abstract class AbstractProducer implements ProducerInterface, ConfigurablePluginInterface {
 
   /**
-   * Current schema version.
-   */
-  const SCHEMA_VERSION = 'v1';
-
-  /**
    * Configuration object.
    *
    * @var Configuration\ProducerConfiguration
@@ -135,7 +130,6 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
     $this->getDocument()->setMetadata('producer_content_id', $this->getProducerContentId());
     $this->getDocument()->setMetadata('created', $this->getDocumentCreationDate());
     $this->getDocument()->setMetadata('updated', $this->getDocumentUpdateDate());
-    $this->getDocument()->setMetadata('version', self::SCHEMA_VERSION);
 
     // Set multilingual-related metadata.
     $this->getDocument()->setMetadata('languages', $this->getEntityWrapper()->getAvailableLanguages());
