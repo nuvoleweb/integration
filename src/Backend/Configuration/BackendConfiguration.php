@@ -20,15 +20,6 @@ use Drupal\integration\PluginManager;
 class BackendConfiguration extends AbstractConfiguration {
 
   /**
-   * Backend type plugin.
-   *
-   * @see integration_backend_info()
-   *
-   * @var string
-   */
-  public $type = '';
-
-  /**
    * Formatter handler machine name.
    *
    * @see hook_integration_backend_formatter_handler_info()
@@ -45,26 +36,6 @@ class BackendConfiguration extends AbstractConfiguration {
    * @var string
    */
   public $response = '';
-
-  /**
-   * Get backend type.
-   *
-   * @return string
-   *    Backend type.
-   */
-  public function getType() {
-    return isset($this->type) ? $this->type : '';
-  }
-
-  /**
-   * Set backend type.
-   *
-   * @param string $type
-   *    Backend type.
-   */
-  public function setType($type) {
-    $this->type = $type;
-  }
 
   /**
    * Get formatter handler name.

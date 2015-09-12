@@ -23,6 +23,14 @@ interface ConfigurationInterface {
   public function getName();
 
   /**
+   * Get plugin name, as returned by hook_integration_PLUGIN_TYPE_info().
+   *
+   * @return string
+   *    Plugin name.
+   */
+  public function getPlugin();
+
+  /**
    * Get configuration machine name.
    *
    * @return string

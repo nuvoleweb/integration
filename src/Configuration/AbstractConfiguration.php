@@ -22,6 +22,13 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
   public $name;
 
   /**
+   * Plugin name, as returned by hook_integration_PLUGIN_TYPE_info().
+   *
+   * @var string
+   */
+  public $plugin;
+
+  /**
    * Weather the configuration is enabled or not.
    *
    * @var bool
@@ -49,6 +56,13 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    */
   public function getName() {
     return isset($this->name) ? $this->name : '';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPlugin() {
+    return isset($this->plugin) ? $this->plugin : '';
   }
 
   /**
