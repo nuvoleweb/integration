@@ -41,7 +41,7 @@ class ConsumerConfiguration extends AbstractConfiguration {
    * @var array
    *    Array of consumer specific option.
    */
-  public $options = array();
+  public $settings = array();
 
   /**
    * Return consumer entity bundle.
@@ -80,7 +80,7 @@ class ConsumerConfiguration extends AbstractConfiguration {
    *    Field mapping.
    */
   public function getMapping() {
-    return $this->mapping;
+    return $this->settings['components']['mapping_handler'];
   }
 
   /**
@@ -93,7 +93,7 @@ class ConsumerConfiguration extends AbstractConfiguration {
    *    Source field mapped to the destination field if any, NULL otherwise.
    */
   public function getMappingSource($destination_field) {
-    return isset($this->mapping[$destination_field]) ? $this->mapping[$destination_field] : NULL;
+    return $this->getComponentSetting('mapping_handler', $destination_field);
   }
 
   /**
@@ -106,7 +106,7 @@ class ConsumerConfiguration extends AbstractConfiguration {
    *    Destination field mapped to the source field if any, NULL otherwise.
    */
   public function getMappingDestination($source_field) {
-    $mapping = array_flip($this->mapping);
+    $mapping = array_flip($this->getMapping());
     return isset($mapping[$source_field]) ? $mapping[$source_field] : NULL;
   }
 

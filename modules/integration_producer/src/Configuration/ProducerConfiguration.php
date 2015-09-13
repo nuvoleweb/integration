@@ -23,7 +23,7 @@ class ProducerConfiguration extends AbstractConfiguration {
    * @var array
    *    Array of backend specific option.
    */
-  public $options = array();
+  public $settings = array();
 
   /**
    * Get current site's producer ID.
@@ -55,7 +55,7 @@ class ProducerConfiguration extends AbstractConfiguration {
    *    Option value.
    */
   public function getOptionValue($name) {
-    return isset($this->options[$name]) ? $this->options[$name] : '';
+    return isset($this->settings[$name]) ? $this->settings[$name] : '';
   }
 
 }
