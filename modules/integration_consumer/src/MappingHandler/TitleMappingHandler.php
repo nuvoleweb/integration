@@ -21,7 +21,7 @@ class TitleMappingHandler extends AbstractMappingHandler {
     // Handle Title replacements.
     $source_field = !$source_field ? $destination_field : $source_field;
 
-    $entity_type = $this->getConsumer()->getConfiguration()->getEntityType();
+    $entity_type = $this->getConsumer()->getDestinationEntityType();
     $bundle = $this->getConsumer()->getConfiguration()->getEntityBundle();
     $field_replacement = title_field_replacement_get_label_field($entity_type, $bundle);
     $legacy_field = title_field_replacement_get_legacy_field($entity_type, $field_replacement['field_name']);

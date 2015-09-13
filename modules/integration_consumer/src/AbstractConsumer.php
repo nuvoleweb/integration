@@ -195,7 +195,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
    * {@inheritdoc}
    */
   public function getDestinationEntity($id) {
-    $entity_type = $this->getConfiguration()->getEntityType();
+    $entity_type = $this->getDestinationEntityType();
     $mapping_row = $this->getMap()->getRowBySource(array('_id' => $id));
     if ($mapping_row && isset($mapping_row['destid1']) && !empty($mapping_row['destid1'])) {
       return entity_load_single($entity_type, $mapping_row['destid1']);
@@ -203,7 +203,15 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
     else {
       return FALSE;
     }
+  }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getDestinationEntityType() {
+    $plugin_manager = PluginManager::getInstance('consumer');
+    $plugin = $this->getConfiguration()->getPlugin();
+    return $plugin_manager->getEntityType($plugin);
   }
 
 }

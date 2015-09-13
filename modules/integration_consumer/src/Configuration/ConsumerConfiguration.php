@@ -44,16 +44,6 @@ class ConsumerConfiguration extends AbstractConfiguration {
   public $options = array();
 
   /**
-   * Return consumer entity type.
-   *
-   * @return string
-   *    Entity type machine name.
-   */
-  public function getEntityType() {
-    return isset($this->entity_type) ? $this->entity_type : '';
-  }
-
-  /**
    * Return consumer entity bundle.
    *
    * @return string

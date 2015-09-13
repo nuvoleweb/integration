@@ -46,6 +46,14 @@ interface ConsumerInterface {
   public function getDestinationEntity($id);
 
   /**
+   * Entity type as defined in hook_integration_consumer_info().
+   *
+   * @return string
+   *    Destination entity type.
+   */
+  public function getDestinationEntityType();
+
+  /**
    * Return destination class name for current consumer plugin.
    *
    * @return string
