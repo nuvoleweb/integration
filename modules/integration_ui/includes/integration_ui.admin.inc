@@ -58,10 +58,13 @@ function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $
  */
 function integration_ui_entity_form_submit(&$form, &$form_state) {
   /** @var AbstractConfiguration $configuration */
-  // $configuration = entity_ui_form_submit_build_entity($form, $form_state);
+  $configuration = entity_ui_form_submit_build_entity($form, $form_state);
+
+  $form_manager = FormHandlerFactory::getInstance($configuration);
+  $form_manager->formSubmit($form, $form_state);
+
   // $configuration->save();
   //
   // drupal_set_message(t('Configuration has been saved.'));
   // $form_state['redirect'] = 'admin/config/services/integration';
-  $form_state['rebuild'] = TRUE;
 }
