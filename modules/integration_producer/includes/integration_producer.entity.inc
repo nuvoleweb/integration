@@ -11,7 +11,7 @@
 function integration_producer_entity_info() {
 
   $info['integration_producer'] = array(
-    'label' => t('Integration layer producer'),
+    'label' => t('Producer'),
     'entity class' => 'Drupal\integration_producer\Configuration\ProducerConfiguration',
     'base table' => 'integration_producer',
     'access callback' => 'integration_producer_access',

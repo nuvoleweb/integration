@@ -11,7 +11,7 @@
 function integration_consumer_entity_info() {
 
   $info['integration_consumer'] = array(
-    'label' => t('Integration layer consumer'),
+    'label' => t('Consumer'),
     'entity class' => 'Drupal\integration_consumer\Configuration\ConsumerConfiguration',
     'base table' => 'integration_consumer',
     'access callback' => 'integration_consumer_access',

@@ -11,7 +11,7 @@
 function integration_entity_info() {
 
   $info['integration_backend'] = array(
-    'label' => t('Integration layer backend'),
+    'label' => t('Backend'),
     'entity class' => 'Drupal\integration\Backend\Configuration\BackendConfiguration',
     'base table' => 'integration_backend',
     'access callback' => 'integration_backend_access',
@@ -19,7 +19,7 @@ function integration_entity_info() {
   ) + integration_entity_info_defaults();
 
   $info['integration_resource_schema'] = array(
-    'label' => t('Integration layer resource schema'),
+    'label' => t('Resource schema'),
     'entity class' => 'Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration',
     'base table' => 'integration_resource_schema',
     'access callback' => 'integration_backend_access',
