@@ -26,6 +26,7 @@ $export->settings = array(
   ),
 );
 $export->backend = 'test_configuration';
+$export->resource = 'test_configuration';
 $export->enabled = 1;
 $export->status = 1;
 $export->module = 'integration_test';
