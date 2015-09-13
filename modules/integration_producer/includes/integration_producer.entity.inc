@@ -41,6 +41,13 @@ function integration_producer_entity_property_info() {
       'schema field' => 'backend',
       'required' => TRUE,
     ),
+    'resource' => array(
+      'label' => t('Resource'),
+      'type' => 'integration_resource_schema',
+      'description' => t('Machine name of the resource schema configuration to use.'),
+      'schema field' => 'resource',
+      'required' => TRUE,
+    ),
   );
 
   return $info;
