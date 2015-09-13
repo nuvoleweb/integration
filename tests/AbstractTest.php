@@ -10,6 +10,7 @@ namespace Drupal\integration\Tests;
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration_producer\Configuration\ProducerConfiguration;
+use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
 
 
 /**
@@ -40,6 +41,13 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
    */
   public $consumerConfiguration = NULL;
 
+  /**
+   * Reference to backend configuration object.
+   *
+   * @var ResourceSchemaConfiguration
+   */
+  public $resourceSchemaConfiguration = NULL;
+
 
   /**
    * Setup PHPUnit hook.
@@ -59,6 +67,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
     $data = $this->getConfigurationFixture('consumer', 'test_configuration');
     $this->consumerConfiguration = entity_create('integration_consumer', (array) $data);
     $this->consumerConfiguration->save();
+
+    $data = $this->getConfigurationFixture('resource_schema', 'test_configuration');
+    $this->resourceSchemaConfiguration = entity_create('integration_resource_schema', (array) $data);
+    $this->resourceSchemaConfiguration->save();
   }
 
   /**
@@ -70,6 +82,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
     $this->backendConfiguration->delete();
     $this->producerConfiguration->delete();
     $this->consumerConfiguration->delete();
+    $this->resourceSchemaConfiguration->delete();
   }
 
   /**
