@@ -13,10 +13,12 @@ use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\PluginManager;
+use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration_consumer\Migrate\AbstractMigration;
 use Drupal\integration_consumer\MappingHandler\AbstractMappingHandler;
 use Drupal\integration_consumer\Migrate\MigrateSourceBackend;
+use Drupal\integration\ResourceSchema\AbstractResourceSchema;
 
 /**
  * Class AbstractConsumer.
@@ -38,6 +40,13 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
    * @var BackendInterface
    */
   protected $backend;
+
+  /**
+   * Resource schema object.
+   *
+   * @var AbstractResourceSchema
+   */
+  protected $resource;
 
   /**
    * {@inheritdoc}
@@ -69,6 +78,9 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
     // Set migration source backend.
     $backend = BackendFactory::getInstance($this->getConfiguration()->getBackend());
     $this->setSource(new MigrateSourceBackend($backend));
+
+    // Set resource schema object.
+    $this->resource = ResourceSchemaFactory::getInstance($this->getConfiguration()->resource);
   }
 
   /**

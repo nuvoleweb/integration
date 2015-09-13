@@ -2,13 +2,18 @@
 
 /**
  * @file
- * Contains \Drupal\integration_ui\ResourceSchema\ResourceSchemaFormHandler
+ * Contains \Drupal\integration_ui\ResourceSchema\ResourceSchemaFormHandler.
  */
 
 namespace Drupal\integration_ui\ResourceSchema;
 
 use Drupal\integration_ui\AbstractFormHandler;
 
+/**
+ * Class ResourceSchemaFormHandler.
+ * 
+ * @package Drupal\integration_ui\ResourceSchema
+ */
 class ResourceSchemaFormHandler extends AbstractFormHandler {
 
   /**

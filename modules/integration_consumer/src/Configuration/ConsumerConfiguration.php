@@ -20,12 +20,18 @@ use Drupal\integration\PluginManager;
 class ConsumerConfiguration extends AbstractConfiguration {
 
   /**
-   * Backend machine name associated to current consumer configuration.
+   * Backend configuration machine name.
    *
    * @var string
-   *    Backend machine name.
    */
-  public $backend = '';
+  public $backend = NULL;
+
+  /**
+   * Resource configuration machine name.
+   *
+   * @var string
+   */
+  public $resource = NULL;
 
   /**
    * Contains consumer field mapping.
