@@ -94,7 +94,7 @@ class RestBackend extends AbstractBackend {
     $producer = $document->getMetadata('producer');
     $producer_content_id = $document->getMetadata('producer_content_id');
     if ($producer && $producer_content_id) {
-      $response = $this->httpRequest($this->getConfiguration()->getOption('base_path') . '/uuid/' . $producer . '/' . $producer_content_id, $options);
+      $response = $this->httpRequest($this->getConfiguration()->getPluginSetting('base_path') . '/uuid/' . $producer . '/' . $producer_content_id, $options);
 
       $this->getResponseHandler()->setResponse($response);
       if (!$this->getResponseHandler()->hasErrors()) {
@@ -131,7 +131,7 @@ class RestBackend extends AbstractBackend {
    *    Single resource URI.
    */
   protected function getResourceUri() {
-    return $this->getConfiguration()->getOption('base_path') . '/' . $this->getConfiguration()->getOption('endpoint');
+    return $this->getConfiguration()->getPluginSetting('base_path') . '/' . $this->getConfiguration()->getPluginSetting('endpoint');
   }
 
   /**
@@ -141,7 +141,7 @@ class RestBackend extends AbstractBackend {
    *    List URI.
    */
   protected function getListUri() {
-    return $this->getConfiguration()->getOption('base_path') . '/' . $this->getConfiguration()->getOption('list');
+    return $this->getConfiguration()->getPluginSetting('base_path') . '/' . $this->getConfiguration()->getPluginSetting('list');
   }
 
 }
