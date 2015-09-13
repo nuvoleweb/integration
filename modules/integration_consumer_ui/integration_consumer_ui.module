@@ -11,7 +11,7 @@
 function integration_consumer_ui_entity_info_alter(&$info) {
   $info['integration_consumer']['admin ui'] = array(
     'controller class' => 'Drupal\integration_ui\Configuration\EntityUiController',
-    'path' => 'admin/config/services/integration/consumer',
+    'path' => 'admin/config/integration/consumer',
   );
   return $info;
 }

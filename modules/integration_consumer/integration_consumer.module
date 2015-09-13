@@ -11,6 +11,17 @@ include_once 'includes/integration_consumer.hooks.inc';
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 
 /**
+ * Implements hook_permission().
+ */
+function integration_consumer_permission() {
+  return array(
+    'administer consumers' => array(
+      'title' => t('Administer consumers'),
+    ),
+  );
+}
+
+/**
  * Load consumer entity given its machine name.
  *
  * @param string $machine_name
