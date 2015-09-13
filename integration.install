@@ -31,6 +31,8 @@ function integration_schema() {
       'not null' => TRUE,
     ),
   );
+
+  $schema['integration_resource_schema'] = integration_schema_defaults();
   return $schema;
 }
 

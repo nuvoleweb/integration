@@ -24,6 +24,23 @@ function integration_integration_plugins() {
         ),
       ),
     ),
+    'resource_schema' => array(
+      'label' => t('Resource schema'),
+      'components' => array(),
+    ),
+  );
+}
+
+/**
+ * Implements hook_integration_resource_schema_info().
+ */
+function integration_integration_resource_schema_info() {
+  return array(
+    'raw_resource_schema' => array(
+      'label' => t('Raw resource schema'),
+      'description' => t('Specify a simple list of fields, without any validation.'),
+      'class' => 'Drupal\integration\ResourceSchema\RawResourceSchema',
+    ),
   );
 }
 

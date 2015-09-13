@@ -18,6 +18,14 @@ function integration_entity_info() {
     'module' => 'integration',
   ) + integration_entity_info_defaults();
 
+  $info['integration_resource_schema'] = array(
+    'label' => t('Integration layer resource schema'),
+    'entity class' => 'Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration',
+    'base table' => 'integration_resource_schema',
+    'access callback' => 'integration_backend_access',
+    'module' => 'integration',
+  ) + integration_entity_info_defaults();
+
   return $info;
 }
 
@@ -49,6 +57,8 @@ function integration_entity_property_info() {
       'required' => TRUE,
     ),
   );
+
+  $info['integration_resource_schema']['properties'] = integration_entity_property_info_defaults();
 
   return $info;
 }
