@@ -20,7 +20,8 @@ class ConsumerFormHandler extends AbstractFormHandler {
    * {@inheritdoc}
    */
   public function form(array &$form, array &$form_state, $op) {
-    $this->componentsForm($form, $form_state, $op);
+    $options = $this->getPluginManager()->getFormOptions();
+    $form['plugin'] = $this->formSelect(t('Consumer plugin'), $options);
   }
 
 }
