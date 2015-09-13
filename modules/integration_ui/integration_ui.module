@@ -8,12 +8,50 @@
 include_once 'includes/integration_ui.admin.inc';
 
 /**
+ * Implements hook_menu().
+ */
+function integration_ui_menu() {
+  $items['admin/config/integration'] = array(
+    'title' => 'Integration layer',
+    'description' => 'Integration layer settings.',
+    'position' => 'right',
+    'weight' => 100,
+    'page callback' => 'integration_ui_admin_menu_block_page',
+    'access arguments' => array('access administration pages'),
+  );
+  return $items;
+}
+
+/**
+ * Provide a single block from the administration menu as a page.
+ *
+ * @return null|string
+ *   The output HTML.
+ *
+ * @see system_admin_menu_block_page()
+ */
+function integration_ui_admin_menu_block_page() {
+  $item = menu_get_item();
+  if ($content = system_admin_menu_block($item)) {
+    $output = theme('admin_block_content', array('content' => $content));
+  }
+  else {
+    $output = t('You do not have any administrative items.');
+  }
+  return $output;
+}
+
+/**
  * Implements hook_entity_info_alter().
  */
 function integration_ui_entity_info_alter(&$info) {
   $info['integration_backend']['admin ui'] = array(
     'controller class' => 'Drupal\integration_ui\Configuration\EntityUiController',
-    'path' => 'admin/config/services/integration/backend',
+    'path' => 'admin/config/integration/backend',
+  );
+  $info['integration_resource_schema']['admin ui'] = array(
+    'controller class' => 'Drupal\integration_ui\Configuration\EntityUiController',
+    'path' => 'admin/config/integration/resource-schema',
   );
   return $info;
 }
@@ -23,6 +61,7 @@ function integration_ui_entity_info_alter(&$info) {
  */
 function integration_ui_integration_plugins_alter(&$items) {
   $items['backend']['form handler'] = 'Drupal\integration_ui\Backend\BackendFormHandler';
+  $items['resource_schema']['form handler'] = 'Drupal\integration_ui\ResourceSchema\ResourceSchemaFormHandler';
 }
 
 /**
