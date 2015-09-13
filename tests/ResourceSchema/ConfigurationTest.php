@@ -65,8 +65,6 @@ class ConfigurationTest extends AbstractTest {
     /** @var ResourceSchemaConfiguration $entity */
     $entity = entity_import('integration_resource_schema', $json);
     $this->assertEquals($data->machine_name, $entity->identifier());
-    $this->assertEquals($data->settings['plugin']['endpoint'], $entity->getPluginSetting('endpoint'));
-    $this->assertEquals($data->settings['plugin']['base_path'], $entity->getPluginSetting('base_path'));
   }
 
   /**
