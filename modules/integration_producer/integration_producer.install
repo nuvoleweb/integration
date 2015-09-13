@@ -24,13 +24,6 @@ function integration_producer_schema() {
       'length' => 50,
       'not null' => TRUE,
     ),
-    'options' => array(
-      'description' => 'The options used to configure the producer object.',
-      'type' => 'text',
-      'size' => 'medium',
-      'serialize' => TRUE,
-      'not null' => TRUE,
-    ),
   );
   return $schema;
 }

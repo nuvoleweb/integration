@@ -134,6 +134,24 @@ function integration_entity_property_info_defaults() {
       'schema field' => 'plugin',
       'required' => TRUE,
     ),
+    'settings' => array(
+      'label' => t('Settings'),
+      'description' => t('Configuration entity settings'),
+      'type' => 'struct',
+      'schema field' => 'settings',
+      'property info' => array(
+        'plugin' => array(
+          'label' => t('Plugin settings'),
+          'description' => t('Main plugin setting array.'),
+          'type' => 'struct',
+        ),
+        'components' => array(
+          'label' => t('Components settings'),
+          'description' => t('Array plugin components setting arrays, keyed by component name as defined in hook_integration_plugins().'),
+          'type' => 'struct',
+        ),
+      ),
+    ),
     'enabled' => array(
       'label' => t('Enabled'),
       'type' => 'boolean',
