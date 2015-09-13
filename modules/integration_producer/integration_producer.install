@@ -19,7 +19,13 @@ function integration_producer_schema() {
       'not null' => TRUE,
     ),
     'backend' => array(
-      'description' => 'The machine name of the backend plugin to use.',
+      'description' => 'Machine name of the backend configuration to use.',
+      'type' => 'varchar',
+      'length' => 50,
+      'not null' => TRUE,
+    ),
+    'resource' => array(
+      'description' => 'Machine name of the resource schema configuration to use.',
       'type' => 'varchar',
       'length' => 50,
       'not null' => TRUE,
