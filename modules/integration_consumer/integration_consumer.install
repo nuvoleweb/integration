@@ -12,20 +12,14 @@ function integration_consumer_schema() {
 
   $schema['integration_consumer'] = integration_schema_defaults();
   $schema['integration_consumer']['fields'] += array(
-    'backend' => array(
-      'description' => 'The machine name of the backend plugin to use.',
-      'type' => 'varchar',
-      'length' => 50,
-      'not null' => TRUE,
-    ),
-    'entity_type' => array(
-      'description' => 'Entity type machine name.',
-      'type' => 'varchar',
-      'length' => 50,
-      'not null' => TRUE,
-    ),
     'entity_bundle' => array(
       'description' => 'Entity bundle machine name.',
+      'type' => 'varchar',
+      'length' => 50,
+      'not null' => TRUE,
+    ),
+    'backend' => array(
+      'description' => 'The machine name of the backend plugin to use.',
       'type' => 'varchar',
       'length' => 50,
       'not null' => TRUE,

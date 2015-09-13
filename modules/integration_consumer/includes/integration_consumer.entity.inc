@@ -27,25 +27,18 @@ function integration_consumer_entity_info() {
 function integration_consumer_entity_property_info() {
 
   $info['integration_consumer']['properties'] = integration_entity_property_info_defaults() + array(
-    'backend' => array(
-      'label' => t('Backend'),
-      'type' => 'integration_backend',
-      'description' => t('The ID of the consumer plugin to use.'),
-      'schema field' => 'backend',
-      'required' => TRUE,
-    ),
-    'entity_type' => array(
-      'label' => t('Entity type'),
-      'type' => 'text',
-      'description' => t('Entity type machine name.'),
-      'schema field' => 'entity_type',
-      'required' => TRUE,
-    ),
     'entity_bundle' => array(
       'label' => t('Entity bundle'),
       'type' => 'text',
       'description' => t('Entity bundle machine name.'),
       'schema field' => 'entity_bundle',
+      'required' => TRUE,
+    ),
+    'backend' => array(
+      'label' => t('Backend'),
+      'type' => 'integration_backend',
+      'description' => t('Machine name of the backend configuration to use.'),
+      'schema field' => 'backend',
       'required' => TRUE,
     ),
   );

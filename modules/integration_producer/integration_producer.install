@@ -12,6 +12,18 @@ function integration_producer_schema() {
 
   $schema['integration_producer'] = integration_schema_defaults();
   $schema['integration_producer']['fields'] += array(
+    'entity_bundle' => array(
+      'description' => 'Entity bundle machine name.',
+      'type' => 'varchar',
+      'length' => 50,
+      'not null' => TRUE,
+    ),
+    'backend' => array(
+      'description' => 'The machine name of the backend plugin to use.',
+      'type' => 'varchar',
+      'length' => 50,
+      'not null' => TRUE,
+    ),
     'options' => array(
       'description' => 'The options used to configure the producer object.',
       'type' => 'text',
