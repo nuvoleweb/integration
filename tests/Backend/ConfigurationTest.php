@@ -32,8 +32,8 @@ class ConfigurationTest extends AbstractTest {
 
     $this->assertEquals($data->machine_name, $this->backendConfiguration->identifier());
     $this->assertEquals(ENTITY_CUSTOM, $this->backendConfiguration->getStatus());
-    $this->assertEquals($data->options['endpoint'], $this->backendConfiguration->getOption('endpoint'));
-    $this->assertEquals($data->options['base_path'], $this->backendConfiguration->getOption('base_path'));
+    $this->assertEquals($data->settings['plugin']['endpoint'], $this->backendConfiguration->getPluginSetting('endpoint'));
+    $this->assertEquals($data->settings['plugin']['base_path'], $this->backendConfiguration->getPluginSetting('base_path'));
 
     $machine_name = $this->backendConfiguration->identifier();
     $this->assertNotNull(ConfigurationFactory::load('integration_backend', $machine_name));
@@ -64,8 +64,8 @@ class ConfigurationTest extends AbstractTest {
     /** @var BackendConfiguration $entity */
     $entity = entity_import('integration_backend', $json);
     $this->assertEquals($data->machine_name, $entity->identifier());
-    $this->assertEquals($data->options['endpoint'], $entity->getOption('endpoint'));
-    $this->assertEquals($data->options['base_path'], $entity->getOption('base_path'));
+    $this->assertEquals($data->settings['plugin']['endpoint'], $entity->getPluginSetting('endpoint'));
+    $this->assertEquals($data->settings['plugin']['base_path'], $entity->getPluginSetting('base_path'));
   }
 
   /**

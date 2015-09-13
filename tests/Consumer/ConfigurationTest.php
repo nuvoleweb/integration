@@ -35,17 +35,23 @@ class ConfigurationTest extends AbstractTest {
 
     $this->assertNotEmpty($this->consumerConfiguration->getMapping());
 
-    $flipped = array_flip($data->mapping);
+    $mapping = $data->settings['components']['mapping_handler'];
+    $flipped = array_flip($mapping);
     foreach ($this->consumerConfiguration->getMapping() as $destination => $source) {
-      $this->assertEquals($data->mapping[$destination], $this->consumerConfiguration->getMappingSource($destination));
+      $this->assertEquals($mapping[$destination], $this->consumerConfiguration->getMappingSource($destination));
       $this->assertEquals($flipped[$source], $this->consumerConfiguration->getMappingDestination($source));
     }
 
     $machine_name = $this->consumerConfiguration->identifier();
     $this->assertNotNull(ConfigurationFactory::load('integration_consumer', $machine_name));
 
-    $this->assertEquals($this->backendConfiguration->getOption('base_path'), $this->consumerConfiguration->getBackendConfiguration()->getOption('base_path'));
-    $this->assertEquals($this->backendConfiguration->getOption('endpoint'), $this->consumerConfiguration->getBackendConfiguration()->getOption('endpoint'));
+    $backend = $this->consumerConfiguration->getBackendConfiguration();
+    $this->assertNotNull($backend);
+    $this->assertNotNull($backend->getPluginSetting('base_path'));
+    $this->assertNotNull($backend->getPluginSetting('endpoint'));
+
+    $this->assertEquals($this->backendConfiguration->getPluginSetting('base_path'), $this->consumerConfiguration->getBackendConfiguration()->getPluginSetting('base_path'));
+    $this->assertEquals($this->backendConfiguration->getPluginSetting('endpoint'), $this->consumerConfiguration->getBackendConfiguration()->getPluginSetting('endpoint'));
 
     $this->consumerConfiguration->delete();
     // Should throw \InvalidArgumentException exception.
