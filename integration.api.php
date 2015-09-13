@@ -18,7 +18,7 @@ use \Drupal\integration\PluginManager;
  *
  * Each plugin type can expose the following information:
  *  - 'components': list of component types compatible with the given plugin,
- *    keys being component type names and values their human readable labels.
+ *    keys being component type names.
  *  - 'form handler': handler class responsible for form building, validation
  *    and submission. Default form handler classes are provided by the
  *    integration_ui module.
@@ -35,10 +35,17 @@ use \Drupal\integration\PluginManager;
 function hook_integration_plugins() {
   return array(
     'backend' => array(
+      'label' => t('Backend'),
       'components' => array(
-        'response_handler' => t('Response handler'),
-        'formatter_handler' => t('Formatter handler'),
-        'authentication_handler' => t('Authentication handler'),
+        'response_handler' => array(
+          'label' => t('Response handler'),
+        ),
+        'formatter_handler' => array(
+          'label' => t('Formatter handler'),
+        ),
+        'authentication_handler' => array(
+          'label' => t('Authentication handler'),
+        ),
       ),
     ),
   );
