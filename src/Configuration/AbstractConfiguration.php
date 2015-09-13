@@ -45,11 +45,13 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
   public $status;
 
   /**
-   * Configuration entity options.
+   * Configuration entity settings.
    *
    * @var array
+   *
+   * @see integration_entity_property_info_defaults()
    */
-  public $options = array();
+  public $settings = array();
 
   /**
    * {@inheritdoc}
@@ -124,15 +126,29 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
   /**
    * {@inheritdoc}
    */
-  public function getOption($name) {
-    return isset($this->options[$name]) ? $this->options[$name] : NULL;
+  public function getPluginSetting($name) {
+    return isset($this->settings['plugin'][$name]) ? $this->settings['plugin'][$name] : NULL;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setOption($name, $value) {
-    return $this->options[$name] = $value;
+  public function setPluginSetting($name, $value) {
+    $this->settings['plugin'][$name] = $value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getComponentSetting($component, $name) {
+    return isset($this->settings['components'][$component][$name]) ? $this->settings['components'][$component][$name] : NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setComponentSetting($component, $name, $value) {
+    $this->settings['components'][$component][$name] = $value;
   }
 
 }

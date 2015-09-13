@@ -102,24 +102,57 @@ interface ConfigurationInterface {
   public function getEntityInfoProperty($name);
 
   /**
-   * Get entity configuration option value.
+   * Get plugin setting value given its name.
    *
    * @param string $name
-   *    Entity key name.
+   *    Plugin setting name.
    *
    * @return mixed|NULL
-   *    Option value if set, NULL otherwise.
+   *    Plugin setting value if any, NULL otherwise.
+   *
+   * @see integration_entity_property_info_defaults()
    */
-  public function getOption($name);
+  public function getPluginSetting($name);
 
   /**
-   * Set entity configuration option.
+   * Set plugin setting value given its name and value.
    *
    * @param string $name
-   *    Option name.
-   * @param string $value
-   *    Option value.
+   *    Plugin setting name.
+   * @param mixed $value
+   *    Plugin setting value.
+   *
+   * @see integration_entity_property_info_defaults()
    */
-  public function setOption($name, $value);
+  public function setPluginSetting($name, $value);
+
+  /**
+   * Get plugin component setting value given its name.
+   *
+   * @param string $component
+   *    Component name as defined by hook_integration_plugins() implementations.
+   * @param string $name
+   *    Plugin component setting name.
+   *
+   * @return mixed|NULL
+   *    Plugin component setting value if any, NULL otherwise.
+   *
+   * @see integration_entity_property_info_defaults()
+   */
+  public function getComponentSetting($component, $name);
+
+  /**
+   * Set component plugin setting value given its name and value.
+   *
+   * @param string $component
+   *    Component name as defined by hook_integration_plugins() implementations.
+   * @param string $name
+   *    Plugin component setting name.
+   * @param mixed $value
+   *    Plugin component setting value.
+   *
+   * @see integration_entity_property_info_defaults()
+   */
+  public function setComponentSetting($component, $name, $value);
 
 }
