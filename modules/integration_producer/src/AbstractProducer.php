@@ -7,9 +7,11 @@
 
 namespace Drupal\integration_producer;
 
+use Drupal\integration\Backend\AbstractBackend;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\ResourceSchema\AbstractResourceSchema;
 
 /**
  * Class AbstractProducer.
@@ -40,6 +42,20 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
   private $document = NULL;
 
   /**
+   * Backend instance.
+   *
+   * @var AbstractBackend
+   */
+  private $backend = NULL;
+
+  /**
+   * Resource schema instance.
+   *
+   * @var AbstractResourceSchema
+   */
+  private $resource = NULL;
+
+  /**
    * List of field handler definitions keyed by field type.
    *
    * @see integration_producer_get_field_handlers()
@@ -49,7 +65,7 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
   private $fieldHandlers = array();
 
   /**
-   * Constructor.
+   * AbstractProducer constructor.
    *
    * @param Configuration\ProducerConfiguration $configuration
    *    Configuration object.
@@ -57,11 +73,17 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
    *    Entity object.
    * @param DocumentInterface $document
    *    Document object.
+   * @param AbstractBackend $backend
+   *    Backend object.
+   * @param AbstractResourceSchema $resource
+   *    Resource schema object.
    */
-  public function __construct(Configuration\ProducerConfiguration $configuration, EntityWrapper\EntityWrapper $entity_wrapper, DocumentInterface $document) {
+  public function __construct(Configuration\ProducerConfiguration $configuration, EntityWrapper\EntityWrapper $entity_wrapper, DocumentInterface $document, AbstractBackend $backend, AbstractResourceSchema $resource) {
     $this->setConfiguration($configuration);
     $this->entityWrapper = $entity_wrapper;
     $this->document = $document;
+    $this->backend = $backend;
+    $this->resource = $resource;
     $this->fieldHandlers = integration_producer_get_field_handler_info();
   }
 

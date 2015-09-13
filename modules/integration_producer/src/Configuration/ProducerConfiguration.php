@@ -18,6 +18,20 @@ use Drupal\integration\PluginManager;
 class ProducerConfiguration extends AbstractConfiguration {
 
   /**
+   * Backend configuration machine name.
+   *
+   * @var string
+   */
+  public $backend = NULL;
+
+  /**
+   * Resource configuration machine name.
+   *
+   * @var string
+   */
+  public $resource = NULL;
+
+  /**
    * Contains consumer options.
    *
    * @var array

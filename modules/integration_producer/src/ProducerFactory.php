@@ -7,10 +7,12 @@
 
 namespace Drupal\integration_producer;
 
+use Drupal\integration\Backend\BackendFactory;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Document\Document;
 use Drupal\integration\PluginManager;
+use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 /**
@@ -26,7 +28,7 @@ class ProducerFactory {
    * @param string $machine_name
    *    Producer configuration machine name.
    *
-   * @return \Drupal\integration_producer\AbstractProducer
+   * @return AbstractProducer
    *    Producer instance.
    */
   static public function getInstance($machine_name) {
@@ -39,12 +41,14 @@ class ProducerFactory {
     $producer_class = $plugin_manager->getClass($plugin);
     $entity_wrapper = new EntityWrapper\EntityWrapper($plugin_manager->getEntityType($plugin));
     $document = new Document();
+    $backend = BackendFactory::getInstance($configuration->backend);
+    $resource = ResourceSchemaFactory::getInstance($configuration->resource);
 
     if (!class_exists($producer_class)) {
       throw new \InvalidArgumentException(t('Class @class does not exists', array('class' => $producer_class)));
     }
 
-    return new $producer_class($configuration, $entity_wrapper, $document);
+    return new $producer_class($configuration, $entity_wrapper, $document, $backend, $resource);
   }
 
   /**

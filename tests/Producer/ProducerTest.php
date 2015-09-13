@@ -7,11 +7,9 @@
 
 namespace Drupal\integration\Tests\Producer;
 
-use Drupal\integration\Document\Document;
 use Drupal\integration_producer\NodeProducer;
 use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration_producer\EntityWrapper\EntityWrapper;
-use Drupal\integration_producer\FieldHandlers\FieldHandlerInterface;
 use Drupal\integration_producer\ProducerFactory;
 use Drupal\integration\Tests\AbstractTest;
 use \Mockery as m;
@@ -37,10 +35,16 @@ class ProducerTest extends AbstractTest {
    */
   public function testInstance() {
 
+    /** @var EntityWrapper $entity_wrapper */
     $entity_wrapper = m::mock('Drupal\integration_producer\EntityWrapper\EntityWrapper');
+    /** @var DocumentInterface $document */
     $document = m::mock('Drupal\integration\Document\DocumentInterface');
+    /** @var \Drupal\integration\Backend\MemoryBackend $backend */
+    $backend = m::mock('Drupal\integration\Backend\MemoryBackend');
+    /** @var \Drupal\integration\ResourceSchema\RawResourceSchema $resource */
+    $resource = m::mock('Drupal\integration\ResourceSchema\RawResourceSchema');
 
-    $producer = new NodeProducer($this->producerConfiguration, $entity_wrapper, $document);
+    $producer = new NodeProducer($this->producerConfiguration, $entity_wrapper, $document, $backend, $resource);
     $reflection = new \ReflectionClass($producer);
     $this->assertEquals('Drupal\integration_producer\AbstractProducer', $reflection->getParentClass()->getName());
   }
