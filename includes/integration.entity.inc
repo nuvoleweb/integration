@@ -41,6 +41,13 @@ function integration_entity_property_info() {
       'schema field' => 'formatter',
       'required' => TRUE,
     ),
+    'authentication' => array(
+      'label' => t('Authentication'),
+      'type' => 'text',
+      'description' => t('The ID of the authentication plugin to use.'),
+      'schema field' => 'authentication',
+      'required' => TRUE,
+    ),
   );
 
   return $info;

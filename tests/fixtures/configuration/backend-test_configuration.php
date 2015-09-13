@@ -35,6 +35,7 @@ $export->settings = array(
 );
 $export->response = 'raw_response';
 $export->formatter = 'json_formatter';
+$export->authentication = 'no_authentication';
 $export->enabled = 1;
 $export->status = 1;
 $export->module = 'integration_test';
