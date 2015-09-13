@@ -24,4 +24,18 @@ class BackendFormHandler extends AbstractFormHandler {
     $this->componentsForm($form, $form_state, $op);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function formSubmit(array $form, array &$form_state) {
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function formValidate(array $form, array &$form_state) {
+
+  }
+
 }

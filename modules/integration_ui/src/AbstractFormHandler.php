@@ -65,20 +65,6 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public function formSubmit(array $form, array &$form_state) {
-
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function formValidate(array $form, array &$form_state) {
-
-  }
-
-  /**
    * Format current PluginManager::getInfo() results as list of radio buttons.
    *
    * @param string $title

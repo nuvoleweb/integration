@@ -62,4 +62,18 @@ class ProducerFormHandler extends AbstractFormHandler {
     //    $this->setAjaxDependency($form, 'bundle', 'mapping');
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function formSubmit(array $form, array &$form_state) {
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function formValidate(array $form, array &$form_state) {
+
+  }
+
 }

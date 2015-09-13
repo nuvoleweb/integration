@@ -127,6 +127,26 @@ interface ConfigurationInterface {
   public function setPluginSetting($name, $value);
 
   /**
+   * Unset plugin setting value given its name and value.
+   *
+   * @param string $name
+   *    Plugin setting name.
+   *
+   * @see integration_entity_property_info_defaults()
+   */
+  public function unsetPluginSetting($name);
+
+  /**
+   * Get the whole plugin setting array.
+   *
+   * @return array
+   *    Plugin setting array if any, empty array otherwise.
+   *
+   * @see integration_entity_property_info_defaults()
+   */
+  public function getPluginSettings();
+
+  /**
    * Get plugin component setting value given its name.
    *
    * @param string $component
@@ -154,5 +174,30 @@ interface ConfigurationInterface {
    * @see integration_entity_property_info_defaults()
    */
   public function setComponentSetting($component, $name, $value);
+
+  /**
+   * Unset plugin component setting value given its name.
+   *
+   * @param string $component
+   *    Component name as defined by hook_integration_plugins() implementations.
+   * @param string $name
+   *    Plugin component setting name.
+   *
+   * @see integration_entity_property_info_defaults()
+   */
+  public function unsetComponentSetting($component, $name);
+
+  /**
+   * Get the whole plugin component setting value given its name.
+   *
+   * @param string $component
+   *    Component name as defined by hook_integration_plugins() implementations.
+   *
+   * @return array
+   *    Plugin component setting array if any, , empty array otherwise.
+   *
+   * @see integration_entity_property_info_defaults()
+   */
+  public function getComponentSettings($component);
 
 }

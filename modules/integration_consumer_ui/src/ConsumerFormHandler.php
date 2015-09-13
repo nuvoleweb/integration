@@ -24,4 +24,18 @@ class ConsumerFormHandler extends AbstractFormHandler {
     $form['plugin'] = $this->formSelect(t('Consumer plugin'), $options);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function formSubmit(array $form, array &$form_state) {
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function formValidate(array $form, array &$form_state) {
+
+  }
+
 }

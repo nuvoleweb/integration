@@ -140,6 +140,20 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
   /**
    * {@inheritdoc}
    */
+  public function unsetPluginSetting($name) {
+    unset($this->settings['plugin'][$name]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPluginSettings() {
+    return isset($this->settings['plugin']) ? $this->settings['plugin'] : array();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getComponentSetting($component, $name) {
     return isset($this->settings['components'][$component][$name]) ? $this->settings['components'][$component][$name] : NULL;
   }
@@ -149,6 +163,20 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    */
   public function setComponentSetting($component, $name, $value) {
     $this->settings['components'][$component][$name] = $value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function unsetComponentSetting($component, $name) {
+    unset($this->settings['components'][$component][$name]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getComponentSettings($component) {
+    return isset($this->settings['components'][$component]) ? $this->settings['components'][$component] : array();
   }
 
 }
