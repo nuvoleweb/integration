@@ -81,6 +81,18 @@ function integration_backend_get_backend_info() {
 }
 
 /**
+ * Collect and return list of resource schema definitions.
+ *
+ * @return array
+ *    List of resource schema definitions.
+ */
+function integration_resource_schema_get_resource_schema_info() {
+  $info = module_invoke_all('integration_resource_schema_info');
+  drupal_alter('integration_resource_schema_info', $info);
+  return $info;
+}
+
+/**
  * Collect and return list of backend response handler definitions.
  *
  * @return array
