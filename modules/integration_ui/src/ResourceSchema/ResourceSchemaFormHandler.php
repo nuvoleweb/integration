@@ -18,7 +18,7 @@ use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
 class ResourceSchemaFormHandler extends AbstractFormHandler {
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function form(array &$form, array &$form_state, $op) {
     /** @var ResourceSchemaConfiguration $configuration */
@@ -29,6 +29,7 @@ class ResourceSchemaFormHandler extends AbstractFormHandler {
       '#type' => 'radios',
       '#title' => t('Resource schema plugin'),
       '#options' => $options,
+      '#default_value' => $configuration->getPlugin(),
       '#required' => TRUE,
     );
     foreach ($options as $name => $label) {
@@ -47,13 +48,15 @@ class ResourceSchemaFormHandler extends AbstractFormHandler {
         '#value' => $label,
       );
       $row = array();
-      $row[] = array('#markup' => $name);
-      $row[] = array('#markup' => $label);
-      $row[] = array(
+      $row['name'] = array('#markup' => $name);
+      $row['label'] = array('#markup' => $label);
+      $row['action'] = array(
         '#type' => 'submit',
         '#value' => t('Remove'),
         '#name' => 'remove-field',
         '#field' => $name,
+        '#limit_validation_errors' => array(),
+        '#submit' => array('integration_ui_entity_form_submit'),
       );
       $rows[] = $row;
     }
@@ -70,6 +73,8 @@ class ResourceSchemaFormHandler extends AbstractFormHandler {
         '#type' => 'submit',
         '#value' => t('Add'),
         '#name' => 'add-field',
+        '#limit_validation_errors' => array(),
+        '#submit' => array('integration_ui_entity_form_submit'),
       ),
     );
 
@@ -88,17 +93,17 @@ class ResourceSchemaFormHandler extends AbstractFormHandler {
   public function formSubmit(array $form, array &$form_state) {
     /** @var ResourceSchemaConfiguration $configuration */
     $configuration = $this->getConfiguration();
-    $values = &$form_state['values'];
+    $input = &$form_state['input'];
     $triggering_element = $form_state['triggering_element'];
 
     switch ($triggering_element['#name']) {
 
       // Add field to plugin settings.
       case 'add-field':
-        if ($values['field_name'] && $values['field_label']) {
-          $configuration->setPluginSetting($values['field_name'], $values['field_label']);
+        if ($input['field_name'] && $input['field_label']) {
+          $configuration->setPluginSetting($input['field_name'], $input['field_label']);
         }
-        $values['field_name'] = $values['field_label'] = '';
+        $input['field_name'] = $input['field_label'] = '';
         $form_state['rebuild'] = TRUE;
         break;
 
@@ -113,8 +118,6 @@ class ResourceSchemaFormHandler extends AbstractFormHandler {
     foreach (array('fields') as $name) {
       unset($configuration->settings[$name]);
     }
-
-    $form_state['rebuild'] = TRUE;
   }
 
   /**

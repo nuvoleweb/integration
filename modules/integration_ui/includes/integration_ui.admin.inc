@@ -63,8 +63,8 @@ function integration_ui_entity_form_submit(&$form, &$form_state) {
   $form_manager = FormHandlerFactory::getInstance($configuration);
   $form_manager->formSubmit($form, $form_state);
 
-  // $configuration->save();
-  //
-  // drupal_set_message(t('Configuration has been saved.'));
-  // $form_state['redirect'] = 'admin/config/services/integration';
+  $configuration->save();
+
+  drupal_set_message(t('Configuration has been saved.'));
+  $form_state['redirect'] = 'admin/config/integration/' . arg(3);
 }
