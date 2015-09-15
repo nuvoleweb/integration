@@ -17,6 +17,15 @@ use Drupal\integration\PluginManager;
  */
 class ProducerConfiguration extends AbstractConfiguration {
 
+  // @codingStandardsIgnoreStart
+  /**
+   * Entity bundle the current producer is operating on.
+   *
+   * @var string
+   */
+  public $entity_bundle = NULL;
+  // @codingStandardsIgnoreEnd
+
   /**
    * Backend configuration machine name.
    *
@@ -50,13 +59,13 @@ class ProducerConfiguration extends AbstractConfiguration {
   }
 
   /**
-   * Get producer entity type setting parameter.
+   * Get producer entity bundle.
    *
    * @return string
-   *    Entity type.
+   *    Entity bundle.
    */
-  public function getType() {
-    return isset($this->type) ? $this->type : '';
+  public function getEntityBundle() {
+    return isset($this->entity_bundle) ? $this->entity_bundle : '';
   }
 
   /**
