@@ -24,7 +24,7 @@ class EntityUiController extends \EntityDefaultUIController {
   public function hook_menu() {
     $items = parent::hook_menu();
     foreach ($items as $path => $item) {
-      if ($item['page callback'] == 'entity_ui_get_form') {
+      if (isset($item['page callback']) && $item['page callback'] == 'entity_ui_get_form') {
         $items[$path]['page callback'] = 'integration_ui_get_form';
       }
     }
