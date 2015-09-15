@@ -7,6 +7,7 @@
 
 namespace Drupal\integration_producer_ui;
 
+use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration_ui\AbstractFormHandler;
 use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
@@ -23,8 +24,6 @@ class ProducerFormHandler extends AbstractFormHandler {
   public function form(array &$form, array &$form_state, $op) {
     /** @var ProducerConfiguration $configuration */
     $configuration = $this->getConfiguration();
-    $plugin = '';
-    $entity_type = '';
 
     // Build plugin type form portion.
     $this->buildPluginForm($form, $form_state, $op);
@@ -34,49 +33,17 @@ class ProducerFormHandler extends AbstractFormHandler {
       $this->buildEntityBundleForm($form, $form_state, $op);
     }
 
+    // Add resource schema form portion.
+    if ($entity_bundle = $configuration->getEntityBundle()) {
+      $this->buildResourceSchemaForm($form, $form_state, $op);
+    }
+
     // Add field mapping form portion.
     $entity_type = $this->getPluginManager()->getEntityType($plugin);
-    $entity_bundle = $configuration->getEntityBundle();
-    if ($entity_type && $entity_bundle) {
+    $resource = $configuration->getResourceSchema();
+    if ($resource && $entity_type && $entity_bundle) {
       $this->buildFieldMappingForm($form, $form_state, $op);
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function formSubmit(array $form, array &$form_state) {
-    /** @var ProducerConfiguration $configuration */
-    $configuration = $this->getConfiguration();
-    $input = &$form_state['input'];
-    $triggering_element = $form_state['triggering_element'];
-
-    switch ($triggering_element['#name']) {
-
-      // Add field to plugin settings.
-      case 'plugin_submit':
-      case 'entity_bundle_submit':
-        $form_state['rebuild'] = TRUE;
-        break;
-
-      // Remove field from plugin settings.
-      case 'remove-field':
-        $configuration->unsetPluginSetting($triggering_element['#field']);
-        $form_state['rebuild'] = TRUE;
-        break;
-    }
-
-    // Remove UI-related values from plugin settings.
-    foreach (array('fields') as $name) {
-      unset($configuration->settings[$name]);
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function formValidate(array $form, array &$form_state) {
-
   }
 
   /**
@@ -109,10 +76,10 @@ class ProducerFormHandler extends AbstractFormHandler {
       '#default_value' => $configuration->getPlugin(),
       '#required' => TRUE,
     );
-    $form['plugin_container']['plugin_submit'] = array(
+    $form['plugin_container']['select_plugin'] = array(
       '#type' => 'submit',
       '#value' => t('Select plugin'),
-      '#name' => 'plugin_submit',
+      '#name' => 'select_plugin',
       '#limit_validation_errors' => array(),
       '#submit' => array('integration_ui_entity_form_submit'),
     );
@@ -163,6 +130,49 @@ class ProducerFormHandler extends AbstractFormHandler {
   }
 
   /**
+   * Helper function: render resource schema form portion.
+   *
+   * @param array $form
+   *    Form array.
+   * @param array $form_state
+   *    Form state array.
+   * @param string $op
+   *    Current form operation.
+   */
+  protected function buildResourceSchemaForm(array &$form, array &$form_state, $op) {
+    /** @var ProducerConfiguration $configuration */
+    $configuration = $this->getConfiguration();
+
+    $options = array();
+    $resources = entity_load('integration_resource_schema');
+    foreach ($resources as $resource) {
+      /** @var ProducerConfiguration $resource */
+      $options[$resource->getMachineName()] = $resource->getName();
+    }
+
+    $form['resource_container'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Resource schema'),
+      '#tree' => FALSE,
+      '#attributes' => array('class' => array('container-inline')),
+    );
+    $form['resource_container']['resource'] = array(
+      '#type' => 'select',
+      '#title' => t('Resource schema'),
+      '#title_display' => 'invisible',
+      '#options' => $options,
+      '#default_value' => '',
+      '#required' => TRUE,
+    );
+    $form['resource_container']['resource_submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Select schema'),
+      '#name' => 'resource_submit',
+      '#limit_validation_errors' => array(),
+      '#submit' => array('integration_ui_entity_form_submit'),
+    );
+  }
+  /**
    * Helper function: render field mapping form portion.
    *
    * @param array $form
@@ -183,6 +193,10 @@ class ProducerFormHandler extends AbstractFormHandler {
     $options = $this->extractSelectOptions($properties['bundles'][$entity_bundle]['properties'], 'label');
     $options += $this->extractSelectOptions($properties['properties'], 'label');
     asort($options);
+
+    // @todo: change this by setting proper getters on entity property info.
+    $resource = ConfigurationFactory::load('integration_resource_schema', $configuration->getResourceSchema());
+    $resource_fields = $resource->getPluginSettings();
 
     $form['settings'] = array(
       '#tree' => TRUE,
@@ -217,14 +231,15 @@ class ProducerFormHandler extends AbstractFormHandler {
         '#options' => $options,
         '#default_value' => '',
       ),
-      'field_label' => array(
-        '#type' => 'textfield',
+      'new_destination' => array(
+        '#type' => 'select',
+        '#options' => $resource_fields,
         '#default_value' => '',
       ),
-      'add_mapping_submit' => array(
+      'add_field_mapping' => array(
         '#type' => 'submit',
         '#value' => t('Add mapping'),
-        '#name' => 'add_mapping_submit',
+        '#name' => 'add_field_mapping',
         '#limit_validation_errors' => array(),
         '#submit' => array('integration_ui_entity_form_submit'),
       ),
@@ -239,4 +254,42 @@ class ProducerFormHandler extends AbstractFormHandler {
     );
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function formValidate(array $form, array &$form_state) {
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function formSubmit(array $form, array &$form_state) {
+    /** @var ProducerConfiguration $configuration */
+    $configuration = $this->getConfiguration();
+    $input = &$form_state['input'];
+    $triggering_element = $form_state['triggering_element'];
+
+    switch ($triggering_element['#name']) {
+
+      // Add field to plugin settings.
+      case 'select_plugin':
+      case 'entity_bundle_submit':
+      case 'resource_submit':
+      case 'add_field_mapping':
+        $form_state['rebuild'] = TRUE;
+        break;
+
+      // Remove field from plugin settings.
+      case 'remove_mapping':
+//        $configuration->unsetPluginSetting($triggering_element['#field']);
+        $form_state['rebuild'] = TRUE;
+        break;
+    }
+
+    // Remove UI-related values from plugin settings.
+    foreach (array('fields') as $name) {
+      unset($configuration->settings[$name]);
+    }
+  }
 }
