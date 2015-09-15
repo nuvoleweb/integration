@@ -24,13 +24,13 @@ class HttpAuthenticationFormHandler extends AbstractFormHandler {
       '#title' => t('Username'),
       '#type' => 'textfield',
       '#default_value' => $this->getConfiguration()->getComponentSetting('authentication_handler', 'username'),
-      '#required' => TRUE,
+      '#required' => FALSE,
     );
     $form['password'] = array(
       '#title' => t('Password'),
       '#type' => 'textfield',
       '#default_value' => $this->getConfiguration()->getComponentSetting('authentication_handler', 'password'),
-      '#required' => TRUE,
+      '#required' => FALSE,
     );
   }
 

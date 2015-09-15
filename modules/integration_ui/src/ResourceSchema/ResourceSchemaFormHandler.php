@@ -43,22 +43,25 @@ class ResourceSchemaFormHandler extends AbstractFormHandler {
     $form['settings']['plugin'] = array(
       '#tree' => FALSE,
     );
-    foreach ($configuration->getPluginSettings() as $name => $label) {
-      $form['settings']['plugin'][$name] = array(
+    $i = 0;
+    $fields = (array) $configuration->getPluginSetting('fields');
+    foreach ($fields as $name => $label) {
+      $form['settings']['plugin']['fields'][$name] = array(
         '#value' => $label,
       );
       $row = array();
       $row['name'] = array('#markup' => $name);
       $row['label'] = array('#markup' => $label);
-      $row['action'] = array(
+      $row['remove_field_' . $i] = array(
         '#type' => 'submit',
         '#value' => t('Remove'),
-        '#name' => 'remove-field',
+        '#name' => 'remove_field',
         '#field' => $name,
         '#limit_validation_errors' => array(),
         '#submit' => array('integration_ui_entity_form_submit'),
       );
       $rows[] = $row;
+      $i++;
     }
     $rows[] = array(
       'field_name' => array(
@@ -69,10 +72,10 @@ class ResourceSchemaFormHandler extends AbstractFormHandler {
         '#type' => 'textfield',
         '#default_value' => '',
       ),
-      'field_add' => array(
+      'add_field' => array(
         '#type' => 'submit',
         '#value' => t('Add'),
-        '#name' => 'add-field',
+        '#name' => 'add_field',
         '#limit_validation_errors' => array(),
         '#submit' => array('integration_ui_entity_form_submit'),
       ),
@@ -99,17 +102,18 @@ class ResourceSchemaFormHandler extends AbstractFormHandler {
     switch ($triggering_element['#name']) {
 
       // Add field to plugin settings.
-      case 'add-field':
+      case 'add_field':
         if ($input['field_name'] && $input['field_label']) {
-          $configuration->setPluginSetting($input['field_name'], $input['field_label']);
+          $configuration->settings['plugin']['fields'][$input['field_name']] = $input['field_label'];
         }
         $input['field_name'] = $input['field_label'] = '';
         $form_state['rebuild'] = TRUE;
         break;
 
       // Remove field from plugin settings.
-      case 'remove-field':
-        $configuration->unsetPluginSetting($triggering_element['#field']);
+      case 'remove_field':
+        $field_name = $triggering_element['#field'];
+        unset($configuration->settings['plugin']['fields'][$field_name]);
         $form_state['rebuild'] = TRUE;
         break;
     }

@@ -172,6 +172,7 @@ class ProducerFormHandler extends AbstractFormHandler {
       '#submit' => array('integration_ui_entity_form_submit'),
     );
   }
+
   /**
    * Helper function: render field mapping form portion.
    *
@@ -190,13 +191,18 @@ class ProducerFormHandler extends AbstractFormHandler {
     /** @var \EntityDrupalWrapper $entity_wrapper */
     $entity_wrapper = entity_metadata_wrapper('node');
     $properties = $entity_wrapper->refPropertyInfo();
-    $options = $this->extractSelectOptions($properties['bundles'][$entity_bundle]['properties'], 'label');
-    $options += $this->extractSelectOptions($properties['properties'], 'label');
-    asort($options);
+    $source_options = array('' => '');
+    foreach ($properties['properties'] as $key => $value) {
+      $source_options[$key] = t('Property: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
+    }
+    foreach ($properties['bundles'][$entity_bundle]['properties'] as $key => $value) {
+      $source_options[$key] = t('Field: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
+    }
+    asort($source_options);
 
     // @todo: change this by setting proper getters on entity property info.
     $resource = ConfigurationFactory::load('integration_resource_schema', $configuration->getResourceSchema());
-    $resource_fields = $resource->getPluginSettings();
+    $destination_options = array('' => '') + (array) $resource->getPluginSetting('fields');
 
     $form['settings'] = array(
       '#tree' => TRUE,
@@ -212,12 +218,12 @@ class ProducerFormHandler extends AbstractFormHandler {
         '#value' => $destination,
       );
       $row = array();
-      $row['source'] = array('#markup' => $source);
-      $row['destination'] = array('#markup' => $destination);
-      $row['remove_mapping_submit'] = array(
+      $row['source'] = array('#markup' => $source_options[$source]);
+      $row['destination'] = array('#markup' => $destination_options[$destination]);
+      $row['remove_mapping'] = array(
         '#type' => 'submit',
         '#value' => t('Remove'),
-        '#name' => 'remove_mapping_submit',
+        '#name' => 'remove_mapping',
         '#field' => $source,
         '#limit_validation_errors' => array(),
         '#submit' => array('integration_ui_entity_form_submit'),
@@ -226,14 +232,14 @@ class ProducerFormHandler extends AbstractFormHandler {
     }
 
     $rows[] = array(
-      'new_source' => array(
+      'source' => array(
         '#type' => 'select',
-        '#options' => $options,
+        '#options' => $source_options,
         '#default_value' => '',
       ),
-      'new_destination' => array(
+      'destination' => array(
         '#type' => 'select',
-        '#options' => $resource_fields,
+        '#options' => $destination_options,
         '#default_value' => '',
       ),
       'add_field_mapping' => array(
@@ -276,13 +282,22 @@ class ProducerFormHandler extends AbstractFormHandler {
       case 'select_plugin':
       case 'entity_bundle_submit':
       case 'resource_submit':
+        $form_state['rebuild'] = TRUE;
+        break;
+
       case 'add_field_mapping':
+        $source = $input['source'];
+        $destination = $input['destination'];
+        // @todo: expose producer configuration methods dealing with mapping.
+        $configuration->settings['plugin']['mapping'][$source] = $destination;
         $form_state['rebuild'] = TRUE;
         break;
 
       // Remove field from plugin settings.
       case 'remove_mapping':
-//        $configuration->unsetPluginSetting($triggering_element['#field']);
+        $field_name = $triggering_element['#field'];
+        // @todo: expose producer configuration methods dealing with mapping.
+        unset($configuration->settings['plugin']['mapping'][$field_name]);
         $form_state['rebuild'] = TRUE;
         break;
     }
@@ -292,4 +307,5 @@ class ProducerFormHandler extends AbstractFormHandler {
       unset($configuration->settings[$name]);
     }
   }
+
 }
