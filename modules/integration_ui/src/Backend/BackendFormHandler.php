@@ -30,7 +30,7 @@ class BackendFormHandler extends AbstractFormHandler {
     $this->buildPluginForm($form, $form_state, $op);
 
     // Add resource schemas form portion.
-    if (TRUE || $plugin = $configuration->getPlugin()) {
+    if ($plugin = $configuration->getPlugin()) {
       $this->buildResourceSchemaForm($form, $form_state, $op);
     }
 
@@ -57,7 +57,9 @@ class BackendFormHandler extends AbstractFormHandler {
       );
     }
 
-    $this->componentsForm($form, $form_state, $op);
+    if ($plugin && $resources) {
+      $this->componentsForm($form, $form_state, $op);
+    }
   }
 
   /**
@@ -287,10 +289,15 @@ class BackendFormHandler extends AbstractFormHandler {
         break;
     }
 
-    $configuration->setResponse($input['response_handler']);
-    $configuration->setFormatter($input['formatter_handler']);
-    $configuration->setAuthentication($input['authentication_handler']);
-
+    if (isset($input['response_handler'])) {
+      $configuration->setResponse($input['response_handler']);
+    }
+    if (isset($input['formatter_handler'])) {
+      $configuration->setFormatter($input['formatter_handler']);
+    }
+    if (isset($input['authentication_handler'])) {
+      $configuration->setAuthentication($input['authentication_handler']);
+    }
     if (isset($input['resource_backend_settings'])) {
       $configuration->setPluginSetting('resource_backend_settings', $input['resource_backend_settings']);
     }
