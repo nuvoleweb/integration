@@ -301,11 +301,6 @@ class ProducerFormHandler extends AbstractFormHandler {
         $form_state['rebuild'] = TRUE;
         break;
     }
-
-    // Remove UI-related values from plugin settings.
-    foreach (array('fields') as $name) {
-      unset($configuration->settings[$name]);
-    }
   }
 
 }
