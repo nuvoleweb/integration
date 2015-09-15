@@ -68,6 +68,17 @@ class ProducerConfiguration extends AbstractConfiguration {
     return isset($this->entity_bundle) ? $this->entity_bundle : '';
   }
 
+
+  /**
+   * Get resource schema configuration machine name.
+   *
+   * @return string
+   *    Resource schema configuration machine name.
+   */
+  public function getResourceSchema() {
+    return isset($this->resource) ? $this->resource : '';
+  }
+
   /**
    * Get option value given its name.
    *

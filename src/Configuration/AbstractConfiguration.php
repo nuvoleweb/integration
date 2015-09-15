@@ -21,6 +21,15 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    */
   public $name;
 
+  // @codingStandardsIgnoreStart
+  /**
+   * Configuration machine name.
+   *
+   * @var string
+   */
+  public $machine_name;
+  // @codingStandardsIgnoreEnd
+
   /**
    * Plugin name, as returned by hook_integration_PLUGIN_TYPE_info().
    *
