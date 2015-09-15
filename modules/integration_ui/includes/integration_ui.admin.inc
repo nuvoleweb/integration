@@ -9,7 +9,7 @@ use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration_ui\FormHandlerFactory;
 
 /**
- * Generates the profile type editing form.
+ * Generates configuration entity form.
  */
 function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $configuration, $op = 'edit') {
 
@@ -52,7 +52,7 @@ function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $
 }
 
 /**
- * Form API submit callback for the type form.
+ * Form API submit callback.
  *
  * @see integration_backend_form()
  */
@@ -63,8 +63,29 @@ function integration_ui_entity_form_submit(&$form, &$form_state) {
   $form_manager = FormHandlerFactory::getInstance($configuration);
   $form_manager->formSubmit($form, $form_state);
 
-  $configuration->save();
+  if (isset($form_state['rebuild']) && !$form_state['rebuild']) {
+    $configuration->save();
+    drupal_set_message(t('Configuration has been saved.'));
+    $form_state['redirect'] = 'admin/config/integration/' . arg(3);
+  }
+}
 
-  drupal_set_message(t('Configuration has been saved.'));
-  $form_state['redirect'] = 'admin/config/integration/' . arg(3);
+/**
+ * Form API validate callback.
+ *
+ * @see integration_backend_form()
+ */
+function integration_ui_entity_form_validate(&$form, &$form_state) {
+  /** @var AbstractConfiguration $configuration */
+  $configuration = entity_ui_form_submit_build_entity($form, $form_state);
+
+  $entity_type = $configuration->entityType();
+  $machine_name = $configuration->getMachineName();
+
+  if (!$machine_name) {
+    form_set_error('machine_name', t('Machine name cannot be empty.'));
+  }
+  elseif (entity_load_single($entity_type, $machine_name)) {
+    form_set_error('machine_name', t('A configuration with the same machine name already exists.'));
+  }
 }
