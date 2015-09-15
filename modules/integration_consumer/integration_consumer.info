@@ -1,5 +1,5 @@
-name = Integration Producer
-description = Integration Layer Producer plugin.
+name = Integration Consumer
+description = Integration Layer Consumer plugin.
 core = 7.x
 package = Integration
 version = 7.x-1.0-dev
