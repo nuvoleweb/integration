@@ -37,6 +37,16 @@ class BackendConfiguration extends AbstractConfiguration {
    */
   public $response = '';
 
+
+  /**
+   * Authentication handler machine name.
+   *
+   * @see integration_backend_authentication_handler_info()
+   *
+   * @var string
+   */
+  public $authentication = '';
+
   /**
    * Get formatter handler name.
    *
@@ -75,6 +85,26 @@ class BackendConfiguration extends AbstractConfiguration {
    */
   public function setResponse($response) {
     $this->response = $response;
+  }
+
+  /**
+   * Get authentication handler name.
+   *
+   * @return string
+   *    Authentication handler name.
+   */
+  public function getAuthentication() {
+    return $this->authentication;
+  }
+
+  /**
+   * Set authentication handler name.
+   *
+   * @param string $authentication
+   *    Authentication handler name.
+   */
+  public function setAuthentication($authentication) {
+    $this->authentication = $authentication;
   }
 
 }
