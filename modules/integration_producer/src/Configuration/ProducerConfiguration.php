@@ -79,17 +79,4 @@ class ProducerConfiguration extends AbstractConfiguration {
     return isset($this->resource) ? $this->resource : '';
   }
 
-  /**
-   * Get option value given its name.
-   *
-   * @param string $name
-   *    Option name.
-   *
-   * @return string
-   *    Option value.
-   */
-  public function getOptionValue($name) {
-    return isset($this->settings[$name]) ? $this->settings[$name] : '';
-  }
-
 }
