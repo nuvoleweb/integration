@@ -19,6 +19,15 @@ use Drupal\integration\PluginManager;
  */
 class ConsumerConfiguration extends AbstractConfiguration {
 
+  // @codingStandardsIgnoreStart
+  /**
+   * Entity bundle the current consumer is operating on.
+   *
+   * @var string
+   */
+  public $entity_bundle = NULL;
+  // @codingStandardsIgnoreEnd
+
   /**
    * Backend configuration machine name.
    *
@@ -48,16 +57,6 @@ class ConsumerConfiguration extends AbstractConfiguration {
    *    Array of consumer specific option.
    */
   public $settings = array();
-
-  /**
-   * Return consumer entity bundle.
-   *
-   * @return string
-   *    Entity bundle machine name.
-   */
-  public function getEntityBundle() {
-    return isset($this->entity_bundle) ? $this->entity_bundle : '';
-  }
 
   /**
    * Return backend configuration machine name.
@@ -114,6 +113,26 @@ class ConsumerConfiguration extends AbstractConfiguration {
   public function getMappingDestination($source_field) {
     $mapping = array_flip($this->getMapping());
     return isset($mapping[$source_field]) ? $mapping[$source_field] : NULL;
+  }
+
+  /**
+   * Get consumer entity bundle.
+   *
+   * @return string
+   *    Entity bundle.
+   */
+  public function getEntityBundle() {
+    return isset($this->entity_bundle) ? $this->entity_bundle : '';
+  }
+
+  /**
+   * Get resource schema configuration machine name.
+   *
+   * @return string
+   *    Resource schema configuration machine name.
+   */
+  public function getResourceSchema() {
+    return isset($this->resource) ? $this->resource : '';
   }
 
 }
