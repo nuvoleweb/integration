@@ -291,7 +291,9 @@ class BackendFormHandler extends AbstractFormHandler {
     $configuration->setFormatter($input['formatter_handler']);
     $configuration->setAuthentication($input['authentication_handler']);
 
-    $configuration->setPluginSetting('resource_backend_settings', $input['resource_backend_settings']);
+    if (isset($input['resource_backend_settings'])) {
+      $configuration->setPluginSetting('resource_backend_settings', $input['resource_backend_settings']);
+    }
   }
 
 }
