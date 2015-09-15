@@ -85,7 +85,7 @@ function integration_ui_entity_form_validate(&$form, &$form_state) {
   if (!$machine_name) {
     form_set_error('machine_name', t('Machine name cannot be empty.'));
   }
-  elseif (entity_load_single($entity_type, $machine_name)) {
+  elseif ($form_state['op'] == 'create' && entity_load_single($entity_type, $machine_name)) {
     form_set_error('machine_name', t('A configuration with the same machine name already exists.'));
   }
 }
