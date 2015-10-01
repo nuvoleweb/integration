@@ -12,7 +12,7 @@ use Drupal\integration\Backend\BackendInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\ConfigurationFactory;
-use Drupal\integration\PluginManager;
+use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration_consumer\Migrate\AbstractMigration;
@@ -123,7 +123,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
     $plugin = $configuration->getPlugin();
 
     self::validateArguments($arguments);
-    \Migration::registerMigration($plugin_manager->getClass($plugin), $configuration->getMachineName(), $arguments);
+    \Migration::registerMigration($plugin_manager->getPlugin($plugin)->getClass(), $configuration->getMachineName(), $arguments);
   }
 
   /**
@@ -153,8 +153,9 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
    *    Source field name.
    */
   protected function processMappingHandlers($destination_field, $source_field = NULL) {
+    $manager = PluginManager::getInstance('consumer');
 
-    $handlers = integration_consumer_get_mapping_handler_info();
+    $handlers = $manager->getComponentDefinitions('mapping_handler');
     foreach ($handlers as $name => $info) {
       /** @var AbstractMappingHandler $handler */
       $handler = new $info['class']($this);
@@ -223,7 +224,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
   public function getDestinationEntityType() {
     $plugin_manager = PluginManager::getInstance('consumer');
     $plugin = $this->getConfiguration()->getPlugin();
-    return $plugin_manager->getEntityType($plugin);
+    return $plugin_manager->getPlugin($plugin)->getEntityType();
   }
 
 }

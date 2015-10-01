@@ -9,7 +9,7 @@ namespace Drupal\integration_consumer;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Configuration\AbstractConfiguration;
-use Drupal\integration\PluginManager;
+use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 
 /**
@@ -36,7 +36,7 @@ class ConsumerFactory {
     $plugin = $configuration->getPlugin();
 
     /** @var AbstractConsumer $consumer_class */
-    $consumer_class = $plugin_manager->getClass($plugin);
+    $consumer_class = $plugin_manager->getPlugin($plugin)->getClass();
 
     if (!class_exists($consumer_class)) {
       throw new \InvalidArgumentException(t('Class @class does not exists', array('class' => $consumer_class)));
