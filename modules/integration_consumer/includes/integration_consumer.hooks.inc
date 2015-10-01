@@ -6,22 +6,6 @@
  */
 
 /**
- * Implements hook_integration_plugins().
- */
-function integration_consumer_integration_plugins() {
-  return array(
-    'consumer' => array(
-      'label' => t('Consumer'),
-      'components' => array(
-        'mapping_handler' => array(
-          'label' => t('Mapping handler'),
-        ),
-      ),
-    ),
-  );
-}
-
-/**
  * Implements hook_integration_consumer_info().
  */
 function integration_consumer_integration_consumer_info() {
@@ -36,19 +20,21 @@ function integration_consumer_integration_consumer_info() {
 }
 
 /**
- * Implements hook_integration_consumer_mapping_handler_info().
+ * Implements hook_integration_consumer_components_info().
  */
-function integration_consumer_integration_consumer_mapping_handler_info() {
+function integration_consumer_integration_consumer_components_info() {
   $handlers = array(
     'file_field_mapping' => array(
       'label' => t('File field mapping handler'),
       'description' => t('Handle default values for field mapping sub-field.'),
       'class' => 'Drupal\integration_consumer\MappingHandler\FileFieldMappingHandler',
+      'type' => 'mapping_handler',
     ),
     'text_with_summary_mapping' => array(
       'label' => t('Text with summary mapping handler'),
       'description' => t('Handle "Text with summary" field type mapping.'),
       'class' => 'Drupal\integration_consumer\MappingHandler\TextWithSummaryMappingHandler',
+      'type' => 'mapping_handler',
     ),
   );
   if (module_exists('title')) {
@@ -56,6 +42,7 @@ function integration_consumer_integration_consumer_mapping_handler_info() {
       'label' => t('Title field mapping handler'),
       'description' => t("Make sure that both Title's module title field and title property are mapped to the same source."),
       'class' => 'Drupal\integration_consumer\MappingHandler\TitleMappingHandler',
+      'type' => 'mapping_handler',
     );
   }
   return $handlers;
