@@ -55,27 +55,3 @@ function integration_consumer_load_consumer($machine_name) {
 function integration_consumer_access($op, $consumer, $account, $entity_type) {
   return user_access('administer consumers');
 }
-
-/**
- * Collect and return list of consumer definitions.
- *
- * @return array
- *    List of consumer definitions.
- */
-function integration_consumer_get_consumer_info() {
-  $consumers = module_invoke_all('integration_consumer_info');
-  drupal_alter('integration_consumer_info', $consumers);
-  return $consumers;
-}
-
-/**
- * Collect and return list of mapping handler definitions.
- *
- * @return array
- *    List of mapping handler definitions.
- */
-function integration_consumer_get_mapping_handler_info() {
-  $info = module_invoke_all('integration_consumer_mapping_handler_info');
-  drupal_alter('integration_consumer_mapping_handler_info', $info);
-  return $info;
-}

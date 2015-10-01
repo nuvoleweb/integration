@@ -57,27 +57,3 @@ function integration_producer_load_producer($machine_name) {
 function integration_producer_access($op, $producer, $account, $entity_type) {
   return user_access('administer producers');
 }
-
-/**
- * Collect and return list of producer definitions.
- *
- * @return array
- *    List of producer definitions.
- */
-function integration_producer_get_producer_info() {
-  $producers = module_invoke_all('integration_producer_info');
-  drupal_alter('integration_producer_info', $producers);
-  return $producers;
-}
-
-/**
- * Collect and return list of producer field handler definitions.
- *
- * @return array
- *    List of producer field handler definitions.
- */
-function integration_producer_get_field_handler_info() {
-  $field_handlers = module_invoke_all('integration_producer_field_handler_info');
-  drupal_alter('integration_producer_field_handler_info', $field_handlers);
-  return $field_handlers;
-}
