@@ -57,17 +57,19 @@ function integration_ui_entity_info_alter(&$info) {
 }
 
 /**
- * Implements hook_integration_plugins_alter().
+ * Implements hook_integration_ui_form_handlers().
  */
-function integration_ui_integration_plugins_alter(&$items) {
-  $items['backend']['form handler'] = 'Drupal\integration_ui\Backend\BackendFormHandler';
-  $items['resource_schema']['form handler'] = 'Drupal\integration_ui\ResourceSchema\ResourceSchemaFormHandler';
+function integration_ui_integration_ui_form_handlers() {
+  return array(
+    'backend' => 'Drupal\integration_ui\Backend\BackendFormHandler',
+    'resource_schema' => 'Drupal\integration_ui\ResourceSchema\ResourceSchemaFormHandler',
+  );
 }
 
 /**
- * Implements hook_integration_backend_authentication_handler_info().
+ * Implements hook_integration_backend_components_info_alter().
  */
-function integration_ui_integration_backend_authentication_handler_info_alter(&$items) {
+function integration_ui_integration_backend_components_info_alter(&$items) {
   $items['http_authentication']['form handler'] = 'Drupal\integration_ui\Backend\Authentication\HttpAuthenticationFormHandler';
 }
 

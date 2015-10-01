@@ -17,8 +17,10 @@ function integration_consumer_ui_entity_info_alter(&$info) {
 }
 
 /**
- * Implements hook_integration_plugins_alter().
+ * Implements hook_integration_ui_form_handlers().
  */
-function integration_consumer_ui_integration_plugins_alter(&$items) {
-  $items['consumer']['form handler'] = 'Drupal\integration_consumer_ui\ConsumerFormHandler';
+function integration_consumer_ui_integration_ui_form_handlers() {
+  return array(
+    'consumer' => 'Drupal\integration_consumer_ui\ConsumerFormHandler',
+  );
 }
