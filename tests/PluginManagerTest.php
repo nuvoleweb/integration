@@ -7,97 +7,130 @@
 
 namespace Drupal\integration\Tests;
 
-use Drupal\integration\PluginManager;
+use Drupal\integration\Plugins\PluginManager;
 
 /**
  * Class PluginManager.
+ *
+ * @group hooks
+ * @group plugin-manager
  *
  * @package Drupal\integration\Tests
  */
 class PluginManagerTest extends \PHPUnit_Framework_TestCase {
 
   /**
-   * Test plugin manager construction.
+   * Test plugin and plugin component definitions.
+   * @group run
    */
-  public function testConstruction() {
+  public function testDefinitions() {
+
+    // Test backend plugin definitions.
+    $manager = PluginManager::getInstance('backend');
+    $expected = array(
+      'rest_backend',
+      'memory_backend',
+    );
+    $this->assertEquals($expected, array_keys($manager->getPluginDefinitions()));
+
+    // Test backend plugin component definitions.
+    $expected = array(
+      'json_formatter',
+      'http_response',
+      'raw_response',
+      'http_authentication',
+      'no_authentication',
+    );
+    $this->assertEquals($expected, array_keys($manager->getComponentDefinitions()));
 
     $expected = array(
-      'response_handler',
-      'formatter_handler',
-      'authentication_handler',
+      'http_authentication',
+      'no_authentication',
     );
-    $this->assertEquals($expected, PluginManager::getInstance('backend')->getComponents());
+    $this->assertEquals($expected, array_keys($manager->getComponentDefinitions('authentication_handler')));
 
+    // Test resource_schema plugin definitions.
+    $manager = PluginManager::getInstance('resource_schema');
     $expected = array(
-      'mapping_handler',
+      'raw_resource_schema',
     );
-    $this->assertEquals($expected, PluginManager::getInstance('consumer')->getComponents());
+    $this->assertEquals($expected, array_keys($manager->getPluginDefinitions()));
 
+    // Test consumer plugin definitions.
+    $manager = PluginManager::getInstance('consumer');
     $expected = array(
-      'field_handler',
+      'node_consumer',
     );
-    $this->assertEquals($expected, PluginManager::getInstance('producer')->getComponents());
-  }
+    $this->assertEquals($expected, array_keys($manager->getPluginDefinitions()));
 
-  /**
-   * Test info hooks.
-   */
-  public function testInfo() {
-
-    $info = PluginManager::getInstance('consumer')->setComponent('mapping_handler')->getInfo();
+    // Test consumer plugin component definitions.
     $expected = array(
       'file_field_mapping',
       'text_with_summary_mapping',
       'title_mapping',
     );
-    $this->assertEquals($expected, array_keys($info));
+    $this->assertEquals($expected, array_keys($manager->getComponentDefinitions()));
+    $this->assertEquals($expected, array_keys($manager->getComponentDefinitions('mapping_handler')));
 
-    $definitions = integration_get_integration_plugins();
-    foreach (array('backend', 'consumer', 'producer') as $name) {
-      $manager = PluginManager::getInstance($name);
-      $this->assertEquals($definitions[$name]['form handler'], $manager->getFormHandler());
-      $manager = PluginManager::getInstance('integration_' . $name);
-      $this->assertEquals($definitions[$name]['form handler'], $manager->getFormHandler());
-    }
-
-    $manager = PluginManager::getInstance('backend');
-    $data = integration_integration_backend_info();
-    $this->assertInfoData($manager, $data);
-
-    $manager = PluginManager::getInstance('backend')->setComponent('response_handler');
-    $data = integration_integration_backend_response_handler_info();
-    $this->assertInfoData($manager, $data);
-
-    $manager = PluginManager::getInstance('backend')->setComponent('formatter_handler');
-    $data = integration_integration_backend_formatter_handler_info();
-    $this->assertInfoData($manager, $data);
-
-    $manager = PluginManager::getInstance('consumer')->setComponent('mapping_handler');
-    $data = integration_consumer_integration_consumer_mapping_handler_info();
-    $this->assertInfoData($manager, $data);
-
+    // Test producer plugin definitions.
     $manager = PluginManager::getInstance('producer');
-    $data = integration_producer_get_producer_info();
-    $this->assertInfoData($manager, $data);
+    $expected = array(
+      'node_producer',
+      'taxonomy_term_producer',
+    );
+    $this->assertEquals($expected, array_keys($manager->getPluginDefinitions()));
 
-    $manager = PluginManager::getInstance('producer')->setComponent('field_handler');
-    $data = integration_producer_integration_producer_field_handler_info();
-    $this->assertInfoData($manager, $data);
+    // Test producer plugin component definitions.
+    $expected = array(
+      'default',
+      'text',
+      'text_long',
+      'text_with_summary',
+      'date',
+      'datetime',
+      'datestamp',
+      'file',
+      'image',
+    );
+    $this->assertEquals($expected, array_keys($manager->getComponentDefinitions()));
   }
 
   /**
-   * Assert that all plugin properties are set correctly.
+   * Test plugin definitions.
    *
-   * @param PluginManager $manager
-   *    PluginManager instance.
-   * @param array $data
-   *    Data to test our assertions against.
+   * @group run
    */
-  public function assertInfoData(PluginManager $manager, array $data) {
-    foreach ($data as $name => $info) {
-      $this->assertEquals($info['label'], $manager->getLabel($name));
-      $this->assertEquals($info['class'], $manager->getClass($name));
-      $this->assertEquals($info['description'], $manager->getDescription($name));
+  public function testPluginDefinitions() {
+
+    foreach (array('backend', 'consumer', 'producer', 'resource_schema') as $plugin) {
+      $manager = PluginManager::getInstance($plugin);
+      $definitions = $manager->getComponentDefinitions();
+
+      foreach ($definitions as $name => $definition) {
+        $this->assertEquals($definition['label'], $manager->getComponent($name)->getLabel());
+        $this->assertEquals($definition['class'], $manager->getComponent($name)->getClass());
+        $this->assertEquals($definition['description'], $manager->getComponent($name)->getDescription());
+        $this->assertEquals($definition['type'], $manager->getComponent($name)->getType());
+      }
+    }
+  }
+
+  /**
+   * Test plugin component definitions.
+   *
+   * @group run
+   */
+  public function testPluginComponentDefinitions() {
+
+    foreach (array('backend', 'consumer', 'producer', 'resource_schema') as $plugin) {
+      $manager = PluginManager::getInstance($plugin);
+      $definitions = $manager->getPluginDefinitions();
+
+      foreach ($definitions as $name => $definition) {
+        $this->assertEquals($definition['label'], $manager->getPlugin($name)->getLabel());
+        $this->assertEquals($definition['class'], $manager->getPlugin($name)->getClass());
+        $this->assertEquals($definition['description'], $manager->getPlugin($name)->getDescription());
+      }
     }
   }
 
