@@ -7,6 +7,7 @@
 
 namespace Drupal\integration\Tests\Producer;
 
+use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration_producer\ProducerFactory;
 use Drupal\integration\Tests\AbstractTest;
 
@@ -21,7 +22,8 @@ class ProducerFactoryTest extends AbstractTest {
    * Test create method.
    */
   public function testFactory() {
-    $producer_info = integration_producer_get_producer_info();
+    $manager = PluginManager::getInstance('producer');
+    $producer_info = $manager->getPluginDefinitions();
     $producer_class = $producer_info[$this->producerConfiguration->getPlugin()]['class'];
 
     $producer = ProducerFactory::getInstance('test_configuration');
