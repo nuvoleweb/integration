@@ -8,7 +8,7 @@
 namespace Drupal\integration\ResourceSchema;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
-use Drupal\integration\PluginManager;
+use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
 use Drupal\integration\Configuration\AbstractConfiguration;
 
@@ -35,7 +35,7 @@ class ResourceSchemaFactory {
     $plugin_manager = PluginManager::getInstance('resource_schema');
     $plugin = $configuration->getPlugin();
 
-    $resource_schema_class = $plugin_manager->getClass($plugin);
+    $resource_schema_class = $plugin_manager->getPlugin($plugin)->getClass();
 
     if (!class_exists($resource_schema_class)) {
       throw new \InvalidArgumentException(t('Class @class does not exists', array('class' => $resource_schema_class)));
