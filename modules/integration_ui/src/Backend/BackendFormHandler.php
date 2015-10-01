@@ -10,7 +10,7 @@ namespace Drupal\integration_ui\Backend;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration_ui\AbstractFormHandler;
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
-use Drupal\integration_ui\FormHandlerFactory;
+use Drupal\integration_ui\FormManager;
 
 /**
  * Class BackendFormHandler.
@@ -76,6 +76,7 @@ class BackendFormHandler extends AbstractFormHandler {
    *    Form array.
    */
   protected function buildPluginSettingsForm(array &$form, array &$form_state, $op) {
+    $info = $this->getPluginManager()->getInfo();
     // @todo: fetch this from plugin type form.
     $plugin_settings['endpoint'] = array(
       '#title' => t('Endpoint'),
@@ -237,7 +238,7 @@ class BackendFormHandler extends AbstractFormHandler {
           '#group' => "component_$component",
         );
 
-        $form_manager = FormHandlerFactory::getInstance($this->getConfiguration(), $component, $type);
+        $form_manager = FormManager::getInstance($this->getConfiguration(), $component, $type);
         if ($form_manager) {
           $form_manager->form($element, $form_state, $op);
           $form["component_$component"]["{$component}_configuration"] = $element;

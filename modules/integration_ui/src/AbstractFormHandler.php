@@ -7,7 +7,7 @@
 
 namespace Drupal\integration_ui;
 
-use Drupal\integration\PluginManager;
+use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\Configuration\AbstractConfiguration;
 
 /**
@@ -131,7 +131,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
           '#group' => "component_$component",
         );
 
-        $form_manager = FormHandlerFactory::getInstance($this->getConfiguration(), $component, $type);
+        $form_manager = FormManager::getInstance($this->getConfiguration(), $component, $type);
         if ($form_manager) {
           $form_manager->form($element, $form_state, $op);
           $form["component_$component"]["{$component}_configuration"] = $element;
