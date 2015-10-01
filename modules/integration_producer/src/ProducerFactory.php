@@ -11,7 +11,7 @@ use Drupal\integration\Backend\BackendFactory;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Document\Document;
-use Drupal\integration\PluginManager;
+use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
@@ -38,8 +38,8 @@ class ProducerFactory {
     $plugin_manager = PluginManager::getInstance('producer');
     $plugin = $configuration->getPlugin();
 
-    $producer_class = $plugin_manager->getClass($plugin);
-    $entity_wrapper = new EntityWrapper\EntityWrapper($plugin_manager->getEntityType($plugin));
+    $producer_class = $plugin_manager->getPlugin($plugin)->getClass();
+    $entity_wrapper = new EntityWrapper\EntityWrapper($plugin_manager->getPlugin($plugin)->getEntityType());
     $document = new Document();
     $backend = BackendFactory::getInstance($configuration->backend);
     $resource = ResourceSchemaFactory::getInstance($configuration->resource);

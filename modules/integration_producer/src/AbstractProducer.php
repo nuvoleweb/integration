@@ -11,6 +11,7 @@ use Drupal\integration\Backend\AbstractBackend;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\ResourceSchema\AbstractResourceSchema;
 
 /**
@@ -79,12 +80,14 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
    *    Resource schema object.
    */
   public function __construct(Configuration\ProducerConfiguration $configuration, EntityWrapper\EntityWrapper $entity_wrapper, DocumentInterface $document, AbstractBackend $backend, AbstractResourceSchema $resource) {
+    $manager = PluginManager::getInstance('producer');
+
     $this->setConfiguration($configuration);
     $this->entityWrapper = $entity_wrapper;
     $this->document = $document;
     $this->backend = $backend;
     $this->resource = $resource;
-    $this->fieldHandlers = integration_producer_get_field_handler_info();
+    $this->fieldHandlers = $manager->getComponentDefinitions('field_handler');
   }
 
   /**
