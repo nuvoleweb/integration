@@ -5,16 +5,16 @@
  * Contains HttpAuthenticationFormHandler.
  */
 
-namespace Drupal\integration_ui\Backend\Authentication;
+namespace Drupal\integration_ui\FormHandlers\Backend\Authentication;
 
-use Drupal\integration_ui\AbstractFormHandler;
+use Drupal\integration_ui\AbstractForm;
 
 /**
  * Class HttpAuthenticationFormHandler.
  *
  * @package Drupal\integration_ui\Backend\Authentication
  */
-class HttpAuthenticationFormHandler extends AbstractFormHandler {
+class HttpAuthenticationFormHandler extends AbstractForm {
 
   /**
    * {@inheritdoc}

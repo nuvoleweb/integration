@@ -2,38 +2,65 @@
 
 /**
  * @file
- * Contains \Drupal\integration_ui\Backend\BackendFormHandler.
+ * Contains \Drupal\integration_ui\FormControllers\BackendFormController.
  */
 
-namespace Drupal\integration_ui\Backend;
+namespace Drupal\integration_ui\FormControllers;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
-use Drupal\integration_ui\AbstractFormHandler;
+use Drupal\integration_ui\AbstractForm;
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
-use Drupal\integration_ui\FormManager;
+use Drupal\integration_ui\FormFactory;
+use Drupal\integration_ui\FormHelper;
+use Drupal\integration\Plugins\PluginManager;
 
 /**
- * Class BackendFormHandler.
+ * Class BackendFormController.
  *
- * @package Drupal\integration_ui\Backend
+ * @package Drupal\integration_ui\FormControllers
  */
-class BackendFormHandler extends AbstractFormHandler {
+class BackendFormController extends AbstractForm {
 
   /**
    * {@inheritdoc}
    */
   public function form(array &$form, array &$form_state, $op) {
     /** @var BackendConfiguration $configuration */
-    $configuration = $this->getConfiguration();
+    $configuration = $this->getConfiguration($form_state);
+    /** @var PluginManager $plugin_manager */
+    $plugin_manager = $this->getPluginManager($form_state);
 
-    // Build plugin type form portion.
-    $this->buildPluginForm($form, $form_state, $op);
+    $form['plugin_container'] = FormHelper::inlineFieldset(
+      t('Producer plugin')
+    );
+    $form['plugin_container']['plugin'] = FormHelper::hiddenLabelSelect(
+      t('Backend plugin'),
+      FormHelper::asOptions($plugin_manager->getPluginDefinitions()),
+      $configuration->getPlugin()
+    );
+    $form['plugin_container']['select_plugin'] = FormHelper::stepSubmit(
+      t('Select plugin'),
+      'select_plugin'
+    );
 
-    // Add resource schemas form portion.
+    // Add resource schemas form portion only after setting up the plugin type.
     if ($plugin = $configuration->getPlugin()) {
-      $this->buildResourceSchemaForm($form, $form_state, $op);
+
+      $form['resource_container'] = FormHelper::fieldset(
+        t('Resource schemas')
+      );
+      $form['resource_container']['resource_schemas'] = FormHelper::hiddenLabelCheckboxes(
+        t('Resource schemas'),
+        $this->loadResourceSchemasAsOptions(),
+        (array) $configuration->getPluginSetting('resource_schemas')
+      );
+      $form['resource_container']['select_plugin'] = FormHelper::stepSubmit(
+        t('Select resource schemas'),
+        'resources_submit'
+      );
     }
 
+    // Prompt each resource schema configuration only when they are set.
     if ($resources = (array) $configuration->getPluginSetting('resource_schemas')) {
 
       $rows = array();
@@ -50,17 +77,33 @@ class BackendFormHandler extends AbstractFormHandler {
       }
 
       $header = array(t('Resource schema'), t('Settings'));
-      $form['resource_settings'] = array(
-        '#theme' => 'integration_form_table',
-        '#header' => $header,
-        'rows' => $rows,
+      $form['resource_settings'] = FormHelper::table(
+        $header,
+        $rows
       );
     }
 
-    if ($plugin && $resources) {
-      $this->componentsForm($form, $form_state, $op);
-    }
+    return;
+//
+//
+//    if ($plugin && $resources) {
+//      $this->componentsForm($form, $form_state, $op);
+//    }
   }
+
+  /**
+   * @return array
+   */
+  protected function loadResourceSchemasAsOptions() {
+    $options = array();
+    $resources = entity_load('integration_resource_schema');
+    foreach ($resources as $resource) {
+      /** @var BackendConfiguration $resource */
+      $options[$resource->getMachineName()] = $resource->getName();
+    }
+    return $options;
+  }
+
 
   /**
    * Get specific plugin type settings form.
@@ -76,7 +119,7 @@ class BackendFormHandler extends AbstractFormHandler {
    *    Form array.
    */
   protected function buildPluginSettingsForm(array &$form, array &$form_state, $op) {
-    $info = $this->getPluginManager()->getInfo();
+//    $info = $this->getPluginManager()->getInfo();
     // @todo: fetch this from plugin type form.
     $plugin_settings['endpoint'] = array(
       '#title' => t('Endpoint'),
@@ -87,88 +130,6 @@ class BackendFormHandler extends AbstractFormHandler {
       '#type' => 'textfield',
     );
     return $plugin_settings;
-  }
-
-  /**
-   * Helper function: render entity bundle form portion.
-   *
-   * @param array $form
-   *    Form array.
-   * @param array $form_state
-   *    Form state array.
-   * @param string $op
-   *    Current form operation.
-   */
-  protected function buildPluginForm(array &$form, array &$form_state, $op) {
-    /** @var BackendConfiguration $configuration */
-    $configuration = $this->getConfiguration();
-
-    // Select producer plugin type.
-    $options = $this->getPluginManager()->getFormOptions();
-    $form['plugin_container'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Producer plugin'),
-      '#tree' => FALSE,
-      '#attributes' => array('class' => array('container-inline')),
-    );
-    $form['plugin_container']['plugin'] = array(
-      '#type' => 'select',
-      '#title' => t('Backend plugin'),
-      '#title_display' => 'invisible',
-      '#options' => $options,
-      '#default_value' => $configuration->getPlugin(),
-      '#required' => TRUE,
-    );
-    $form['plugin_container']['select_plugin'] = array(
-      '#type' => 'submit',
-      '#value' => t('Select plugin'),
-      '#name' => 'select_plugin',
-      '#limit_validation_errors' => array(),
-      '#submit' => array('integration_ui_entity_form_submit'),
-    );
-  }
-
-  /**
-   * Helper function: render resource schema form portion.
-   *
-   * @param array $form
-   *    Form array.
-   * @param array $form_state
-   *    Form state array.
-   * @param string $op
-   *    Current form operation.
-   */
-  protected function buildResourceSchemaForm(array &$form, array &$form_state, $op) {
-    /** @var BackendConfiguration $configuration */
-    $configuration = $this->getConfiguration();
-
-    $options = array();
-    $resources = entity_load('integration_resource_schema');
-    foreach ($resources as $resource) {
-      /** @var BackendConfiguration $resource */
-      $options[$resource->getMachineName()] = $resource->getName();
-    }
-
-    $form['resource_container'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Resource schemas'),
-      '#tree' => FALSE,
-    );
-    $form['resource_container']['resource_schemas'] = array(
-      '#type' => 'checkboxes',
-      '#title' => t('Resource schemas'),
-      '#title_display' => 'invisible',
-      '#options' => $options,
-      '#required' => TRUE,
-      '#default_value' => (array) $configuration->getPluginSetting('resource_schemas'),
-    );
-    $form['resource_container']['resources_submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('Select schemas'),
-      '#name' => 'resources_submit',
-      '#limit_validation_errors' => array(),
-      '#submit' => array('integration_ui_entity_form_submit'),
-    );
   }
 
   /**
@@ -183,8 +144,8 @@ class BackendFormHandler extends AbstractFormHandler {
    */
   protected function componentsForm(array &$form, array &$form_state, $op) {
     /** @var BackendConfiguration $configuration */
-    $configuration = $this->getConfiguration();
-    $plugin = $this->getPluginManager();
+    $configuration = $this->getConfiguration($form_state);
+    $plugin = $this->getPluginManager($form_state);
 
     $form['components'] = array(
       '#type' => 'vertical_tabs',
@@ -238,7 +199,7 @@ class BackendFormHandler extends AbstractFormHandler {
           '#group' => "component_$component",
         );
 
-        $form_manager = FormManager::getInstance($this->getConfiguration(), $component, $type);
+        $form_manager = FormFactory::getInstance($this->getConfiguration(), $component, $type);
         if ($form_manager) {
           $form_manager->form($element, $form_state, $op);
           $form["component_$component"]["{$component}_configuration"] = $element;
@@ -252,7 +213,7 @@ class BackendFormHandler extends AbstractFormHandler {
    */
   public function formValidate(array $form, array &$form_state) {
     /** @var BackendConfiguration $configuration */
-    $configuration = $this->getConfiguration();
+    $configuration = $this->getConfiguration($form_state);
 
     if (!$configuration->getResponse()) {
       form_set_error('response_handler', t('Response handler cannot be left empty.'));
@@ -270,7 +231,7 @@ class BackendFormHandler extends AbstractFormHandler {
    */
   public function formSubmit(array $form, array &$form_state) {
     /** @var BackendConfiguration $configuration */
-    $configuration = $this->getConfiguration();
+    $configuration = $this->getConfiguration($form_state);
     $input = &$form_state['input'];
     $triggering_element = $form_state['triggering_element'];
 

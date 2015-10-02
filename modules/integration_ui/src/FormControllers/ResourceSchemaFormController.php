@@ -2,20 +2,20 @@
 
 /**
  * @file
- * Contains \Drupal\integration_ui\ResourceSchema\ResourceSchemaFormHandler.
+ * Contains \Drupal\integration_ui\FormControllers\ResourceSchemaFormController.
  */
 
-namespace Drupal\integration_ui\ResourceSchema;
+namespace Drupal\integration_ui\FormControllers;
 
-use Drupal\integration_ui\AbstractFormHandler;
+use Drupal\integration_ui\AbstractForm;
 use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
 
 /**
- * Class ResourceSchemaFormHandler.
+ * Class ResourceSchemaFormController.
  *
- * @package Drupal\integration_ui\ResourceSchema
+ * @package Drupal\integration_ui\FormControllers
  */
-class ResourceSchemaFormHandler extends AbstractFormHandler {
+class ResourceSchemaFormController extends AbstractForm {
 
   /**
    * {@inheritdoc}
