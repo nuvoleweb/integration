@@ -21,7 +21,7 @@ function integration_producer_ui_entity_info_alter(&$info) {
  */
 function integration_producer_ui_integration_ui_form_controllers() {
   return array(
-    'producer' => 'Drupal\integration_producer_ui\ProducerFormHandler',
+    'producer' => 'Drupal\integration_producer_ui\FormControllers\ProducerFormController',
   );
 }
 

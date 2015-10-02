@@ -10,7 +10,6 @@ namespace Drupal\integration_consumer_ui\FormControllers;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration_ui\AbstractForm;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
-use Drupal\integration_ui\FormFactory;
 use Drupal\integration_ui\FormHelper;
 
 /**
@@ -27,7 +26,6 @@ class ConsumerFormController extends AbstractForm {
     /** @var ConsumerConfiguration $configuration */
     $configuration = $this->getConfiguration($form_state);
     $plugin_manager = $this->getPluginManager($form_state);
-    $form_factory = FormFactory::getInstance('consumer');
 
     // Add plugin type selection.
     $form['plugin_container'] = FormHelper::inlineFieldset(
@@ -83,11 +81,12 @@ class ConsumerFormController extends AbstractForm {
     // Add field mapping form portion.
     $resource_name = $configuration->getResourceSchema();
     if ($plugin && $resource_name) {
+      $entity_type = $plugin_manager->getPlugin($plugin)->getEntityType();
 
       // @todo: change this by setting proper getters on entity property info.
       $resource = ConfigurationFactory::load('integration_resource_schema', $resource_name);
       $source_options = array('' => '') + (array) $resource->getPluginSetting('fields');
-      $destination_options = $this->getDestinationOptions($entity_type, $entity_bundle);
+      $destination_options = $this->getEntityFieldList($entity_type, $entity_bundle);
 
       $rows = array();
       $mapping = (array) $configuration->getPluginSetting('mapping');
@@ -154,31 +153,6 @@ class ConsumerFormController extends AbstractForm {
         $form_state['rebuild'] = TRUE;
         break;
     }
-  }
-
-  /**
-   * Get options list of possible entity type destinations.
-   *
-   * @param string $entity_type
-   *    Entity type machine name.
-   *
-   * @return array
-   *    List of entity type fields and properties.
-   */
-  protected function getDestinationOptions($entity_type, $entity_bundle) {
-    $options = array('' => '');
-
-    /** @var \EntityDrupalWrapper $entity_wrapper */
-    $entity_wrapper = entity_metadata_wrapper($entity_type);
-    $properties = $entity_wrapper->refPropertyInfo();
-    foreach ($properties['properties'] as $key => $value) {
-      $options[$key] = t('Property: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
-    }
-    foreach ($properties['bundles'][$entity_bundle]['properties'] as $key => $value) {
-      $options[$key] = t('Field: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
-    }
-    asort($options);
-    return $options;
   }
 
 }

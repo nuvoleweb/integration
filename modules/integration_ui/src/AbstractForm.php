@@ -72,4 +72,29 @@ abstract class AbstractForm implements FormInterface {
     return $resource_schema->getName();
   }
 
+  /**
+   * Get list of ist of entity type fields and properties.
+   *
+   * @param string $entity_type
+   *    Entity type machine name.
+   *
+   * @return array
+   *    List of entity type fields and properties.
+   */
+  protected function getEntityFieldList($entity_type, $entity_bundle) {
+    $options = array('' => '');
+
+    /** @var \EntityDrupalWrapper $entity_wrapper */
+    $entity_wrapper = entity_metadata_wrapper($entity_type);
+    $properties = $entity_wrapper->refPropertyInfo();
+    foreach ($properties['properties'] as $key => $value) {
+      $options[$key] = t('Property: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
+    }
+    foreach ($properties['bundles'][$entity_bundle]['properties'] as $key => $value) {
+      $options[$key] = t('Field: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
+    }
+    asort($options);
+    return $options;
+  }
+
 }
