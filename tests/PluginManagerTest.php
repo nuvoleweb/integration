@@ -21,6 +21,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * Test plugin and plugin component definitions.
+   *
    * @group run
    */
   public function testDefinitions() {
