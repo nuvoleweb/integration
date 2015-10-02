@@ -2,21 +2,21 @@
 
 /**
  * @file
- * Contains \Drupal\integration_producer_ui\ProducerFormHandler.
+ * Contains ProducerFormController.
  */
 
-namespace Drupal\integration_producer_ui;
+namespace Drupal\integration_producer_ui\FormControllers;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
-use Drupal\integration_ui\AbstractFormHandler;
+use Drupal\integration_ui\AbstractForm;
 use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 /**
- * Class ProducerFormHandler.
+ * Class ProducerFormController.
  *
- * @package Drupal\integration_producer_ui
+ * @package Drupal\integration_producer_ui\FormControllers
  */
-class ProducerFormHandler extends AbstractFormHandler {
+class ProducerFormController extends AbstractForm {
 
   /**
    * {@inheritdoc}
