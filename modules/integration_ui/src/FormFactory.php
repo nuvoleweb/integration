@@ -10,20 +10,20 @@ namespace Drupal\integration_ui;
 use Drupal\integration\Plugins\PluginManager;
 
 /**
- * Class FormManager.
+ * Class FormFactory.
  *
  * @package Drupal\integration_ui
  */
-class FormManager {
+class FormFactory {
 
   /**
-   * Main plugin form handlers.
+   * List of form controller classes for main integration plugin types.
    *
    * @see integration_ui_entity_form()
    *
    * @var array
    */
-  protected $handlers = array();
+  protected $controllers = array();
 
   /**
    * Plugin manager instance.
@@ -35,41 +35,41 @@ class FormManager {
   /**
    * Get plugin manager instance.
    *
-   * @param string $plugin_type
+   * @param string $plugin
    *    Plugin type, as defined in self::$definitions array's keys.
    *
-   * @return FormManager
+   * @return FormFactory
    *    PluginManager instance for specified plugin type.
    */
-  static public function getInstance($plugin_type) {
-    return new self($plugin_type);
+  static public function getInstance($plugin) {
+    return new self($plugin);
   }
 
   /**
-   * FormManager constructor.
+   * FormFactory constructor.
    *
-   * @param string $plugin_type
+   * @param string $plugin
    *    Either a plugin type or its configuration entity type name.
    */
-  public function __construct($plugin_type) {
-    $this->plugin = str_replace('integration_', '', $plugin_type);
+  public function __construct($plugin) {
+    $this->plugin = str_replace('integration_', '', $plugin);
 
-    $this->handlers = module_invoke_all("integration_ui_form_handlers");
-    drupal_alter("integration_ui_form_handlers", $this->handlers);
+    $this->controllers = module_invoke_all("integration_ui_form_controllers");
+    drupal_alter("integration_ui_form_controllers", $this->controllers);
 
     $this->pluginManager = PluginManager::getInstance($this->plugin);
   }
 
   /**
-   * Get form handler for current plugin type.
+   * Return new form controller instance for current plugin type.
    *
-   * @return FormHandlerInterface
+   * @return FormInterface
    *    Form handler instance
    */
-  public function getHandler() {
+  public function getController() {
     // @todo Throw exception is not set.
-    if (isset($this->handlers[$this->plugin])) {
-      return new $this->handlers[$this->plugin]();
+    if (isset($this->controllers[$this->plugin])) {
+      return new $this->controllers[$this->plugin]();
     }
   }
 
@@ -79,7 +79,7 @@ class FormManager {
    * @param string $plugin
    *    Plugin name.
    *
-   * @return FormHandlerInterface
+   * @return FormInterface
    *    Form handler instance
    */
   public function getPluginHandler($plugin) {
@@ -96,14 +96,15 @@ class FormManager {
    * @param string $component
    *    Component name.
    *
-   * @return FormHandlerInterface
+   * @return FormInterface
    *    Form handler instance
    */
   public function getComponentHandler($component) {
-    // @todo Throw exception is not set.
     $form_handler = $this->pluginManager->getComponent($component)->getFormHandler();
-    if ($form_handler) {
+    try {
       return new $form_handler();
+    } catch (\InvalidArgumentException $e) {
+      watchdog_exception('integration', $e);
     }
   }
 

@@ -2,19 +2,39 @@
 
 /**
  * @file
- * Contains FormHandlerInterface.
+ * Contains Drupal\integration_ui\FormHandlers\FormInterface.
  */
 
 namespace Drupal\integration_ui;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\Plugins\PluginManager;
 
 /**
- * Interface FormHandlerInterface.
+ * Interface FormInterface.
  *
  * @package Drupal\integration_ui
  */
-interface FormHandlerInterface {
+interface FormInterface {
+
+  /**
+   * Extract configuration entity from current $form_state array.
+   *
+   * @param array $form_state
+   *    Form state array.
+   *
+   * @return AbstractConfiguration
+   *    Current configuration entity object.
+   */
+  public function getConfiguration(array &$form_state);
+
+  /**
+   * Return plugin manager instance from current $form_state array.
+   *
+   * @return PluginManager
+   *    Plugin manager instance.
+   */
+  public function getPluginManager(array &$form_state);
 
   /**
    * Build form array.
