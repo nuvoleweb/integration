@@ -54,10 +54,9 @@ class ResourceSchemaFormController extends AbstractForm {
       'field_label' => FormHelper::textField(NULL, NULL, FALSE),
       'add_field' => FormHelper::stepSubmit(t('Add'), 'add_field'),
     );
-    $form['settings']['fields'] = FormHelper::table(
-      array(t('Field name'), t('Field label'), ''),
-      $rows
-    );
+
+    $header = array(t('Field name'), t('Field label'), '');
+    $form['settings']['fields'] = FormHelper::table($header, $rows);
   }
 
   /**
