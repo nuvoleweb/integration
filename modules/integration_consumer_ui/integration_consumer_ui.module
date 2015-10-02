@@ -21,6 +21,6 @@ function integration_consumer_ui_entity_info_alter(&$info) {
  */
 function integration_consumer_ui_integration_ui_form_controllers() {
   return array(
-    'consumer' => 'Drupal\integration_consumer_ui\ConsumerFormHandler',
+    'consumer' => 'Drupal\integration_consumer_ui\FormControllers\ConsumerFormController',
   );
 }
