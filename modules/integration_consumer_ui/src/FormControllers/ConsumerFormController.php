@@ -2,21 +2,21 @@
 
 /**
  * @file
- * Contains \Drupal\integration_consumer_ui\ConsumerFormHandler.
+ * Contains ConsumerFormController.
  */
 
-namespace Drupal\integration_consumer_ui;
+namespace Drupal\integration_consumer_ui\FormControllers;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
-use Drupal\integration_ui\AbstractFormHandler;
+use Drupal\integration_ui\AbstractForm;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 
 /**
- * Class ConsumerFormHandler.
+ * Class ConsumerFormController.
  *
- * @package Drupal\integration_consumer_ui
+ * @package Drupal\integration_consumer_ui\FormControllers
  */
-class ConsumerFormHandler extends AbstractFormHandler {
+class ConsumerFormController extends AbstractForm {
 
   /**
    * {@inheritdoc}
