@@ -7,7 +7,6 @@
 
 namespace Drupal\integration_ui\FormControllers;
 
-use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration_ui\AbstractForm;
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration_ui\Exceptions\UndefinedFormHandlerException;
@@ -32,7 +31,7 @@ class BackendFormController extends AbstractForm {
 
     // Add plugin type selection.
     $form['plugin_container'] = FormHelper::inlineFieldset(
-      t('Producer plugin')
+      t('Backend plugin')
     );
     $form['plugin_container']['plugin'] = FormHelper::hiddenLabelSelect(
       t('Backend plugin'),
@@ -194,36 +193,6 @@ class BackendFormController extends AbstractForm {
     if (isset($input['resource_backend_settings'])) {
       $configuration->setPluginSetting('resource_backend_settings', $input['resource_backend_settings']);
     }
-  }
-
-  /**
-   * Load all available resource schema and format them as an #options array.
-   *
-   * @return array
-   *    Form element options.
-   */
-  protected function getResourceSchemasAsOptions() {
-    $options = array();
-    $resources = entity_load('integration_resource_schema');
-    foreach ($resources as $resource) {
-      /** @var BackendConfiguration $resource */
-      $options[$resource->getMachineName()] = $resource->getName();
-    }
-    return $options;
-  }
-
-  /**
-   * Get resource schema label given its machine name.
-   *
-   * @param string $resource
-   *    Response schema machine name.
-   *
-   * @return string
-   *    Response schema label.
-   */
-  protected function getResourceSchemaLabel($resource) {
-    $resource_schema = ConfigurationFactory::load('integration_resource_schema', $resource);
-    return $resource_schema->getName();
   }
 
 }

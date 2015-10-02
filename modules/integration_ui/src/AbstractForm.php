@@ -8,6 +8,7 @@
 namespace Drupal\integration_ui;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Plugins\PluginManager;
 
 /**
@@ -39,6 +40,36 @@ abstract class AbstractForm implements FormInterface {
     // @todo throw exception if none is set.
     $entity_type = $form_state['build_info']['args'][2];
     return PluginManager::getInstance($entity_type);
+  }
+
+  /**
+   * Load all available resource schema and format them as an #options array.
+   *
+   * @return array
+   *    Form element options.
+   */
+  protected function getResourceSchemasAsOptions() {
+    $options = array();
+    $resources = entity_load('integration_resource_schema');
+    foreach ($resources as $resource) {
+      /** @var AbstractConfiguration $resource */
+      $options[$resource->getMachineName()] = $resource->getName();
+    }
+    return $options;
+  }
+
+  /**
+   * Get resource schema label given its machine name.
+   *
+   * @param string $resource
+   *    Response schema machine name.
+   *
+   * @return string
+   *    Response schema label.
+   */
+  protected function getResourceSchemaLabel($resource) {
+    $resource_schema = ConfigurationFactory::load('integration_resource_schema', $resource);
+    return $resource_schema->getName();
   }
 
 }
