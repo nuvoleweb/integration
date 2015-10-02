@@ -17,9 +17,9 @@ function integration_producer_ui_entity_info_alter(&$info) {
 }
 
 /**
- * Implements hook_integration_ui_form_handlers().
+ * Implements hook_integration_ui_form_controllers().
  */
-function integration_producer_ui_integration_ui_form_handlers() {
+function integration_producer_ui_integration_ui_form_controllers() {
   return array(
     'producer' => 'Drupal\integration_producer_ui\ProducerFormHandler',
   );
