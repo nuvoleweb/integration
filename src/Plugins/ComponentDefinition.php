@@ -15,9 +15,13 @@ namespace Drupal\integration\Plugins;
 class ComponentDefinition extends AbstractDefinition {
 
   /**
-   * @return mixed
+   * Get component type.
+   *
+   * @return string
+   *    Component type.
    */
   public function getType() {
     return $this->definition['type'];
   }
+
 }

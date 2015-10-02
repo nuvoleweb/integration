@@ -15,7 +15,10 @@ namespace Drupal\integration\Plugins;
 class PluginDefinition extends AbstractDefinition {
 
   /**
-   * @return mixed
+   * Get plugin entity type.
+   *
+   * @return string
+   *    Plugin entity type.
    */
   public function getEntityType() {
     return isset($this->definition['entity type']) ? $this->definition['entity type'] : NULL;

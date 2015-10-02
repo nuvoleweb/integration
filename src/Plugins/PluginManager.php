@@ -19,14 +19,14 @@ class PluginManager {
    *
    * @var array
    */
-  private $plugin_definitions = array();
+  private $pluginDefinitions = array();
 
   /**
    * List of current plugin type component definitions.
    *
    * @var array
    */
-  private $component_definitions = array();
+  private $componentDefinitions = array();
 
   /**
    * Current plugin machine name.
@@ -57,18 +57,26 @@ class PluginManager {
   public function __construct($name) {
     $this->plugin = str_replace('integration_', '', $name);
 
-    $this->plugin_definitions = module_invoke_all("integration_{$this->plugin}_info");
-    drupal_alter("integration_{$this->plugin}_info", $this->plugin_definitions);
+    $this->pluginDefinitions = module_invoke_all("integration_{$this->plugin}_info");
+    drupal_alter("integration_{$this->plugin}_info", $this->pluginDefinitions);
 
-    $this->component_definitions = module_invoke_all("integration_{$this->plugin}_components_info");
-    drupal_alter("integration_{$this->plugin}_info", $this->component_definitions);
+    $this->componentDefinitions = module_invoke_all("integration_{$this->plugin}_components_info");
+    drupal_alter("integration_{$this->plugin}_components_info", $this->componentDefinitions);
   }
 
   /**
+   * Get plugin definitions.
+   *
    * @return array
+   *    List of plugin definitions.
+   *
+   * @see hook_integration_backend_info()
+   * @see hook_integration_producer_info()
+   * @see hook_integration_consumer_info()
+   * @see hook_integration_resource_schema_info()
    */
   public function getPluginDefinitions() {
-    return $this->plugin_definitions;
+    return $this->pluginDefinitions;
   }
 
   /**
@@ -79,34 +87,44 @@ class PluginManager {
    *
    * @return array
    *    Component definitions of a specific type, if any, all otherwise.
+   *
+   * @see hook_integration_backend_components_info()
+   * @see hook_integration_producer_components_info()
+   * @see hook_integration_consumer_components_info()
    */
   public function getComponentDefinitions($type = NULL) {
     if ($type) {
-      return array_filter($this->component_definitions, function ($definition) use ($type) {
+      return array_filter($this->componentDefinitions, function ($definition) use ($type) {
         return $definition['type'] == $type;
       });
     }
-    return $this->component_definitions;
+    return $this->componentDefinitions;
   }
 
   /**
+   * Get plugin definition object.
+   *
    * @param string $plugin
    *    Plugin name.
    *
    * @return PluginDefinition
+   *    Plugin definition object.
    */
   public function getPlugin($plugin) {
-    return new PluginDefinition($this->plugin_definitions[$plugin]);
+    return new PluginDefinition($this->pluginDefinitions[$plugin]);
   }
 
   /**
+   * Get component definition object.
+   *
    * @param string $component
    *    Component name.
    *
    * @return ComponentDefinition
+   *    Component definition object
    */
   public function getComponent($component) {
-    return new ComponentDefinition($this->component_definitions[$component]);
+    return new ComponentDefinition($this->componentDefinitions[$component]);
   }
 
 }
