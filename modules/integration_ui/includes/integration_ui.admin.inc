@@ -9,9 +9,51 @@ use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration_ui\FormFactory;
 
 /**
+ * A wrapper around drupal_get_form() that helps building entity forms.
+ *
+ * @param string $entity_type
+ *   The entity type for which to get the form.
+ * @param object $entity
+ *   The entity for which to return the form.
+ * @param string $op
+ *   One of 'edit', 'add' or 'clone'. Defaults to edit.
+ * @param array $form_state
+ *   A pre-populated form state.
+ *
+ * @return array
+ *   The fully built and processed form, ready to be rendered.
+ *
+ * @see entity_ui_get_form()
+ */
+function integration_ui_get_form($entity_type, $entity, $op = 'edit', array $form_state = array()) {
+  if (!isset($entity) && $op == 'add') {
+    $entity = entity_create($entity_type, array());
+  }
+
+  $form_state['wrapper_callback'] = 'entity_ui_main_form_defaults';
+  $form_state['entity_type'] = $entity_type;
+  form_load_include($form_state, 'inc', 'entity', 'includes/entity.ui');
+
+  if ($op == 'clone') {
+    $entity = entity_ui_clone_entity($entity_type, $entity);
+  }
+
+  $form_state['build_info']['args'] = array($entity, $op, $entity_type);
+  return drupal_build_form('integration_ui_entity_form', $form_state);
+}
+
+/**
+ * Implements hook_action_info().
+ */
+function integration_ui_form_ajax_callback($form, $form_state) {
+  $target = $form_state['triggering_element']['#ajax']['target'];
+  return $form[$target];
+}
+
+/**
  * Generates configuration entity form.
  */
-function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $configuration, $op = 'edit', $entity_type) {
+function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $configuration, $op, $entity_type) {
 
   $form['name'] = array(
     '#title' => t('Name'),
