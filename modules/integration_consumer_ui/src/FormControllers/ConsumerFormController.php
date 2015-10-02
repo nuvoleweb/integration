@@ -10,6 +10,8 @@ namespace Drupal\integration_consumer_ui\FormControllers;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration_ui\AbstractForm;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
+use Drupal\integration_ui\FormFactory;
+use Drupal\integration_ui\FormHelper;
 
 /**
  * Class ConsumerFormController.
@@ -23,241 +25,92 @@ class ConsumerFormController extends AbstractForm {
    */
   public function form(array &$form, array &$form_state, $op) {
     /** @var ConsumerConfiguration $configuration */
-    $configuration = $this->getConfiguration();
+    $configuration = $this->getConfiguration($form_state);
+    $plugin_manager = $this->getPluginManager($form_state);
+    $form_factory = FormFactory::getInstance('consumer');
 
-    // Build plugin type form portion.
-    $this->buildPluginForm($form, $form_state, $op);
+    // Add plugin type selection.
+    $form['plugin_container'] = FormHelper::inlineFieldset(
+      t('Consumer plugin')
+    );
+    $form['plugin_container']['plugin'] = FormHelper::hiddenLabelSelect(
+      t('Consumer plugin'),
+      FormHelper::asOptions($plugin_manager->getPluginDefinitions()),
+      $configuration->getPlugin()
+    );
+    $form['plugin_container']['select_plugin'] = FormHelper::stepSubmit(
+      t('Select plugin'),
+      'select_plugin'
+    );
 
     // Select entity bundle based on producer plugin type.
     if ($plugin = $configuration->getPlugin()) {
-      $this->buildEntityBundleForm($form, $form_state, $op);
+
+      $entity_type = $plugin_manager->getPlugin($plugin)->getEntityType();
+      $entity_info = entity_get_info($entity_type);
+
+      $form['entity_bundle_container'] = FormHelper::inlineFieldset(t('Entity bundle'));
+      $form['entity_bundle_container']['entity_bundle'] = FormHelper::hiddenLabelSelect(
+        t('Entity bundle'),
+        FormHelper::asOptions($entity_info['bundles']),
+        $configuration->getEntityBundle()
+      );
+      $form['entity_bundle_container']['entity_bundle_submit'] = FormHelper::stepSubmit(
+        t('Select bundle'),
+        'entity_bundle_submit'
+      );
     }
 
     // Add resource schema form portion.
     if ($entity_bundle = $configuration->getEntityBundle()) {
-      $this->buildResourceSchemaForm($form, $form_state, $op);
+
+      $form['resource_container'] = FormHelper::inlineFieldset(
+        t('Resource schema')
+      );
+      $form['resource_container']['resource'] = FormHelper::hiddenLabelSelect(
+        t('Resource schema'),
+        $this->getResourceSchemasAsOptions(),
+        (array) $configuration->getPluginSetting('resource_schema')
+      );
+      $form['resource_container']['resource_submit'] = FormHelper::stepSubmit(
+        t('Select resource schema'),
+        'resource_submit'
+      );
     }
+    $form['settings'] = FormHelper::tree();
+    $form['settings']['plugin'] = FormHelper::tree(FALSE);
 
     // Add field mapping form portion.
-    $entity_type = $this->getPluginManager()->getEntityType($plugin);
-    $resource = $configuration->getResourceSchema();
-    if ($resource && $entity_type && $entity_bundle) {
-      $this->buildFieldMappingForm($form, $form_state, $op);
-    }
-  }
+    $resource_name = $configuration->getResourceSchema();
+    if ($plugin && $resource_name) {
 
-  /**
-   * Helper function: render entity bundle form portion.
-   *
-   * @param array $form
-   *    Form array.
-   * @param array $form_state
-   *    Form state array.
-   * @param string $op
-   *    Current form operation.
-   */
-  protected function buildPluginForm(array &$form, array &$form_state, $op) {
-    /** @var ConsumerConfiguration $configuration */
-    $configuration = $this->getConfiguration();
+      // @todo: change this by setting proper getters on entity property info.
+      $resource = ConfigurationFactory::load('integration_resource_schema', $resource_name);
+      $source_options = array('' => '') + (array) $resource->getPluginSetting('fields');
+      $destination_options = $this->getDestinationOptions($entity_type, $entity_bundle);
 
-    // Select producer plugin type.
-    $options = $this->getPluginManager()->getFormOptions();
-    $form['plugin_container'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Consumer plugin'),
-      '#tree' => FALSE,
-      '#attributes' => array('class' => array('container-inline')),
-    );
-    $form['plugin_container']['plugin'] = array(
-      '#type' => 'select',
-      '#title' => t('Producer plugin'),
-      '#title_display' => 'invisible',
-      '#options' => $options,
-      '#default_value' => $configuration->getPlugin(),
-      '#required' => TRUE,
-    );
-    $form['plugin_container']['select_plugin'] = array(
-      '#type' => 'submit',
-      '#value' => t('Select plugin'),
-      '#name' => 'select_plugin',
-      '#limit_validation_errors' => array(),
-      '#submit' => array('integration_ui_entity_form_submit'),
-    );
-  }
+      $rows = array();
+      $mapping = (array) $configuration->getPluginSetting('mapping');
+      foreach ($mapping as $source => $destination) {
+        $form['settings']['plugin']['mapping'][$source] = FormHelper::hidden($destination);
 
+        $row = array();
+        $row['source'] = FormHelper::markup($source_options[$source]);
+        $row['destination'] = FormHelper::markup($destination_options[$destination]);
+        $row['remove_mapping'] = FormHelper::stepSubmit(t('Remove'), 'remove_mapping');
+        $row['remove_mapping']['#field'] = $source;
+        $rows[] = $row;
+      }
 
-  /**
-   * Helper function: render entity bundle form portion.
-   *
-   * @param array $form
-   *    Form array.
-   * @param array $form_state
-   *    Form state array.
-   * @param string $op
-   *    Current form operation.
-   */
-  protected function buildEntityBundleForm(array &$form, array &$form_state, $op) {
-    /** @var ConsumerConfiguration $configuration */
-    $configuration = $this->getConfiguration();
-    $plugin = $configuration->getPlugin();
-
-    $entity_type = $this->getPluginManager()->getEntityType($plugin);
-    $entity_info = entity_get_info($entity_type);
-    $options = $this->extractSelectOptions($entity_info['bundles'], 'label');
-    $entity_bundle = $configuration->getEntityBundle();
-
-    $form['entity_bundle_container'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Entity bundle'),
-      '#tree' => FALSE,
-      '#attributes' => array('class' => array('container-inline')),
-    );
-    $form['entity_bundle_container']['entity_bundle'] = array(
-      '#type' => 'select',
-      '#title' => t('Entity bundle'),
-      '#title_display' => 'invisible',
-      '#options' => $options,
-      '#default_value' => $entity_bundle,
-      '#required' => TRUE,
-    );
-    $form['entity_bundle_container']['entity_bundle_submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('Select bundle'),
-      '#name' => 'entity_bundle_submit',
-      '#limit_validation_errors' => array(),
-      '#submit' => array('integration_ui_entity_form_submit'),
-    );
-  }
-
-  /**
-   * Helper function: render resource schema form portion.
-   *
-   * @param array $form
-   *    Form array.
-   * @param array $form_state
-   *    Form state array.
-   * @param string $op
-   *    Current form operation.
-   */
-  protected function buildResourceSchemaForm(array &$form, array &$form_state, $op) {
-    /** @var ConsumerConfiguration $configuration */
-    $configuration = $this->getConfiguration();
-
-    $options = array();
-    $resources = entity_load('integration_resource_schema');
-    foreach ($resources as $resource) {
-      /** @var ConsumerConfiguration $resource */
-      $options[$resource->getMachineName()] = $resource->getName();
-    }
-
-    $form['resource_container'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Resource schema'),
-      '#tree' => FALSE,
-      '#attributes' => array('class' => array('container-inline')),
-    );
-    $form['resource_container']['resource'] = array(
-      '#type' => 'select',
-      '#title' => t('Resource schema'),
-      '#title_display' => 'invisible',
-      '#options' => $options,
-      '#default_value' => '',
-      '#required' => TRUE,
-    );
-    $form['resource_container']['resource_submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('Select schema'),
-      '#name' => 'resource_submit',
-      '#limit_validation_errors' => array(),
-      '#submit' => array('integration_ui_entity_form_submit'),
-    );
-  }
-
-  /**
-   * Helper function: render field mapping form portion.
-   *
-   * @param array $form
-   *    Form array.
-   * @param array $form_state
-   *    Form state array.
-   * @param string $op
-   *    Current form operation.
-   */
-  protected function buildFieldMappingForm(array &$form, array &$form_state, $op) {
-    /** @var ConsumerConfiguration $configuration */
-    $configuration = $this->getConfiguration();
-    $entity_bundle = $configuration->getEntityBundle();
-
-    /** @var \EntityDrupalWrapper $entity_wrapper */
-    $entity_wrapper = entity_metadata_wrapper('node');
-    $properties = $entity_wrapper->refPropertyInfo();
-    $destination_options = array('' => '');
-    foreach ($properties['properties'] as $key => $value) {
-      $destination_options[$key] = t('Property: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
-    }
-    foreach ($properties['bundles'][$entity_bundle]['properties'] as $key => $value) {
-      $destination_options[$key] = t('Field: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
-    }
-    asort($destination_options);
-
-    // @todo: change this by setting proper getters on entity property info.
-    $resource = ConfigurationFactory::load('integration_resource_schema', $configuration->getResourceSchema());
-    $source_options = array('' => '') + (array) $resource->getPluginSetting('fields');
-
-    $form['settings'] = array(
-      '#tree' => TRUE,
-    );
-    $rows = array();
-    $form['settings']['plugin'] = array(
-      '#tree' => FALSE,
-    );
-    $mapping = (array) $configuration->getPluginSetting('mapping');
-
-    foreach ($mapping as $source => $destination) {
-      $form['settings']['plugin']['mapping'][$source] = array(
-        '#value' => $destination,
+      $rows[] = array(
+        'source' => FormHelper::select(NULL, $source_options),
+        'destination' => FormHelper::select(NULL, $destination_options),
+        'add_field_mapping' => FormHelper::stepSubmit(t('Add mapping'), 'add_field_mapping'),
       );
-      $row = array();
-      $row['source'] = array('#markup' => $source_options[$source]);
-      $row['destination'] = array('#markup' => $destination_options[$destination]);
-      $row['remove_mapping'] = array(
-        '#type' => 'submit',
-        '#value' => t('Remove'),
-        '#name' => 'remove_mapping',
-        '#field' => $source,
-        '#limit_validation_errors' => array(),
-        '#submit' => array('integration_ui_entity_form_submit'),
-      );
-      $rows[] = $row;
+
+      $header = array(t('Source'), t('Destination'), '');
+      $form['mapping'] = FormHelper::table($header, $rows);
     }
-
-    $rows[] = array(
-      'source' => array(
-        '#type' => 'select',
-        '#options' => $source_options,
-        '#default_value' => '',
-      ),
-      'destination' => array(
-        '#type' => 'select',
-        '#options' => $destination_options,
-        '#default_value' => '',
-      ),
-      'add_field_mapping' => array(
-        '#type' => 'submit',
-        '#value' => t('Add mapping'),
-        '#name' => 'add_field_mapping',
-        '#limit_validation_errors' => array(),
-        '#submit' => array('integration_ui_entity_form_submit'),
-      ),
-    );
-
-    $header = array(t('Source'), t('Destination'), '');
-    $form['mapping'] = array(
-      '#theme' => 'integration_form_table',
-      '#header' => $header,
-      '#tree' => FALSE,
-      'rows' => $rows,
-    );
   }
 
   /**
@@ -272,7 +125,7 @@ class ConsumerFormController extends AbstractForm {
    */
   public function formSubmit(array $form, array &$form_state) {
     /** @var ConsumerConfiguration $configuration */
-    $configuration = $this->getConfiguration();
+    $configuration = $this->getConfiguration($form_state);
     $input = &$form_state['input'];
     $triggering_element = $form_state['triggering_element'];
 
@@ -301,6 +154,31 @@ class ConsumerFormController extends AbstractForm {
         $form_state['rebuild'] = TRUE;
         break;
     }
+  }
+
+  /**
+   * Get options list of possible entity type destinations.
+   *
+   * @param string $entity_type
+   *    Entity type machine name.
+   *
+   * @return array
+   *    List of entity type fields and properties.
+   */
+  protected function getDestinationOptions($entity_type, $entity_bundle) {
+    $options = array('' => '');
+
+    /** @var \EntityDrupalWrapper $entity_wrapper */
+    $entity_wrapper = entity_metadata_wrapper($entity_type);
+    $properties = $entity_wrapper->refPropertyInfo();
+    foreach ($properties['properties'] as $key => $value) {
+      $options[$key] = t('Property: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
+    }
+    foreach ($properties['bundles'][$entity_bundle]['properties'] as $key => $value) {
+      $options[$key] = t('Field: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
+    }
+    asort($options);
+    return $options;
   }
 
 }
