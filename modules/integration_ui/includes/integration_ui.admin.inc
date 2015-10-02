@@ -6,12 +6,12 @@
  */
 
 use Drupal\integration\Configuration\AbstractConfiguration;
-use Drupal\integration_ui\FormManager;
+use Drupal\integration_ui\FormFactory;
 
 /**
  * Generates configuration entity form.
  */
-function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $configuration, $op = 'edit') {
+function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $configuration, $op = 'edit', $entity_type) {
 
   $form['name'] = array(
     '#title' => t('Name'),
@@ -39,8 +39,8 @@ function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $
     '#value' => ($op == 'add') ? ENTITY_CUSTOM : $configuration->getStatus(),
   );
 
-  $form_manager = FormManager::getInstance($configuration->entityType());
-  $form_manager->getHandler()->form($form, $form_state, $op);
+  $form_manager = FormFactory::getInstance($entity_type);
+  $form_manager->getController()->form($form, $form_state, $op);
 
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array(
@@ -60,8 +60,8 @@ function integration_ui_entity_form_submit(&$form, &$form_state) {
   /** @var AbstractConfiguration $configuration */
   $configuration = entity_ui_form_submit_build_entity($form, $form_state);
 
-  $form_manager = FormManager::getInstance($configuration);
-  $form_manager->getHandler()->formSubmit($form, $form_state);
+  $form_manager = FormFactory::getInstance($configuration->entityType());
+  $form_manager->getController()->formSubmit($form, $form_state);
 
   if (isset($form_state['rebuild']) && !$form_state['rebuild']) {
     $configuration->save();
