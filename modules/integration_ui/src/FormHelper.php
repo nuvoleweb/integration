@@ -210,6 +210,7 @@ class FormHelper {
     return array(
       '#theme' => 'integration_form_table',
       '#header' => $header,
+      '#tree' => FALSE,
       'rows' => $rows,
     );
   }
@@ -299,6 +300,21 @@ class FormHelper {
       $element[$name] = array('#description' => $values[$description_key]);
     }
     return $element;
+  }
+
+  /**
+   * Set #tree value.
+   *
+   * @param bool|TRUE $tree
+   *    Weather to consider the current element as a form #tree or not.
+   *
+   * @return array
+   *    Form API radio buttons element.
+   */
+  static public function tree($tree = TRUE) {
+    return array(
+      '#tree' => $tree,
+    );
   }
 
 }

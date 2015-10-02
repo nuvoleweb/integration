@@ -9,6 +9,7 @@ namespace Drupal\integration_ui\FormControllers;
 
 use Drupal\integration_ui\AbstractForm;
 use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
+use Drupal\integration_ui\FormHelper;
 
 /**
  * Class ResourceSchemaFormController.
@@ -22,71 +23,40 @@ class ResourceSchemaFormController extends AbstractForm {
    */
   public function form(array &$form, array &$form_state, $op) {
     /** @var ResourceSchemaConfiguration $configuration */
-    $configuration = $this->getConfiguration();
+    $configuration = $this->getConfiguration($form_state);
+    $plugin_manager = $this->getPluginManager($form_state);
 
-    $options = $this->getPluginManager()->getFormOptions();
-    $form['plugin'] = array(
-      '#type' => 'radios',
-      '#title' => t('Resource schema plugin'),
-      '#options' => $options,
-      '#default_value' => $configuration->getPlugin(),
-      '#required' => TRUE,
+    $form['plugin'] = FormHelper::radios(
+      t('Resource schema plugin'),
+      $plugin_manager->getPluginDefinitions(),
+      $configuration->getPlugin()
     );
-    foreach ($options as $name => $label) {
-      $form['plugin'][$name] = array('#description' => $this->getPluginManager()->getDescription($name));
-    }
+    $form['settings'] = FormHelper::tree();
+    $form['settings']['plugin'] = FormHelper::tree(FALSE);
 
-    $form['settings'] = array(
-      '#tree' => TRUE,
-    );
-    $rows = array();
-    $form['settings']['plugin'] = array(
-      '#tree' => FALSE,
-    );
     $i = 0;
+    $rows = array();
     $fields = (array) $configuration->getPluginSetting('fields');
     foreach ($fields as $name => $label) {
-      $form['settings']['plugin']['fields'][$name] = array(
-        '#value' => $label,
-      );
+      $form['settings']['plugin']['fields'][$name] = FormHelper::hidden($label);
+
       $row = array();
-      $row['name'] = array('#markup' => $name);
-      $row['label'] = array('#markup' => $label);
-      $row['remove_field_' . $i] = array(
-        '#type' => 'submit',
-        '#value' => t('Remove'),
-        '#name' => 'remove_field',
-        '#field' => $name,
-        '#limit_validation_errors' => array(),
-        '#submit' => array('integration_ui_entity_form_submit'),
-      );
+      $row['name'] = FormHelper::markup($name);
+      $row['label'] = FormHelper::markup($label);
+      $row['remove_field_' . $i] = FormHelper::stepSubmit(t('Remove'), $name);
+      $row['remove_field_' . $i]['#field'] = $name;
       $rows[] = $row;
       $i++;
     }
-    $rows[] = array(
-      'field_name' => array(
-        '#type' => 'textfield',
-        '#default_value' => '',
-      ),
-      'field_label' => array(
-        '#type' => 'textfield',
-        '#default_value' => '',
-      ),
-      'add_field' => array(
-        '#type' => 'submit',
-        '#value' => t('Add'),
-        '#name' => 'add_field',
-        '#limit_validation_errors' => array(),
-        '#submit' => array('integration_ui_entity_form_submit'),
-      ),
-    );
 
-    $header = array(t('Field name'), t('Field label'), '');
-    $form['settings']['fields'] = array(
-      '#theme' => 'integration_form_table',
-      '#header' => $header,
-      '#tree' => FALSE,
-      'rows' => $rows,
+    $rows[] = array(
+      'field_name' => FormHelper::textField(NULL, NULL, FALSE),
+      'field_label' => FormHelper::textField(NULL, NULL, FALSE),
+      'add_field' => FormHelper::stepSubmit(t('Add'), 'add_field'),
+    );
+    $form['settings']['fields'] = FormHelper::table(
+      array(t('Field name'), t('Field label'), ''),
+      $rows
     );
   }
 
@@ -95,7 +65,7 @@ class ResourceSchemaFormController extends AbstractForm {
    */
   public function formSubmit(array $form, array &$form_state) {
     /** @var ResourceSchemaConfiguration $configuration */
-    $configuration = $this->getConfiguration();
+    $configuration = $this->getConfiguration($form_state);
     $input = &$form_state['input'];
     $triggering_element = $form_state['triggering_element'];
 
