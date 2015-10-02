@@ -10,9 +10,9 @@ namespace Drupal\integration_ui\FormControllers;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration_ui\AbstractForm;
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
+use Drupal\integration_ui\Exceptions\UndefinedFormHandlerException;
 use Drupal\integration_ui\FormFactory;
 use Drupal\integration_ui\FormHelper;
-use Drupal\integration\Plugins\PluginManager;
 
 /**
  * Class BackendFormController.
@@ -27,9 +27,10 @@ class BackendFormController extends AbstractForm {
   public function form(array &$form, array &$form_state, $op) {
     /** @var BackendConfiguration $configuration */
     $configuration = $this->getConfiguration($form_state);
-    /** @var PluginManager $plugin_manager */
     $plugin_manager = $this->getPluginManager($form_state);
+    $form_factory = FormFactory::getInstance('backend');
 
+    // Add plugin type selection.
     $form['plugin_container'] = FormHelper::inlineFieldset(
       t('Producer plugin')
     );
@@ -51,7 +52,7 @@ class BackendFormController extends AbstractForm {
       );
       $form['resource_container']['resource_schemas'] = FormHelper::hiddenLabelCheckboxes(
         t('Resource schemas'),
-        $this->loadResourceSchemasAsOptions(),
+        $this->getResourceSchemasAsOptions(),
         (array) $configuration->getPluginSetting('resource_schemas')
       );
       $form['resource_container']['select_plugin'] = FormHelper::stepSubmit(
@@ -64,15 +65,19 @@ class BackendFormController extends AbstractForm {
     if ($resources = (array) $configuration->getPluginSetting('resource_schemas')) {
 
       $rows = array();
-      foreach ($resources as $resource) {
-        $resource_schema = ConfigurationFactory::load('integration_resource_schema', $resource);
-        $form['resource_settings'][$resource_schema->getMachineName()] = array(
-          '#value' => $resource_schema->getMachineName(),
-        );
+      foreach ($resources as $machine_name) {
+        $element = array();
+        $form['resource_settings'][$machine_name] = FormHelper::hidden($machine_name);
+        try {
+          $form_factory->getPluginHandler($plugin)->form($element, $form_state, $op);
+        }
+        catch (UndefinedFormHandlerException $e) {
+        }
+
         $row = array();
-        $row['resource'] = array('#markup' => $resource_schema->getName());
+        $row['resource'] = FormHelper::markup($this->getResourceSchemaLabel($resource));
         $row['resource_backend_settings']['#tree'] = TRUE;
-        $row['resource_backend_settings'][$resource_schema->getMachineName()] = $this->buildPluginSettingsForm($form, $form_state, $op);
+        $row['resource_backend_settings'][$machine_name] = $element;
         $rows[] = $row;
       }
 
@@ -83,126 +88,52 @@ class BackendFormController extends AbstractForm {
       );
     }
 
-    return;
-//
-//
-//    if ($plugin && $resources) {
-//      $this->componentsForm($form, $form_state, $op);
-//    }
-  }
-
-  /**
-   * @return array
-   */
-  protected function loadResourceSchemasAsOptions() {
-    $options = array();
-    $resources = entity_load('integration_resource_schema');
-    foreach ($resources as $resource) {
-      /** @var BackendConfiguration $resource */
-      $options[$resource->getMachineName()] = $resource->getName();
-    }
-    return $options;
-  }
-
-
-  /**
-   * Get specific plugin type settings form.
-   *
-   * @param array $form
-   *    Form array.
-   * @param array $form_state
-   *    Form state array.
-   * @param string $op
-   *    Current form operation.
-   *
-   * @return mixed
-   *    Form array.
-   */
-  protected function buildPluginSettingsForm(array &$form, array &$form_state, $op) {
-//    $info = $this->getPluginManager()->getInfo();
-    // @todo: fetch this from plugin type form.
-    $plugin_settings['endpoint'] = array(
-      '#title' => t('Endpoint'),
-      '#type' => 'textfield',
-    );
-    $plugin_settings['changes'] = array(
-      '#title' => t('Change feed'),
-      '#type' => 'textfield',
-    );
-    return $plugin_settings;
-  }
-
-  /**
-   * Return current plugin components form portion.
-   *
-   * @param array $form
-   *    Form array.
-   * @param array $form_state
-   *    Form state array.
-   * @param string $op
-   *    Current form operation.
-   */
-  protected function componentsForm(array &$form, array &$form_state, $op) {
-    /** @var BackendConfiguration $configuration */
-    $configuration = $this->getConfiguration($form_state);
-    $plugin = $this->getPluginManager($form_state);
-
-    $form['components'] = array(
-      '#type' => 'vertical_tabs',
-      '#tree' => TRUE,
-    );
-    foreach ($plugin->getComponents() as $component) {
-
-      $component_value = '';
-      switch ($component) {
-        case 'response_handler':
-          $component_value = $configuration->getResponse();
-          break;
-
-        case 'formatter_handler':
-          $component_value = $configuration->getFormatter();
-          break;
-
-        case 'authentication_handler':
-          $component_value = $configuration->getAuthentication();
-          break;
-      }
-
-      $plugin->setComponent($component);
-      $label = $plugin->getComponentLabel($component);
-
-      $form["component_$component"] = array(
-        '#type' => 'fieldset',
-        '#title' => $label,
-        '#collapsible' => TRUE,
-        '#group' => 'components',
-        '#tree' => FALSE,
+    // Add component specific forms.
+    if ($plugin && $resources) {
+      $components = array(
+        'response_handler' => array(
+          'label' => t('Response handler'),
+          'value' => $configuration->getResponse(),
+        ),
+        'formatter_handler' => array(
+          'label' => t('Formatter handler'),
+          'value' => $configuration->getFormatter(),
+        ),
+        'authentication_handler' => array(
+          'label' => t('Authentication handler'),
+          'value' => $configuration->getAuthentication(),
+        ),
       );
 
-      $options = $this->getPluginManager()->getFormOptions();
-      $form["component_$component"][$component] = array(
-        '#type' => 'radios',
-        '#title' => $label,
-        '#default_value' => $component_value,
-        '#options' => $options,
-        '#required' => FALSE,
+      $form['components'] = array(
+        '#type' => 'vertical_tabs',
+        '#tree' => TRUE,
       );
-      foreach (array_keys($options) as $name) {
-        $element[$name] = array('#description' => $this->getPluginManager()->getDescription($name));
-      }
+      foreach ($components as $component_type => $component) {
 
-      foreach ($plugin->getInfo() as $type => $info) {
-        $element = array(
-          '#type' => 'fieldset',
-          '#title' => t('@component options', array('@component' => $label)),
-          '#collapsible' => TRUE,
-          '#group' => "component_$component",
+        $form["component_$component_type"] = FormHelper::fieldset(
+          $component['label'],
+          FALSE,
+          'components'
+        );
+        $form["component_$component_type"][$component_type] = FormHelper::radios(
+          $component['label'],
+          $plugin_manager->getComponentDefinitions($component_type),
+          $component['value']
         );
 
-        $form_manager = FormFactory::getInstance($this->getConfiguration(), $component, $type);
-        if ($form_manager) {
-          $form_manager->form($element, $form_state, $op);
-          $form["component_$component"]["{$component}_configuration"] = $element;
+        if ($component['value']) {
+          try {
+            $element = FormHelper::fieldset(
+              t('Settings'),
+              FALSE,
+              "component_$component_type"
+            );
+            $form_factory->getComponentHandler($component['value'])->form($element, $form_state, $op);
+            $form["component_$component_type"]["{$component_type}_configuration"] = $element;
+          }
+          catch (UndefinedFormHandlerException $e) {
+          }
         }
       }
     }
@@ -263,6 +194,36 @@ class BackendFormController extends AbstractForm {
     if (isset($input['resource_backend_settings'])) {
       $configuration->setPluginSetting('resource_backend_settings', $input['resource_backend_settings']);
     }
+  }
+
+  /**
+   * Load all available resource schema and format them as an #options array.
+   *
+   * @return array
+   *    Form element options.
+   */
+  protected function getResourceSchemasAsOptions() {
+    $options = array();
+    $resources = entity_load('integration_resource_schema');
+    foreach ($resources as $resource) {
+      /** @var BackendConfiguration $resource */
+      $options[$resource->getMachineName()] = $resource->getName();
+    }
+    return $options;
+  }
+
+  /**
+   * Get resource schema label given its machine name.
+   *
+   * @param string $resource
+   *    Response schema machine name.
+   *
+   * @return string
+   *    Response schema label.
+   */
+  protected function getResourceSchemaLabel($resource) {
+    $resource_schema = ConfigurationFactory::load('integration_resource_schema', $resource);
+    return $resource_schema->getName();
   }
 
 }
