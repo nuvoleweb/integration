@@ -28,41 +28,21 @@ class ProducerFormController extends AbstractForm {
     $plugin_manager = $this->getPluginManager($form_state);
 
     // Add plugin type selection.
-    $form += $this->getPluginForm(t('Producer plugin'), $configuration, $plugin_manager);
+    $form += FormHelper::choosePlugin(t('Producer plugin'), $configuration, $plugin_manager);
 
     // Select entity bundle based on producer plugin type.
     if ($plugin = $configuration->getPlugin()) {
-
-      $entity_type = $plugin_manager->getPlugin($plugin)->getEntityType();
-      $entity_info = entity_get_info($entity_type);
-
-      $form['entity_bundle_container'] = FormHelper::inlineFieldset(t('Entity bundle'));
-      $form['entity_bundle_container']['entity_bundle'] = FormHelper::hiddenLabelSelect(
-        t('Entity bundle'),
-        FormHelper::asOptions($entity_info['bundles']),
-        $configuration->getEntityBundle()
-      );
-      $form['entity_bundle_container']['entity_bundle_submit'] = FormHelper::stepSubmit(
-        t('Select bundle'),
-        'entity_bundle_submit'
-      );
+      $form += FormHelper::chooseEntityBundle($plugin, $configuration, $plugin_manager);
     }
 
     // Add resource schema form portion.
     if ($entity_bundle = $configuration->getEntityBundle()) {
+      $options = $this->getResourceSchemasAsOptions();
+      $default_value = (array) $configuration->getPluginSetting('resource_schema');
 
-      $form['resource_container'] = FormHelper::inlineFieldset(
-        t('Resource schema')
-      );
-      $form['resource_container']['resource'] = FormHelper::hiddenLabelSelect(
-        t('Resource schema'),
-        $this->getResourceSchemasAsOptions(),
-        (array) $configuration->getPluginSetting('resource_schema')
-      );
-      $form['resource_container']['resource_submit'] = FormHelper::stepSubmit(
-        t('Select resource schema'),
-        'resource_submit'
-      );
+      $form['resource_container'] = FormHelper::inlineFieldset(t('Resource schema'));
+      $form['resource_container']['resource'] = FormHelper::hiddenLabelSelect(t('Resource schema'), $options, $default_value);
+      $form['resource_container']['resource_submit'] = FormHelper::stepSubmit(t('Select resource schema'), 'resource_submit');
     }
     $form['settings'] = FormHelper::tree();
     $form['settings']['plugin'] = FormHelper::tree(FALSE);
@@ -82,21 +62,21 @@ class ProducerFormController extends AbstractForm {
       foreach ($mapping as $source => $destination) {
         $form['settings']['plugin']['mapping'][$source] = FormHelper::hidden($destination);
 
-        $row = array();
-        $row['source'] = FormHelper::markup($source_options[$source]);
-        $row['destination'] = FormHelper::markup($destination_options[$destination]);
-        $row['remove_mapping'] = FormHelper::stepSubmit(t('Remove'), 'remove_mapping');
-        $row['remove_mapping']['#field'] = $source;
+        $row = array(
+          'source'         => FormHelper::markup($source_options[$source]),
+          'destination'    => FormHelper::markup($destination_options[$destination]),
+          'remove_mapping' => FormHelper::stepSubmit(t('Remove'), 'remove_mapping'),
+        );
         $rows[] = $row;
       }
 
       $rows[] = array(
-        'source' => FormHelper::select(NULL, $source_options),
-        'destination' => FormHelper::select(NULL, $destination_options),
+        'source'            => FormHelper::select(NULL, $source_options),
+        'destination'       => FormHelper::select(NULL, $destination_options),
         'add_field_mapping' => FormHelper::stepSubmit(t('Add mapping'), 'add_field_mapping'),
       );
 
-      $header = array(t('Source'), t('Destination'), '');
+      $header = array(t('Source'), t('Destination'), NULL);
       $form['mapping'] = FormHelper::table($header, $rows);
     }
   }
