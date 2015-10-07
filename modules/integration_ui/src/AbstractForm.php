@@ -73,22 +73,6 @@ abstract class AbstractForm implements FormInterface {
   }
 
   /**
-   * @param string $label
-   * @param AbstractConfiguration $configuration
-   * @param PluginManager $plugin_manager
-   * @return mixed
-   */
-  protected function getPluginForm($label, AbstractConfiguration $configuration, PluginManager $plugin_manager) {
-    $options = FormHelper::asOptions($plugin_manager->getPluginDefinitions());
-    $default = $configuration->getPlugin();
-
-    $form['plugin_container'] = FormHelper::inlineFieldset($label);
-    $form['plugin_container']['plugin'] = FormHelper::hiddenLabelSelect($label, $options, $default);
-    $form['plugin_container']['select_plugin'] = FormHelper::stepSubmit(t('Select plugin'), 'select_plugin');
-    return $form;
-  }
-
-  /**
    * Get list of ist of entity type fields and properties.
    *
    * @param string $entity_type

@@ -7,6 +7,11 @@
 
 namespace Drupal\integration_ui;
 
+use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration_producer\Configuration\ProducerConfiguration;
+use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
+use Drupal\integration\Plugins\PluginManager;
+
 /**
  * Class FormHelper.
  *
@@ -142,6 +147,7 @@ class FormHelper {
       '#type' => 'submit',
       '#value' => $label,
       '#name' => $name,
+      '#field' => $name,
       '#limit_validation_errors' => array(),
       '#submit' => array('integration_ui_entity_form_submit'),
     );
@@ -174,6 +180,22 @@ class FormHelper {
       $element['#group'] = $group;
     }
     return $element;
+  }
+
+  /**
+   * Form API helper: return vertical tabs element.
+   *
+   * @param bool|TRUE $tree
+   *    Weather the form element is to be treated as a tree.
+   *
+   * @return array
+   *    Form element array as expected by Drupal's Form API.
+   */
+  static public function verticalTabs($tree = TRUE) {
+    return array(
+      '#type' => 'vertical_tabs',
+      '#tree' => $tree,
+    );
   }
 
   /**
@@ -284,7 +306,7 @@ class FormHelper {
    *    Array item's key to be used as description.
    *
    * @return array
-   *    Form API radio buttons element.
+   *    Form element array as expected by Drupal's Form API.
    */
   static public function radios($title, array $array, $default_value, $required = FALSE, $label_key = 'label', $description_key = 'description') {
     $options = self::asOptions($array, $label_key);
@@ -309,12 +331,60 @@ class FormHelper {
    *    Weather to consider the current element as a form #tree or not.
    *
    * @return array
-   *    Form API radio buttons element.
+   *    Form element array as expected by Drupal's Form API.
    */
   static public function tree($tree = TRUE) {
     return array(
       '#tree' => $tree,
     );
+  }
+
+  /**
+   * Returns plugin selection form.
+   *
+   * @param string $label
+   *    Form element label.
+   * @param AbstractConfiguration|ProducerConfiguration|ConsumerConfiguration $configuration
+   *    Current configuration object.
+   * @param PluginManager $plugin_manager
+   *    Current plugin manager object.
+   *
+   * @return array
+   *    Form element array as expected by Drupal's Form API.
+   */
+  static public function choosePlugin($label, AbstractConfiguration $configuration, PluginManager $plugin_manager) {
+    $options = self::asOptions($plugin_manager->getPluginDefinitions());
+    $default = $configuration->getPlugin();
+
+    $form['plugin_container'] = self::inlineFieldset($label);
+    $form['plugin_container']['plugin'] = self::hiddenLabelSelect($label, $options, $default);
+    $form['plugin_container']['select_plugin'] = self::stepSubmit(t('Select plugin'), 'select_plugin');
+    return $form;
+  }
+
+  /**
+   * Returns entity bundle selection form.
+   *
+   * @param string $plugin
+   *    Current plugin name, as defined in PluginManager::$pluginDefinitions.
+   * @param AbstractConfiguration|ProducerConfiguration|ConsumerConfiguration $configuration
+   *    Current configuration object.
+   * @param PluginManager $plugin_manager
+   *    Current plugin manager object.
+   *
+   * @return array
+   *    Form element array as expected by Drupal's Form API.
+   */
+  static public function chooseEntityBundle($plugin, AbstractConfiguration $configuration, PluginManager $plugin_manager) {
+    $entity_type = $plugin_manager->getPlugin($plugin)->getEntityType();
+    $entity_info = entity_get_info($entity_type);
+    $options = self::asOptions($entity_info['bundles']);
+    $entity_bundle = $configuration->getEntityBundle();
+
+    $form['entity_bundle_container'] = self::inlineFieldset(t('Entity bundle'));
+    $form['entity_bundle_container']['entity_bundle'] = self::hiddenLabelSelect(t('Entity bundle'), $options, $entity_bundle);
+    $form['entity_bundle_container']['entity_bundle_submit'] = self::stepSubmit(t('Select bundle'), 'entity_bundle_submit');
+    return $form;
   }
 
 }
