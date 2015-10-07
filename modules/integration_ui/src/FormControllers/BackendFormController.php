@@ -30,23 +30,16 @@ class BackendFormController extends AbstractForm {
     $form_factory = FormFactory::getInstance('backend');
 
     // Add plugin type selection.
-    $form += $this->getPluginForm(t('Backend plugin'), $configuration, $plugin_manager);
+    $form += FormHelper::choosePlugin(t('Backend plugin'), $configuration, $plugin_manager);
 
     // Add resource schemas form portion only after setting up the plugin type.
     if ($plugin = $configuration->getPlugin()) {
+      $options = $this->getResourceSchemasAsOptions();
+      $default_value = (array) $configuration->getPluginSetting('resource_schemas');
 
-      $form['resource_container'] = FormHelper::fieldset(
-        t('Resource schemas')
-      );
-      $form['resource_container']['resource_schemas'] = FormHelper::hiddenLabelCheckboxes(
-        t('Resource schemas'),
-        $this->getResourceSchemasAsOptions(),
-        (array) $configuration->getPluginSetting('resource_schemas')
-      );
-      $form['resource_container']['select_plugin'] = FormHelper::stepSubmit(
-        t('Select resource schemas'),
-        'resources_submit'
-      );
+      $form['resource_container'] = FormHelper::fieldset(t('Resource schemas'));
+      $form['resource_container']['resource_schemas'] = FormHelper::hiddenLabelCheckboxes(t('Resource schemas'), $options, $default_value);
+      $form['resource_container']['select_plugin'] = FormHelper::stepSubmit(t('Select resource schemas'), 'resources_submit');
     }
 
     // Prompt each resource schema configuration only when they are set.
@@ -70,10 +63,7 @@ class BackendFormController extends AbstractForm {
       }
 
       $header = array(t('Resource schema'), t('Settings'));
-      $form['resource_settings'] = FormHelper::table(
-        $header,
-        $rows
-      );
+      $form['resource_settings'] = FormHelper::table($header, $rows);
     }
 
     // Add component specific forms.
@@ -93,30 +83,16 @@ class BackendFormController extends AbstractForm {
         ),
       );
 
-      $form['components'] = array(
-        '#type' => 'vertical_tabs',
-        '#tree' => TRUE,
-      );
+      $form['components'] = FormHelper::verticalTabs();
       foreach ($components as $component_type => $component) {
+        $options = $plugin_manager->getComponentDefinitions($component_type);
 
-        $form["component_$component_type"] = FormHelper::fieldset(
-          $component['label'],
-          FALSE,
-          'components'
-        );
-        $form["component_$component_type"][$component_type] = FormHelper::radios(
-          $component['label'],
-          $plugin_manager->getComponentDefinitions($component_type),
-          $component['value']
-        );
+        $form["component_$component_type"] = FormHelper::fieldset($component['label'], FALSE, 'components');
+        $form["component_$component_type"][$component_type] = FormHelper::radios($component['label'], $options, $component['value']);
 
         if ($component['value']) {
           try {
-            $element = FormHelper::fieldset(
-              t('Settings'),
-              FALSE,
-              "component_$component_type"
-            );
+            $element = FormHelper::fieldset(t('Settings'), FALSE, "component_$component_type");
             $form_factory->getComponentHandler($component['value'])->form($element, $form_state, $op);
             $form["component_$component_type"]["{$component_type}_configuration"] = $element;
           }

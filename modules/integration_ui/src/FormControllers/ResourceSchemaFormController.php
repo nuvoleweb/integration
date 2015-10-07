@@ -27,7 +27,7 @@ class ResourceSchemaFormController extends AbstractForm {
     $plugin_manager = $this->getPluginManager($form_state);
 
     // Add plugin type selection.
-    $form += $this->getPluginForm(t('Resource schema plugin'), $configuration, $plugin_manager);
+    $form += FormHelper::choosePlugin(t('Resource schema plugin'), $configuration, $plugin_manager);
 
     $form['settings'] = FormHelper::tree();
     $form['settings']['plugin'] = FormHelper::tree(FALSE);
@@ -38,22 +38,22 @@ class ResourceSchemaFormController extends AbstractForm {
     foreach ($fields as $name => $label) {
       $form['settings']['plugin']['fields'][$name] = FormHelper::hidden($label);
 
-      $row = array();
-      $row['name'] = FormHelper::markup($name);
-      $row['label'] = FormHelper::markup($label);
-      $row['remove_field_' . $i] = FormHelper::stepSubmit(t('Remove'), $name);
-      $row['remove_field_' . $i]['#field'] = $name;
+      $row = array(
+        'name'            => FormHelper::markup($name),
+        'label'           => FormHelper::markup($label),
+        "remove_field_$i" => FormHelper::stepSubmit(t('Remove'), $name),
+      );
       $rows[] = $row;
       $i++;
     }
 
     $rows[] = array(
-      'field_name' => FormHelper::textField(NULL, NULL, FALSE),
+      'field_name'  => FormHelper::textField(NULL, NULL, FALSE),
       'field_label' => FormHelper::textField(NULL, NULL, FALSE),
-      'add_field' => FormHelper::stepSubmit(t('Add'), 'add_field'),
+      'add_field'   => FormHelper::stepSubmit(t('Add'), 'add_field'),
     );
 
-    $header = array(t('Field name'), t('Field label'), '');
+    $header = array(t('Field name'), t('Field label'), NULL);
     $form['settings']['fields'] = FormHelper::table($header, $rows);
   }
 
