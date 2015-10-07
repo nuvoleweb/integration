@@ -26,11 +26,9 @@ class ResourceSchemaFormController extends AbstractForm {
     $configuration = $this->getConfiguration($form_state);
     $plugin_manager = $this->getPluginManager($form_state);
 
-    $form['plugin'] = FormHelper::radios(
-      t('Resource schema plugin'),
-      $plugin_manager->getPluginDefinitions(),
-      $configuration->getPlugin()
-    );
+    // Add plugin type selection.
+    $form += $this->getPluginForm(t('Resource schema plugin'), $configuration, $plugin_manager);
+
     $form['settings'] = FormHelper::tree();
     $form['settings']['plugin'] = FormHelper::tree(FALSE);
 

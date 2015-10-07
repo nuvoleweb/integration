@@ -28,18 +28,7 @@ class ConsumerFormController extends AbstractForm {
     $plugin_manager = $this->getPluginManager($form_state);
 
     // Add plugin type selection.
-    $form['plugin_container'] = FormHelper::inlineFieldset(
-      t('Consumer plugin')
-    );
-    $form['plugin_container']['plugin'] = FormHelper::hiddenLabelSelect(
-      t('Consumer plugin'),
-      FormHelper::asOptions($plugin_manager->getPluginDefinitions()),
-      $configuration->getPlugin()
-    );
-    $form['plugin_container']['select_plugin'] = FormHelper::stepSubmit(
-      t('Select plugin'),
-      'select_plugin'
-    );
+    $form += $this->getPluginForm(t('Consumer plugin'), $configuration, $plugin_manager);
 
     // Select entity bundle based on producer plugin type.
     if ($plugin = $configuration->getPlugin()) {

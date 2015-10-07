@@ -30,18 +30,7 @@ class BackendFormController extends AbstractForm {
     $form_factory = FormFactory::getInstance('backend');
 
     // Add plugin type selection.
-    $form['plugin_container'] = FormHelper::inlineFieldset(
-      t('Backend plugin')
-    );
-    $form['plugin_container']['plugin'] = FormHelper::hiddenLabelSelect(
-      t('Backend plugin'),
-      FormHelper::asOptions($plugin_manager->getPluginDefinitions()),
-      $configuration->getPlugin()
-    );
-    $form['plugin_container']['select_plugin'] = FormHelper::stepSubmit(
-      t('Select plugin'),
-      'select_plugin'
-    );
+    $form += $this->getPluginForm(t('Backend plugin'), $configuration, $plugin_manager);
 
     // Add resource schemas form portion only after setting up the plugin type.
     if ($plugin = $configuration->getPlugin()) {
@@ -74,7 +63,7 @@ class BackendFormController extends AbstractForm {
         }
 
         $row = array();
-        $row['resource'] = FormHelper::markup($this->getResourceSchemaLabel($resource));
+        $row['resource'] = FormHelper::markup($this->getResourceSchemaLabel($machine_name));
         $row['resource_backend_settings']['#tree'] = TRUE;
         $row['resource_backend_settings'][$machine_name] = $element;
         $rows[] = $row;

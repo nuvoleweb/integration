@@ -28,18 +28,7 @@ class ProducerFormController extends AbstractForm {
     $plugin_manager = $this->getPluginManager($form_state);
 
     // Add plugin type selection.
-    $form['plugin_container'] = FormHelper::inlineFieldset(
-      t('Producer plugin')
-    );
-    $form['plugin_container']['plugin'] = FormHelper::hiddenLabelSelect(
-      t('Producer plugin'),
-      FormHelper::asOptions($plugin_manager->getPluginDefinitions()),
-      $configuration->getPlugin()
-    );
-    $form['plugin_container']['select_plugin'] = FormHelper::stepSubmit(
-      t('Select plugin'),
-      'select_plugin'
-    );
+    $form += $this->getPluginForm(t('Producer plugin'), $configuration, $plugin_manager);
 
     // Select entity bundle based on producer plugin type.
     if ($plugin = $configuration->getPlugin()) {
