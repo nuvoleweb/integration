@@ -118,24 +118,6 @@ class BackendFormController extends AbstractForm {
   /**
    * {@inheritdoc}
    */
-  public function formValidate(array $form, array &$form_state) {
-    /** @var BackendConfiguration $configuration */
-    $configuration = $this->getConfiguration($form_state);
-
-    if (!$configuration->getResponse()) {
-      form_set_error('response_handler', t('Response handler cannot be left empty.'));
-    }
-    if (!$configuration->getFormatter()) {
-      form_set_error('formatter_handler', t('Formatter handler cannot be left empty.'));
-    }
-    if (!$configuration->getAuthentication()) {
-      form_set_error('authentication_handler', t('Authentication handler cannot be left empty.'));
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function formSubmit(array $form, array &$form_state) {
     /** @var BackendConfiguration $configuration */
     $configuration = $this->getConfiguration($form_state);

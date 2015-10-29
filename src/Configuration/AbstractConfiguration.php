@@ -63,6 +63,13 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
   public $settings = array();
 
   /**
+   * List of current error messages resulted by a failed validation.
+   *
+   * @var array[string]
+   */
+  protected $errors = array();
+
+  /**
    * {@inheritdoc}
    */
   public function getName() {
@@ -188,6 +195,20 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    */
   public function getComponentSettings($component) {
     return isset($this->settings['components'][$component]) ? $this->settings['components'][$component] : array();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validate() {
+    return empty($this->errors);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getErrors() {
+    return $this->errors;
   }
 
   /**

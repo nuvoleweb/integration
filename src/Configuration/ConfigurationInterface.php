@@ -204,4 +204,22 @@ interface ConfigurationInterface {
    */
   public function getComponentSettings($component);
 
+  /**
+   * Validate current configuration entity.
+   * If not valid a list of error messages can be accessed via
+   * ConfigurationInterface::getErrors() implementation.
+   *
+   * @return bool
+   *    TRUE if valid, FALSE otherwise.
+   */
+  public function validate();
+
+  /**
+   * Return list of current errors.
+   *
+   * @return array[string]
+   *    List of current error messages resulted by a failed validation.
+   */
+  public function getErrors();
+
 }

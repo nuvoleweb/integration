@@ -107,4 +107,24 @@ class BackendConfiguration extends AbstractConfiguration {
     $this->authentication = $authentication;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function validate() {
+
+    if (!$this->getResponse()) {
+      $this->errors['response_handler'] = t('Response handler cannot be left empty.');
+    }
+    if (!$this->getFormatter()) {
+      $this->errors['formatter_handler'] = t('Formatter handler cannot be left empty.');
+    }
+    if (!$this->getAuthentication()) {
+      $this->errors['authentication_handler'] = t('Authentication handler cannot be left empty.');
+    }
+    if (!$this->getPluginSetting('resource_schema')) {
+      $this->errors['resource_schema'] = t('At least one resource schema need to be associated with this backend.');
+    }
+    return empty($this->errors);
+  }
+
 }

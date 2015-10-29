@@ -43,6 +43,20 @@ abstract class AbstractForm implements FormInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function formValidate(array $form, array &$form_state) {
+    /** @var AbstractConfiguration $configuration */
+    $configuration = $this->getConfiguration($form_state);
+
+    if (!$configuration->validate()) {
+      foreach ($configuration->getErrors() as $key => $message) {
+        form_set_error($key, $message);
+      }
+    }
+  }
+
+  /**
    * Load all available resource schema and format them as an #options array.
    *
    * @return array
