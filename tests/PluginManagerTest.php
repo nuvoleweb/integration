@@ -31,6 +31,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
     $expected = array(
       'rest_backend',
       'memory_backend',
+      'file_system_backend',
     );
     $this->assertEquals($expected, array_keys($manager->getPluginDefinitions()));
 
