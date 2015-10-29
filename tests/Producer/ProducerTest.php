@@ -8,7 +8,6 @@
 namespace Drupal\integration\Tests\Producer;
 
 use Drupal\integration_producer\NodeProducer;
-use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 use Drupal\integration_producer\ProducerFactory;
 use Drupal\integration\Tests\AbstractTest;

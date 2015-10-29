@@ -9,11 +9,9 @@ namespace Drupal\integration_producer;
 
 use Drupal\integration\Backend\BackendFactory;
 use Drupal\integration\Configuration\ConfigurationFactory;
-use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Document\Document;
 use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
-use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 /**
  * Interface ProducerFactory.

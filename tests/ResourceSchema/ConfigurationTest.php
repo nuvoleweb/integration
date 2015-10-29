@@ -7,7 +7,6 @@
 
 namespace Drupal\integration\Tests\ResourceSchema;
 
-use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Tests\AbstractTest;
 

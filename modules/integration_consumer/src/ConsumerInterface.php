@@ -7,9 +7,6 @@
 
 namespace Drupal\integration_consumer;
 
-use Drupal\integration\Backend\BackendInterface;
-use Drupal\integration_consumer\Configuration\ConsumerConfigurationInterface;
-use Drupal\integration\Document\DocumentInterface;
 
 /**
  * Interface ConsumerInterface.

@@ -8,9 +8,6 @@
 namespace Drupal\integration\Backend\Configuration;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
-use Drupal\integration\Configuration\AbstractComponentConfiguration;
-use Drupal\integration\Configuration\FormTrait;
-use Drupal\integration\Plugins\PluginManager;
 
 /**
  * Class BackendConfiguration.

@@ -137,9 +137,9 @@ function integration_ui_entity_form_validate(&$form, &$form_state) {
  *
  * @param string $machine_name
  *    Current machine name value.
- * @param $element
+ * @param string $element
  *    Machine name form element.
- * @param $form_state
+ * @param array $form_state
  *    Form state array.
  *
  * @return bool
@@ -147,6 +147,6 @@ function integration_ui_entity_form_validate(&$form, &$form_state) {
  *
  * @see integration_ui_entity_form()
  */
-function integration_ui_machine_name_exists($machine_name, $element, $form_state) {
+function integration_ui_machine_name_exists($machine_name, $element, array $form_state) {
   return (bool) entity_load_single($element['#entity_type'], $machine_name);
 }

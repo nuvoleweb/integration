@@ -7,7 +7,6 @@
 
 namespace Drupal\integration_consumer\Migrate;
 
-use Drupal\integration\Document\Document;
 
 // @codingStandardsIgnoreStart
 

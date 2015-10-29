@@ -7,9 +7,6 @@
 
 namespace Drupal\integration\Tests\Consumer;
 
-use Drupal\integration\Backend\Configuration\BackendConfiguration;
-use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
-use Drupal\integration_consumer\AbstractConsumer;
 use Drupal\integration\Tests\AbstractTest;
 use Drupal\integration_consumer\ConsumerFactory;
 

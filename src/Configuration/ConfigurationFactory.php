@@ -7,7 +7,6 @@
 
 namespace Drupal\integration\Configuration;
 
-use Drupal\integration\Configuration\AbstractConfiguration;
 
 /**
  * Interface ConfigurationFactory.

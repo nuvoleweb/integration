@@ -7,7 +7,6 @@
 
 namespace Drupal\integration\Tests\Backend;
 
-use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Tests\AbstractTest;
 

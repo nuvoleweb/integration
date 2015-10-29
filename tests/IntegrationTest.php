@@ -8,7 +8,6 @@
 namespace Drupal\integration\Tests;
 
 use Drupal\integration\Backend\BackendFactory;
-use Drupal\integration_consumer\AbstractConsumer;
 use Drupal\integration_consumer\ConsumerFactory;
 use Drupal\integration_producer\ProducerFactory;
 

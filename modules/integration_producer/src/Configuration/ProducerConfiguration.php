@@ -8,7 +8,6 @@
 namespace Drupal\integration_producer\Configuration;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
-use Drupal\integration\Plugins\PluginManager;
 
 /**
  * Class ProducerConfiguration.

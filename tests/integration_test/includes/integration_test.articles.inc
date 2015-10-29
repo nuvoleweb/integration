@@ -5,8 +5,6 @@
  * Contains IntegrationTestArticlesMigration class.
  */
 
-use Drupal\integration\Tests\Consumer\Migrate\AbstractMigrateTest;
-
 /**
  * Class IntegrationTestArticlesMigration.
  */

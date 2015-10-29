@@ -7,7 +7,6 @@
 
 namespace Drupal\integration\Tests\Producer;
 
-use Drupal\integration_producer\Configuration\ProducerConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Tests\AbstractTest;
 

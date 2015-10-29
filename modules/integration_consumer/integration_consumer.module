@@ -8,7 +8,6 @@
 include_once 'includes/integration_consumer.entity.inc';
 include_once 'includes/integration_consumer.hooks.inc';
 
-use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 
 /**
  * Implements hook_permission().

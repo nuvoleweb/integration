@@ -219,7 +219,7 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    *    Nested settings can be reached by concatenating them using a dot
    *    as separator, for example:
    *    $value = $configuration->getPluginSetting('a.b.c');
-   *    will return 'c' setting value if any, NULL if not set;
+   *    will return 'c' setting value if any, NULL if not set.
    * @param array $settings
    *    Plugin or plugin component setting array.
    *

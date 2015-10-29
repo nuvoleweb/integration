@@ -8,8 +8,6 @@
 namespace Drupal\integration_ui;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
-use Drupal\integration_producer\Configuration\ProducerConfiguration;
-use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration\Plugins\PluginManager;
 
 /**

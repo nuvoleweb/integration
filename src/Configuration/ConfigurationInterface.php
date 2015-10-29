@@ -109,7 +109,7 @@ interface ConfigurationInterface {
    *    Nested settings can be reached by concatenating them using a dot
    *    as separator, for example:
    *    $value = $configuration->getPluginSetting('a.b.c');
-   *    will return 'c' setting value if any, NULL if not set;
+   *    will return 'c' setting value if any, NULL if not set.
    *
    * @return mixed|NULL
    *    Plugin setting value if any, NULL otherwise.
@@ -206,6 +206,7 @@ interface ConfigurationInterface {
 
   /**
    * Validate current configuration entity.
+   *
    * If not valid a list of error messages can be accessed via
    * ConfigurationInterface::getErrors() implementation.
    *

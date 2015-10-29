@@ -7,8 +7,6 @@
 
 namespace Drupal\integration_producer;
 
-use Drupal\integration\Document\DocumentInterface;
-use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 
 /**
  * Interface ProducerInterface.

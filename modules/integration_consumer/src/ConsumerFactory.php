@@ -8,9 +8,7 @@
 namespace Drupal\integration_consumer;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
-use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Plugins\PluginManager;
-use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 
 /**
  * Interface ConsumerFactory.

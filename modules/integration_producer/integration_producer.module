@@ -8,9 +8,6 @@
 include_once 'includes/integration_producer.entity.inc';
 include_once 'includes/integration_producer.hooks.inc';
 
-use Drupal\integration\Document\DocumentInterface;
-use Drupal\integration_producer\EntityWrapper\EntityWrapper;
-use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 /**
  * Implements hook_permission().

@@ -8,11 +8,9 @@
 namespace Drupal\integration_ui\FormControllers;
 
 use Drupal\integration_ui\AbstractForm;
-use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration_ui\Exceptions\UndefinedFormHandlerException;
 use Drupal\integration_ui\FormFactory;
 use Drupal\integration_ui\FormHelper;
-use Drupal\integration_ui\FormHandlers\Backend\AbstractBackendFormHandler;
 
 /**
  * Class BackendFormController.

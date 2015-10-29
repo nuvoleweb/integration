@@ -9,7 +9,6 @@ namespace Drupal\integration_producer_ui\FormControllers;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration_ui\AbstractForm;
-use Drupal\integration_producer\Configuration\ProducerConfiguration;
 use Drupal\integration_ui\FormHelper;
 
 /**
