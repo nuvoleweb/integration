@@ -64,13 +64,13 @@ function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $
   $form['machine_name'] = array(
     '#type' => 'machine_name',
     '#default_value' => $configuration->getMachineName(),
-    '#disabled' => $configuration->getEnabled(),
     '#machine_name' => array(
-      'exists' => 'integration_load_backend',
+      'exists' => 'integration_ui_machine_name_exists',
       'source' => array('name'),
     ),
     '#descripwtion' => t('A unique machine-readable name for this configuration object. It must only contain lowercase letters, numbers, and underscores.'),
     '#required' => TRUE,
+    '#entity_type' => $entity_type,
   );
   $form['enabled'] = array(
     '#title' => t('Enabled'),
@@ -130,4 +130,23 @@ function integration_ui_entity_form_validate(&$form, &$form_state) {
   elseif ($form_state['op'] == 'create' && entity_load_single($entity_type, $machine_name)) {
     form_set_error('machine_name', t('A configuration with the same machine name already exists.'));
   }
+}
+
+/**
+ * Checks for machine name uniqueness.
+ *
+ * @param string $machine_name
+ *    Current machine name value.
+ * @param $element
+ *    Machine name form element.
+ * @param $form_state
+ *    Form state array.
+ *
+ * @return bool
+ *    TRUE if machine name exists, FALSE otherwise.
+ *
+ * @see integration_ui_entity_form()
+ */
+function integration_ui_machine_name_exists($machine_name, $element, $form_state) {
+  return (bool) entity_load_single($element['#entity_type'], $machine_name);
 }
