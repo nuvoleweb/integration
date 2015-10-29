@@ -14,7 +14,7 @@ use Drupal\integration_ui\FormHelper;
  *
  * @package Drupal\integration_ui\FormHandlers\Backend
  */
-class RestBackendFormHandler extends AbstractBackendFormHandler {
+class FileSystemBackendFormHandler extends AbstractBackendFormHandler {
 
   /**
    * {@inheritdoc}
@@ -22,14 +22,7 @@ class RestBackendFormHandler extends AbstractBackendFormHandler {
   public function resourceSchemaForm(array &$form, array &$form_state, $op) {
     $configuration = $this->getConfiguration($form_state);
 
-    $form['endpoint'] = FormHelper::textField(
-      t('Endpoint'),
-      $configuration->getPluginSetting('endpoint')
-    );
-    $form['changes'] = FormHelper::textField(
-      t('Change feed'),
-      $configuration->getPluginSetting('changes')
-    );
+    $form['folder'] = FormHelper::textField(t('Folder'), $configuration->getPluginSetting('folder'));
   }
 
   /**

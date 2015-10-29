@@ -12,6 +12,7 @@ use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration_ui\Exceptions\UndefinedFormHandlerException;
 use Drupal\integration_ui\FormFactory;
 use Drupal\integration_ui\FormHelper;
+use Drupal\integration_ui\FormHandlers\Backend\AbstractBackendFormHandler;
 
 /**
  * Class BackendFormController.
@@ -50,7 +51,9 @@ class BackendFormController extends AbstractForm {
         $element = array();
         $form['resource_settings'][$machine_name] = FormHelper::hidden($machine_name);
         try {
-          $form_factory->getPluginHandler($plugin)->form($element, $form_state, $op);
+          /** @var AbstractBackendFormHandler $plugin_handler */
+          $plugin_handler = $form_factory->getPluginHandler($plugin);
+          $plugin_handler->resourceSchemaForm($element, $form_state, $op);
         }
         catch (UndefinedFormHandlerException $e) {
         }

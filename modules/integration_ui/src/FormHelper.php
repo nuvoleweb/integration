@@ -276,15 +276,18 @@ class FormHelper {
    *    Form element default value.
    * @param bool|TRUE $required
    *    Weather the form element is required or not.
+   * @param string $description
+   *    Form field description.
    *
    * @return array
    *    Form element array as expected by Drupal's Form API.
    */
-  static public function textField($label, $default = NULL, $required = TRUE) {
+  static public function textField($label, $default = NULL, $required = TRUE, $description = '') {
     return array(
       '#type' => 'textfield',
       '#title' => $label,
       '#default_value' => $default,
+      '#description' => $description,
       '#required' => $required,
     );
   }

@@ -72,6 +72,7 @@ function integration_ui_integration_ui_form_controllers() {
  */
 function integration_ui_integration_backend_info_alter(&$items) {
   $items['rest_backend']['form handler'] = 'Drupal\integration_ui\FormHandlers\Backend\RestBackendFormHandler';
+  $items['file_system_backend']['form handler'] = 'Drupal\integration_ui\FormHandlers\Backend\FileSystemBackendFormHandler';
 }
 
 /**
