@@ -24,12 +24,10 @@ class RestBackendFormHandler extends AbstractBackendFormHandler {
 
     $form['endpoint'] = FormHelper::textField(
       t('Endpoint'),
-      $configuration->getPluginSetting('endpoint')
-    );
+      $configuration->getPluginSetting("resource_schema.$machine_name.endpoint"));
     $form['changes'] = FormHelper::textField(
       t('Change feed'),
-      $configuration->getPluginSetting('changes')
-    );
+      $configuration->getPluginSetting("resource_schema.$machine_name.changes"));
   }
 
   /**
@@ -38,10 +36,7 @@ class RestBackendFormHandler extends AbstractBackendFormHandler {
   public function form(array &$form, array &$form_state, $op) {
     $configuration = $this->getConfiguration($form_state);
 
-    $form['base'] = FormHelper::textField(
-      t('Base URL'),
-      $configuration->getPluginSetting('base')
-    );
+    $form['base'] = FormHelper::textField(t('Base URL'), $configuration->getPluginSetting('backend.base'));
   }
 
   /**

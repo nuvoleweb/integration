@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Backend\MemoryBackend.
+ * Contains \Drupal\integration\Backend\FileSystemBackend.
  */
 
 namespace Drupal\integration\Backend;
@@ -11,11 +11,11 @@ use Drupal\integration\Document\Document;
 use Drupal\integration\Document\DocumentInterface;
 
 /**
- * Class MemoryBackend.
+ * Class FileSystemBackend.
  *
  * @package Drupal\integration\Backend
  */
-class MemoryBackend extends AbstractBackend {
+class FileSystemBackend extends AbstractBackend {
 
   /**
    * Backend data storage.

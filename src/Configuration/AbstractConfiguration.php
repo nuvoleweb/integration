@@ -136,7 +136,7 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    * {@inheritdoc}
    */
   public function getPluginSetting($name) {
-    $settings = $this->settings['plugin'];
+    $settings = isset($this->settings['plugin']) ? $this->settings['plugin'] : array();
     $parts = explode('.', $name);
 
     $walk = function($parts, $settings) use (&$walk) {
