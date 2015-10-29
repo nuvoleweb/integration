@@ -137,18 +137,7 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    */
   public function getPluginSetting($name) {
     $settings = isset($this->settings['plugin']) ? $this->settings['plugin'] : array();
-    $parts = explode('.', $name);
-
-    $walk = function($parts, $settings) use (&$walk) {
-      $key = array_shift($parts);
-      if (count($parts)) {
-        return isset($settings[$key]) ? $walk($parts, $settings[$key]) : NULL;
-      }
-      else {
-        return isset($settings[$key]) ? $settings[$key] : NULL;
-      }
-    };
-    return $walk($parts, $settings);
+    return $this->getSettingValue($name, $settings);
   }
 
   /**
@@ -176,7 +165,8 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    * {@inheritdoc}
    */
   public function getComponentSetting($component, $name) {
-    return isset($this->settings['components'][$component][$name]) ? $this->settings['components'][$component][$name] : NULL;
+    $settings = isset($this->settings['components']) ? $this->settings['components'] : array();
+    return $this->getSettingValue($name, $settings);
   }
 
   /**
@@ -198,6 +188,36 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    */
   public function getComponentSettings($component) {
     return isset($this->settings['components'][$component]) ? $this->settings['components'][$component] : array();
+  }
+
+  /**
+   * Helper method to get a setting value given its name in dotted notation.
+   *
+   * @param string $name
+   *    Plugin setting name using dotted notation, such as "a.b.c".
+   *    Nested settings can be reached by concatenating them using a dot
+   *    as separator, for example:
+   *    $value = $configuration->getPluginSetting('a.b.c');
+   *    will return 'c' setting value if any, NULL if not set;
+   * @param array $settings
+   *    Plugin or plugin component setting array.
+   *
+   * @return mixed|NULL
+   *    Plugin or plugin component setting value if any, NULL otherwise.
+   */
+  private function getSettingValue($name, $settings) {
+    $parts = explode('.', $name);
+
+    $walk = function($parts, $settings) use (&$walk) {
+      $key = array_shift($parts);
+      if (count($parts)) {
+        return isset($settings[$key]) ? $walk($parts, $settings[$key]) : NULL;
+      }
+      else {
+        return isset($settings[$key]) ? $settings[$key] : NULL;
+      }
+    };
+    return $walk($parts, $settings);
   }
 
 }
