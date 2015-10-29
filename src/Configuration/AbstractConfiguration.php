@@ -165,7 +165,7 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    * {@inheritdoc}
    */
   public function getComponentSetting($component, $name) {
-    $settings = isset($this->settings['components']) ? $this->settings['components'] : array();
+    $settings = isset($this->settings['components'][$component]) ? $this->settings['components'][$component] : array();
     return $this->getSettingValue($name, $settings);
   }
 
