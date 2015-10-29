@@ -41,6 +41,15 @@ class BackendFormController extends AbstractForm {
       $form['resource_container'] = FormHelper::fieldset(t('Resource schemas'));
       $form['resource_container']['resource_schemas'] = FormHelper::hiddenLabelCheckboxes(t('Resource schemas'), $options, $default_value);
       $form['resource_container']['select_plugin'] = FormHelper::stepSubmit(t('Select resource schemas'), 'resources_submit');
+
+      try {
+        /** @var AbstractBackendFormHandler $plugin_handler */
+        $plugin_handler = $form_factory->getPluginHandler($plugin);
+        $form['backend'] = FormHelper::fieldset(t('Backend settings'), TRUE);
+        $plugin_handler->form($form['backend'], $form_state, $op);
+      }
+      catch (UndefinedFormHandlerException $e) {
+      }
     }
 
     // Prompt each resource schema configuration only when they are set.
@@ -53,15 +62,15 @@ class BackendFormController extends AbstractForm {
         try {
           /** @var AbstractBackendFormHandler $plugin_handler */
           $plugin_handler = $form_factory->getPluginHandler($plugin);
-          $plugin_handler->resourceSchemaForm($element, $form_state, $op);
+          $plugin_handler->resourceSchemaForm($machine_name, $element, $form_state, $op);
         }
         catch (UndefinedFormHandlerException $e) {
         }
 
         $row = array();
         $row['resource'] = FormHelper::markup($this->getResourceSchemaLabel($machine_name));
-        $row['resource_backend_settings']['#tree'] = TRUE;
-        $row['resource_backend_settings'][$machine_name] = $element;
+        $row['resource_schema'] = FormHelper::tree();
+        $row['resource_schema'][$machine_name] = $element;
         $rows[] = $row;
       }
 
@@ -158,8 +167,11 @@ class BackendFormController extends AbstractForm {
     if (isset($input['authentication_handler'])) {
       $configuration->setAuthentication($input['authentication_handler']);
     }
-    if (isset($input['resource_backend_settings'])) {
-      $configuration->setPluginSetting('resource_backend_settings', $input['resource_backend_settings']);
+    if (isset($input['backend'])) {
+      $configuration->setPluginSetting('backend', $input['backend']);
+    }
+    if (isset($input['resource_schema'])) {
+      $configuration->setPluginSetting('resource_schema', $input['resource_schema']);
     }
   }
 

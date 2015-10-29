@@ -19,6 +19,8 @@ abstract class AbstractBackendFormHandler extends AbstractForm {
   /**
    * Build resource schema specific form array.
    *
+   * @param string $machine_name
+   *    Resource schema machine name.
    * @param array $form
    *    Form array.
    * @param array $form_state
@@ -26,6 +28,6 @@ abstract class AbstractBackendFormHandler extends AbstractForm {
    * @param string $op
    *    Current form operation.
    */
-  abstract public function resourceSchemaForm(array &$form, array &$form_state, $op);
+  abstract public function resourceSchemaForm($machine_name, array &$form, array &$form_state, $op);
 
 }

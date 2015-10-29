@@ -19,7 +19,7 @@ class RestBackendFormHandler extends AbstractBackendFormHandler {
   /**
    * {@inheritdoc}
    */
-  public function resourceSchemaForm(array &$form, array &$form_state, $op) {
+  public function resourceSchemaForm($machine_name, array &$form, array &$form_state, $op) {
     $configuration = $this->getConfiguration($form_state);
 
     $form['endpoint'] = FormHelper::textField(
@@ -36,7 +36,12 @@ class RestBackendFormHandler extends AbstractBackendFormHandler {
    * {@inheritdoc}
    */
   public function form(array &$form, array &$form_state, $op) {
+    $configuration = $this->getConfiguration($form_state);
 
+    $form['base'] = FormHelper::textField(
+      t('Base URL'),
+      $configuration->getPluginSetting('base')
+    );
   }
 
   /**
