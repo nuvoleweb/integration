@@ -33,7 +33,7 @@ class RestBackend extends AbstractBackend {
   public function create($resource_schema, DocumentInterface $document) {
     $options = [];
     $options['method'] = 'POST';
-    $options['data'] = $this->getFormatterHandler()->format($document);
+    $options['data'] = $this->getFormatterHandler()->encode($document);
     $response = $this->httpRequest($this->getResourceUri(), $options);
 
     $this->getResponseHandler()->setResponse($response);
@@ -62,7 +62,7 @@ class RestBackend extends AbstractBackend {
   public function update($resource_schema, DocumentInterface $document) {
     $options = [];
     $options['method'] = 'PUT';
-    $options['data'] = $this->getFormatterHandler()->format($document);
+    $options['data'] = $this->getFormatterHandler()->encode($document);
     $response = $this->httpRequest($this->getResourceUri() . '/' . $this->getBackendContentId($document), $options);
 
     $this->getResponseHandler()->setResponse($response);

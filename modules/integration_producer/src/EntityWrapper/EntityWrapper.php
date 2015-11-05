@@ -135,14 +135,15 @@ class EntityWrapper extends \EntityDrupalWrapper implements EntityWrapperInterfa
    */
   public function getAvailableLanguages() {
     $translations = $this->translationHandler->getTranslations();
-    return array_keys($translations->data);
+    return $translations->data ? array_keys($translations->data) : [LANGUAGE_NONE];
   }
 
   /**
    * {@inheritdoc}
    */
   public function getDefaultLanguage() {
-    return $this->translationHandler->getLanguage();
+    $translations = $this->translationHandler->getTranslations();
+    return $translations->data ? $this->translationHandler->getLanguage() : LANGUAGE_NONE;
   }
 
 }

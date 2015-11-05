@@ -37,7 +37,7 @@ class ConfigurationTest extends AbstractTest {
 
     $this->assertNotEmpty($this->consumerConfiguration->getMapping());
 
-    $mapping = $data->settings['components']['mapping_handler'];
+    $mapping = $data->settings['plugin']['mapping'];
     $flipped = array_flip($mapping);
     foreach ($this->consumerConfiguration->getMapping() as $destination => $source) {
       $this->assertEquals($mapping[$destination], $this->consumerConfiguration->getMappingSource($destination));
