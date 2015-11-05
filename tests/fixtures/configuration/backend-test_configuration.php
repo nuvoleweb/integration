@@ -12,21 +12,30 @@ $export->description = 'Test configuration description.';
 $export->plugin = 'memory_backend';
 $export->settings = array(
   'plugin' => array(
-    'base_path' => 'service',
-    'endpoint' => 'article',
+    'base_url' => 'http://example.com',
+    'resource_schema' => array(
+      'test_configuration' => array(
+        'base_path' => 'service',
+        'endpoint' => 'article',
+      ),
+      'foo' => array(
+        'base_path' => 'foo',
+        'endpoint' => 'foo',
+      ),
+    ),
   ),
   'components' => array(
-    'response_handler' => array(
+    'response' => array(
       'key1' => 'value1',
       'key2' => 'value2',
       'key3' => 'value3',
     ),
-    'formatter_handler' => array(
+    'formatter' => array(
       'key1' => 'value1',
       'key2' => 'value2',
       'key3' => 'value3',
     ),
-    'authentication_handler' => array(
+    'authentication' => array(
       'key1' => 'value1',
       'key2' => 'value2',
       'key3' => 'value3',

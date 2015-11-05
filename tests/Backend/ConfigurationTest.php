@@ -30,10 +30,7 @@ class ConfigurationTest extends AbstractTest {
     $reflection = new \ReflectionClass($this->backendConfiguration);
     $this->assertEquals('Drupal\integration\Backend\Configuration\BackendConfiguration', $reflection->getName());
 
-    $this->assertEquals($data->machine_name, $this->backendConfiguration->identifier());
-    $this->assertEquals(ENTITY_CUSTOM, $this->backendConfiguration->getStatus());
-    $this->assertEquals($data->settings['plugin']['endpoint'], $this->backendConfiguration->getPluginSetting('endpoint'));
-    $this->assertEquals($data->settings['plugin']['base_path'], $this->backendConfiguration->getPluginSetting('base_path'));
+    $this->checkConsistency($data, $this->backendConfiguration);
 
     $machine_name = $this->backendConfiguration->identifier();
     $this->assertNotNull(ConfigurationFactory::load('integration_backend', $machine_name));
@@ -62,10 +59,49 @@ class ConfigurationTest extends AbstractTest {
     $this->assertEquals($data->machine_name, $decoded->machine_name);
 
     /** @var BackendConfiguration $entity */
-    $entity = entity_import('integration_backend', $json);
-    $this->assertEquals($data->machine_name, $entity->identifier());
-    $this->assertEquals($data->settings['plugin']['endpoint'], $entity->getPluginSetting('endpoint'));
-    $this->assertEquals($data->settings['plugin']['base_path'], $entity->getPluginSetting('base_path'));
+    $configuration = entity_import('integration_backend', $json);
+    $this->checkConsistency($data, $configuration);
+  }
+
+  /**
+   * Run consistency tests over configuration entity properties.
+   * 
+   * @param mixed $data
+   *    Expected configuration data, fetched from fixtures.
+   * @param BackendConfiguration $configuration
+   *    Actual configuration entity.
+   */
+  private function checkConsistency($data, $configuration) {
+
+    $this->assertEquals($data->machine_name, $configuration->identifier());
+    $this->assertEquals(ENTITY_CUSTOM, $configuration->getStatus());
+
+    $actual = $configuration->getPluginSetting('base_url');
+    $this->assertNotEmpty($actual);
+    $this->assertEquals($data->settings['plugin']['base_url'], $actual);
+
+    $resource_schema = $data->settings['plugin']['resource_schema'];
+    $mapping = array(
+      'resource_schema.foo.base_path' => $resource_schema['foo']['base_path'],
+      'resource_schema.foo.endpoint' => $resource_schema['foo']['endpoint'],
+      'resource_schema.test_configuration.base_path' => $resource_schema['test_configuration']['base_path'],
+      'resource_schema.test_configuration.endpoint' => $resource_schema['test_configuration']['endpoint'],
+    );
+    foreach ($mapping as $name => $expected) {
+      $actual = $configuration->getPluginSetting($name);
+      $this->assertNotEmpty($actual);
+      $this->assertEquals($expected, $actual);
+    }
+
+    $components_data = $data->settings['components'];
+    foreach ($components_data as $component => $settings) {
+      $actual = $configuration->getComponentSettings($component);
+      $this->assertNotEmpty($actual);
+      $this->assertEquals($data->{$component}, $configuration->{$component});
+      foreach ($settings as $name => $expected) {
+        $this->assertEquals($expected, $configuration->getComponentSetting($component, $name));
+      }
+    }
   }
 
   /**
