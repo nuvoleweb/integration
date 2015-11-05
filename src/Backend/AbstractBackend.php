@@ -51,7 +51,7 @@ abstract class AbstractBackend implements BackendInterface, ConfigurablePluginIn
   public function __construct(Configuration\BackendConfiguration $configuration, Response\ResponseInterface $response, Formatter\FormatterInterface $formatter) {
     $this->setConfiguration($configuration);
     $this->setResponseHandler($response);
-    $this->setFormatter($formatter);
+    $this->setFormatterHandler($formatter);
   }
 
   /**
@@ -92,7 +92,7 @@ abstract class AbstractBackend implements BackendInterface, ConfigurablePluginIn
   /**
    * {@inheritdoc}
    */
-  public function setFormatter(Formatter\FormatterInterface $formatter) {
+  public function setFormatterHandler(Formatter\FormatterInterface $formatter) {
     $this->formatter = $formatter;
   }
 

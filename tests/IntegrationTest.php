@@ -34,16 +34,16 @@ class IntegrationTest extends AbstractTest {
     // Push all fixture nodes to given backend.
     foreach ($this->getProducerNodes() as $node) {
       $document = ProducerFactory::getInstance('test_configuration')->build($node);
-      $backend->create($document);
+      $backend->create($resource_schema, $document);
     }
 
     // Consume documents from backend.
     $consumer->processImport();
 
     // Assert that title and body have been imported correctly.
-    foreach ($backend->getDocumentList() as $id) {
+    foreach ($backend->listDocuments($resource_schema) as $id) {
 
-      $document = $backend->read($id);
+      $document = $backend->read($resource_schema, $id);
       $node = $consumer->getDestinationEntity($id);
 
       foreach (array('en', 'fr') as $language) {

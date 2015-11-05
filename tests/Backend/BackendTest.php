@@ -43,23 +43,23 @@ class BackendTest extends AbstractTest {
     $this->assertEquals($this->expectedNodeDocumentId($node), $backend->getBackendContentId($document));
 
     // Test backend create method.
-    $document = $backend->create($document);
+    $document = $backend->create($resource_schema, $document);
 
     // Test that backend create does assign an ID to a document.
     $this->assertEquals($this->expectedNodeDocumentId($node), $document->getId());
 
     // Test backend read method.
-    $document = $backend->read($document->getId());
+    $document = $backend->read($resource_schema, $document->getId());
 
     // Test backend update method.
     $document->setCurrentLanguage('en')->setField('title_field', 'English title updated');
-    $updated_document = $backend->update($document);
+    $updated_document = $backend->update($resource_schema, $document);
     $this->assertEquals('English title updated', $updated_document->getFieldValue('title_field'));
 
     // Test backend delete method.
     $id = $updated_document->getId();
-    $backend->delete($id);
-    $this->assertFalse($backend->read($id));
+    $backend->delete($resource_schema, $id);
+    $this->assertFalse($backend->read($resource_schema, $id));
   }
 
 }

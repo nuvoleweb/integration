@@ -22,7 +22,7 @@ class RestBackend extends AbstractBackend {
   /**
    * {@inheritdoc}
    */
-  public function getDocumentList($max = 0) {
+  public function listDocuments($resource_schema, $max = 0) {
     // @todo implement document list retrieval.
     return array();
   }
@@ -30,7 +30,7 @@ class RestBackend extends AbstractBackend {
   /**
    * {@inheritdoc}
    */
-  public function create(DocumentInterface $document) {
+  public function create($resource_schema, DocumentInterface $document) {
     $options = array();
     $options['method'] = 'POST';
     $options['data'] = $this->getFormatterHandler()->format($document);
@@ -45,7 +45,7 @@ class RestBackend extends AbstractBackend {
   /**
    * {@inheritdoc}
    */
-  public function read($id) {
+  public function read($resource_schema, $id) {
     $options = array();
     $options['method'] = 'GET';
     $response = $this->httpRequest($this->getResourceUri() . '/' . $id, $options);
@@ -59,7 +59,7 @@ class RestBackend extends AbstractBackend {
   /**
    * {@inheritdoc}
    */
-  public function update(DocumentInterface $document) {
+  public function update($resource_schema, DocumentInterface $document) {
     $options = array();
     $options['method'] = 'PUT';
     $options['data'] = $this->getFormatterHandler()->format($document);
@@ -74,7 +74,7 @@ class RestBackend extends AbstractBackend {
   /**
    * {@inheritdoc}
    */
-  public function delete($id) {
+  public function delete($resource_schema, $id) {
     $options = array();
     $options['method'] = 'DELETE';
     $response = $this->httpRequest($this->getResourceUri() . '/' . $id, $options);

@@ -87,7 +87,7 @@ class MigrateSourceBackend extends \MigrateSource {
    */
   public function performRewind() {
     if (!$this->documentList) {
-      $this->documentList = $this->backend->getDocumentList();
+      $this->documentList = $this->backend->listDocuments($resource_schema);
     }
     $this->currentId = 0;
   }
@@ -101,7 +101,7 @@ class MigrateSourceBackend extends \MigrateSource {
   public function getNextRow() {
 
     if ($this->currentId < $this->computeCount()) {
-      $document = $this->backend->read($this->documentList[$this->currentId]);
+      $document = $this->backend->read($resource_schema, $this->documentList[$this->currentId]);
       $document_wrapper = new DocumentWrapper($document);
       $this->currentId++;
       return $document_wrapper;

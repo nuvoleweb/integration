@@ -46,62 +46,72 @@ interface BackendInterface {
    * @param Formatter\FormatterInterface $formatter
    *    Formatter object instance.
    */
-  public function setFormatter(Formatter\FormatterInterface $formatter);
+  public function setFormatterHandler(Formatter\FormatterInterface $formatter);
 
   /**
    * Return list of document IDs.
    *
+   * @param string $resource_schema
+   *    Machine name of a resource schema configuration object.
    * @param int $max
    *    Max number of items IDs to return.
    *
    * @return array
    *    List of document IDs
    */
-  public function getDocumentList($max = 0);
+  public function listDocuments($resource_schema, $max = 0);
 
   /**
    * Create a new document and populate its backend ID.
    *
+   * @param string $resource_schema
+   *    Machine name of a resource schema configuration object.
    * @param DocumentInterface $document
    *    Document object.
    *
    * @return DocumentInterface
    *    Document object with backend ID.
    */
-  public function create(DocumentInterface $document);
+  public function create($resource_schema, DocumentInterface $document);
 
   /**
    * Get a document from the backend, given its backend ID.
    *
+   * @param string $resource_schema
+   *    Machine name of a resource schema configuration object.
    * @param string $id
    *    Document backend ID.
    *
-   * @return DocumentInterface|false
-   *    Document fetched from backend or FALSE if not found.
+   * @return DocumentInterface
+   *    Document object with backend ID.
    */
-  public function read($id);
+  public function read($resource_schema, $id);
 
   /**
    * Update an existing document.
    *
+   * @param string $resource_schema
+   *    Machine name of a resource schema configuration object.
    * @param DocumentInterface $document
    *    Document object.
    *
    * @return DocumentInterface
-   *    Updated document object.
+   *    Document object with backend ID.
    */
-  public function update(DocumentInterface $document);
+  public function update($resource_schema, DocumentInterface $document);
 
   /**
    * Delete a document from the backend, given its backend ID.
    *
+   * @param string $resource_schema
+   *    Machine name of a resource schema configuration object.
    * @param string $id
    *    Document backend ID.
    *
    * @return bool
    *    TRUE if deleted FALSE if not found.
    */
-  public function delete($id);
+  public function delete($resource_schema, $id);
 
   /**
    * Get backend content ID.
