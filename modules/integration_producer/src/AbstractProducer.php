@@ -43,20 +43,6 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
   private $document = NULL;
 
   /**
-   * Backend instance.
-   *
-   * @var AbstractBackend
-   */
-  private $backend = NULL;
-
-  /**
-   * Resource schema instance.
-   *
-   * @var AbstractResourceSchema
-   */
-  private $resource = NULL;
-
-  /**
    * List of field handler definitions keyed by field type.
    *
    * @see integration_producer_get_field_handlers()
@@ -74,19 +60,13 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
    *    Entity object.
    * @param DocumentInterface $document
    *    Document object.
-   * @param AbstractBackend $backend
-   *    Backend object.
-   * @param AbstractResourceSchema $resource
-   *    Resource schema object.
    */
-  public function __construct(Configuration\ProducerConfiguration $configuration, EntityWrapper\EntityWrapper $entity_wrapper, DocumentInterface $document, AbstractBackend $backend, AbstractResourceSchema $resource) {
+  public function __construct(Configuration\ProducerConfiguration $configuration, EntityWrapper\EntityWrapper $entity_wrapper, DocumentInterface $document) {
     $manager = PluginManager::getInstance('producer');
 
     $this->setConfiguration($configuration);
     $this->entityWrapper = $entity_wrapper;
     $this->document = $document;
-    $this->backend = $backend;
-    $this->resource = $resource;
     $this->fieldHandlers = $manager->getComponentDefinitions('field_handler');
   }
 

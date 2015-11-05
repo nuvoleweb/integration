@@ -41,14 +41,12 @@ class ProducerFactory {
     $producer_class = $plugin_manager->getPlugin($plugin)->getClass();
     $entity_wrapper = new EntityWrapper\EntityWrapper($plugin_manager->getPlugin($plugin)->getEntityType());
     $document = new Document();
-    $backend = BackendFactory::getInstance($configuration->backend);
-    $resource = ResourceSchemaFactory::getInstance($configuration->resource);
 
     if (!class_exists($producer_class)) {
       throw new \InvalidArgumentException(t('Class @class does not exists', ['class' => $producer_class]));
     }
 
-    return new $producer_class($configuration, $entity_wrapper, $document, $backend, $resource);
+    return new $producer_class($configuration, $entity_wrapper, $document);
   }
 
   /**
