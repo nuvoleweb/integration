@@ -14,6 +14,9 @@ use Drupal\integration\Tests\AbstractTest;
 /**
  * Class BackendFactoryTest.
  *
+ * @group backend
+ * @group factory
+ *
  * @package Drupal\integration\Tests\Backend
  */
 class BackendFactoryTest extends AbstractTest {

@@ -14,6 +14,9 @@ use Drupal\integration\Backend\Configuration\BackendConfiguration;
 /**
  * Class ConfigurationTest.
  *
+ * @group backend
+ * @group configuration
+ *
  * @package Drupal\integration\Tests\Backend
  */
 class ConfigurationTest extends AbstractTest {

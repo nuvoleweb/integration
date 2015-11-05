@@ -16,6 +16,8 @@ use Drupal\integration\Backend\RestBackend;
 /**
  * Class HttpRestBackendTest.
  *
+ * @group backend
+ *
  * @package Drupal\integration\Tests\Backend
  */
 class HttpRestBackendTest extends AbstractTest {
@@ -24,6 +26,7 @@ class HttpRestBackendTest extends AbstractTest {
    * Test create method.
    */
   public function testCreate() {
+    $resource_schema = 'test_configuration';
     $response = new \stdClass();
     $response->code = 200;
     $response->data = (object) array('_id' => '123');
@@ -31,7 +34,7 @@ class HttpRestBackendTest extends AbstractTest {
     $backend = $this->getMockedHttpBackendInstance($response);
 
     /** @var RestBackend $backend */
-    $document = $backend->create(new Document());
+    $document = $backend->create($resource_schema, new Document());
     $this->assertEquals('123', $document->getId());
   }
 
@@ -39,6 +42,7 @@ class HttpRestBackendTest extends AbstractTest {
    * Test update method.
    */
   public function testUpdate() {
+    $resource_schema = 'test_configuration';
     $response = new \stdClass();
     $response->code = 200;
     $response->data = (object) array('_id' => '123');
@@ -46,7 +50,7 @@ class HttpRestBackendTest extends AbstractTest {
     $backend = $this->getMockedHttpBackendInstance($response);
 
     /** @var RestBackend $backend */
-    $document = $backend->update(new Document());
+    $document = $backend->update($resource_schema, new Document());
     $this->assertEquals('123', $document->getId());
   }
 
@@ -54,6 +58,7 @@ class HttpRestBackendTest extends AbstractTest {
    * Test delete method.
    */
   public function testDelete() {
+    $resource_schema = 'test_configuration';
     $response = new \stdClass();
     $response->code = 200;
     $response->data = (object) array('_id' => '123');
@@ -61,7 +66,7 @@ class HttpRestBackendTest extends AbstractTest {
     $backend = $this->getMockedHttpBackendInstance($response);
 
     /** @var RestBackend $backend */
-    $return = $backend->delete('123');
+    $return = $backend->delete($resource_schema, '123');
     $this->assertTrue($return);
   }
 
@@ -75,7 +80,6 @@ class HttpRestBackendTest extends AbstractTest {
    *    Mocked object.
    */
   protected function getMockedHttpBackendInstance($returned_response) {
-
     $arguments = array(
       $this->backendConfiguration,
       new HttpRequestResponse(),

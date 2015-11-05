@@ -12,6 +12,9 @@ use Drupal\integration\Backend\Formatter\JsonFormatter;
 /**
  * Class JsonFormatterTest.
  *
+ * @group backend
+ * @group formatter
+ *
  * @package Drupal\integration\Tests\Backend
  */
 class JsonFormatterTest extends \PHPUnit_Framework_TestCase {

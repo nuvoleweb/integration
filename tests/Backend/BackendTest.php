@@ -14,6 +14,8 @@ use Drupal\integration\Tests\AbstractTest;
 /**
  * Class BackendTest.
  *
+ * @group backend
+ *
  * @package Drupal\integration\Tests\Backend
  */
 class BackendTest extends AbstractTest {
@@ -29,6 +31,7 @@ class BackendTest extends AbstractTest {
    * @dataProvider nodeFixturesDataProvider
    */
   public function testBackendCrudOperations($bundle, $id) {
+    $resource_schema = 'test_configuration';
     $node = $this->getExportedEntityFixture('node', $bundle, $id);
 
     // Get backend, producer and consumer instances.
