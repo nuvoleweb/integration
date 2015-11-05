@@ -14,6 +14,9 @@ use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
 /**
  * Class ConfigurationTest.
  *
+ * @group resource_schema
+ * @group configuration
+ *
  * @package Drupal\integration\Tests\ResourceSchema
  */
 class ConfigurationTest extends AbstractTest {

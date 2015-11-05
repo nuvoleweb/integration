@@ -14,6 +14,9 @@ use Drupal\integration_producer\Configuration\ProducerConfiguration;
 /**
  * Class ConfigurationTest.
  *
+ * @group producer
+ * @group configuration
+ *
  * @package Drupal\integration\Tests\Producer
  */
 class ConfigurationTest extends AbstractTest {

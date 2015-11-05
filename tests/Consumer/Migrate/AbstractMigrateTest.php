@@ -10,6 +10,8 @@ namespace Drupal\integration\Tests\Consumer\Migrate;
 /**
  * Class AbstractMigrateTest.
  *
+ * @group migrate
+ *
  * @package Drupal\integration\Tests\Consumer\Migrate
  */
 abstract class AbstractMigrateTest extends \PHPUnit_Framework_TestCase {

@@ -13,6 +13,8 @@ use Drupal\integration_consumer\Migrate\DocumentWrapper;
 /**
  * Class DocumentWrapperTest.
  *
+ * @group migrate
+ *
  * @package Drupal\integration\Tests
  */
 class DocumentWrapperTest extends AbstractMigrateTest {

@@ -77,7 +77,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
 
     // Set migration source backend.
     $backend = BackendFactory::getInstance($this->getConfiguration()->getBackend());
-    $this->setSource(new MigrateSourceBackend($backend));
+    $this->setSource(new MigrateSourceBackend($backend, $this->getConfiguration()->getPluginSetting('resource_schema')));
 
     // Set resource schema object.
     $this->resource = ResourceSchemaFactory::getInstance($this->getConfiguration()->resource);

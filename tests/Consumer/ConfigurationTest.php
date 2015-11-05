@@ -14,6 +14,9 @@ use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 /**
  * Class ConfigurationTest.
  *
+ * @group consumer
+ * @group configuration
+ *
  * @package Drupal\integration\Tests\Consumer
  */
 class ConfigurationTest extends AbstractTest {
@@ -46,11 +49,9 @@ class ConfigurationTest extends AbstractTest {
 
     $backend = $this->consumerConfiguration->getBackendConfiguration();
     $this->assertNotNull($backend);
-    $this->assertNotNull($backend->getPluginSetting('base_path'));
-    $this->assertNotNull($backend->getPluginSetting('endpoint'));
+    $this->assertNotNull($backend->getPluginSetting('base_url'));
 
-    $this->assertEquals($this->backendConfiguration->getPluginSetting('base_path'), $this->consumerConfiguration->getBackendConfiguration()->getPluginSetting('base_path'));
-    $this->assertEquals($this->backendConfiguration->getPluginSetting('endpoint'), $this->consumerConfiguration->getBackendConfiguration()->getPluginSetting('endpoint'));
+    $this->assertEquals($this->backendConfiguration->getPluginSetting('base_url'), $this->consumerConfiguration->getBackendConfiguration()->getPluginSetting('base_url'));
 
     $this->consumerConfiguration->delete();
     // Should throw \InvalidArgumentException exception.

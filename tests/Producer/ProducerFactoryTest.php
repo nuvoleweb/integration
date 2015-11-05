@@ -14,6 +14,8 @@ use Drupal\integration\Tests\AbstractTest;
 /**
  * Class ProducerFactoryTest.
  *
+ * @group producer
+ *
  * @package Drupal\integration\Tests\Producer
  */
 class ProducerFactoryTest extends AbstractTest {

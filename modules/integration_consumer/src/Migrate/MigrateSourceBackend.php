@@ -24,6 +24,13 @@ class MigrateSourceBackend extends \MigrateSource {
   protected $backend;
 
   /**
+   * Machine name of a resource schema configuration object.
+   *
+   * @var string
+   */
+  protected $resource_schema;
+
+  /**
    * List of documents IDs retrieved by current backend.
    *
    * @var array
@@ -42,12 +49,16 @@ class MigrateSourceBackend extends \MigrateSource {
    *
    * @param AbstractBackend $backend
    *    Backend instance.
+   * @param string $resource_schema
+   *    Machine name of a resource schema configuration object.
+   *
    * @param array $options
    *    Migrate source options.
    */
-  public function __construct(AbstractBackend $backend, array $options = []) {
+  public function __construct(AbstractBackend $backend, $resource_schema, array $options = []) {
     parent::__construct($options);
     $this->backend = $backend;
+    $this->resource_schema = $resource_schema;
   }
 
   /**
@@ -87,7 +98,7 @@ class MigrateSourceBackend extends \MigrateSource {
    */
   public function performRewind() {
     if (!$this->documentList) {
-      $this->documentList = $this->backend->listDocuments($resource_schema);
+      $this->documentList = $this->backend->listDocuments($this->resource_schema);
     }
     $this->currentId = 0;
   }
@@ -101,7 +112,7 @@ class MigrateSourceBackend extends \MigrateSource {
   public function getNextRow() {
 
     if ($this->currentId < $this->computeCount()) {
-      $document = $this->backend->read($resource_schema, $this->documentList[$this->currentId]);
+      $document = $this->backend->read($this->resource_schema, $this->documentList[$this->currentId]);
       $document_wrapper = new DocumentWrapper($document);
       $this->currentId++;
       return $document_wrapper;

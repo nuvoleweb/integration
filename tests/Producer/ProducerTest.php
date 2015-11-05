@@ -17,6 +17,8 @@ use \Mockery as m;
 /**
  * Class BackendTest.
  *
+ * @group producer
+ *
  * @package Drupal\integration\Tests\Producer\ProducerTest
  */
 class ProducerTest extends AbstractTest {

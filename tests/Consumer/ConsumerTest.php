@@ -13,6 +13,8 @@ use Drupal\integration_consumer\ConsumerFactory;
 /**
  * Class ConsumerTest.
  *
+ * @group consumer
+ *
  * @package Drupal\integration\Tests\Consumer
  */
 class ConsumerTest extends AbstractTest {

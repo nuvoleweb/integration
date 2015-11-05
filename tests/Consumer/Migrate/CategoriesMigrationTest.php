@@ -12,6 +12,8 @@ use Drupal\integration\Document\Document;
 /**
  * Class CategoriesMigrationTest.
  *
+ * @group migrate
+ *
  * @package Drupal\integration\Tests\Consumer\Migrate
  */
 class CategoriesMigrationTest extends AbstractMigrateTest {

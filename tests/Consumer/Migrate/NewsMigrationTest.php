@@ -12,6 +12,8 @@ use Drupal\integration\Document\Document;
 /**
  * Class NewsMigrationTest.
  *
+ * @group migrate
+ *
  * @package Drupal\integration\Tests\Consumer\Migrate
  */
 class NewsMigrationTest extends AbstractMigrateTest {
