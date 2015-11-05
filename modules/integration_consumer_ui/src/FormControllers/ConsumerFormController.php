@@ -37,6 +37,12 @@ class ConsumerFormController extends AbstractForm {
 
     // Add resource schema form portion.
     if ($entity_bundle = $configuration->getEntityBundle()) {
+      $options = $this->getBackendsAsOptions();
+      $default_value = $configuration->getBackend();
+      $form['backend_container'] = FormHelper::inlineFieldset(t('Backend'));
+      $form['backend_container']['backend'] = FormHelper::hiddenLabelSelect(t('Backend'), $options, $default_value);
+      $form['backend_container']['backend_submit'] = FormHelper::stepSubmit(t('Select Backend'), 'backend_submit');
+
       $options = $this->getResourceSchemasAsOptions();
       $default_value = (array) $configuration->getPluginSetting('resource_schema');
 
@@ -63,16 +69,16 @@ class ConsumerFormController extends AbstractForm {
         $form['settings']['plugin']['mapping'][$source] = FormHelper::hidden($destination);
 
         $row = [
-          'source'         => FormHelper::markup($source_options[$source]),
-          'destination'    => FormHelper::markup($destination_options[$destination]),
+          'source' => FormHelper::markup($source_options[$source]),
+          'destination' => FormHelper::markup($destination_options[$destination]),
           'remove_mapping' => FormHelper::stepSubmit(t('Remove'), 'remove_mapping'),
         ];
         $rows[] = $row;
       }
 
       $rows[] = [
-        'source'            => FormHelper::select(NULL, $source_options),
-        'destination'       => FormHelper::select(NULL, $destination_options),
+        'source' => FormHelper::select(NULL, $source_options),
+        'destination' => FormHelper::select(NULL, $destination_options),
         'add_field_mapping' => FormHelper::stepSubmit(t('Add mapping'), 'add_field_mapping'),
       ];
 
@@ -103,6 +109,7 @@ class ConsumerFormController extends AbstractForm {
       case 'select_plugin':
       case 'entity_bundle_submit':
       case 'resource_submit':
+      case 'backend_submit':
         $form_state['rebuild'] = TRUE;
         break;
 

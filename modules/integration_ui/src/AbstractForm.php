@@ -57,6 +57,21 @@ abstract class AbstractForm implements FormInterface {
   }
 
   /**
+   * Load all available backends and format them as an #options array.
+   *
+   * @return array
+   *    Form element options.
+   */
+  protected function getBackendsAsOptions() {
+    $options = [];
+    foreach (entity_load('integration_backend') as $backend) {
+      /** @var AbstractConfiguration $backend */
+      $options[$backend->getMachineName()] = $backend->getName();
+    }
+    return $options;
+  }
+
+  /**
    * Load all available resource schema and format them as an #options array.
    *
    * @return array
