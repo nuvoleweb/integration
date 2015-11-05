@@ -30,6 +30,9 @@ class HttpRequestResponse extends AbstractResponse {
     if ($this->hasErrors()) {
       return $this->getResponse()->error;
     }
+    else {
+      return '';
+    }
   }
 
   /**
@@ -52,6 +55,9 @@ class HttpRequestResponse extends AbstractResponse {
   public function getData() {
     if (!$this->hasErrors()) {
       return $this->getResponse()->data;
+    }
+    else {
+      return '';
     }
   }
 

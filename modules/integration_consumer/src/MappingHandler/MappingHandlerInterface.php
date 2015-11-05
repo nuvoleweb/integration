@@ -7,6 +7,7 @@
 
 namespace Drupal\integration_consumer\MappingHandler;
 
+use Drupal\integration_consumer\AbstractConsumer;
 
 /**
  * Interface MappingHandlerInterface.

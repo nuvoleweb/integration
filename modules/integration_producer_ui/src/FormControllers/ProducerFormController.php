@@ -10,6 +10,7 @@ namespace Drupal\integration_producer_ui\FormControllers;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration_ui\AbstractForm;
 use Drupal\integration_ui\FormHelper;
+use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 /**
  * Class ProducerFormController.
@@ -62,16 +63,16 @@ class ProducerFormController extends AbstractForm {
         $form['settings']['plugin']['mapping'][$source] = FormHelper::hidden($destination);
 
         $row = array(
-          'source'         => FormHelper::markup($source_options[$source]),
-          'destination'    => FormHelper::markup($destination_options[$destination]),
+          'source' => FormHelper::markup($source_options[$source]),
+          'destination' => FormHelper::markup($destination_options[$destination]),
           'remove_mapping' => FormHelper::stepSubmit(t('Remove'), 'remove_mapping'),
         );
         $rows[] = $row;
       }
 
       $rows[] = array(
-        'source'            => FormHelper::select(NULL, $source_options),
-        'destination'       => FormHelper::select(NULL, $destination_options),
+        'source' => FormHelper::select(NULL, $source_options),
+        'destination' => FormHelper::select(NULL, $destination_options),
         'add_field_mapping' => FormHelper::stepSubmit(t('Add mapping'), 'add_field_mapping'),
       );
 

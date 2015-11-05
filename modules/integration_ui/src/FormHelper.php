@@ -9,6 +9,8 @@ namespace Drupal\integration_ui;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Plugins\PluginManager;
+use Drupal\integration_producer\Configuration\ProducerConfiguration;
+use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 
 /**
  * Class FormHelper.
@@ -345,7 +347,7 @@ class FormHelper {
    *
    * @param string $label
    *    Form element label.
-   * @param AbstractConfiguration|ProducerConfiguration|ConsumerConfiguration $configuration
+   * @param AbstractConfiguration $configuration
    *    Current configuration object.
    * @param PluginManager $plugin_manager
    *    Current plugin manager object.

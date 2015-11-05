@@ -10,6 +10,7 @@ namespace Drupal\integration_consumer_ui\FormControllers;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration_ui\AbstractForm;
 use Drupal\integration_ui\FormHelper;
+use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 
 /**
  * Class ConsumerFormController.

@@ -15,6 +15,10 @@ use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 use Drupal\integration_consumer\Migrate\AbstractMigration;
 use Drupal\integration_consumer\Migrate\MigrateSourceBackend;
+use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
+use Drupal\integration\Backend\BackendInterface;
+use Drupal\integration\ResourceSchema\AbstractResourceSchema;
+use Drupal\integration_consumer\MappingHandler\AbstractMappingHandler;
 
 /**
  * Class AbstractConsumer.

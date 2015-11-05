@@ -28,6 +28,7 @@ class CategoriesMigrationTest extends AbstractMigrateTest {
    * Testing Content migration.
    */
   public function testContentMigration() {
+    /** @var \Migration $migration */
     $migration = \Migration::getInstance('IntegrationTestCategories');
 
     foreach ($this->fixtures['categories'] as $id => $fixture) {

@@ -12,6 +12,8 @@ use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Document\Document;
 use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
+use Drupal\integration_producer\Configuration\ProducerConfiguration;
+use Drupal\integration\Configuration\AbstractConfiguration;
 
 /**
  * Interface ProducerFactory.

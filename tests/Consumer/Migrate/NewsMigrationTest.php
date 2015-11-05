@@ -28,6 +28,7 @@ class NewsMigrationTest extends AbstractMigrateTest {
    * Testing Content migration.
    */
   public function testContentMigration() {
+    /** @var \Migration $migration */
     $migration = \Migration::getInstance('IntegrationTestNews');
 
     foreach ($this->fixtures['news'] as $id => $fixture) {

@@ -27,7 +27,7 @@ interface ConfigurablePluginInterface {
   /**
    * Get reference to current configuration entity object.
    *
-   * @return string
+   * @return AbstractConfiguration
    *    Configuration entity object.
    */
   public function getConfiguration();

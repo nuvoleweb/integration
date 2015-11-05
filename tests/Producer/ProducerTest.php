@@ -11,6 +11,7 @@ use Drupal\integration_producer\NodeProducer;
 use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 use Drupal\integration_producer\ProducerFactory;
 use Drupal\integration\Tests\AbstractTest;
+use Drupal\integration\Document\DocumentInterface;
 use \Mockery as m;
 
 /**

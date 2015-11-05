@@ -9,6 +9,7 @@ namespace Drupal\integration\Tests\Backend;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Tests\AbstractTest;
+use Drupal\integration\Backend\Configuration\BackendConfiguration;
 
 /**
  * Class ConfigurationTest.

@@ -59,7 +59,7 @@ class BackendTest extends AbstractTest {
     // Test backend delete method.
     $id = $updated_document->getId();
     $backend->delete($resource_schema, $id);
-    $this->assertFalse($backend->read($resource_schema, $id));
+    $this->assertFalse((bool) $backend->read($resource_schema, $id));
   }
 
 }

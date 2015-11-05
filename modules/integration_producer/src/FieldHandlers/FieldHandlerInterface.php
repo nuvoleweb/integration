@@ -7,6 +7,8 @@
 
 namespace Drupal\integration_producer\FieldHandlers;
 
+use Drupal\integration_producer\EntityWrapper\EntityWrapper;
+use Drupal\integration\Document\DocumentInterface;
 
 /**
  * Interface FieldHandlerInterface.

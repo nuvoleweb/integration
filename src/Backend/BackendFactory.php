@@ -9,6 +9,8 @@ namespace Drupal\integration\Backend;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Plugins\PluginManager;
+use Drupal\integration\Backend\Configuration\BackendConfiguration;
+use Drupal\integration\Configuration\AbstractConfiguration;
 
 /**
  * Interface BackendFactory.

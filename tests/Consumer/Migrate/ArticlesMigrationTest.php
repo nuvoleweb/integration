@@ -30,6 +30,7 @@ class ArticlesMigrationTest extends AbstractMigrateTest {
    * Testing Content migration.
    */
   public function testContentMigration() {
+    /** @var \Migration $migration */
     $migration = \Migration::getInstance('IntegrationTestArticles');
 
     foreach ($this->fixtures['articles'] as $id => $fixture) {
@@ -87,9 +88,9 @@ class ArticlesMigrationTest extends AbstractMigrateTest {
       foreach ($node->field_integration_test_ref[LANGUAGE_NONE] as $key => $value) {
         $news_raw_document = $this->getDocument('news', $news_ids[$key]);
         $news_source = new Document($news_raw_document);
-        $news_source->setCurrentLanguage($language);
+        $news_source->setCurrentLanguage('en');
         $news = node_load($value['target_id']);
-        $this->assertEquals($news_source->getFieldValue('title'), $news->title_field[$language][0]['value']);
+        $this->assertEquals($news_source->getFieldValue('title'), $news->title_field['en'][0]['value']);
       }
 
       // Assert that default language has been imported correctly.

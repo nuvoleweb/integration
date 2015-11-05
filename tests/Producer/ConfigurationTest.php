@@ -9,6 +9,7 @@ namespace Drupal\integration\Tests\Producer;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Tests\AbstractTest;
+use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 /**
  * Class ConfigurationTest.
