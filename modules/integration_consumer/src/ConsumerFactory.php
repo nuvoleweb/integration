@@ -39,7 +39,7 @@ class ConsumerFactory {
     $consumer_class = $plugin_manager->getPlugin($plugin)->getClass();
 
     if (!class_exists($consumer_class)) {
-      throw new \InvalidArgumentException(t('Class @class does not exists', array('class' => $consumer_class)));
+      throw new \InvalidArgumentException(t('Class @class does not exists', ['class' => $consumer_class]));
     }
 
     return $consumer_class::getInstance($machine_name);

@@ -19,14 +19,14 @@ class PluginManager {
    *
    * @var array
    */
-  private $pluginDefinitions = array();
+  private $pluginDefinitions = [];
 
   /**
    * List of current plugin type component definitions.
    *
    * @var array
    */
-  private $componentDefinitions = array();
+  private $componentDefinitions = [];
 
   /**
    * Current plugin machine name.

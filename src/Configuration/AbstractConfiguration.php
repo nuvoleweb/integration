@@ -60,14 +60,14 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    *
    * @see integration_entity_property_info_defaults()
    */
-  public $settings = array();
+  public $settings = [];
 
   /**
    * List of current error messages resulted by a failed validation.
    *
    * @var array[string]
    */
-  protected $errors = array();
+  protected $errors = [];
 
   /**
    * {@inheritdoc}
@@ -143,7 +143,7 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    * {@inheritdoc}
    */
   public function getPluginSetting($name) {
-    $settings = isset($this->settings['plugin']) ? $this->settings['plugin'] : array();
+    $settings = isset($this->settings['plugin']) ? $this->settings['plugin'] : [];
     return $this->getSettingValue($name, $settings);
   }
 
@@ -165,14 +165,14 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    * {@inheritdoc}
    */
   public function getPluginSettings() {
-    return isset($this->settings['plugin']) ? $this->settings['plugin'] : array();
+    return isset($this->settings['plugin']) ? $this->settings['plugin'] : [];
   }
 
   /**
    * {@inheritdoc}
    */
   public function getComponentSetting($component, $name) {
-    $settings = isset($this->settings['components'][$component]) ? $this->settings['components'][$component] : array();
+    $settings = isset($this->settings['components'][$component]) ? $this->settings['components'][$component] : [];
     return $this->getSettingValue($name, $settings);
   }
 
@@ -194,7 +194,7 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    * {@inheritdoc}
    */
   public function getComponentSettings($component) {
-    return isset($this->settings['components'][$component]) ? $this->settings['components'][$component] : array();
+    return isset($this->settings['components'][$component]) ? $this->settings['components'][$component] : [];
   }
 
   /**

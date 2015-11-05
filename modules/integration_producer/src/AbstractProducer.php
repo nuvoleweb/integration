@@ -63,7 +63,7 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
    *
    * @var array[FieldHandlerInterface]
    */
-  private $fieldHandlers = array();
+  private $fieldHandlers = [];
 
   /**
    * AbstractProducer constructor.

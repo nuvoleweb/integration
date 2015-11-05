@@ -79,9 +79,9 @@ class ConfigurationTest extends AbstractTest {
    *    Configuration objects.
    */
   public function configurationProvider() {
-    return array(
-      array($this->getConfigurationFixture('producer', 'test_configuration')),
-    );
+    return [
+      [$this->getConfigurationFixture('producer', 'test_configuration')],
+    ];
   }
 
 }

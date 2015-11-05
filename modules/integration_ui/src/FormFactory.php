@@ -24,7 +24,7 @@ class FormFactory {
    *
    * @var array
    */
-  protected $controllers = array();
+  protected $controllers = [];
 
   /**
    * Plugin manager instance.
@@ -89,7 +89,7 @@ class FormFactory {
   public function getPluginHandler($plugin) {
     $form_handler = $this->pluginManager->getPlugin($plugin)->getFormHandler();
     if (!$form_handler) {
-      throw new UndefinedFormHandlerException(t('Plugin type "!plugin" does not have a form handler defined.', array('!plugin' => $plugin)));
+      throw new UndefinedFormHandlerException(t('Plugin type "!plugin" does not have a form handler defined.', ['!plugin' => $plugin]));
     }
     return new $form_handler();
   }
@@ -109,7 +109,7 @@ class FormFactory {
   public function getComponentHandler($component) {
     $form_handler = $this->pluginManager->getComponent($component)->getFormHandler();
     if (!$form_handler) {
-      throw new UndefinedFormHandlerException(t('Plugin component type "!component" does not have a form handler defined.', array('!plugin' => $component)));
+      throw new UndefinedFormHandlerException(t('Plugin component type "!component" does not have a form handler defined.', ['!plugin' => $component]));
     }
     return new $form_handler();
   }

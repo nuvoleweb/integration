@@ -28,62 +28,62 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
 
     // Test backend plugin definitions.
     $manager = PluginManager::getInstance('backend');
-    $expected = array(
+    $expected = [
       'rest_backend',
       'memory_backend',
       'file_system_backend',
-    );
+    ];
     $this->assertEquals($expected, array_keys($manager->getPluginDefinitions()));
 
     // Test backend plugin component definitions.
-    $expected = array(
+    $expected = [
       'json_formatter',
       'http_response',
       'raw_response',
       'http_authentication',
       'no_authentication',
-    );
+    ];
     $this->assertEquals($expected, array_keys($manager->getComponentDefinitions()));
 
-    $expected = array(
+    $expected = [
       'http_authentication',
       'no_authentication',
-    );
+    ];
     $this->assertEquals($expected, array_keys($manager->getComponentDefinitions('authentication_handler')));
 
     // Test resource_schema plugin definitions.
     $manager = PluginManager::getInstance('resource_schema');
-    $expected = array(
+    $expected = [
       'raw_resource_schema',
-    );
+    ];
     $this->assertEquals($expected, array_keys($manager->getPluginDefinitions()));
 
     // Test consumer plugin definitions.
     $manager = PluginManager::getInstance('consumer');
-    $expected = array(
+    $expected = [
       'node_consumer',
-    );
+    ];
     $this->assertEquals($expected, array_keys($manager->getPluginDefinitions()));
 
     // Test consumer plugin component definitions.
-    $expected = array(
+    $expected = [
       'file_field_mapping',
       'text_with_summary_mapping',
       'title_mapping',
-    );
+    ];
     $this->assertEquals($expected, array_keys($manager->getComponentDefinitions()));
     $this->assertEquals($expected, array_keys($manager->getComponentDefinitions('mapping_handler')));
 
     // Test producer plugin definitions.
     $manager = PluginManager::getInstance('producer');
-    $expected = array(
+    $expected = [
       'node_producer',
       'taxonomy_term_producer',
-    );
+    ];
     $this->assertEquals($expected, array_keys($manager->getPluginDefinitions()));
 
     // Test producer plugin component definitions.
-    $expected = array(
+    $expected = [
       'default',
       'text',
       'text_long',
@@ -93,7 +93,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
       'datestamp',
       'file',
       'image',
-    );
+    ];
     $this->assertEquals($expected, array_keys($manager->getComponentDefinitions()));
   }
 
@@ -104,7 +104,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
    */
   public function testPluginDefinitions() {
 
-    foreach (array('backend', 'consumer', 'producer', 'resource_schema') as $plugin) {
+    foreach (['backend', 'consumer', 'producer', 'resource_schema'] as $plugin) {
       $manager = PluginManager::getInstance($plugin);
       $definitions = $manager->getComponentDefinitions();
 
@@ -124,7 +124,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
    */
   public function testPluginComponentDefinitions() {
 
-    foreach (array('backend', 'consumer', 'producer', 'resource_schema') as $plugin) {
+    foreach (['backend', 'consumer', 'producer', 'resource_schema'] as $plugin) {
       $manager = PluginManager::getInstance($plugin);
       $definitions = $manager->getPluginDefinitions();
 

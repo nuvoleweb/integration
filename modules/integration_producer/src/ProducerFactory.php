@@ -45,7 +45,7 @@ class ProducerFactory {
     $resource = ResourceSchemaFactory::getInstance($configuration->resource);
 
     if (!class_exists($producer_class)) {
-      throw new \InvalidArgumentException(t('Class @class does not exists', array('class' => $producer_class)));
+      throw new \InvalidArgumentException(t('Class @class does not exists', ['class' => $producer_class]));
     }
 
     return new $producer_class($configuration, $entity_wrapper, $document, $backend, $resource);

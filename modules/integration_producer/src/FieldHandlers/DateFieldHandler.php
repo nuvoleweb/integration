@@ -23,11 +23,11 @@ class DateFieldHandler extends AbstractFieldHandler {
    * {@inheritdoc}
    */
   public function getSubFieldList() {
-    return array(
+    return [
       'start' => t('Start date'),
       'end' => t('End date'),
       'timezone' => t('Timezone'),
-    );
+    ];
   }
 
   /**

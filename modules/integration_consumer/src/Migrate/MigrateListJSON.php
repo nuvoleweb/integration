@@ -23,7 +23,7 @@ class MigrateListJSON extends \MigrateListJSON {
    * {@inheritdoc}
    */
   protected function getIDsFromJSON(array $data) {
-    $return = array();
+    $return = [];
     foreach ($data['results'] as $item) {
       $return[] = $item['id'];
     }

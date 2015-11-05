@@ -11,26 +11,26 @@
 function integration_schema() {
 
   $schema['integration_backend'] = integration_schema_defaults();
-  $schema['integration_backend']['fields'] += array(
-    'response' => array(
+  $schema['integration_backend']['fields'] += [
+    'response' => [
       'description' => 'The id of the response plugin to use.',
       'type' => 'varchar',
       'length' => 50,
       'not null' => TRUE,
-    ),
-    'formatter' => array(
+    ],
+    'formatter' => [
       'description' => 'The id of the formatter plugin to use.',
       'type' => 'varchar',
       'length' => 50,
       'not null' => TRUE,
-    ),
-    'authentication' => array(
+    ],
+    'authentication' => [
       'description' => 'The id of the authentication plugin to use.',
       'type' => 'varchar',
       'length' => 50,
       'not null' => TRUE,
-    ),
-  );
+    ],
+  ];
 
   $schema['integration_resource_schema'] = integration_schema_defaults();
   return $schema;
@@ -45,71 +45,71 @@ function integration_schema() {
  * @see hook_schema()
  */
 function integration_schema_defaults() {
-  return array(
-    'fields' => array(
-      'id' => array(
+  return [
+    'fields' => [
+      'id' => [
         'description' => 'Primary identifier.',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
-      ),
-      'name' => array(
+      ],
+      'name' => [
         'description' => 'Human readable configuration name.',
         'type' => 'varchar',
         'length' => 50,
         'not null' => TRUE,
-      ),
-      'machine_name' => array(
+      ],
+      'machine_name' => [
         'description' => 'Configuration machine name.',
         'type' => 'varchar',
         'length' => 50,
         'not null' => TRUE,
-      ),
-      'description' => array(
+      ],
+      'description' => [
         'description' => 'Configuration entity description.',
         'type' => 'text',
         'not null' => FALSE,
-      ),
-      'plugin' => array(
+      ],
+      'plugin' => [
         'description' => 'Plugin name, as returned by hook_integration_PLUGIN_TYPE_info() implementations.',
         'type' => 'varchar',
         'length' => 50,
         'not null' => TRUE,
-      ),
-      'settings' => array(
+      ],
+      'settings' => [
         'description' => 'Configuration entity settings.',
         'type' => 'text',
         'size' => 'medium',
         'serialize' => TRUE,
         'not null' => TRUE,
-      ),
-      'enabled' => array(
+      ],
+      'enabled' => [
         'description' => 'A flag indicating whether the configuration is enabled.',
         'type' => 'int',
         'size' => 'tiny',
         'not null' => TRUE,
         'default' => 1,
-      ),
-      'status' => array(
+      ],
+      'status' => [
         'description' => 'The exportable status of the configuration entity.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0x01,
         'size' => 'tiny',
-      ),
-      'module' => array(
+      ],
+      'module' => [
         'description' => 'The name of the module from which this configuration entity originates.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => FALSE,
-      ),
-    ),
-    'indexes' => array(
-      'enabled' => array('enabled'),
-    ),
-    'unique keys' => array(
-      'machine_name' => array('machine_name'),
-    ),
-    'primary key' => array('id'),
-  );
+      ],
+    ],
+    'indexes' => [
+      'enabled' => ['enabled'],
+    ],
+    'unique keys' => [
+      'machine_name' => ['machine_name'],
+    ],
+    'primary key' => ['id'],
+  ];
 }

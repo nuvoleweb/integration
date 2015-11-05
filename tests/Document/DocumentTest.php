@@ -32,13 +32,13 @@ class DocumentTest extends AbstractMigrateTest {
 
       // Assert fields machine names.
       $machine_names = $document->getFieldMachineNames();
-      foreach (array('title', 'images', 'image_alt_text', 'abstract') as $key) {
+      foreach (['title', 'images', 'image_alt_text', 'abstract'] as $key) {
         $this->assertTrue(in_array($key, $machine_names));
       }
 
       // Assert fields values.
       $field_values = $document->getCurrentLanguageFieldsValues();
-      foreach (array('title', 'images', 'image_alt_text', 'abstract') as $key) {
+      foreach (['title', 'images', 'image_alt_text', 'abstract'] as $key) {
         $this->assertArrayHasKey($key, $field_values);
         $this->assertTrue(!empty($field_values[$key]));
       }
@@ -55,7 +55,7 @@ class DocumentTest extends AbstractMigrateTest {
       $this->assertContains('French title', $document->getFieldValue('title'));
 
       // Assert available languages.
-      $this->assertEquals(array('fr', 'en'), $document->getAvailableLanguages());
+      $this->assertEquals(['fr', 'en'], $document->getAvailableLanguages());
     }
   }
 

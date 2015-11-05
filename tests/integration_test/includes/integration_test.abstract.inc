@@ -20,13 +20,13 @@ abstract class IntegrationTestAbstractMigration extends AbstractMigration {
    *    Get default source key definition.
    */
   public function getSourceKey() {
-    return array(
-      '_id' => array(
+    return [
+      '_id' => [
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
-      ),
-    );
+      ],
+    ];
   }
 
   /**
@@ -43,8 +43,8 @@ abstract class IntegrationTestAbstractMigration extends AbstractMigration {
     $base_path = self::getFixturesPath() . '/' . $type;
     $this->setSource(new MigrateSourceList(
       new \MigrateListJSON($base_path . '/list.json'),
-      new MigrateItemJSON($base_path . '/document-:id.json', array()),
-      array()
+      new MigrateItemJSON($base_path . '/document-:id.json', []),
+      []
     ));
   }
 

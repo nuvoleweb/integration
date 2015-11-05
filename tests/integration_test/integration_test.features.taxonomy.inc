@@ -8,29 +8,29 @@
  * Implements hook_taxonomy_default_vocabularies().
  */
 function integration_test_taxonomy_default_vocabularies() {
-  return array(
-    'integration_test' => array(
+  return [
+    'integration_test' => [
       'name' => 'Integration test',
       'machine_name' => 'integration_test',
       'description' => 'Integration test vocabulary.',
       'hierarchy' => 0,
       'module' => 'taxonomy',
       'weight' => 0,
-      'rdf_mapping' => array(
-        'rdftype' => array(
+      'rdf_mapping' => [
+        'rdftype' => [
           0 => 'skos:ConceptScheme',
-        ),
-        'name' => array(
-          'predicates' => array(
+        ],
+        'name' => [
+          'predicates' => [
             0 => 'dc:title',
-          ),
-        ),
-        'description' => array(
-          'predicates' => array(
+          ],
+        ],
+        'description' => [
+          'predicates' => [
             0 => 'rdfs:comment',
-          ),
-        ),
-      ),
-    ),
-  );
+          ],
+        ],
+      ],
+    ],
+  ];
 }

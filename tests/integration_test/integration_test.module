@@ -10,26 +10,26 @@ include_once 'integration_test.features.inc';
  * Implements hook_migrate_api().
  */
 function integration_test_migrate_api() {
-  return array(
+  return [
     'api' => 2,
-    'groups' => array(
-      'IntegrationTest' => array(
+    'groups' => [
+      'IntegrationTest' => [
         'title' => t('Integration Test'),
-      ),
-    ),
-    'migrations' => array(
-      'IntegrationTestArticles' => array(
+      ],
+    ],
+    'migrations' => [
+      'IntegrationTestArticles' => [
         'class_name' => 'IntegrationTestArticlesMigration',
         'group_name' => 'IntegrationTest',
-      ),
-      'IntegrationTestNews' => array(
+      ],
+      'IntegrationTestNews' => [
         'class_name' => 'IntegrationTestNewsMigration',
         'group_name' => 'IntegrationTest',
-      ),
-      'IntegrationTestCategories' => array(
+      ],
+      'IntegrationTestCategories' => [
         'class_name' => 'IntegrationTestCategoriesMigration',
         'group_name' => 'IntegrationTest',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 }

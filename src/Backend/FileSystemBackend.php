@@ -22,7 +22,7 @@ class FileSystemBackend extends AbstractBackend {
    *
    * @var array
    */
-  private $storage = array();
+  private $storage = [];
 
   /**
    * {@inheritdoc}

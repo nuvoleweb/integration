@@ -11,19 +11,19 @@ $export->machine_name = 'test_configuration';
 $export->description = 'Test configuration description.';
 $export->plugin = 'node_consumer';
 $export->entity_bundle = 'integration_test';
-$export->settings = array(
-  'plugin' => array(
+$export->settings = [
+  'plugin' => [
     'key1' => 'value1',
     'key2' => 'value2',
     'key3' => 'value3',
-  ),
-  'components' => array(
-    'mapping_handler' => array(
+  ],
+  'components' => [
+    'mapping_handler' => [
       'title' => 'title_field',
       'body' => 'body',
-    ),
-  ),
-);
+    ],
+  ],
+];
 $export->backend = 'test_configuration';
 $export->resource = 'test_configuration';
 $export->enabled = 1;

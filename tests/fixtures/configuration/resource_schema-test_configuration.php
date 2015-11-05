@@ -10,14 +10,14 @@ $export->name = 'Test configuration';
 $export->machine_name = 'test_configuration';
 $export->description = 'Test configuration description.';
 $export->plugin = 'raw_resource_schema';
-$export->settings = array(
-  'plugin' => array(
+$export->settings = [
+  'plugin' => [
     'title' => 'Title',
     'body' => 'Body',
     'attachment' => 'Attachment',
-  ),
-  'components' => array(),
-);
+  ],
+  'components' => [],
+];
 $export->backend = 'test_configuration';
 $export->enabled = 1;
 $export->status = 1;

@@ -18,12 +18,12 @@ class FileFieldHandler extends AbstractFieldHandler {
    * {@inheritdoc}
    */
   public function getSubFieldList() {
-    return array(
+    return [
       'path' => t('File path'),
       'size' => t('File size'),
       'mime' => t('File mime'),
       'status' => t('File status'),
-    );
+    ];
   }
 
   /**

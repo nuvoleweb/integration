@@ -28,7 +28,7 @@ class MigrateSourceBackend extends \MigrateSource {
    *
    * @var array
    */
-  protected $documentList = array();
+  protected $documentList = [];
 
   /**
    * Index in $documentList array of current document being processed.
@@ -45,7 +45,7 @@ class MigrateSourceBackend extends \MigrateSource {
    * @param array $options
    *    Migrate source options.
    */
-  public function __construct(AbstractBackend $backend, array $options = array()) {
+  public function __construct(AbstractBackend $backend, array $options = []) {
     parent::__construct($options);
     $this->backend = $backend;
   }
@@ -57,7 +57,7 @@ class MigrateSourceBackend extends \MigrateSource {
    *    String representing the source
    */
   public function __toString() {
-    return t('Migrate source using %backend integration backend.', array('%backend' => $this->backend->getConfiguration()->getName()));
+    return t('Migrate source using %backend integration backend.', ['%backend' => $this->backend->getConfiguration()->getName()]);
   }
 
   /**
@@ -67,9 +67,9 @@ class MigrateSourceBackend extends \MigrateSource {
    *    List of fields keyed by field name.
    */
   public function fields() {
-    return array(
+    return [
       '_id' => t('Backend content ID'),
-    );
+    ];
   }
 
   /**

@@ -33,27 +33,27 @@ class ResourceSchemaFormController extends AbstractForm {
     $form['settings']['plugin'] = FormHelper::tree(FALSE);
 
     $i = 0;
-    $rows = array();
+    $rows = [];
     $fields = (array) $configuration->getPluginSetting('fields');
     foreach ($fields as $name => $label) {
       $form['settings']['plugin']['fields'][$name] = FormHelper::hidden($label);
 
-      $row = array(
+      $row = [
         'name'            => FormHelper::markup($name),
         'label'           => FormHelper::markup($label),
         "remove_field_$i" => FormHelper::stepSubmit(t('Remove'), $name),
-      );
+      ];
       $rows[] = $row;
       $i++;
     }
 
-    $rows[] = array(
+    $rows[] = [
       'field_name'  => FormHelper::textField(NULL, NULL, FALSE),
       'field_label' => FormHelper::textField(NULL, NULL, FALSE),
       'add_field'   => FormHelper::stepSubmit(t('Add'), 'add_field'),
-    );
+    ];
 
-    $header = array(t('Field name'), t('Field label'), NULL);
+    $header = [t('Field name'), t('Field label'), NULL];
     $form['settings']['fields'] = FormHelper::table($header, $rows);
   }
 
@@ -86,7 +86,7 @@ class ResourceSchemaFormController extends AbstractForm {
     }
 
     // Remove UI-related values from plugin settings.
-    foreach (array('fields') as $name) {
+    foreach (['fields'] as $name) {
       unset($configuration->settings[$name]);
     }
   }

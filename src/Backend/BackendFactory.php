@@ -24,7 +24,7 @@ class BackendFactory {
    *
    * @var array[AbstractBackend]
    */
-  static private $instances = array();
+  static private $instances = [];
 
   /**
    * Instantiate and return a backend object given its configuration.
@@ -47,7 +47,7 @@ class BackendFactory {
       $response_class = $plugin_manager->getComponent($configuration->getResponse())->getClass();
       $formatter_class = $plugin_manager->getComponent($configuration->getFormatter())->getClass();
 
-      foreach (array($backend_class, $response_class, $formatter_class) as $class) {
+      foreach ([$backend_class, $response_class, $formatter_class] as $class) {
         if (!class_exists($class)) {
           throw new \InvalidArgumentException("Class $class does not exists");
         }

@@ -18,9 +18,9 @@ class TextWithSummaryFieldHandler extends AbstractFieldHandler {
    * {@inheritdoc}
    */
   public function getSubFieldList() {
-    return array(
+    return [
       'summary' => t('Summary text'),
-    );
+    ];
   }
 
   /**

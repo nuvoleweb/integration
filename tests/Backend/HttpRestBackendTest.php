@@ -29,7 +29,7 @@ class HttpRestBackendTest extends AbstractTest {
     $resource_schema = 'test_configuration';
     $response = new \stdClass();
     $response->code = 200;
-    $response->data = (object) array('_id' => '123');
+    $response->data = (object) ['_id' => '123'];
 
     $backend = $this->getMockedHttpBackendInstance($response);
 
@@ -45,7 +45,7 @@ class HttpRestBackendTest extends AbstractTest {
     $resource_schema = 'test_configuration';
     $response = new \stdClass();
     $response->code = 200;
-    $response->data = (object) array('_id' => '123');
+    $response->data = (object) ['_id' => '123'];
 
     $backend = $this->getMockedHttpBackendInstance($response);
 
@@ -61,7 +61,7 @@ class HttpRestBackendTest extends AbstractTest {
     $resource_schema = 'test_configuration';
     $response = new \stdClass();
     $response->code = 200;
-    $response->data = (object) array('_id' => '123');
+    $response->data = (object) ['_id' => '123'];
 
     $backend = $this->getMockedHttpBackendInstance($response);
 
@@ -80,11 +80,11 @@ class HttpRestBackendTest extends AbstractTest {
    *    Mocked object.
    */
   protected function getMockedHttpBackendInstance($returned_response) {
-    $arguments = array(
+    $arguments = [
       $this->backendConfiguration,
       new HttpRequestResponse(),
       new JsonFormatter(),
-    );
+    ];
     $backend = \Mockery::mock('Drupal\integration\Backend\RestBackend[httpRequest]', $arguments);
     $backend->shouldAllowMockingProtectedMethods()
       ->shouldReceive('httpRequest')

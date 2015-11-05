@@ -13,11 +13,11 @@ include_once 'includes/integration_producer.hooks.inc';
  * Implements hook_permission().
  */
 function integration_producer_permission() {
-  return array(
-    'administer producers' => array(
+  return [
+    'administer producers' => [
       'title' => t('Administer producers'),
-    ),
-  );
+    ],
+  ];
 }
 
 /**

@@ -135,7 +135,7 @@ class Document implements DocumentInterface {
       return (count($values) <= 1) ? array_shift($values) : $values;
     }
     else {
-      throw new \Exception(t('Field not found: !field_name', array('!field_name' => $field_name)));
+      throw new \Exception(t('Field not found: !field_name', ['!field_name' => $field_name]));
     }
   }
 
@@ -148,7 +148,7 @@ class Document implements DocumentInterface {
       return $this;
     }
     else {
-      throw new \Exception(t('Trying to set a not-available language as current language: !language', array('!language' => $language)));
+      throw new \Exception(t('Trying to set a not-available language as current language: !language', ['!language' => $language]));
     }
   }
 
@@ -179,7 +179,7 @@ class Document implements DocumentInterface {
     $document = new \stdClass();
     $document->_id = NULL;
     $document->default_language = 'en';
-    $document->languages = array('en');
+    $document->languages = ['en'];
     $document->fields = new \stdClass();
     return $document;
   }
@@ -192,10 +192,10 @@ class Document implements DocumentInterface {
 
     $fields = &$this->document->fields;
     if (!isset($fields->{$name}->{$language})) {
-      $fields->{$name}->{$language} = array();
+      $fields->{$name}->{$language} = [];
     }
     $values = &$fields->{$name}->{$language};
-    $values = is_array($value) ? $value : array($value);
+    $values = is_array($value) ? $value : [$value];
     return $this;
   }
 
@@ -208,7 +208,7 @@ class Document implements DocumentInterface {
     $fields = &$this->document->fields;
     if (!isset($fields->{$name})) {
       $fields->{$name} = new \stdClass();
-      $fields->{$name}->{$language} = array();
+      $fields->{$name}->{$language} = [];
     }
     $values = &$fields->{$name}->{$language};
     $values[] = $value;

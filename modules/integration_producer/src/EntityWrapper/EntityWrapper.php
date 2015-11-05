@@ -42,7 +42,7 @@ class EntityWrapper extends \EntityDrupalWrapper implements EntityWrapperInterfa
    * @param mixed $info
    *   Optional. Used internally to pass info about properties down the tree.
    */
-  public function __construct($type, $data = NULL, $info = array()) {
+  public function __construct($type, $data = NULL, $info = []) {
     parent::__construct($type, $data, $info);
     $this->translationHandler = entity_translation_get_handler($type, $data);
     $this->setUp();
@@ -90,7 +90,7 @@ class EntityWrapper extends \EntityDrupalWrapper implements EntityWrapperInterfa
    * {@inheritdoc}
    */
   public function getPropertyList() {
-    $properties = array();
+    $properties = [];
     foreach ($this->propertyInfo['properties'] as $name => $info) {
       if (!isset($info['field'])) {
         $properties[] = $name;
@@ -104,7 +104,7 @@ class EntityWrapper extends \EntityDrupalWrapper implements EntityWrapperInterfa
    */
   public function getFieldList() {
 
-    $fields = array();
+    $fields = [];
     foreach ($this->propertyInfo['properties'] as $name => $info) {
       if (isset($info['field']) && $info['field']) {
         $fields[] = $name;

@@ -11,20 +11,20 @@ $export->machine_name = 'test_configuration';
 $export->description = 'Test configuration description.';
 $export->plugin = 'node_producer';
 $export->entity_bundle = 'article';
-$export->settings = array(
-  'plugin' => array(
+$export->settings = [
+  'plugin' => [
     'key1' => 'value1',
     'key2' => 'value2',
     'key3' => 'value3',
-  ),
-  'components' => array(
-    'field_handler' => array(
+  ],
+  'components' => [
+    'field_handler' => [
       'key1' => 'value1',
       'key2' => 'value2',
       'key3' => 'value3',
-    ),
-  ),
-);
+    ],
+  ],
+];
 $export->backend = 'test_configuration';
 $export->resource = 'test_configuration';
 $export->enabled = 1;

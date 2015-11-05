@@ -47,7 +47,7 @@ class ConsumerConfiguration extends AbstractConfiguration {
    * @var array
    *    Array of consumer field mapping.
    */
-  public $mapping = array();
+  public $mapping = [];
 
   /**
    * Contains consumer options.
@@ -55,7 +55,7 @@ class ConsumerConfiguration extends AbstractConfiguration {
    * @var array
    *    Array of consumer specific option.
    */
-  public $settings = array();
+  public $settings = [];
 
   /**
    * Return backend configuration machine name.

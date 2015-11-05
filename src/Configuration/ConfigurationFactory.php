@@ -33,7 +33,7 @@ class ConfigurationFactory {
       return $configuration;
     }
     else {
-      $args = array('@machine_name' => $machine_name, '@type' => $type);
+      $args = ['@machine_name' => $machine_name, '@type' => $type];
       throw new \InvalidArgumentException(t('Configuration entity "@machine_name" of type "@type" not found.', $args));
     }
   }

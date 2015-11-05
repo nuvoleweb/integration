@@ -55,9 +55,9 @@ class BackendFormController extends AbstractForm {
     // Prompt each resource schema configuration only when they are set.
     if ($resources = (array) $configuration->getPluginSetting('resource_schemas')) {
 
-      $rows = array();
+      $rows = [];
       foreach ($resources as $machine_name) {
-        $element = array();
+        $element = [];
         $form['resource_settings'][$machine_name] = FormHelper::hidden($machine_name);
         try {
           /** @var AbstractBackendFormHandler $plugin_handler */
@@ -67,33 +67,33 @@ class BackendFormController extends AbstractForm {
         catch (UndefinedFormHandlerException $e) {
         }
 
-        $row = array();
+        $row = [];
         $row['resource'] = FormHelper::markup($this->getResourceSchemaLabel($machine_name));
         $row['resource_schema'] = FormHelper::tree();
         $row['resource_schema'][$machine_name] = $element;
         $rows[] = $row;
       }
 
-      $header = array(t('Resource schema'), t('Settings'));
+      $header = [t('Resource schema'), t('Settings')];
       $form['resource_settings'] = FormHelper::table($header, $rows);
     }
 
     // Add component specific forms.
     if ($plugin && $resources) {
-      $components = array(
-        'response_handler' => array(
+      $components = [
+        'response_handler' => [
           'label' => t('Response handler'),
           'value' => $configuration->getResponse(),
-        ),
-        'formatter_handler' => array(
+        ],
+        'formatter_handler' => [
           'label' => t('Formatter handler'),
           'value' => $configuration->getFormatter(),
-        ),
-        'authentication_handler' => array(
+        ],
+        'authentication_handler' => [
           'label' => t('Authentication handler'),
           'value' => $configuration->getAuthentication(),
-        ),
-      );
+        ],
+      ];
 
       $form['components'] = FormHelper::verticalTabs();
       foreach ($components as $component_type => $component) {
@@ -131,7 +131,7 @@ class BackendFormController extends AbstractForm {
         break;
 
       case 'resources_submit':
-        $values = array();
+        $values = [];
         foreach (array_filter($input['resource_schemas']) as $value) {
           $values[] = $value;
         }

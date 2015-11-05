@@ -74,9 +74,9 @@ class ProducerTest extends AbstractTest {
     $this->assertEquals($producer->getConfiguration()->getProducerId(), $document->getMetadata('producer'));
 
     // Assert that available languages have been set correctly.
-    $this->assertEquals(array('en', 'fr'), $document->getAvailableLanguages());
+    $this->assertEquals(['en', 'fr'], $document->getAvailableLanguages());
 
-    foreach (array('en', 'fr') as $language) {
+    foreach (['en', 'fr'] as $language) {
       $document->setCurrentLanguage($language);
 
       // Assert that title has been imported correctly.
@@ -127,31 +127,31 @@ class ProducerTest extends AbstractTest {
     $node = $this->getExportedEntityFixture('node', 'integration_test', 1);
     $wrapper = new EntityWrapper('node', $node);
 
-    $properties = array(
+    $properties = [
       'nid',
       'vid',
       'type',
       'title',
       'promote',
-    );
+    ];
     foreach ($properties as $property) {
       $this->assertTrue($wrapper->isProperty($property));
       $this->assertEquals($node->{$property}, $wrapper->getProperty($property));
     }
     $this->assertEquals(date(EntityWrapper::DEFAULT_DATE_FORMAT, $node->created), $wrapper->getProperty('created'));
 
-    $fields = array(
+    $fields = [
       'body',
       'field_integration_test_dates',
       'field_integration_test_files',
       'title_field',
-    );
+    ];
     foreach ($fields as $field) {
       $this->assertTrue($wrapper->isField($field));
     }
 
-    $this->assertEquals(array('en', 'fr'), $wrapper->getAvailableLanguages());
-    foreach (array('en', 'fr') as $language) {
+    $this->assertEquals(['en', 'fr'], $wrapper->getAvailableLanguages());
+    foreach (['en', 'fr'] as $language) {
       $this->assertEquals($node->title_field[$language][0]['value'], $wrapper->getField('title_field', $language));
     }
   }

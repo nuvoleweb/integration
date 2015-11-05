@@ -13,11 +13,11 @@ include_once 'includes/integration.hooks.inc';
  * Implements hook_permission().
  */
 function integration_permission() {
-  return array(
-    'administer backends' => array(
+  return [
+    'administer backends' => [
       'title' => t('Administer integration layer backends'),
-    ),
-  );
+    ],
+  ];
 }
 
 /**

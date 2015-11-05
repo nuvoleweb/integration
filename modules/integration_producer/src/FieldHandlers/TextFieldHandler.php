@@ -18,7 +18,7 @@ class TextFieldHandler extends AbstractFieldHandler {
    * {@inheritdoc}
    */
   public function getSubFieldList() {
-    return array();
+    return [];
   }
 
   /**

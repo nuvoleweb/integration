@@ -32,13 +32,13 @@ class NewsMigrationTest extends AbstractMigrateTest {
     $migration = \Migration::getInstance('IntegrationTestNews');
 
     foreach ($this->fixtures['news'] as $id => $fixture) {
-      $mapping_row = $migration->getMap()->getRowBySource(array('_id' => $id));
+      $mapping_row = $migration->getMap()->getRowBySource(['_id' => $id]);
 
       $raw_document = $this->getDocument('news', $id);
       $source = new Document($raw_document);
 
       $node = node_load($mapping_row['destid1']);
-      foreach (array('en', 'fr') as $language) {
+      foreach (['en', 'fr'] as $language) {
         $source->setCurrentLanguage($language);
 
         // Assert that title has been imported correctly.

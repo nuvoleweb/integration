@@ -46,7 +46,7 @@ class IntegrationTest extends AbstractTest {
       $document = $backend->read($resource_schema, $id);
       $node = $consumer->getDestinationEntity($id);
 
-      foreach (array('en', 'fr') as $language) {
+      foreach (['en', 'fr'] as $language) {
         $document->setCurrentLanguage($language);
         $this->assertEquals($document->getFieldValue('title_field'), $node->title_field[$language][0]['value']);
         $this->assertEquals($document->getFieldValue('body'), $node->body[$language][0]['value']);
@@ -65,7 +65,7 @@ class IntegrationTest extends AbstractTest {
    *    List of node objects.
    */
   private function getProducerNodes() {
-    $nodes = array();
+    $nodes = [];
     foreach ($this->nodeFixturesDataProvider() as $row) {
       $nodes[] = $this->getExportedEntityFixture('node', $row[0], $row[1]);
     }

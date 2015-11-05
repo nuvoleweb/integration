@@ -12,14 +12,14 @@ include_once 'includes/integration_ui.themes.inc';
  * Implements hook_menu().
  */
 function integration_ui_menu() {
-  $items['admin/config/integration'] = array(
+  $items['admin/config/integration'] = [
     'title' => 'Integration layer',
     'description' => 'Integration layer settings.',
     'position' => 'right',
     'weight' => 100,
     'page callback' => 'integration_ui_admin_menu_block_page',
-    'access arguments' => array('access administration pages'),
-  );
+    'access arguments' => ['access administration pages'],
+  ];
   return $items;
 }
 
@@ -34,7 +34,7 @@ function integration_ui_menu() {
 function integration_ui_admin_menu_block_page() {
   $item = menu_get_item();
   if ($content = system_admin_menu_block($item)) {
-    $output = theme('admin_block_content', array('content' => $content));
+    $output = theme('admin_block_content', ['content' => $content]);
   }
   else {
     $output = t('You do not have any administrative items.');
@@ -46,14 +46,14 @@ function integration_ui_admin_menu_block_page() {
  * Implements hook_entity_info_alter().
  */
 function integration_ui_entity_info_alter(&$info) {
-  $info['integration_backend']['admin ui'] = array(
+  $info['integration_backend']['admin ui'] = [
     'controller class' => 'Drupal\integration_ui\Configuration\EntityUiController',
     'path' => 'admin/config/integration/backend',
-  );
-  $info['integration_resource_schema']['admin ui'] = array(
+  ];
+  $info['integration_resource_schema']['admin ui'] = [
     'controller class' => 'Drupal\integration_ui\Configuration\EntityUiController',
     'path' => 'admin/config/integration/resource-schema',
-  );
+  ];
   return $info;
 }
 
@@ -61,10 +61,10 @@ function integration_ui_entity_info_alter(&$info) {
  * Implements hook_integration_ui_form_controllers().
  */
 function integration_ui_integration_ui_form_controllers() {
-  return array(
+  return [
     'backend' => 'Drupal\integration_ui\FormControllers\BackendFormController',
     'resource_schema' => 'Drupal\integration_ui\FormControllers\ResourceSchemaFormController',
-  );
+  ];
 }
 
 /**

@@ -20,7 +20,7 @@ abstract class AbstractMigrateTest extends \PHPUnit_Framework_TestCase {
    * @var array
    *    List of fixtures divided by entity type.
    */
-  public $fixtures = array();
+  public $fixtures = [];
 
   /**
    * {@inheritdoc}
@@ -48,7 +48,7 @@ abstract class AbstractMigrateTest extends \PHPUnit_Framework_TestCase {
    */
   public function buildFixturesList() {
     $directory = self::getFixturesPath();
-    foreach (array('news', 'articles', 'categories') as $type) {
+    foreach (['news', 'articles', 'categories'] as $type) {
       foreach (file_scan_directory($directory . '/' . $type, '/(document-.*\.json)$/') as $path => $file) {
         list(, $id) = explode('-', $file->name);
         $this->fixtures[$type][$id] = $path;

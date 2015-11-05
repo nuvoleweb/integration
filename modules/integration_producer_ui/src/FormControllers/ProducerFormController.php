@@ -55,28 +55,28 @@ class ProducerFormController extends AbstractForm {
       $source_options = $this->getEntityFieldList($entity_type, $entity_bundle);
       // @todo: change this by setting proper getters on entity property info.
       $resource = ConfigurationFactory::load('integration_resource_schema', $resource_name);
-      $destination_options = array('' => '') + (array) $resource->getPluginSetting('fields');
+      $destination_options = ['' => ''] + (array) $resource->getPluginSetting('fields');
 
-      $rows = array();
+      $rows = [];
       $mapping = (array) $configuration->getPluginSetting('mapping');
       foreach ($mapping as $source => $destination) {
         $form['settings']['plugin']['mapping'][$source] = FormHelper::hidden($destination);
 
-        $row = array(
+        $row = [
           'source' => FormHelper::markup($source_options[$source]),
           'destination' => FormHelper::markup($destination_options[$destination]),
           'remove_mapping' => FormHelper::stepSubmit(t('Remove'), 'remove_mapping'),
-        );
+        ];
         $rows[] = $row;
       }
 
-      $rows[] = array(
+      $rows[] = [
         'source' => FormHelper::select(NULL, $source_options),
         'destination' => FormHelper::select(NULL, $destination_options),
         'add_field_mapping' => FormHelper::stepSubmit(t('Add mapping'), 'add_field_mapping'),
-      );
+      ];
 
-      $header = array(t('Source'), t('Destination'), NULL);
+      $header = [t('Source'), t('Destination'), NULL];
       $form['mapping'] = FormHelper::table($header, $rows);
     }
   }

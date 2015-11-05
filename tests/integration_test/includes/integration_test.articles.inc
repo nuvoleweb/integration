@@ -17,10 +17,10 @@ class IntegrationTestArticlesMigration extends IntegrationTestAbstractMigration 
     parent::__construct('articles', $arguments);
 
     // Requires taxonomy terms migration to run before content migration.
-    $this->setHardDependencies(array(
+    $this->setHardDependencies([
       'IntegrationTestNews',
       'IntegrationTestCategories',
-    ));
+    ]);
 
     $this->setMap(new MigrateSQLMap(
       $this->getMachineName(),

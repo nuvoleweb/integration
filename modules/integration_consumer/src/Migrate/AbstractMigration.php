@@ -59,7 +59,7 @@ abstract class AbstractMigration extends \Migration {
         $entity_type = $this->getDestination()->getEntityType();
         $bundle_name = $this->getDestination()->getBundle();
 
-        $values = array();
+        $values = [];
         $field_instances = field_info_instances($entity_type, $bundle_name);
         foreach ($field_instances as $field_name => $field_instance) {
           if (isset($this->destinationValues->$field_name)) {
@@ -73,13 +73,13 @@ abstract class AbstractMigration extends \Migration {
         // Load translations.
         $translation_handler->loadTranslations();
 
-        $translation = array(
+        $translation = [
           'translate' => 0,
           'status' => TRUE,
           'language' => $language,
           'source' => $entity->translations->original,
           'changed' => time(),
-        );
+        ];
 
         // Content based translation.
         if ($entity_type == 'node' && entity_translation_node_supported_type($entity->type)) {

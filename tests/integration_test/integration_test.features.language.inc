@@ -8,10 +8,10 @@
  * Implements hook_locale_default_languages().
  */
 function integration_test_locale_default_languages() {
-  $languages = array();
+  $languages = [];
 
   // Exported language: en.
-  $languages['en'] = array(
+  $languages['en'] = [
     'language' => 'en',
     'name' => 'English',
     'native' => 'English',
@@ -22,9 +22,9 @@ function integration_test_locale_default_languages() {
     'domain' => '',
     'prefix' => '',
     'weight' => 0,
-  );
+  ];
   // Exported language: fr.
-  $languages['fr'] = array(
+  $languages['fr'] = [
     'language' => 'fr',
     'name' => 'French',
     'native' => 'Français',
@@ -35,6 +35,6 @@ function integration_test_locale_default_languages() {
     'domain' => '',
     'prefix' => 'fr',
     'weight' => 0,
-  );
+  ];
   return $languages;
 }

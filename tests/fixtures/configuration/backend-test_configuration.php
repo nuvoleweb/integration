@@ -10,38 +10,38 @@ $export->name = 'Test configuration';
 $export->machine_name = 'test_configuration';
 $export->description = 'Test configuration description.';
 $export->plugin = 'memory_backend';
-$export->settings = array(
-  'plugin' => array(
+$export->settings = [
+  'plugin' => [
     'base_url' => 'http://example.com',
-    'resource_schema' => array(
-      'test_configuration' => array(
+    'resource_schema' => [
+      'test_configuration' => [
         'base_path' => 'service',
         'endpoint' => 'article',
-      ),
-      'foo' => array(
+      ],
+      'foo' => [
         'base_path' => 'foo',
         'endpoint' => 'foo',
-      ),
-    ),
-  ),
-  'components' => array(
-    'response' => array(
+      ],
+    ],
+  ],
+  'components' => [
+    'response' => [
       'key1' => 'value1',
       'key2' => 'value2',
       'key3' => 'value3',
-    ),
-    'formatter' => array(
+    ],
+    'formatter' => [
       'key1' => 'value1',
       'key2' => 'value2',
       'key3' => 'value3',
-    ),
-    'authentication' => array(
+    ],
+    'authentication' => [
       'key1' => 'value1',
       'key2' => 'value2',
       'key3' => 'value3',
-    ),
-  ),
-);
+    ],
+  ],
+];
 $export->response = 'raw_response';
 $export->formatter = 'json_formatter';
 $export->authentication = 'no_authentication';

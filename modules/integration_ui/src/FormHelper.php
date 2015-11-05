@@ -35,13 +35,13 @@ class FormHelper {
    *    Form element array as expected by Drupal's Form API.
    */
   static public function select($label, array $options, $default = NULL, $required = TRUE) {
-    return array(
+    return [
       '#type' => 'select',
       '#title' => $label,
       '#default_value' => $default,
       '#options' => $options,
       '#required' => $required,
-    );
+    ];
   }
 
   /**
@@ -81,13 +81,13 @@ class FormHelper {
    *    Form element array as expected by Drupal's Form API.
    */
   static public function checkboxes($label, array $options, $default = NULL, $required = TRUE) {
-    return array(
+    return [
       '#type' => 'checkboxes',
       '#title' => $label,
       '#options' => $options,
       '#required' => $required,
       '#default_value' => $default,
-    );
+    ];
   }
 
   /**
@@ -124,7 +124,7 @@ class FormHelper {
    *    Input array formatted to be consumable by a Form API select.
    */
   static public function asOptions(array $array, $label_key = 'label') {
-    $values = array();
+    $values = [];
     foreach ($array as $key => $value) {
       $values[$key] = $value[$label_key];
     }
@@ -143,14 +143,14 @@ class FormHelper {
    *    Form element array as expected by Drupal's Form API.
    */
   static public function stepSubmit($label, $name = '') {
-    $element = array(
+    $element = [
       '#type' => 'submit',
       '#value' => $label,
       '#name' => $name,
       '#field' => $name,
-      '#limit_validation_errors' => array(),
-      '#submit' => array('integration_ui_entity_form_submit'),
-    );
+      '#limit_validation_errors' => [],
+      '#submit' => ['integration_ui_entity_form_submit'],
+    ];
     if ($name) {
       $element['#name'] = $name;
     }
@@ -171,11 +171,11 @@ class FormHelper {
    *    Form element array as expected by Drupal's Form API.
    */
   static public function fieldset($label, $tree = FALSE, $group = '') {
-    $element = array(
+    $element = [
       '#type' => 'fieldset',
       '#title' => $label,
       '#tree' => $tree,
-    );
+    ];
     if ($group) {
       $element['#group'] = $group;
     }
@@ -192,10 +192,10 @@ class FormHelper {
    *    Form element array as expected by Drupal's Form API.
    */
   static public function verticalTabs($tree = TRUE) {
-    return array(
+    return [
       '#type' => 'vertical_tabs',
       '#tree' => $tree,
-    );
+    ];
   }
 
   /**
@@ -211,7 +211,7 @@ class FormHelper {
    */
   static public function inlineFieldset($label, $tree = FALSE) {
     $element = self::fieldset($label, $tree);
-    $element['#attributes'] = array('class' => array('container-inline'));
+    $element['#attributes'] = ['class' => ['container-inline']];
     return $element;
   }
 
@@ -229,12 +229,12 @@ class FormHelper {
    * @see theme_integration_form_table()
    */
   static public function table(array $header, array $rows) {
-    return array(
+    return [
       '#theme' => 'integration_form_table',
       '#header' => $header,
       '#tree' => FALSE,
       'rows' => $rows,
-    );
+    ];
   }
 
   /**
@@ -247,9 +247,9 @@ class FormHelper {
    *    Form element array as expected by Drupal's Form API.
    */
   static public function hidden($value) {
-    return array(
+    return [
       '#value' => $value,
-    );
+    ];
   }
 
   /**
@@ -262,9 +262,9 @@ class FormHelper {
    *    Form element array as expected by Drupal's Form API.
    */
   static public function markup($markup) {
-    return array(
+    return [
       '#markup' => $markup,
-    );
+    ];
   }
 
   /**
@@ -283,13 +283,13 @@ class FormHelper {
    *    Form element array as expected by Drupal's Form API.
    */
   static public function textField($label, $default = NULL, $required = TRUE, $description = '') {
-    return array(
+    return [
       '#type' => 'textfield',
       '#title' => $label,
       '#default_value' => $default,
       '#description' => $description,
       '#required' => $required,
-    );
+    ];
   }
 
   /**
@@ -314,15 +314,15 @@ class FormHelper {
   static public function radios($title, array $array, $default_value, $required = FALSE, $label_key = 'label', $description_key = 'description') {
     $options = self::asOptions($array, $label_key);
 
-    $element = array(
+    $element = [
       '#type' => 'radios',
       '#title' => $title,
       '#default_value' => $default_value,
       '#options' => $options,
       '#required' => $required,
-    );
+    ];
     foreach ($array as $name => $values) {
-      $element[$name] = array('#description' => $values[$description_key]);
+      $element[$name] = ['#description' => $values[$description_key]];
     }
     return $element;
   }
@@ -337,9 +337,9 @@ class FormHelper {
    *    Form element array as expected by Drupal's Form API.
    */
   static public function tree($tree = TRUE) {
-    return array(
+    return [
       '#tree' => $tree,
-    );
+    ];
   }
 
   /**

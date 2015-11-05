@@ -84,12 +84,12 @@ class ConfigurationTest extends AbstractTest {
     $this->assertEquals($data->settings['plugin']['base_url'], $actual);
 
     $resource_schema = $data->settings['plugin']['resource_schema'];
-    $mapping = array(
+    $mapping = [
       'resource_schema.foo.base_path' => $resource_schema['foo']['base_path'],
       'resource_schema.foo.endpoint' => $resource_schema['foo']['endpoint'],
       'resource_schema.test_configuration.base_path' => $resource_schema['test_configuration']['base_path'],
       'resource_schema.test_configuration.endpoint' => $resource_schema['test_configuration']['endpoint'],
-    );
+    ];
     foreach ($mapping as $name => $expected) {
       $actual = $configuration->getPluginSetting($name);
       $this->assertNotEmpty($actual);
@@ -114,9 +114,9 @@ class ConfigurationTest extends AbstractTest {
    *    Configuration objects.
    */
   public function configurationProvider() {
-    return array(
-      array($this->getConfigurationFixture('backend', 'test_configuration')),
-    );
+    return [
+      [$this->getConfigurationFixture('backend', 'test_configuration')],
+    ];
   }
 
 }

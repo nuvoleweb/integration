@@ -13,5 +13,5 @@ function integration_test_install() {
   // Force registration of migration classes.
   migrate_static_registration();
   // Make sure all sensitive configuration is correctly applied.
-  features_revert(array('integration_test' => array('taxonomy', 'variable')));
+  features_revert(['integration_test' => ['taxonomy', 'variable']]);
 }

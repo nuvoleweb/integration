@@ -45,7 +45,7 @@ class ProducerConfiguration extends AbstractConfiguration {
    * @var array
    *    Array of backend specific option.
    */
-  public $settings = array();
+  public $settings = [];
 
   /**
    * Get current site's producer ID.

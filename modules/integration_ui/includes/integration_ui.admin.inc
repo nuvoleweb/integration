@@ -25,9 +25,9 @@ use Drupal\integration_ui\FormFactory;
  *
  * @see entity_ui_get_form()
  */
-function integration_ui_get_form($entity_type, $entity, $op = 'edit', array $form_state = array()) {
+function integration_ui_get_form($entity_type, $entity, $op = 'edit', array $form_state = []) {
   if (!isset($entity) && $op == 'add') {
-    $entity = entity_create($entity_type, array());
+    $entity = entity_create($entity_type, []);
   }
 
   $form_state['wrapper_callback'] = 'entity_ui_main_form_defaults';
@@ -38,7 +38,7 @@ function integration_ui_get_form($entity_type, $entity, $op = 'edit', array $for
     $entity = entity_ui_clone_entity($entity_type, $entity);
   }
 
-  $form_state['build_info']['args'] = array($entity, $op, $entity_type);
+  $form_state['build_info']['args'] = [$entity, $op, $entity_type];
   return drupal_build_form('integration_ui_entity_form', $form_state);
 }
 
@@ -55,41 +55,41 @@ function integration_ui_form_ajax_callback($form, $form_state) {
  */
 function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $configuration, $op, $entity_type) {
 
-  $form['name'] = array(
+  $form['name'] = [
     '#title' => t('Name'),
     '#type' => 'textfield',
     '#default_value' => ($op == 'clone') ? $configuration->getName() . ' clone' : $configuration->getName(),
     '#required' => TRUE,
-  );
-  $form['machine_name'] = array(
+  ];
+  $form['machine_name'] = [
     '#type' => 'machine_name',
     '#default_value' => $configuration->getMachineName(),
-    '#machine_name' => array(
+    '#machine_name' => [
       'exists' => 'integration_ui_machine_name_exists',
-      'source' => array('name'),
-    ),
+      'source' => ['name'],
+    ],
     '#descripwtion' => t('A unique machine-readable name for this configuration object. It must only contain lowercase letters, numbers, and underscores.'),
     '#required' => TRUE,
     '#entity_type' => $entity_type,
-  );
-  $form['enabled'] = array(
+  ];
+  $form['enabled'] = [
     '#title' => t('Enabled'),
     '#type' => 'checkbox',
     '#default_value' => ($op == 'add') ? TRUE : $configuration->getEnabled(),
-  );
-  $form['status'] = array(
+  ];
+  $form['status'] = [
     '#value' => ($op == 'add') ? ENTITY_CUSTOM : $configuration->getStatus(),
-  );
+  ];
 
   $form_manager = FormFactory::getInstance($entity_type);
   $form_manager->getController()->form($form, $form_state, $op);
 
-  $form['actions'] = array('#type' => 'actions');
-  $form['actions']['submit'] = array(
+  $form['actions'] = ['#type' => 'actions'];
+  $form['actions']['submit'] = [
     '#type' => 'submit',
     '#value' => t('Save'),
     '#weight' => 40,
-  );
+  ];
   return $form;
 }
 

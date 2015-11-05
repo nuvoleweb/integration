@@ -13,11 +13,11 @@ include_once 'includes/integration_consumer.hooks.inc';
  * Implements hook_permission().
  */
 function integration_consumer_permission() {
-  return array(
-    'administer consumers' => array(
+  return [
+    'administer consumers' => [
       'title' => t('Administer consumers'),
-    ),
-  );
+    ],
+  ];
 }
 
 /**

@@ -9,11 +9,11 @@
  * Implements hook_theme().
  */
 function integration_ui_theme() {
-  return array(
-    'integration_form_table' => array(
+  return [
+    'integration_form_table' => [
       'render element' => 'form',
-    ),
-  );
+    ],
+  ];
 }
 
 /**
@@ -27,14 +27,14 @@ function theme_integration_form_table(&$variables) {
   $rows = $form['rows'];
   $header = $form['#header'];
 
-  $content = array(
+  $content = [
     '#theme' => 'table',
     '#header' => $header,
-    '#rows' => array(),
-  );
+    '#rows' => [],
+  ];
 
   foreach (element_children($rows) as $row_index) {
-    $row = array();
+    $row = [];
     foreach (element_children($rows[$row_index]) as $col_index) {
       $row[] = drupal_render($rows[$row_index][$col_index]);
     }

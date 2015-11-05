@@ -30,7 +30,7 @@ class DocumentWrapperTest extends AbstractMigrateTest {
       $document_wrapper = new DocumentWrapper($document);
 
       // Assert document is wrapped correctly.
-      foreach (array('title', 'images', 'image_alt_text', 'abstract') as $name) {
+      foreach (['title', 'images', 'image_alt_text', 'abstract'] as $name) {
         $this->assertObjectHasAttribute($name, $document_wrapper);
       }
 
@@ -42,7 +42,7 @@ class DocumentWrapperTest extends AbstractMigrateTest {
       $this->assertEquals($document, $stored_document);
 
       // Assert available languages.
-      $this->assertEquals(array('fr', 'en'), $document_wrapper->getAvailableLanguages());
+      $this->assertEquals(['fr', 'en'], $document_wrapper->getAvailableLanguages());
 
       // Assert default language.
       $this->assertEquals('en', $document_wrapper->getDefaultLanguage());

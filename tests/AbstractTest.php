@@ -96,7 +96,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
    *    Configuration settings object.
    */
   protected function getConfigurationFixture($type, $name) {
-    static $fixtures = array();
+    static $fixtures = [];
     if (!isset($fixtures[$type][$name])) {
       $export = new \stdClass();
       include "fixtures/configuration/$type-$name.php";
@@ -119,7 +119,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
    *    Entity object.
    */
   protected function getExportedEntityFixture($entity_type, $bundle, $id) {
-    static $fixtures = array();
+    static $fixtures = [];
     if (!isset($fixtures[$bundle][$id])) {
       $export = new \stdClass();
       include "fixtures/entities/$entity_type-$bundle-$id.php";
@@ -135,11 +135,11 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
    *    List of fixtures types and IDs.
    */
   public function nodeFixturesDataProvider() {
-    return array(
-      array('integration_test', 1),
-      array('integration_test', 2),
-      array('integration_test', 3),
-    );
+    return [
+      ['integration_test', 1],
+      ['integration_test', 2],
+      ['integration_test', 3],
+    ];
   }
 
   /**

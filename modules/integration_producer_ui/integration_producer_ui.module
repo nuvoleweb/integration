@@ -9,10 +9,10 @@
  * Implements hook_entity_info_alter().
  */
 function integration_producer_ui_entity_info_alter(&$info) {
-  $info['integration_producer']['admin ui'] = array(
+  $info['integration_producer']['admin ui'] = [
     'controller class' => 'Drupal\integration_ui\Configuration\EntityUiController',
     'path' => 'admin/config/integration/producer',
-  );
+  ];
   return $info;
 }
 
@@ -20,9 +20,9 @@ function integration_producer_ui_entity_info_alter(&$info) {
  * Implements hook_integration_ui_form_controllers().
  */
 function integration_producer_ui_integration_ui_form_controllers() {
-  return array(
+  return [
     'producer' => 'Drupal\integration_producer_ui\FormControllers\ProducerFormController',
-  );
+  ];
 }
 
 /**
@@ -30,13 +30,13 @@ function integration_producer_ui_integration_ui_form_controllers() {
  */
 function integration_producer_ui_menu() {
 
-  $items['admin/config/integration/producer/settings'] = array(
+  $items['admin/config/integration/producer/settings'] = [
     'title' => 'Settings',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('integration_producer_ui_site_settings'),
-    'access arguments' => array('administer producers'),
+    'page arguments' => ['integration_producer_ui_site_settings'],
+    'access arguments' => ['administer producers'],
     'type' => MENU_LOCAL_TASK,
-  );
+  ];
   return $items;
 }
 
@@ -46,16 +46,16 @@ function integration_producer_ui_menu() {
  * @see integration_producer_ui_menu()
  */
 function integration_producer_ui_site_settings() {
-  $form['site_settings'] = array(
+  $form['site_settings'] = [
     '#type' => 'fieldset',
     '#title' => t('Site settings'),
-  );
-  $form['site_settings']['integration_producer_id'] = array(
+  ];
+  $form['site_settings']['integration_producer_id'] = [
     '#type' => 'textfield',
     '#title' => t('Producer ID'),
     '#default_value' => variable_get('integration_producer_id', ''),
     '#description' => t("Global producer ID for this site, set on all produced documents."),
     '#required' => TRUE,
-  );
+  ];
   return system_settings_form($form);
 }

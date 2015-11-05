@@ -87,13 +87,13 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
    * {@inheritdoc}
    */
   public function getSourceKey() {
-    return array(
-      '_id' => array(
+    return [
+      '_id' => [
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
-      ),
-    );
+      ],
+    ];
   }
 
   /**
@@ -116,7 +116,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
   public static function register($name) {
     $configuration = ConfigurationFactory::load('integration_consumer', $name);
 
-    $arguments = array();
+    $arguments = [];
     $arguments['consumer']['configuration'] = $configuration->getMachineName();
 
     $plugin_manager = PluginManager::getInstance('consumer');
@@ -139,7 +139,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
    * @return AbstractConsumer
    *    Consumer object instance.
    */
-  static public function getInstance($machine_name, $class_name = NULL, array $arguments = array()) {
+  static public function getInstance($machine_name, $class_name = NULL, array $arguments = []) {
     self::register($machine_name);
     return parent::getInstance($machine_name, $class_name, $arguments);
   }
@@ -209,7 +209,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
    */
   public function getDestinationEntity($id) {
     $entity_type = $this->getDestinationEntityType();
-    $mapping_row = $this->getMap()->getRowBySource(array('_id' => $id));
+    $mapping_row = $this->getMap()->getRowBySource(['_id' => $id]);
     if ($mapping_row && isset($mapping_row['destid1']) && !empty($mapping_row['destid1'])) {
       return entity_load_single($entity_type, $mapping_row['destid1']);
     }

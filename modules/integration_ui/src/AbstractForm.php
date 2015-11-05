@@ -63,7 +63,7 @@ abstract class AbstractForm implements FormInterface {
    *    Form element options.
    */
   protected function getResourceSchemasAsOptions() {
-    $options = array();
+    $options = [];
     $resources = entity_load('integration_resource_schema');
     foreach ($resources as $resource) {
       /** @var AbstractConfiguration $resource */
@@ -96,16 +96,16 @@ abstract class AbstractForm implements FormInterface {
    *    List of entity type fields and properties.
    */
   protected function getEntityFieldList($entity_type, $entity_bundle) {
-    $options = array('' => '');
+    $options = ['' => ''];
 
     /** @var \EntityDrupalWrapper $entity_wrapper */
     $entity_wrapper = entity_metadata_wrapper($entity_type);
     $properties = $entity_wrapper->refPropertyInfo();
     foreach ($properties['properties'] as $key => $value) {
-      $options[$key] = t('Property: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
+      $options[$key] = t('Property: @label (@machine_name)', ['@label' => $value['label'], '@machine_name' => $key]);
     }
     foreach ($properties['bundles'][$entity_bundle]['properties'] as $key => $value) {
-      $options[$key] = t('Field: @label (@machine_name)', array('@label' => $value['label'], '@machine_name' => $key));
+      $options[$key] = t('Field: @label (@machine_name)', ['@label' => $value['label'], '@machine_name' => $key]);
     }
     asort($options);
     return $options;

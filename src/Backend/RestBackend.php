@@ -24,14 +24,14 @@ class RestBackend extends AbstractBackend {
    */
   public function listDocuments($resource_schema, $max = 0) {
     // @todo implement document list retrieval.
-    return array();
+    return [];
   }
 
   /**
    * {@inheritdoc}
    */
   public function create($resource_schema, DocumentInterface $document) {
-    $options = array();
+    $options = [];
     $options['method'] = 'POST';
     $options['data'] = $this->getFormatterHandler()->format($document);
     $response = $this->httpRequest($this->getResourceUri(), $options);
@@ -46,7 +46,7 @@ class RestBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function read($resource_schema, $id) {
-    $options = array();
+    $options = [];
     $options['method'] = 'GET';
     $response = $this->httpRequest($this->getResourceUri() . '/' . $id, $options);
 
@@ -60,7 +60,7 @@ class RestBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function update($resource_schema, DocumentInterface $document) {
-    $options = array();
+    $options = [];
     $options['method'] = 'PUT';
     $options['data'] = $this->getFormatterHandler()->format($document);
     $response = $this->httpRequest($this->getResourceUri() . '/' . $this->getBackendContentId($document), $options);
@@ -75,7 +75,7 @@ class RestBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function delete($resource_schema, $id) {
-    $options = array();
+    $options = [];
     $options['method'] = 'DELETE';
     $response = $this->httpRequest($this->getResourceUri() . '/' . $id, $options);
 
@@ -89,7 +89,7 @@ class RestBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function getBackendContentId(DocumentInterface $document) {
-    $options = array();
+    $options = [];
     $options['method'] = 'GET';
     $producer = $document->getMetadata('producer');
     $producer_content_id = $document->getMetadata('producer_content_id');
@@ -117,7 +117,7 @@ class RestBackend extends AbstractBackend {
    *
    * @see drupal_http_request()
    */
-  protected function httpRequest($url, array $options = array()) {
+  protected function httpRequest($url, array $options = []) {
     global $conf;
     // Make sure we use standard drupal_http_request(), without overrides.
     $conf['drupal_http_request_function'] = FALSE;

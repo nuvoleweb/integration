@@ -5,7 +5,7 @@
  * Node object export.
  */
 
-$export = (object) array(
+$export = (object) [
   'vid' => '28',
   'uid' => '1',
   'title' => 'English title news 2',
@@ -23,52 +23,52 @@ $export = (object) array(
   'translate' => '0',
   'revision_timestamp' => '1438074280',
   'revision_uid' => '1',
-  'body' => array(
-    'en' => array(
-      array(
+  'body' => [
+    'en' => [
+      [
         'value' => 'Processed English abstract news 2',
         'summary' => NULL,
         'format' => 'plain_text',
         'safe_value' => "<p>Processed English abstract news 2</p>\n",
         'safe_summary' => '',
-      ),
-    ),
-    'fr' => array(
-      array(
+      ],
+    ],
+    'fr' => [
+      [
         'value' => 'Processed French abstract news 2',
         'summary' => NULL,
         'format' => 'plain_text',
         'safe_value' => "<p>Processed French abstract news 2</p>\n",
         'safe_summary' => '',
-      ),
-    ),
-  ),
-  'field_integration_test_dates' => array(),
-  'field_integration_test_files' => array(),
-  'field_integration_test_images' => array(),
-  'field_integration_test_ref' => array(),
-  'field_integration_test_terms' => array(),
-  'field_integration_test_text' => array(),
-  'title_field' => array(
-    'en' => array(
-      array(
+      ],
+    ],
+  ],
+  'field_integration_test_dates' => [],
+  'field_integration_test_files' => [],
+  'field_integration_test_images' => [],
+  'field_integration_test_ref' => [],
+  'field_integration_test_terms' => [],
+  'field_integration_test_text' => [],
+  'title_field' => [
+    'en' => [
+      [
         'value' => 'English title news 2',
         'format' => NULL,
         'safe_value' => 'English title news 2',
-      ),
-    ),
-    'fr' => array(
-      array(
+      ],
+    ],
+    'fr' => [
+      [
         'value' => 'French title news 2',
         'format' => NULL,
         'safe_value' => 'French title news 2',
-      ),
-    ),
-  ),
-  'translations' => (object) array(
+      ],
+    ],
+  ],
+  'translations' => (object) [
     'original' => 'en',
-    'data' => array(
-      'en' => array(
+    'data' => [
+      'en' => [
         'entity_type' => 'node',
         'entity_id' => '28',
         'revision_id' => '28',
@@ -79,8 +79,8 @@ $export = (object) array(
         'translate' => '0',
         'created' => '1438074280',
         'changed' => '1438074280',
-      ),
-      'fr' => array(
+      ],
+      'fr' => [
         'entity_type' => 'node',
         'entity_id' => '28',
         'revision_id' => '28',
@@ -91,66 +91,66 @@ $export = (object) array(
         'translate' => '0',
         'created' => '1438074280',
         'changed' => '1438074280',
-      ),
-    ),
-  ),
+      ],
+    ],
+  ],
   'title_original' => 'English title news 2',
   'entity_translation_handler_id' => 'node-eid-28-28',
-  'rdf_mapping' => array(
-    'rdftype' => array(
+  'rdf_mapping' => [
+    'rdftype' => [
       'sioc:Item',
       'foaf:Document',
-    ),
-    'title' => array(
-      'predicates' => array(
+    ],
+    'title' => [
+      'predicates' => [
         'dc:title',
-      ),
-    ),
-    'created' => array(
-      'predicates' => array(
+      ],
+    ],
+    'created' => [
+      'predicates' => [
         'dc:date',
         'dc:created',
-      ),
+      ],
       'datatype' => 'xsd:dateTime',
       'callback' => 'date_iso8601',
-    ),
-    'changed' => array(
-      'predicates' => array(
+    ],
+    'changed' => [
+      'predicates' => [
         'dc:modified',
-      ),
+      ],
       'datatype' => 'xsd:dateTime',
       'callback' => 'date_iso8601',
-    ),
-    'body' => array(
-      'predicates' => array(
+    ],
+    'body' => [
+      'predicates' => [
         'content:encoded',
-      ),
-    ),
-    'uid' => array(
-      'predicates' => array(
+      ],
+    ],
+    'uid' => [
+      'predicates' => [
         'sioc:has_creator',
-      ),
+      ],
       'type' => 'rel',
-    ),
-    'name' => array(
-      'predicates' => array(
+    ],
+    'name' => [
+      'predicates' => [
         'foaf:name',
-      ),
-    ),
-    'comment_count' => array(
-      'predicates' => array(
+      ],
+    ],
+    'comment_count' => [
+      'predicates' => [
         'sioc:num_replies',
-      ),
+      ],
       'datatype' => 'xsd:integer',
-    ),
-    'last_activity' => array(
-      'predicates' => array(
+    ],
+    'last_activity' => [
+      'predicates' => [
         'sioc:last_activity_date',
-      ),
+      ],
       'datatype' => 'xsd:dateTime',
       'callback' => 'date_iso8601',
-    ),
-  ),
+    ],
+  ],
   'cid' => '0',
   'last_comment_timestamp' => '1438074280',
   'last_comment_name' => NULL,
@@ -162,4 +162,4 @@ $export = (object) array(
   'path' => FALSE,
   'menu' => NULL,
   'node_export_drupal_version' => '7',
-);
+];
