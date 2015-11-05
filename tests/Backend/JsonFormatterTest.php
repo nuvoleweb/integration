@@ -36,7 +36,7 @@ class JsonFormatterTest extends \PHPUnit_Framework_TestCase {
     "fields": {}
 }
 EOD;
-    $this->assertEquals($expected, $formatter->format($document));
+    $this->assertEquals($expected, $formatter->encode($document));
   }
 
 }
