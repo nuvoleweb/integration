@@ -8,6 +8,7 @@
 include_once 'includes/integration_producer.entity.inc';
 include_once 'includes/integration_producer.hooks.inc';
 
+use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 /**
  * Implements hook_permission().

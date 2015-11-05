@@ -8,6 +8,7 @@
 include_once 'includes/integration.entity.inc';
 include_once 'includes/integration.hooks.inc';
 
+use Drupal\integration\Backend\Configuration\BackendConfiguration;
 
 /**
  * Implements hook_permission().
