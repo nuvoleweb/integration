@@ -84,7 +84,7 @@ class ConsumerConfiguration extends AbstractConfiguration {
    *    Field mapping.
    */
   public function getMapping() {
-    return $this->settings['components']['mapping_handler'];
+    return $this->getPluginSetting('mapping') ? $this->getPluginSetting('mapping') : [];
   }
 
   /**
@@ -97,7 +97,8 @@ class ConsumerConfiguration extends AbstractConfiguration {
    *    Source field mapped to the destination field if any, NULL otherwise.
    */
   public function getMappingSource($destination_field) {
-    return $this->getComponentSetting('mapping_handler', $destination_field);
+    $mapping = $this->getMapping();
+    return isset($mapping[$destination_field]) ? $mapping[$destination_field] : NULL;
   }
 
   /**

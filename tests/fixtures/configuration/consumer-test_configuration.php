@@ -13,16 +13,12 @@ $export->plugin = 'node_consumer';
 $export->entity_bundle = 'integration_test';
 $export->settings = [
   'plugin' => [
-    'key1' => 'value1',
-    'key2' => 'value2',
-    'key3' => 'value3',
-  ],
-  'components' => [
-    'mapping_handler' => [
+    'mapping' => [
       'title' => 'title_field',
       'body' => 'body',
     ],
   ],
+  'components' => [],
 ];
 $export->backend = 'test_configuration';
 $export->resource = 'test_configuration';
