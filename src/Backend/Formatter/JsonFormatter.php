@@ -18,8 +18,22 @@ class JsonFormatter implements FormatterInterface {
   /**
    * {@inheritdoc}
    */
-  public function format(DocumentInterface $document) {
+  public function encode(DocumentInterface $document) {
     return json_encode($document->getDocument(), JSON_PRETTY_PRINT);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function decode($raw) {
+    return json_decode($raw);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getExtension() {
+    return 'json';
   }
 
 }

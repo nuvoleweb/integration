@@ -24,6 +24,25 @@ interface FormatterInterface {
    * @return string
    *    Textual representation of the Document object.
    */
-  public function format(DocumentInterface $document);
+  public function encode(DocumentInterface $document);
+
+  /**
+   * Decode a string into an object.
+   *
+   * @param string $raw
+   *    Raw text.
+   *
+   * @return \stdClass
+   *    Decoded object.
+   */
+  public function decode($raw);
+
+  /**
+   * Get file extension of formatted files.
+   *
+   * @return string
+   *    File extension, like: "json", "xml", etc.
+   */
+  public function getExtension();
 
 }

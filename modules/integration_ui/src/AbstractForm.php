@@ -79,8 +79,7 @@ abstract class AbstractForm implements FormInterface {
    */
   protected function getResourceSchemasAsOptions() {
     $options = [];
-    $resources = entity_load('integration_resource_schema');
-    foreach ($resources as $resource) {
+    foreach (entity_load('integration_resource_schema') as $resource) {
       /** @var AbstractConfiguration $resource */
       $options[$resource->getMachineName()] = $resource->getName();
     }
