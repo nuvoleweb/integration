@@ -53,7 +53,7 @@ interface ConsumerInterface {
   /**
    * Return destination class name for current consumer plugin.
    *
-   * @return string
+   * @return \MigrateDestinationNode
    *    Destination class name, such as "\MigrateDestinationNode", etc.
    */
   public function getDestinationClass();
