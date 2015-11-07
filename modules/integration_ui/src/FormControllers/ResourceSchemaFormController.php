@@ -39,8 +39,8 @@ class ResourceSchemaFormController extends AbstractForm {
       $form['settings']['plugin']['fields'][$name] = FormHelper::hidden($label);
 
       $row = [
-        'name'            => FormHelper::markup($name),
-        'label'           => FormHelper::markup($label),
+        'name' => FormHelper::markup($name),
+        'label' => FormHelper::markup($label),
         "remove_field_$i" => FormHelper::stepSubmit(t('Remove'), $name),
       ];
       $rows[] = $row;
@@ -48,9 +48,9 @@ class ResourceSchemaFormController extends AbstractForm {
     }
 
     $rows[] = [
-      'field_name'  => FormHelper::textField(NULL, NULL, FALSE),
+      'field_name' => FormHelper::textField(NULL, NULL, FALSE),
       'field_label' => FormHelper::textField(NULL, NULL, FALSE),
-      'add_field'   => FormHelper::stepSubmit(t('Add'), 'add_field'),
+      'add_field' => FormHelper::stepSubmit(t('Add'), 'add_field'),
     ];
 
     $header = [t('Field name'), t('Field label'), NULL];
@@ -67,6 +67,10 @@ class ResourceSchemaFormController extends AbstractForm {
     $triggering_element = $form_state['triggering_element'];
 
     switch ($triggering_element['#name']) {
+
+      case 'select_plugin':
+        $form_state['rebuild'] = TRUE;
+        break;
 
       // Add field to plugin settings.
       case 'add_field':

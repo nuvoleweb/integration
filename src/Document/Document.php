@@ -192,6 +192,7 @@ class Document implements DocumentInterface {
 
     $fields = &$this->document->fields;
     if (!isset($fields->{$name}->{$language})) {
+      $fields->{$name} = new \stdClass();
       $fields->{$name}->{$language} = [];
     }
     $values = &$fields->{$name}->{$language};

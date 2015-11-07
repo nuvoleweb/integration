@@ -140,13 +140,22 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
     $this->getDocument()->setMetadata('languages', $this->getEntityWrapper()->getAvailableLanguages());
     $this->getDocument()->setMetadata('default_language', $this->getEntityWrapper()->getDefaultLanguage());
 
-    // Set field values.
-    foreach ($this->getEntityWrapper()->getAvailableLanguages() as $language) {
-      foreach ($this->getEntityWrapper()->getFieldList() as $field_name) {
-        $this->getFieldHandler($field_name, $language)->process();
+    // Set entity properties and fields values.
+    $mapping = $this->getConfiguration()->getPluginSetting('mapping');
+    foreach (array_keys($mapping) as $field_name) {
+      $info = $this->getEntityWrapper()->getPropertyInfo($field_name);
+      foreach ($this->getEntityWrapper()->getAvailableLanguages() as $language) {
+        if (!isset($info['field'])) {
+          $this->getDocument()->setCurrentLanguage($language);
+          $this->getDocument()->setField($field_name, $this->getEntityWrapper()->{$field_name}->value());
+        }
+        else {
+          $this->getFieldHandler($field_name, $language)->process();
+        }
       }
     }
 
+    $this->getDocument()->setCurrentLanguage($this->getEntityWrapper()->getDefaultLanguage());
     $entity_wrapper = $this->getEntityWrapper();
     $document = $this->getDocument();
     drupal_alter('integration_producer_document_build', $entity_wrapper, $document);
