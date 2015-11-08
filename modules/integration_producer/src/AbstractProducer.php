@@ -7,12 +7,10 @@
 
 namespace Drupal\integration_producer;
 
-use Drupal\integration\Backend\AbstractBackend;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Plugins\PluginManager;
-use Drupal\integration\ResourceSchema\AbstractResourceSchema;
 
 /**
  * Class AbstractProducer.
