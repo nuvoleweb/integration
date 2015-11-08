@@ -7,9 +7,9 @@
 
 namespace Drupal\integration_consumer\Configuration;
 
+use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
-use Drupal\integration\Backend\Configuration\BackendConfiguration;
 
 /**
  * Class ConsumerConfiguration.

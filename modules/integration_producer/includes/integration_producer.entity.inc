@@ -16,7 +16,7 @@ function integration_producer_entity_info() {
     'base table' => 'integration_producer',
     'access callback' => 'integration_producer_access',
     'module' => 'integration_producer',
-    ] + integration_entity_info_defaults();
+  ] + integration_entity_info_defaults();
 
   return $info;
 }
@@ -48,7 +48,7 @@ function integration_producer_entity_property_info() {
       'schema field' => 'resource',
       'required' => TRUE,
     ],
-    ];
+  ];
 
   return $info;
 }

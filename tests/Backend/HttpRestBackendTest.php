@@ -9,9 +9,9 @@ namespace Drupal\integration\Tests\Backend;
 
 use Drupal\integration\Backend\Formatter\JsonFormatter;
 use Drupal\integration\Backend\Response\HttpRequestResponse;
+use Drupal\integration\Backend\RestBackend;
 use Drupal\integration\Document\Document;
 use Drupal\integration\Tests\AbstractTest;
-use Drupal\integration\Backend\RestBackend;
 
 /**
  * Class HttpRestBackendTest.

@@ -7,8 +7,6 @@
 
 namespace Drupal\integration_producer\FieldHandlers;
 
-
-
 /**
  * Class ImageFieldHandler.
  *

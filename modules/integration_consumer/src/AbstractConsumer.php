@@ -8,15 +8,15 @@
 namespace Drupal\integration_consumer;
 
 use Drupal\integration\Backend\BackendFactory;
-use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\Backend\BackendInterface;
 use Drupal\integration\ConfigurablePluginInterface;
+use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Plugins\PluginManager;
+use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
+use Drupal\integration_consumer\MappingHandler\AbstractMappingHandler;
 use Drupal\integration_consumer\Migrate\AbstractMigration;
 use Drupal\integration_consumer\Migrate\MigrateSourceBackend;
-use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
-use Drupal\integration\Backend\BackendInterface;
-use Drupal\integration_consumer\MappingHandler\AbstractMappingHandler;
 
 /**
  * Class AbstractConsumer.

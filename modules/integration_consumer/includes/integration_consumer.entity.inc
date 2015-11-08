@@ -16,7 +16,7 @@ function integration_consumer_entity_info() {
     'base table' => 'integration_consumer',
     'access callback' => 'integration_consumer_access',
     'module' => 'integration_consumer',
-    ] + integration_entity_info_defaults();
+  ] + integration_entity_info_defaults();
 
   return $info;
 }
@@ -48,7 +48,7 @@ function integration_consumer_entity_property_info() {
       'schema field' => 'resource',
       'required' => TRUE,
     ],
-    ];
+  ];
 
   return $info;
 }

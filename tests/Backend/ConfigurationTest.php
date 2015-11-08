@@ -7,9 +7,9 @@
 
 namespace Drupal\integration\Tests\Backend;
 
+use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Tests\AbstractTest;
-use Drupal\integration\Backend\Configuration\BackendConfiguration;
 
 /**
  * Class ConfigurationTest.
@@ -68,7 +68,7 @@ class ConfigurationTest extends AbstractTest {
 
   /**
    * Run consistency tests over configuration entity properties.
-   * 
+   *
    * @param mixed $data
    *    Expected configuration data, fetched from fixtures.
    * @param BackendConfiguration $configuration

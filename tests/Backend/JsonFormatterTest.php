@@ -6,8 +6,8 @@
 
 namespace Drupal\integration\Tests\Backend;
 
-use Drupal\integration\Document\Document;
 use Drupal\integration\Backend\Formatter\JsonFormatter;
+use Drupal\integration\Document\Document;
 
 /**
  * Class JsonFormatterTest.

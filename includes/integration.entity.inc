@@ -16,7 +16,7 @@ function integration_entity_info() {
     'base table' => 'integration_backend',
     'access callback' => 'integration_backend_access',
     'module' => 'integration',
-    ] + integration_entity_info_defaults();
+  ] + integration_entity_info_defaults();
 
   $info['integration_resource_schema'] = [
     'label' => t('Resource schema'),
@@ -24,7 +24,7 @@ function integration_entity_info() {
     'base table' => 'integration_resource_schema',
     'access callback' => 'integration_backend_access',
     'module' => 'integration',
-    ] + integration_entity_info_defaults();
+  ] + integration_entity_info_defaults();
 
   return $info;
 }
@@ -56,7 +56,7 @@ function integration_entity_property_info() {
       'schema field' => 'authentication',
       'required' => TRUE,
     ],
-    ];
+  ];
 
   $info['integration_resource_schema']['properties'] = integration_entity_property_info_defaults();
 

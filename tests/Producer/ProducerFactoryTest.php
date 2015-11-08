@@ -8,8 +8,8 @@
 namespace Drupal\integration\Tests\Producer;
 
 use Drupal\integration\Plugins\PluginManager;
-use Drupal\integration_producer\ProducerFactory;
 use Drupal\integration\Tests\AbstractTest;
+use Drupal\integration_producer\ProducerFactory;
 
 /**
  * Class ProducerFactoryTest.

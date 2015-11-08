@@ -7,8 +7,8 @@
 
 namespace Drupal\integration_ui;
 
-use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\Plugins\PluginManager;
 
 /**
  * Interface FormInterface.

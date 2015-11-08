@@ -8,9 +8,9 @@
 namespace Drupal\integration\Tests;
 
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
-use Drupal\integration_producer\Configuration\ProducerConfiguration;
-use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
+use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
+use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
 /**
  * Class AbstractTest.
