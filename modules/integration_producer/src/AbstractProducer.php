@@ -133,6 +133,7 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
     $this->getDocument()->setMetadata('producer_content_id', $this->getProducerContentId());
     $this->getDocument()->setMetadata('created', $this->getDocumentCreationDate());
     $this->getDocument()->setMetadata('updated', $this->getDocumentUpdateDate());
+    $this->getDocument()->setMetadata('version', 'v1');
 
     // Set multilingual-related metadata.
     $this->getDocument()->setMetadata('languages', $this->getEntityWrapper()->getAvailableLanguages());

@@ -101,7 +101,12 @@ class RestBackend extends AbstractBackend {
     $producer = $document->getMetadata('producer');
     $producer_content_id = $document->getMetadata('producer_content_id');
     if ($producer && $producer_content_id) {
-      $response = $this->httpRequest($this->getConfiguration()->getPluginSetting('base_url') . '/uuid/' . $producer . '/' . $producer_content_id, $options);
+      $parts[] = $this->getConfiguration()->getPluginSetting('backend.base_url');
+      $parts[] = 'uuid';
+      $parts[] = $producer;
+      $parts[] = $producer_content_id;
+      $url = implode('/', $parts);
+      $response = $this->httpRequest($url, $options);
 
       $this->getResponseHandler()->setResponse($response);
       if (!$this->getResponseHandler()->hasErrors()) {
@@ -141,7 +146,7 @@ class RestBackend extends AbstractBackend {
    *    Single resource URI.
    */
   protected function getResourceUri($resource_schema) {
-    $base_url = $this->getConfiguration()->getPluginSetting('base_url');
+    $base_url = $this->getConfiguration()->getPluginSetting('backend.base_url');
     $endpoint = $this->getConfiguration()->getPluginSetting("resource_schema.$resource_schema.endpoint");
     return "$base_url/$endpoint";
   }
@@ -156,7 +161,7 @@ class RestBackend extends AbstractBackend {
    *    List URI.
    */
   protected function getListUri($resource_schema) {
-    $base_url = $this->getConfiguration()->getPluginSetting('base_url');
+    $base_url = $this->getConfiguration()->getPluginSetting('backend.base_url');
     $endpoint = $this->getConfiguration()->getPluginSetting("resource_schema.$resource_schema.changes");
     return "$base_url/$endpoint";
   }
