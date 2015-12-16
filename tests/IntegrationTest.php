@@ -8,6 +8,7 @@
 namespace Drupal\integration\Tests;
 
 use Drupal\integration\Backend\BackendFactory;
+use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 use Drupal\integration_consumer\ConsumerFactory;
 use Drupal\integration_producer\ProducerFactory;
 
@@ -26,6 +27,7 @@ class IntegrationTest extends AbstractTest {
     // Get backend, producer and consumer instances.
     $backend = BackendFactory::getInstance('test_configuration');
     $consumer = ConsumerFactory::getInstance('test_configuration');
+    $resource_schema = ResourceSchemaFactory::getInstance('test_configuration');
 
     // Make sure we have no test leftovers.
     // @todo: remove rollback from test execution.
@@ -34,7 +36,10 @@ class IntegrationTest extends AbstractTest {
     // Push all fixture nodes to given backend.
     foreach ($this->getProducerNodes() as $node) {
       $document = ProducerFactory::getInstance('test_configuration')->build($node);
-      $backend->create($resource_schema, $document);
+      $this->assertNotEmpty($document->getFields());
+      $this->assertNull($document->getId());
+      $document = $backend->create($resource_schema, $document);
+      $this->assertNotEmpty($document->getId());
     }
 
     // Consume documents from backend.

@@ -54,10 +54,10 @@ class HttpRequestResponse extends AbstractResponse {
    */
   public function getData() {
     if (!$this->hasErrors()) {
-      return json_decode($this->getResponse()->data);
+      return $this->getResponse()->data;
     }
     else {
-      return '';
+      return [];
     }
   }
 

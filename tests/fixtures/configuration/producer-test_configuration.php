@@ -13,9 +13,14 @@ $export->plugin = 'node_producer';
 $export->entity_bundle = 'article';
 $export->settings = [
   'plugin' => [
-    'key1' => 'value1',
-    'key2' => 'value2',
-    'key3' => 'value3',
+    'mapping' => [
+      'title_field' => 'title',
+      'body' => 'body',
+      'field_integration_test_text' => 'text',
+      'field_integration_test_images' => 'images',
+      'field_integration_test_files' => 'files',
+      'field_integration_test_dates' => 'dates',
+    ],
   ],
   'components' => [
     'field_handler' => [

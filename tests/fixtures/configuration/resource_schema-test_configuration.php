@@ -12,9 +12,14 @@ $export->description = 'Test configuration description.';
 $export->plugin = 'raw_resource_schema';
 $export->settings = [
   'plugin' => [
-    'title' => 'Title',
-    'body' => 'Body',
-    'attachment' => 'Attachment',
+    'fields' => [
+      'title' => 'title',
+      'body' => 'body',
+      'text' => 'text',
+      'images' => 'images',
+      'files' => 'files',
+      'dates' => 'dates',
+    ],
   ],
   'components' => [],
 ];
