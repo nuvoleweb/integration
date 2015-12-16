@@ -7,6 +7,7 @@
 
 namespace Drupal\integration\Backend;
 
+use Drupal\integration\Backend\Authentication\AuthenticationInterface;
 use Drupal\integration\Document\DocumentInterface;
 
 /**
@@ -47,6 +48,22 @@ interface BackendInterface {
    *    Formatter object instance.
    */
   public function setFormatterHandler(Formatter\FormatterInterface $formatter);
+
+  /**
+   * Set authentication object.
+   *
+   * @return AuthenticationInterface
+   *    Authentication object instance.
+   */
+  public function getAuthenticationHandler();
+
+  /**
+   * Set authentication component.
+   *
+   * @param AuthenticationInterface $authentication
+   *    Authentication component object.
+   */
+  public function setAuthenticationHandler(AuthenticationInterface $authentication);
 
   /**
    * Return list of document IDs.

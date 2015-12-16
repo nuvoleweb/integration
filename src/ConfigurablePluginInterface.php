@@ -12,8 +12,8 @@ use Drupal\integration\Configuration\AbstractConfiguration;
 /**
  * Interface ConfigurablePluginInterface.
  *
- * Implemented typically by plugins or plugin components classes that need to
- * store with configuration entities.
+ * Implemented by plugins or plugin components that need to store
+ * configuration entities.
  *
  * @package Drupal\integration\Configuration
  */

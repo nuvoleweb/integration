@@ -6,13 +6,14 @@
  */
 
 namespace Drupal\integration\Backend\Authentication;
+use Drupal\integration\ConfigurablePluginInterface;
 
 /**
  * Interface AuthenticationInterface.
  *
  * @package Drupal\integration\Backend\Authentication
  */
-interface AuthenticationInterface {
+interface AuthenticationInterface extends ConfigurablePluginInterface {
 
   /**
    * Authenticates and provides an authentication result

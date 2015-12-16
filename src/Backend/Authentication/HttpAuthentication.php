@@ -12,7 +12,7 @@ namespace Drupal\integration\Backend\Authentication;
  *
  * @package Drupal\integration\Backend\Authentication
  */
-class HttpAuthentication implements AuthenticationInterface {
+class HttpAuthentication extends AbstractAuthentication {
 
   /**
    * {@inheritdoc}

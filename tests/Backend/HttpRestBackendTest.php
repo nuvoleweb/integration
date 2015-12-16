@@ -7,6 +7,7 @@
 
 namespace Drupal\integration\Tests\Backend;
 
+use Drupal\integration\Backend\Authentication\NoAuthentication;
 use Drupal\integration\Backend\Formatter\JsonFormatter;
 use Drupal\integration\Backend\Response\HttpRequestResponse;
 use Drupal\integration\Backend\RestBackend;
@@ -84,6 +85,7 @@ class HttpRestBackendTest extends AbstractTest {
       $this->backendConfiguration,
       new HttpRequestResponse(),
       new JsonFormatter(),
+      new NoAuthentication($this->backendConfiguration),
     ];
     $backend = \Mockery::mock('Drupal\integration\Backend\RestBackend[httpRequest]', $arguments);
     $backend->shouldAllowMockingProtectedMethods()

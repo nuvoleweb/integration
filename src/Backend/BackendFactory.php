@@ -11,6 +11,7 @@ use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Plugins\PluginManager;
+use Drupal\integration\Backend\Authentication\AbstractAuthentication;
 
 /**
  * Interface BackendFactory.
@@ -46,8 +47,13 @@ class BackendFactory {
       $backend_class = $plugin_manager->getPlugin($configuration->getPlugin())->getClass();
       $response_class = $plugin_manager->getComponent($configuration->getResponse())->getClass();
       $formatter_class = $plugin_manager->getComponent($configuration->getFormatter())->getClass();
+      $authentication_class = $plugin_manager->getComponent($configuration->getAuthentication())->getClass();
 
-      self::$instances[$machine_name] = new $backend_class($configuration, new $response_class(), new $formatter_class());
+      self::$instances[$machine_name] = new $backend_class(
+        $configuration,
+        new $response_class(),
+        new $formatter_class(),
+        new $authentication_class($configuration));
     }
     return self::$instances[$machine_name];
   }

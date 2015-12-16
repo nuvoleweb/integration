@@ -7,6 +7,7 @@
 
 namespace Drupal\integration\Backend;
 
+use Drupal\integration\Backend\Authentication\AuthenticationInterface;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
 
@@ -18,25 +19,32 @@ use Drupal\integration\Configuration\AbstractConfiguration;
 abstract class AbstractBackend implements BackendInterface, ConfigurablePluginInterface {
 
   /**
-   * Configuration object.
+   * Configuration component.
    *
    * @var Configuration\BackendConfiguration
    */
   private $configuration;
 
   /**
-   * Response handler object.
+   * Response handler component.
    *
    * @var Response\ResponseInterface
    */
   private $response;
 
   /**
-   * Formatter object.
+   * Formatter component.
    *
    * @var Formatter\FormatterInterface
    */
   private $formatter;
+
+  /**
+   * Authentication component.
+   *
+   * @var AuthenticationInterface
+   */
+  private $authentication;
 
   /**
    * Constructor.
@@ -47,11 +55,14 @@ abstract class AbstractBackend implements BackendInterface, ConfigurablePluginIn
    *    Response handler object.
    * @param Formatter\FormatterInterface $formatter
    *    Formatter object.
+   * @param AuthenticationInterface $authentication
+   *    Authentication handler object.
    */
-  public function __construct(Configuration\BackendConfiguration $configuration, Response\ResponseInterface $response, Formatter\FormatterInterface $formatter) {
+  public function __construct(Configuration\BackendConfiguration $configuration, Response\ResponseInterface $response, Formatter\FormatterInterface $formatter, AuthenticationInterface $authentication) {
     $this->setConfiguration($configuration);
     $this->setResponseHandler($response);
     $this->setFormatterHandler($formatter);
+    $this->setAuthenticationHandler($authentication);
   }
 
   /**
@@ -94,6 +105,20 @@ abstract class AbstractBackend implements BackendInterface, ConfigurablePluginIn
    */
   public function setFormatterHandler(Formatter\FormatterInterface $formatter) {
     $this->formatter = $formatter;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getAuthenticationHandler() {
+    return $this->authentication;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setAuthenticationHandler(AuthenticationInterface $authentication) {
+    $this->authentication = $authentication;
   }
 
 }
