@@ -14,4 +14,11 @@ namespace Drupal\integration\Backend\Authentication;
  */
 class HttpAuthentication implements AuthenticationInterface {
 
+  /**
+   * {@inheritdoc}
+   */
+  public function authenticate() {
+    return TRUE;
+  }
+
 }

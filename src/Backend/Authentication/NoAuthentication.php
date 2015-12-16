@@ -14,4 +14,11 @@ namespace Drupal\integration\Backend\Authentication;
  */
 class NoAuthentication implements AuthenticationInterface {
 
+  /**
+   * {@inheritdoc}
+   */
+  public function authenticate() {
+    return TRUE;
+  }
+
 }
