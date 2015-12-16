@@ -2,19 +2,19 @@
 
 /**
  * @file
- * Contains HttpRequestResponse.
+ * Contains HttpJsonResponse.
  */
 
 namespace Drupal\integration\Backend\Response;
 
 /**
- * Class HttpRequestResponse.
+ * Class HttpJsonResponse.
  *
  * Parse response returned by standard drupal_http_request(), without overrides.
  *
  * @package Drupal\integration\Backend\Response
  */
-class HttpRequestResponse extends AbstractResponse {
+class HttpJsonResponse extends AbstractResponse {
 
   /**
    * {@inheritdoc}
@@ -54,10 +54,10 @@ class HttpRequestResponse extends AbstractResponse {
    */
   public function getData() {
     if (!$this->hasErrors()) {
-      return $this->getResponse()->data;
+      return json_decode($this->getResponse()->data);
     }
     else {
-      return [];
+      return NULL;
     }
   }
 

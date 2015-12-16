@@ -39,10 +39,10 @@ function integration_integration_backend_components_info() {
       'class' => 'Drupal\integration\Backend\Formatter\JsonFormatter',
       'type' => 'formatter_handler',
     ],
-    'http_response' => [
+    'http_json_response' => [
       'label' => t('HTTP request response'),
       'description' => t('Parse response returned by standard, non-overridden, drupal_http_request().'),
-      'class' => 'Drupal\integration\Backend\Response\HttpRequestResponse',
+      'class' => 'Drupal\integration\Backend\Response\HttpJsonResponse',
       'type' => 'response_handler',
     ],
     'raw_response' => [

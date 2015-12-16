@@ -9,7 +9,7 @@ namespace Drupal\integration\Tests\Backend;
 
 use Drupal\integration\Backend\Authentication\NoAuthentication;
 use Drupal\integration\Backend\Formatter\JsonFormatter;
-use Drupal\integration\Backend\Response\HttpRequestResponse;
+use Drupal\integration\Backend\Response\HttpJsonResponse;
 use Drupal\integration\Backend\RestBackend;
 use Drupal\integration\Document\Document;
 use Drupal\integration\Tests\AbstractTest;
@@ -30,7 +30,7 @@ class HttpRestBackendTest extends AbstractTest {
     $resource_schema = 'test_configuration';
     $response = new \stdClass();
     $response->code = 200;
-    $response->data = (object) ['_id' => '123'];
+    $response->data = '{"_id": "123"}';
 
     $backend = $this->getMockedHttpBackendInstance($response);
 
@@ -46,7 +46,7 @@ class HttpRestBackendTest extends AbstractTest {
     $resource_schema = 'test_configuration';
     $response = new \stdClass();
     $response->code = 200;
-    $response->data = (object) ['_id' => '123'];
+    $response->data = '{"_id": "123"}';
 
     $backend = $this->getMockedHttpBackendInstance($response);
 
@@ -62,7 +62,7 @@ class HttpRestBackendTest extends AbstractTest {
     $resource_schema = 'test_configuration';
     $response = new \stdClass();
     $response->code = 200;
-    $response->data = (object) ['_id' => '123'];
+    $response->data = '{"_id": "123"}';
 
     $backend = $this->getMockedHttpBackendInstance($response);
 
@@ -83,7 +83,7 @@ class HttpRestBackendTest extends AbstractTest {
   protected function getMockedHttpBackendInstance($returned_response) {
     $arguments = [
       $this->backendConfiguration,
-      new HttpRequestResponse(),
+      new HttpJsonResponse(),
       new JsonFormatter(),
       new NoAuthentication($this->backendConfiguration),
     ];
