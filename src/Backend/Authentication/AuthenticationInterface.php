@@ -23,4 +23,20 @@ interface AuthenticationInterface extends ConfigurablePluginInterface {
    */
   public function authenticate();
 
+  /**
+   * Get context data.
+   *
+   * @return array
+   *    Context data array.
+   */
+  public function getContext();
+
+  /**
+   * Set context data.
+   *
+   * @param array $context
+   *    Context data array.
+   */
+  public function setContext(array $context);
+
 }

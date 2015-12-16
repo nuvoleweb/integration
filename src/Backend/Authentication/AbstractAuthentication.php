@@ -24,6 +24,13 @@ abstract class AbstractAuthentication implements AuthenticationInterface {
   private $configuration;
 
   /**
+   * Context data which will be passed to the authentication callback.
+   *
+   * @var array
+   */
+  private $context;
+
+  /**
    * AbstractAuthentication constructor.
    *
    * @param \Drupal\integration\Configuration\AbstractConfiguration $configuration
@@ -44,6 +51,20 @@ abstract class AbstractAuthentication implements AuthenticationInterface {
    */
   public function setConfiguration(AbstractConfiguration $configuration) {
     $this->configuration = $configuration;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getContext() {
+    return $this->context;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setContext(array $context) {
+    $this->context = $context;
   }
 
 }

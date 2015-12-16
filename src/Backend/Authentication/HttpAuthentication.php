@@ -18,6 +18,14 @@ class HttpAuthentication extends AbstractAuthentication {
    * {@inheritdoc}
    */
   public function authenticate() {
+    $configuration = $this->getConfiguration();
+    $username = $configuration->getComponentSetting('authentication_handler', 'username');
+    $password = $configuration->getComponentSetting('authentication_handler', 'password');
+
+    $context = $this->getContext();
+    list($protocol, $uri) = explode('://', $context['url']);
+    $context['url'] = "$protocol://$username:$password@$uri";
+    $this->setContext($context);
     return TRUE;
   }
 

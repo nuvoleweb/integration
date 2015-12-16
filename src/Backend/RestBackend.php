@@ -134,9 +134,14 @@ class RestBackend extends AbstractBackend {
    */
   protected function httpRequest($url, array $options = []) {
     global $conf;
+    $authentication = $this->getAuthenticationHandler();
+    $authentication->setContext(['url' => $url, 'options' => $options]);
+    $authentication->authenticate();
+
     // Make sure we use standard drupal_http_request(), without overrides.
     $conf['drupal_http_request_function'] = FALSE;
-    return drupal_http_request($url, $options);
+    $context = $authentication->getContext();
+    return drupal_http_request($context['url'], $context['options']);
   }
 
   /**
