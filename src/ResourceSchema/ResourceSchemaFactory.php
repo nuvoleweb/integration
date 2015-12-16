@@ -10,6 +10,7 @@ namespace Drupal\integration\ResourceSchema;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
+use Drupal\integration\Configuration\AbstractConfiguration;
 
 /**
  * Interface ResourceSchemaFactory.

@@ -8,7 +8,45 @@
 namespace Drupal\integration\Plugins;
 
 /**
- * Class PluginManager.
+ * Plugin manager.
+ *
+ * The integration module is built on the following plugin types:
+ *
+ *  - Backend plugins, abstracting specific backend implementations.
+ *  - Producer plugins, producing documents that can be stored by a backend.
+ *  - Consumer plugins, fetching documents from a backend and saving them as
+ *    Drupal entities.
+ *  - Resource schema plugins, defining the schema documents need to comply with
+ *    in order to be able to be produced, stored and consumer by the plugins
+ *    above.
+ *
+ * Each plugin type may have several plugin components, depending on the use
+ * case they are supposed to satisfy.
+ *
+ * The aim of this class is to collect plugin and component definitions and to
+ * provide convenience methods for inspecting their properties.
+ *
+ * Plugin and component definitions are exposed by implementing the hooks below:
+ *
+ * @see hook_integration_backend_info()
+ * @see hook_integration_backend_info_alter(&$definitions)
+ * @see hook_integration_backend_components_info()
+ * @see hook_integration_backend_components_info_alter(&$definitions)
+ *
+ * @see hook_integration_producer_info()
+ * @see hook_integration_producer_info_alter(&$definitions)
+ * @see hook_integration_producer_components_info()
+ * @see hook_integration_producer_components_info_alter(&$definitions)
+ *
+ * @see hook_integration_consumer_info()
+ * @see hook_integration_consumer_info_alter(&$definitions)
+ * @see hook_integration_consumer_components_info()
+ * @see hook_integration_consumer_components_info_alter(&$definitions)
+ *
+ * @see hook_integration_resource_schema_info()
+ * @see hook_integration_resource_schema_info_alter(&$definitions)
+ * @see hook_integration_resource_schema_components_info()
+ * @see hook_integration_resource_schema_components_info_alter(&$definitions)
  *
  * @package Drupal\integration\Plugins\PluginManager
  */

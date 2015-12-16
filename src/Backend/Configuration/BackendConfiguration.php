@@ -34,7 +34,6 @@ class BackendConfiguration extends AbstractConfiguration {
    */
   public $response = '';
 
-
   /**
    * Authentication handler machine name.
    *

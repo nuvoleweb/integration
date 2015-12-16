@@ -198,7 +198,7 @@ interface ConfigurationInterface {
    *    Component name as defined by hook_integration_plugins() implementations.
    *
    * @return array
-   *    Plugin component setting array if any, , empty array otherwise.
+   *    Plugin component setting array if any, empty array otherwise.
    *
    * @see integration_entity_property_info_defaults()
    */
