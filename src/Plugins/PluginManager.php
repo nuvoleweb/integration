@@ -6,6 +6,7 @@
  */
 
 namespace Drupal\integration\Plugins;
+use Drupal\integration\Plugins\Exceptions\PluginManagerException;
 
 /**
  * Plugin manager.
@@ -91,9 +92,16 @@ class PluginManager {
    *
    * @param string $name
    *    Either a plugin name or its configuration entity type name.
+   *
+   * @throws PluginManagerException
+   *    Throws PluginManagerException if plugin name is not valid.
    */
   public function __construct($name) {
     $this->plugin = str_replace('integration_', '', $name);
+
+    if (!in_array($name, ['backend', 'consumer', 'producer', 'resource_schema'])) {
+      throw new PluginManagerException(t("!name is not a valid plugin type", ['!name' => $name]));
+    }
 
     $this->pluginDefinitions = module_invoke_all("integration_{$this->plugin}_info");
     drupal_alter("integration_{$this->plugin}_info", $this->pluginDefinitions);
