@@ -40,7 +40,7 @@ class FormHelper {
     return [
       '#type' => 'select',
       '#title' => $label,
-      '#default_value' => $default,
+      '#default_value' => $default ? $default : self::getFirstOption($options),
       '#options' => $options,
       '#required' => $required,
     ];
@@ -301,7 +301,7 @@ class FormHelper {
    *    Form element #title.
    * @param array $array
    *    Two-levels array to extract options and descriptions from.
-   * @param mixed $default_value
+   * @param mixed $default
    *    Form element #default_value.
    * @param bool|FALSE $required
    *    Form element #required.
@@ -313,13 +313,13 @@ class FormHelper {
    * @return array
    *    Form element array as expected by Drupal's Form API.
    */
-  static public function radios($title, array $array, $default_value, $required = FALSE, $label_key = 'label', $description_key = 'description') {
+  static public function radios($title, array $array, $default, $required = FALSE, $label_key = 'label', $description_key = 'description') {
     $options = self::asOptions($array, $label_key);
 
     $element = [
       '#type' => 'radios',
       '#title' => $title,
-      '#default_value' => $default_value,
+      '#default_value' => $default ? $default : self::getFirstOption($options),
       '#options' => $options,
       '#required' => $required,
     ];
@@ -390,6 +390,23 @@ class FormHelper {
     $form['entity_bundle_container']['entity_bundle'] = self::hiddenLabelSelect(t('Entity bundle'), $options, $entity_bundle);
     $form['entity_bundle_container']['entity_bundle_submit'] = self::stepSubmit(t('Select bundle'), 'entity_bundle_submit');
     return $form;
+  }
+
+  /**
+   * Return first value of an option array.
+   *
+   * @param $options
+   *    Option array, used in select or radios form elements.
+   *
+   * @return string
+   *    First options value.
+   */
+  static private function getFirstOption(array $options) {
+    if (!empty($options)) {
+      $keys = array_keys($options);
+      return array_shift($keys);
+    }
+    return '';
   }
 
 }

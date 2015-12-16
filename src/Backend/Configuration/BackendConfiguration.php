@@ -123,4 +123,30 @@ class BackendConfiguration extends AbstractConfiguration {
     return empty($this->errors);
   }
 
+  /**
+   * Get resource schema endpoint setting.
+   *
+   * @param string $machine_name
+   *    Resource schema machine name.
+   *
+   * @return string
+   *    Resource schema endpoint.
+   */
+  public function getResourceEndpoint($machine_name) {
+    return $this->getPluginSetting("resource_schema.$machine_name.endpoint");
+  }
+
+  /**
+   * Get resource schema change feed setting.
+   *
+   * @param string $machine_name
+   *    Resource schema machine name.
+   *
+   * @return string
+   *    Resource schema change feed.
+   */
+  public function getResourceChangeFeed($machine_name) {
+    return $this->getPluginSetting("resource_schema.$machine_name.changes");
+  }
+
 }

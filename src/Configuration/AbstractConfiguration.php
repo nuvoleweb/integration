@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains ConsumerConfiguration.
+ * Contains AbstractConfiguration.
  */
 
 namespace Drupal\integration\Configuration;
