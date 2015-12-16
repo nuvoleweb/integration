@@ -10,6 +10,7 @@ namespace Drupal\integration_ui;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Plugins\PluginManager;
+use Drupal\integration_ui\Exceptions\MalformedFormStateFormException;
 
 /**
  * Class AbstractForm.
@@ -29,15 +30,27 @@ abstract class AbstractForm implements FormInterface {
    * {@inheritdoc}
    */
   public function getConfiguration(array &$form_state) {
-    // @todo throw exception if none is set.
-    return $form_state['build_info']['args'][0];
+    if (!isset($form_state['build_info']['args'][0])) {
+      throw new MalformedFormStateFormException(t('Configuration entity not set.'));
+    }
+    elseif (!is_object($form_state['build_info']['args'][0])) {
+      throw new MalformedFormStateFormException(t('Configuration entity is supposed to be an object.'));
+    }
+    $configuration = $form_state['build_info']['args'][0];
+    $reflection = new \ReflectionClass($configuration);
+    if (!$reflection->isSubclassOf('Drupal\integration\Configuration\AbstractConfiguration')) {
+      throw new MalformedFormStateFormException(t('Configuration entity must extend Drupal\integration\Configuration\AbstractConfiguration class.'));
+    }
+    return $configuration;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getPluginManager(array &$form_state) {
-    // @todo throw exception if none is set.
+    if (!isset($form_state['build_info']['args'][2])) {
+      throw new MalformedFormStateFormException(t('Entity type not set.'));
+    }
     $entity_type = $form_state['build_info']['args'][2];
     return PluginManager::getInstance($entity_type);
   }
