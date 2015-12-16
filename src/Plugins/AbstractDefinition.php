@@ -6,6 +6,7 @@
  */
 
 namespace Drupal\integration\Plugins;
+use Drupal\integration\Plugins\Exceptions\PluginManagerException;
 
 /**
  * Class AbstractDefinition.
@@ -64,8 +65,21 @@ abstract class AbstractDefinition {
    *
    * @return string
    *    Plugin or component class.
+   *
+   * @throws PluginManagerException
    */
   public function getClass() {
+    if (!isset($this->definition['class']) || empty($this->definition['class'])) {
+      throw new PluginManagerException(t('"!label" class is not set or empty', [
+        '!label' => $this->getLabel(),
+      ]));
+    }
+    elseif (!class_exists($this->definition['class'])) {
+      throw new PluginManagerException(t('"!label" class !name does not exists', [
+        '!label' => $this->getLabel(),
+        '!name' => $this->definition['class'],
+      ]));
+    }
     return $this->definition['class'];
   }
 

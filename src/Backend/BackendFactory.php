@@ -47,11 +47,6 @@ class BackendFactory {
       $response_class = $plugin_manager->getComponent($configuration->getResponse())->getClass();
       $formatter_class = $plugin_manager->getComponent($configuration->getFormatter())->getClass();
 
-      foreach ([$backend_class, $response_class, $formatter_class] as $class) {
-        if (!class_exists($class)) {
-          throw new \InvalidArgumentException("Class $class does not exists");
-        }
-      }
       self::$instances[$machine_name] = new $backend_class($configuration, new $response_class(), new $formatter_class());
     }
     return self::$instances[$machine_name];

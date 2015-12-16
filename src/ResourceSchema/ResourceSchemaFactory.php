@@ -37,10 +37,6 @@ class ResourceSchemaFactory {
 
     $resource_schema_class = $plugin_manager->getPlugin($plugin)->getClass();
 
-    if (!class_exists($resource_schema_class)) {
-      throw new \InvalidArgumentException(t('Class @class does not exists', ['class' => $resource_schema_class]));
-    }
-
     return new $resource_schema_class($configuration);
   }
 

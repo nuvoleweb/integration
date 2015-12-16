@@ -42,10 +42,6 @@ class ProducerFactory {
     $entity_wrapper = new EntityWrapper\EntityWrapper($plugin_manager->getPlugin($plugin)->getEntityType());
     $document = new Document();
 
-    if (!class_exists($producer_class)) {
-      throw new \InvalidArgumentException(t('Class @class does not exists', ['class' => $producer_class]));
-    }
-
     return new $producer_class($configuration, $entity_wrapper, $document);
   }
 
