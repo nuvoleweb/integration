@@ -8,7 +8,9 @@
 namespace Drupal\integration_ui;
 
 use Drupal\integration\Plugins\PluginManager;
+use Drupal\integration_ui\Exceptions\UndefinedFormControllerException;
 use Drupal\integration_ui\Exceptions\UndefinedFormHandlerException;
+use Mockery\CountValidator\Exception;
 
 /**
  * Class FormFactory.
@@ -66,11 +68,15 @@ class FormFactory {
    *
    * @return FormInterface
    *    Form handler instance
+   *
+   * @throws UndefinedFormControllerException
    */
   public function getController() {
-    // @todo Throw exception is not set.
     if (isset($this->controllers[$this->plugin])) {
       return new $this->controllers[$this->plugin]();
+    }
+    else {
+      throw new UndefinedFormControllerException($this->plugin);
     }
   }
 
@@ -89,7 +95,7 @@ class FormFactory {
   public function getPluginHandler($plugin) {
     $form_handler = $this->pluginManager->getPlugin($plugin)->getFormHandler();
     if (!$form_handler) {
-      throw new UndefinedFormHandlerException(t('Plugin type "!plugin" does not have a form handler defined.', ['!plugin' => $plugin]));
+      throw new UndefinedFormHandlerException('plugin', $plugin);
     }
     return new $form_handler();
   }
@@ -109,7 +115,7 @@ class FormFactory {
   public function getComponentHandler($component) {
     $form_handler = $this->pluginManager->getComponent($component)->getFormHandler();
     if (!$form_handler) {
-      throw new UndefinedFormHandlerException(t('Plugin component type "!component" does not have a form handler defined.', ['!plugin' => $component]));
+      throw new UndefinedFormHandlerException('component', $component);
     }
     return new $form_handler();
   }

@@ -15,6 +15,8 @@ use Drupal\integration_producer\Configuration\ProducerConfiguration;
 /**
  * Class FormHelper.
  *
+ * Simple collection of static methods to ease Drupal form API manipulation.
+ *
  * @package Drupal\integration_ui
  */
 class FormHelper {
