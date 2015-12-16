@@ -37,6 +37,22 @@ interface FormInterface {
   public function getPluginManager(array &$form_state);
 
   /**
+   * Check whereas a new configuration entity can be created or not.
+   *
+   * This is used, for example, to check if we have resource schemas before
+   * creating a backend or if we have backends before creating a consumer.
+   *
+   * @param array $form_state
+   *    Form state array.
+   *
+   * @return bool
+   *    TRUE if configuration can be created, FALSE otherwise.
+   *
+   * @see integration_ui_entity_form()
+   */
+  public function canCreate(array &$form_state);
+
+  /**
    * Build form array.
    *
    * @param array $form

@@ -57,6 +57,23 @@ abstract class AbstractForm implements FormInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function canCreate(array &$form_state) {
+    /** @var AbstractConfiguration $configuration */
+    $configuration = $this->getConfiguration($form_state);
+
+    if ($configuration->entityType() != 'integration_resource_schema') {
+      // All configuration types needs resource schemas.
+      if (!entity_load('integration_resource_schema')) {
+        drupal_set_message(t('No resource schemas found. !link before proceeding.', ['!link' => l(t('Add a resource schema'), 'admin/config/integration/resource-schema/add')]), 'error');
+        return FALSE;
+      }
+    }
+    return TRUE;
+  }
+
+  /**
    * Load all available backends and format them as an #options array.
    *
    * @return array

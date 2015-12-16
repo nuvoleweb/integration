@@ -131,4 +131,15 @@ class ConsumerFormController extends AbstractForm {
     }
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function canCreate(array &$form_state) {
+    if (!entity_load('integration_backend')) {
+      drupal_set_message(t('No backend found. !link before proceeding.', ['!link' => l(t('Add a backend'), 'admin/config/integration/backend/add')]), 'error');
+      return FALSE;
+    }
+    return parent::canCreate($form_state);
+  }
+
 }

@@ -25,6 +25,7 @@ class BackendFormController extends AbstractForm {
    * {@inheritdoc}
    */
   public function form(array &$form, array &$form_state, $op) {
+
     /** @var BackendConfiguration $configuration */
     $configuration = $this->getConfiguration($form_state);
     $plugin_manager = $this->getPluginManager($form_state);

@@ -54,42 +54,44 @@ function integration_ui_form_ajax_callback($form, $form_state) {
  * Generates configuration entity form.
  */
 function integration_ui_entity_form($form, &$form_state, AbstractConfiguration $configuration, $op, $entity_type) {
-
-  $form['name'] = [
-    '#title' => t('Name'),
-    '#type' => 'textfield',
-    '#default_value' => ($op == 'clone') ? $configuration->getName() . ' clone' : $configuration->getName(),
-    '#required' => TRUE,
-  ];
-  $form['machine_name'] = [
-    '#type' => 'machine_name',
-    '#default_value' => $configuration->getMachineName(),
-    '#machine_name' => [
-      'exists' => 'integration_ui_machine_name_exists',
-      'source' => ['name'],
-    ],
-    '#descripwtion' => t('A unique machine-readable name for this configuration object. It must only contain lowercase letters, numbers, and underscores.'),
-    '#required' => TRUE,
-    '#entity_type' => $entity_type,
-  ];
-  $form['enabled'] = [
-    '#title' => t('Enabled'),
-    '#type' => 'checkbox',
-    '#default_value' => ($op == 'add') ? TRUE : $configuration->getEnabled(),
-  ];
-  $form['status'] = [
-    '#value' => ($op == 'add') ? ENTITY_CUSTOM : $configuration->getStatus(),
-  ];
-
   $form_manager = FormFactory::getInstance($entity_type);
-  $form_manager->getController()->form($form, $form_state, $op);
 
-  $form['actions'] = ['#type' => 'actions'];
-  $form['actions']['submit'] = [
-    '#type' => 'submit',
-    '#value' => t('Save'),
-    '#weight' => 40,
-  ];
+  if ($form_manager->getController()->canCreate($form_state)) {
+    $form['name'] = [
+      '#title' => t('Name'),
+      '#type' => 'textfield',
+      '#default_value' => ($op == 'clone') ? $configuration->getName() . ' clone' : $configuration->getName(),
+      '#required' => TRUE,
+    ];
+    $form['machine_name'] = [
+      '#type' => 'machine_name',
+      '#default_value' => $configuration->getMachineName(),
+      '#machine_name' => [
+        'exists' => 'integration_ui_machine_name_exists',
+        'source' => ['name'],
+      ],
+      '#descripwtion' => t('A unique machine-readable name for this configuration object. It must only contain lowercase letters, numbers, and underscores.'),
+      '#required' => TRUE,
+      '#entity_type' => $entity_type,
+    ];
+    $form['enabled'] = [
+      '#title' => t('Enabled'),
+      '#type' => 'checkbox',
+      '#default_value' => ($op == 'add') ? TRUE : $configuration->getEnabled(),
+    ];
+    $form['status'] = [
+      '#value' => ($op == 'add') ? ENTITY_CUSTOM : $configuration->getStatus(),
+    ];
+
+    $form['actions'] = ['#type' => 'actions'];
+    $form['actions']['submit'] = [
+      '#type' => 'submit',
+      '#value' => t('Save'),
+      '#weight' => 100,
+    ];
+
+    $form_manager->getController()->form($form, $form_state, $op);
+  }
   return $form;
 }
 
