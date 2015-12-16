@@ -6,6 +6,7 @@
  */
 
 namespace Drupal\integration\Plugins;
+
 use Drupal\integration\Plugins\Exceptions\PluginManagerException;
 
 /**
