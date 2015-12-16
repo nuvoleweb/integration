@@ -17,6 +17,8 @@ use Drupal\integration_ui\FormHelper;
 /**
  * Class BackendFormController.
  *
+ * @method BackendConfiguration getConfiguration(array &$form_state)
+ *
  * @package Drupal\integration_ui\FormControllers
  */
 class BackendFormController extends AbstractForm {
@@ -26,7 +28,6 @@ class BackendFormController extends AbstractForm {
    */
   public function form(array &$form, array &$form_state, $op) {
 
-    /** @var BackendConfiguration $configuration */
     $configuration = $this->getConfiguration($form_state);
     $plugin_manager = $this->getPluginManager($form_state);
     $form_factory = FormFactory::getInstance('backend');
@@ -105,7 +106,7 @@ class BackendFormController extends AbstractForm {
 
         if ($component['value']) {
           try {
-            $element = FormHelper::fieldset(t('Settings'), FALSE, "component_$component_type");
+            $element = FormHelper::fieldset(t('Settings'), TRUE, "component_$component_type");
             $form_factory->getComponentHandler($component['value'])->form($element, $form_state, $op);
             $form["component_$component_type"]["{$component_type}_configuration"] = $element;
           }
@@ -120,10 +121,10 @@ class BackendFormController extends AbstractForm {
    * {@inheritdoc}
    */
   public function formSubmit(array $form, array &$form_state) {
-    /** @var BackendConfiguration $configuration */
     $configuration = $this->getConfiguration($form_state);
     $input = &$form_state['input'];
     $triggering_element = $form_state['triggering_element'];
+    $form_factory = FormFactory::getInstance('backend');
 
     switch ($triggering_element['#name']) {
 
@@ -149,6 +150,11 @@ class BackendFormController extends AbstractForm {
     }
     if (isset($input['authentication_handler'])) {
       $configuration->setAuthentication($input['authentication_handler']);
+      try {
+        $form_factory->getComponentHandler($input['authentication_handler'])->formSubmit($form, $form_state);
+      }
+      catch (UndefinedFormHandlerException $e) {
+      }
     }
     if (isset($input['backend'])) {
       $configuration->setPluginSetting('backend', $input['backend']);

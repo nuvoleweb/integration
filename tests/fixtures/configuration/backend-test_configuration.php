@@ -25,17 +25,7 @@ $export->settings = [
     ],
   ],
   'components' => [
-    'response' => [
-      'key1' => 'value1',
-      'key2' => 'value2',
-      'key3' => 'value3',
-    ],
-    'formatter' => [
-      'key1' => 'value1',
-      'key2' => 'value2',
-      'key3' => 'value3',
-    ],
-    'authentication' => [
+    'authentication_handler' => [
       'key1' => 'value1',
       'key2' => 'value2',
       'key3' => 'value3',

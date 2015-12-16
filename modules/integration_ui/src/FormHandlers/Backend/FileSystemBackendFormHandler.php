@@ -22,7 +22,6 @@ class FileSystemBackendFormHandler extends AbstractBackendFormHandler {
   public function resourceSchemaForm($machine_name, array &$form, array &$form_state, $op) {
     $configuration = $this->getConfiguration($form_state);
     $default_value = $configuration->getPluginSetting("resource_schema.$machine_name.folder");
-
     $form['folder'] = FormHelper::textField(t('Folder'), $default_value);
   }
 
@@ -32,7 +31,6 @@ class FileSystemBackendFormHandler extends AbstractBackendFormHandler {
   public function form(array &$form, array &$form_state, $op) {
     $configuration = $this->getConfiguration($form_state);
     $default_value = $configuration->getPluginSetting('backend.path');
-
     $form['path'] = FormHelper::textField(t('File system path'), $default_value);
   }
 

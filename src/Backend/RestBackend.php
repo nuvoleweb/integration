@@ -9,11 +9,14 @@ namespace Drupal\integration\Backend;
 
 use Drupal\integration\Document\Document;
 use Drupal\integration\Document\DocumentInterface;
+use Drupal\integration\Backend\Configuration\BackendConfiguration;
 
 /**
  * Class RestBackend.
  *
  * Simple REST backend using standard drupal_http_request(), without overrides.
+ *
+ * @method BackendConfiguration getConfiguration()
  *
  * @package Drupal\integration\Backend
  */
@@ -24,7 +27,7 @@ class RestBackend extends AbstractBackend {
    */
   public function listDocuments($resource_schema, $max = 0) {
     $options['method'] = 'GET';
-    $response = $this->httpRequest($this->getListUri($resource_schema), $options);
+    $response = $this->httpRequest($this->getChangeFeedUri($resource_schema), $options);
 
     $return = [];
     $this->getResponseHandler()->setResponse($response);
@@ -102,7 +105,7 @@ class RestBackend extends AbstractBackend {
     $producer_content_id = $document->getMetadata('producer_content_id');
     if ($producer && $producer_content_id) {
       $parts[] = $this->getConfiguration()->getPluginSetting('backend.base_url');
-      $parts[] = 'uuid';
+      $parts[] = $this->getConfiguration()->getPluginSetting('backend.backend_id');
       $parts[] = $producer;
       $parts[] = $producer_content_id;
       $url = implode('/', $parts);
@@ -147,22 +150,22 @@ class RestBackend extends AbstractBackend {
    */
   protected function getResourceUri($resource_schema) {
     $base_url = $this->getConfiguration()->getPluginSetting('backend.base_url');
-    $endpoint = $this->getConfiguration()->getPluginSetting("resource_schema.$resource_schema.endpoint");
+    $endpoint = $this->getConfiguration()->getResourceEndpoint($resource_schema);
     return "$base_url/$endpoint";
   }
 
   /**
-   * Get full resources list URI.
+   * Get resource change feed URI.
    *
    * @param string $resource_schema
    *    Machine name of a resource schema configuration object.
    *
-   * @return string $list
-   *    List URI.
+   * @return string
+   *    Resource change feed URI.
    */
-  protected function getListUri($resource_schema) {
+  protected function getChangeFeedUri($resource_schema) {
     $base_url = $this->getConfiguration()->getPluginSetting('backend.base_url');
-    $endpoint = $this->getConfiguration()->getPluginSetting("resource_schema.$resource_schema.changes");
+    $endpoint = $this->getConfiguration()->getResourceChangeFeed($resource_schema);
     return "$base_url/$endpoint";
   }
 

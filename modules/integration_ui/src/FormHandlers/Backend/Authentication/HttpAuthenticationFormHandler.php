@@ -39,7 +39,10 @@ class HttpAuthenticationFormHandler extends AbstractForm {
    * {@inheritdoc}
    */
   public function formSubmit(array $form, array &$form_state) {
-
+    $configuration = $this->getConfiguration($form_state);
+    $input = $form_state['input']['authentication_handler_configuration'];
+    $configuration->setComponentSetting('authentication_handler', 'username', $input['username']);
+    $configuration->setComponentSetting('authentication_handler', 'password', $input['password']);
   }
 
   /**
