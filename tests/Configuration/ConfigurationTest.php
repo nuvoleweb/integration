@@ -27,20 +27,25 @@ class ConfigurationTest extends AbstractTest {
     $configuration = entity_create('integration_backend', []);
     $expected_settings = [
       'a' => [
-        'b' => ['c' => 1],
-        'd' => ['e' => 2],
+        'b' => [
+            'c' => 1,
+            'd' => 2,
+        ],
+        'e' => ['f' => 3],
       ],
-      'f' => 3,
+      'g' => 4,
     ];
 
     $configuration->setPluginSetting('a.b.c', 1);
-    $configuration->setPluginSetting('a.d.e', 2);
-    $configuration->setPluginSetting('f', 3);
+    $configuration->setPluginSetting('a.b.d', 2);
+    $configuration->setPluginSetting('a.e.f', 3);
+    $configuration->setPluginSetting('g', 4);
     $this->assertEquals($expected_settings, $configuration->getPluginSettings());
 
     $configuration->setComponentSetting('component', 'a.b.c', 1);
-    $configuration->setComponentSetting('component', 'a.d.e', 2);
-    $configuration->setComponentSetting('component', 'f', 3);
+    $configuration->setComponentSetting('component', 'a.b.d', 2);
+    $configuration->setComponentSetting('component', 'a.e.f', 3);
+    $configuration->setComponentSetting('component', 'g', 4);
     $this->assertEquals($expected_settings, $configuration->getComponentSettings('component'));
   }
 
