@@ -8,7 +8,7 @@
 namespace Drupal\integration\Tests\Backend;
 
 use Drupal\integration\Backend\Authentication\HttpAuthentication;
-use Drupal\integration\Backend\Authentication\NoAuthentication;
+use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Backend\Formatter\JsonFormatter;
 use Drupal\integration\Backend\Response\HttpJsonResponse;
 use Drupal\integration\Backend\RestBackend;
@@ -73,11 +73,11 @@ class HttpRestBackendTest extends AbstractTest {
    * Test authentication plugin.
    */
   public function testHttpAuthentication() {
-    $resource_schema = 'test_configuration';
-    $configuration = clone $this->backendConfiguration;
-
+    /** @var BackendConfiguration $configuration */
+    $configuration = entity_create('integration_backend', []);
     $configuration->plugin = 'rest_backend';
     $configuration->setPluginSetting('backend.base_url', 'http://example.com/v1');
+    $configuration->setPluginSetting('resource_schema.article.endpoint', 'article');
     $configuration->setAuthentication('http_authentication');
     $configuration->setComponentSetting('authentication_handler', 'username', 'name');
     $configuration->setComponentSetting('authentication_handler', 'password', 'password');
@@ -89,7 +89,7 @@ class HttpRestBackendTest extends AbstractTest {
       ->andReturn($response);
 
     /** @var RestBackend $backend */
-    $backend->read($resource_schema, '123');
+    $backend->read('article', '123');
   }
 
   /**
