@@ -253,7 +253,7 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    * @param mixed $value
    *    Vetting values, can be either an array or a simple scalar.
    */
-  public function setValue(array &$settings, $name, $value) {
+  private function setValue(array &$settings, $name, $value) {
     $parts = explode('.', $name);
 
     $walk = function($parts, &$settings, $value) use (&$walk) {
