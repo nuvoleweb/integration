@@ -144,14 +144,15 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    */
   public function getPluginSetting($name) {
     $settings = isset($this->settings['plugin']) ? $this->settings['plugin'] : [];
-    return $this->getSettingValue($name, $settings);
+    return $this->getValue($name, $settings);
   }
 
   /**
    * {@inheritdoc}
    */
   public function setPluginSetting($name, $value) {
-    $this->settings['plugin'][$name] = $value;
+    $this->settings['plugin'] = $this->settings['plugin'] ? $this->settings['plugin'] : [];
+    $this->setValue($this->settings['plugin'], $name, $value);
   }
 
   /**
@@ -173,14 +174,15 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    */
   public function getComponentSetting($component, $name) {
     $settings = isset($this->settings['components'][$component]) ? $this->settings['components'][$component] : [];
-    return $this->getSettingValue($name, $settings);
+    return $this->getValue($name, $settings);
   }
 
   /**
    * {@inheritdoc}
    */
   public function setComponentSetting($component, $name, $value) {
-    $this->settings['components'][$component][$name] = $value;
+    $this->settings['components'][$component] = $this->settings['components'][$component] ? $this->settings['components'][$component] : [];
+    $this->setValue($this->settings['components'][$component], $name, $value);
   }
 
   /**
@@ -220,25 +222,51 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    *    as separator, for example:
    *    $value = $configuration->getPluginSetting('a.b.c');
    *    will return 'c' setting value if any, NULL if not set.
-   * @param array $settings
-   *    Plugin or plugin component setting array.
+   * @param mixed $value
+   *    Vetting values, can be either an array or a simple scalar.
    *
    * @return mixed|NULL
    *    Plugin or plugin component setting value if any, NULL otherwise.
    */
-  private function getSettingValue($name, $settings) {
+  private function getValue($name, $value) {
     $parts = explode('.', $name);
 
-    $walk = function($parts, $settings) use (&$walk) {
+    $walk = function($parts, $value) use (&$walk) {
       $key = array_shift($parts);
       if (count($parts)) {
-        return isset($settings[$key]) ? $walk($parts, $settings[$key]) : NULL;
+        return isset($value[$key]) ? $walk($parts, $value[$key]) : NULL;
       }
       else {
-        return isset($settings[$key]) ? $settings[$key] : NULL;
+        return isset($value[$key]) ? $value[$key] : NULL;
       }
     };
-    return $walk($parts, $settings);
+    return $walk($parts, $value);
+  }
+
+  /**
+   * Add a setting name-value pair to an existing setting array.
+   *
+   * @param array $settings
+   *    Settings array to be modified.
+   * @param string $name
+   *    Setting name using dotted notation, such as "a.b.c".
+   * @param mixed $value
+   *    Vetting values, can be either an array or a simple scalar.
+   */
+  public function setValue(array &$settings, $name, $value) {
+    $parts = explode('.', $name);
+
+    $walk = function($parts, &$settings, $value) use (&$walk) {
+      $key = array_shift($parts);
+      if (count($parts)) {
+        $settings[$key] = isset($settings[$key]) ? $settings[$key] : NULL;
+        $walk($parts, $settings[$key], $value);
+      }
+      else {
+        $settings[$key] = $value;
+      }
+    };
+    return $walk($parts, $settings, $value);
   }
 
 }

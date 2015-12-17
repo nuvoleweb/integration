@@ -61,7 +61,6 @@ class ConfigurationTest extends AbstractTest {
     $this->assertNotNull($decoded);
     $this->assertEquals($data->machine_name, $decoded->machine_name);
 
-    /** @var BackendConfiguration $entity */
     $configuration = entity_import('integration_backend', $json);
     $this->checkConsistency($data, $configuration);
   }
