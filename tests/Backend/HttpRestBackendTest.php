@@ -29,11 +29,10 @@ class HttpRestBackendTest extends AbstractTest {
    */
   public function testCreate() {
     $resource_schema = 'test_configuration';
-    $response = new \stdClass();
-    $response->code = 200;
-    $response->data = '{"_id": "123"}';
 
-    $backend = $this->getMockedHttpBackendInstance($response);
+    $response = $this->getMockResponse();
+    $backend = $this->getMockBackend($this->backendConfiguration);
+    $backend->shouldReceive('doRequest')->andReturn($response);
 
     /** @var RestBackend $backend */
     $document = $backend->create($resource_schema, new Document());
@@ -45,11 +44,10 @@ class HttpRestBackendTest extends AbstractTest {
    */
   public function testUpdate() {
     $resource_schema = 'test_configuration';
-    $response = new \stdClass();
-    $response->code = 200;
-    $response->data = '{"_id": "123"}';
 
-    $backend = $this->getMockedHttpBackendInstance($response);
+    $response = $this->getMockResponse();
+    $backend = $this->getMockBackend($this->backendConfiguration);
+    $backend->shouldReceive('doRequest')->andReturn($response);
 
     /** @var RestBackend $backend */
     $document = $backend->update($resource_schema, new Document());
@@ -61,11 +59,10 @@ class HttpRestBackendTest extends AbstractTest {
    */
   public function testDelete() {
     $resource_schema = 'test_configuration';
-    $response = new \stdClass();
-    $response->code = 200;
-    $response->data = '{"_id": "123"}';
 
-    $backend = $this->getMockedHttpBackendInstance($response);
+    $response = $this->getMockResponse();
+    $backend = $this->getMockBackend($this->backendConfiguration);
+    $backend->shouldReceive('doRequest')->andReturn($response);
 
     /** @var RestBackend $backend */
     $return = $backend->delete($resource_schema, '123');
@@ -85,35 +82,45 @@ class HttpRestBackendTest extends AbstractTest {
     $configuration->setComponentSetting('authentication_handler', 'username', 'name');
     $configuration->setComponentSetting('authentication_handler', 'password', 'password');
 
-    $backend = new RestBackend(
-      $configuration,
-      new HttpJsonResponse(),
-      new JsonFormatter(),
-      new HttpAuthentication($configuration));
+    $response = $this->getMockResponse();
+    $backend = $this->getMockBackend($configuration);
+    $backend->shouldReceive('doRequest')
+      ->withArgs(['http://name:password@example.com/v1/article/123', ['method' => 'GET']])
+      ->andReturn($response);
+
+    /** @var RestBackend $backend */
     $backend->read($resource_schema, '123');
   }
 
   /**
    * Get mocked backend instance.
    *
-   * @param string $returned_response
-   *    Response that it's going to be returned by the backend.
-   *
    * @return \Mockery\MockInterface
    *    Mocked object.
    */
-  protected function getMockedHttpBackendInstance($returned_response) {
-    $arguments = [
-      $this->backendConfiguration,
+  protected function getMockBackend($configuration) {
+    // Reset internal static container.
+    \Mockery::close();
+    $backend = \Mockery::mock('Drupal\integration\Backend\RestBackend[doRequest]', [
+      $configuration,
       new HttpJsonResponse(),
       new JsonFormatter(),
-      new NoAuthentication($this->backendConfiguration),
-    ];
-    $backend = \Mockery::mock('Drupal\integration\Backend\RestBackend[httpRequest]', $arguments);
-    $backend->shouldAllowMockingProtectedMethods()
-      ->shouldReceive('httpRequest')
-      ->andReturn($returned_response);
+      new HttpAuthentication($configuration),
+    ]);
+    $backend->shouldAllowMockingProtectedMethods();
     return $backend;
+  }
+
+  /**
+   * Get mock response.
+   *
+   * @return \stdClass
+   */
+  protected function getMockResponse() {
+    $response = new \stdClass();
+    $response->code = 200;
+    $response->data = '{"_id": "123"}';
+    return $response;
   }
 
 }
