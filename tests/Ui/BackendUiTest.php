@@ -48,7 +48,7 @@ class BackendUiTest extends AbstractUiTest {
     // After creating a resource schema warning message should be gone.
     $this->createResourceSchema();
     $this->visit('admin/config/integration/backend/add');
-    $this->assertFalse($page->hasContent('No resource schemas found. Add a resource schema before proceeding.'));
+    $this->assertNoErrorMessages();
   }
 
 }

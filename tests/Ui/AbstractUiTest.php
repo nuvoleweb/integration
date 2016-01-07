@@ -15,7 +15,7 @@ use Drupal\Driver\DrupalDriver;
  *
  * @package Drupal\integration\Tests\Ui
  */
-class AbstractUiTest extends BrowserTestCase {
+abstract class AbstractUiTest extends BrowserTestCase {
 
   /**
    * Drupal driver instance.
@@ -142,6 +142,28 @@ class AbstractUiTest extends BrowserTestCase {
     $configuration = entity_create('integration_resource_schema', $data);
     entity_save('integration_resource_schema', $configuration);
     $this->resource_schemas[] = $configuration;
+  }
+
+  /**
+   * Assert that current page has no error messages.
+   */
+  public function assertNoErrorMessages() {
+    if ($message = $this->getPage()->find('css', '.messages.error')) {
+      $this->fail($message->getText());
+    }
+  }
+
+  /**
+   * Wrapper around Mink page pressButton() method.
+   *
+   * Check no error messages are present on the page after pressing the button.
+   *
+   * @param string $locator
+   *    Press button with given locator.
+   */
+  public function pressButton($locator) {
+    $this->getPage()->pressButton($locator);
+    $this->assertNoErrorMessages();
   }
 
 }
