@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Tests\Ui\BackendUiTest
+ * Contains \Drupal\integration\Tests\Ui\ResourceSchemaUiTest
  */
 
 namespace Drupal\integration\Tests\Ui;
@@ -10,7 +10,7 @@ namespace Drupal\integration\Tests\Ui;
 use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 
 /**
- * Class BackendUiTest.
+ * Class ResourceSchemaUiTest.
  *
  * @package Drupal\integration\Tests\Ui
  */

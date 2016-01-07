@@ -9,6 +9,7 @@ namespace Drupal\integration\Tests\Ui;
 
 use aik099\PHPUnit\BrowserTestCase;
 use Drupal\Driver\DrupalDriver;
+use Drupal\integration\Configuration\AbstractConfiguration;
 
 /**
  * Class AbstractUiTest.
@@ -39,6 +40,13 @@ abstract class AbstractUiTest extends BrowserTestCase {
   protected $resource_schemas = [];
 
   /**
+   * List of backends created during test execution.
+   *
+   * @var array
+   */
+  protected $backends = [];
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp() {
@@ -67,6 +75,11 @@ abstract class AbstractUiTest extends BrowserTestCase {
     // Remove resource schemas created during test execution.
     foreach ($this->resource_schemas as $configuration) {
       entity_delete('integration_resource_schema', $configuration->id);
+    }
+
+    // Remove backend created during test execution.
+    foreach ($this->backends as $configuration) {
+      entity_delete('integration_backend', $configuration->id);
     }
 
     parent::tearDown();
@@ -133,15 +146,44 @@ abstract class AbstractUiTest extends BrowserTestCase {
 
   /**
    * Create dummy resource schema, it will be deleted on tear-down.
+   *
+   * @return AbstractConfiguration
+   *    Configuration object.
    */
   public function createResourceSchema() {
     $data = [
       'name' => 'Resource schema ' . rand(),
       'machine_name' => 'resource_schema_' . rand(),
+      'settings' => [
+        'plugin' => [
+          'fields' => [
+            'title' => 'title',
+            'body' => 'body',
+          ],
+        ],
+      ],
     ];
     $configuration = entity_create('integration_resource_schema', $data);
     entity_save('integration_resource_schema', $configuration);
     $this->resource_schemas[] = $configuration;
+    return $configuration;
+  }
+
+  /**
+   * Create dummy backend, it will be deleted on tear-down.
+   *
+   * @return AbstractConfiguration
+   *    Configuration object.
+   */
+  public function createBackend() {
+    $data = [
+      'name' => 'Backend ' . rand(),
+      'machine_name' => 'backend_' . rand(),
+    ];
+    $configuration = entity_create('integration_backend', $data);
+    entity_save('integration_backend', $configuration);
+    $this->backends[] = $configuration;
+    return $configuration;
   }
 
   /**
