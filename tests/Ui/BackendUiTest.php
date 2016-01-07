@@ -15,9 +15,9 @@ namespace Drupal\integration\Tests\Ui;
 class BackendUiTest extends AbstractUiTest {
 
   /**
-   * Test administrators can manage backends.
+   * Administrators can access backends administrative pages.
    */
-  public function testManageBackend() {
+  public function testCanAccessAdminPages() {
     $page = $this->getPage();
     $this->loginAs('administrator');
     $this->visit('admin/config/integration');
@@ -32,11 +32,23 @@ class BackendUiTest extends AbstractUiTest {
     // Initial interface must provide name text field and plugin selection.
     $page->clickLink('Add backend');
     $this->assertEquals('Add backend', $page->find('css', 'h1')->getText());
-    $this->assertTrue($page->hasField('name'));
-    $this->assertTrue($page->hasSelect('plugin'));
+  }
 
-    $page->pressButton('Select plugin');
-    $this->assertTrue($page->hasContent('Resource schemas'));
+  /**
+   * Administrators can create backends.
+   */
+  public function testCreateBackend() {
+    $page = $this->getPage();
+    $this->loginAs('administrator');
+    $this->visit('admin/config/integration/backend/add');
+
+    // Backend requires at least a resource schema to be available.
+    $this->assertTrue($page->hasContent('No resource schemas found. Add a resource schema before proceeding.'));
+
+    // After creating a resource schema warning message should be gone.
+    $this->createResourceSchema();
+    $this->visit('admin/config/integration/backend/add');
+    $this->assertFalse($page->hasContent('No resource schemas found. Add a resource schema before proceeding.'));
   }
 
 }

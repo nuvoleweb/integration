@@ -32,6 +32,13 @@ class AbstractUiTest extends BrowserTestCase {
   protected $users = [];
 
   /**
+   * List of resource schemas created during test execution.
+   *
+   * @var array
+   */
+  protected $resource_schemas = [];
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp() {
@@ -56,6 +63,12 @@ class AbstractUiTest extends BrowserTestCase {
     foreach ($this->users as $user) {
       user_delete($user->uid);
     }
+
+    // Remove resource schemas created during test execution.
+    foreach ($this->resource_schemas as $configuration) {
+      entity_delete('integration_resource_schema', $configuration->id);
+    }
+
     parent::tearDown();
   }
 
@@ -116,6 +129,19 @@ class AbstractUiTest extends BrowserTestCase {
    */
   public function getPage() {
     return $this->getSession()->getPage();
+  }
+
+  /**
+   * Create dummy resource schema, it will be deleted on tear-down.
+   */
+  public function createResourceSchema() {
+    $data = [
+      'name' => 'Resource schema ' . rand(),
+      'machine_name' => 'resource_schema_' . rand(),
+    ];
+    $configuration = entity_create('integration_resource_schema', $data);
+    entity_save('integration_resource_schema', $configuration);
+    $this->resource_schemas[] = $configuration;
   }
 
 }
