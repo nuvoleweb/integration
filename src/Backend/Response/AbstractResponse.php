@@ -29,7 +29,7 @@ abstract class AbstractResponse implements ResponseInterface {
       return $this->response;
     }
     else {
-      throw new \InvalidArgumentException(t('Response object not set on @class', ['@class' => ___CLASS__]));
+      throw new \InvalidArgumentException(t('Response object not set on @class', ['@class' => __CLASS__]));
     }
   }
 
