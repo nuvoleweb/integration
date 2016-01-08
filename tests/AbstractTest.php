@@ -99,7 +99,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
     static $fixtures = [];
     if (!isset($fixtures[$type][$name])) {
       $export = new \stdClass();
-      include "fixtures/configuration/$type-$name.php";
+      include $this->getFixturePath() . "/configuration/$type-$name.php";
       $fixtures[$type][$name] = clone $export;
     }
     return $fixtures[$type][$name];
@@ -122,7 +122,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
     static $fixtures = [];
     if (!isset($fixtures[$bundle][$id])) {
       $export = new \stdClass();
-      include "fixtures/entities/$entity_type-$bundle-$id.php";
+      include $this->getFixturePath() . "/entities/$entity_type-$bundle-$id.php";
       $fixtures[$bundle][$id] = clone $export;
     }
     return $fixtures[$bundle][$id];
@@ -153,6 +153,16 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
    */
   protected function expectedNodeDocumentId($node) {
     return 'node-integration-test-' . $node->nid;
+  }
+
+  /**
+   * Get root fixture path.
+   *
+   * @return string
+   *    Root fixture path.
+   */
+  protected function getFixturePath() {
+    return dirname(__FILE__) . '/fixtures';
   }
 
 }
