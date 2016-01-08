@@ -46,13 +46,21 @@ class RestBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function create($resource_schema, DocumentInterface $document) {
-    $options['method'] = 'POST';
-    $options['data'] = $this->getFormatterHandler()->encode($document);
-    $response = $this->httpRequest($this->getResourceUri($resource_schema), $options);
 
-    $this->getResponseHandler()->setResponse($response);
-    if (!$this->getResponseHandler()->hasErrors()) {
-      return new Document($this->getResponseHandler()->getData());
+    // If document already exists then update it.
+    if ($id = $this->getBackendContentId($document)) {
+      $document->setMetadata('_id', $id);
+      $this->update($resource_schema, $document);
+    }
+    else {
+      $options['method'] = 'POST';
+      $options['data'] = $this->getFormatterHandler()->encode($document);
+      $response = $this->httpRequest($this->getResourceUri($resource_schema), $options);
+
+      $this->getResponseHandler()->setResponse($response);
+      if (!$this->getResponseHandler()->hasErrors()) {
+        return new Document($this->getResponseHandler()->getData());
+      }
     }
   }
 
@@ -117,6 +125,7 @@ class RestBackend extends AbstractBackend {
         return $data->rows[0]->id;
       }
     }
+    return NULL;
   }
 
   /**
