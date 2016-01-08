@@ -34,7 +34,7 @@ class RestBackend extends AbstractBackend {
     if (!$this->getResponseHandler()->hasErrors()) {
       $data = $this->getResponseHandler()->getData();
       foreach ($data->results as $item) {
-        if (isset($item->deleted)) {
+        if (!isset($item->deleted)) {
           $return[] = $item->id;
         }
       }

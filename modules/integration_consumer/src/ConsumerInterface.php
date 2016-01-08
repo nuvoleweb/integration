@@ -58,4 +58,9 @@ interface ConsumerInterface {
    */
   public function getDestinationClass();
 
+  /**
+   * Fetch all documents from current configuration's backend.
+   */
+  public function fetchAll();
+
 }

@@ -215,4 +215,12 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
     return $plugin_manager->getPlugin($plugin)->getEntityType();
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function fetchAll() {
+    $this->prepareUpdate();
+    $this->processImport();
+  }
+
 }
