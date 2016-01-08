@@ -20,6 +20,15 @@ use Drupal\integration_producer\ProducerFactory;
 class IntegrationTest extends AbstractTest {
 
   /**
+   * {@inheritdoc}
+   */
+  public function tearDown() {
+    $consumer = ConsumerFactory::getInstance('test_configuration');
+    $consumer->processRollback();
+    parent::tearDown();
+  }
+
+  /**
    * Test producer-consumer workflow.
    */
   public function testProducerConsumerWorkflow() {
@@ -28,10 +37,6 @@ class IntegrationTest extends AbstractTest {
     $backend = BackendFactory::getInstance('test_configuration');
     $consumer = ConsumerFactory::getInstance('test_configuration');
     $resource_schema = ResourceSchemaFactory::getInstance('test_configuration');
-
-    // Make sure we have no test leftovers.
-    // @todo: remove rollback from test execution.
-    $consumer->processRollback();
 
     // Push all fixture nodes to given backend.
     foreach ($this->getProducerNodes() as $node) {
@@ -58,9 +63,6 @@ class IntegrationTest extends AbstractTest {
       }
     }
 
-    // Remove nodes from consumer.
-    // @todo: remove rollback from test execution.
-    $consumer->processRollback();
   }
 
   /**

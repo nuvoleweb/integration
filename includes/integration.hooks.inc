@@ -40,8 +40,8 @@ function integration_integration_backend_components_info() {
       'type' => 'formatter_handler',
     ],
     'http_json_response' => [
-      'label' => t('HTTP request response'),
-      'description' => t('Parse response returned by standard, non-overridden, drupal_http_request().'),
+      'label' => t('HTTP JSON response'),
+      'description' => t('Parse JSON response returned by standard, non-overridden, drupal_http_request().'),
       'class' => 'Drupal\integration\Backend\Response\HttpJsonResponse',
       'type' => 'response_handler',
     ],
