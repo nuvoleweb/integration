@@ -18,6 +18,16 @@ function integration_entity_info() {
     'module' => 'integration',
   ] + integration_entity_info_defaults();
 
+  $info['integration_backend_entity'] = [
+    'label' => t('Backend entities'),
+    'base table' => 'integration_backend_entities',
+    'controller class' => 'EntityAPIController',
+    'entity keys' => [
+      'id' => 'id',
+    ],
+    'module' => 'integration',
+  ];
+
   $info['integration_resource_schema'] = [
     'label' => t('Resource schema'),
     'entity class' => 'Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration',

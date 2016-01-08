@@ -12,10 +12,12 @@ use Drupal\integration\Backend\BackendInterface;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
+use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration_consumer\MappingHandler\AbstractMappingHandler;
 use Drupal\integration_consumer\Migrate\AbstractMigration;
+use Drupal\integration_consumer\Migrate\DocumentWrapper;
 use Drupal\integration_consumer\Migrate\MigrateSourceBackend;
 
 /**
@@ -221,6 +223,43 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
   public function fetchAll() {
     $this->prepareUpdate();
     $this->processImport();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function complete($entity, $source_row) {
+    $this->createBackendEntity($entity, $source_row);
+    parent::complete($entity, $source_row);
+  }
+
+  /**
+   * Create a mapping between local and remote ID.
+   *
+   * @param object $entity
+   *    Entity object.
+   * @param DocumentWrapper $source_row
+   *    Document wrapper object.
+   */
+  protected function createBackendEntity($entity, $source_row) {
+    $entity_type = $this->getDestinationEntityType();
+    $values = [
+      'backend_name' => $this->getConfiguration()->getBackend(),
+      'backend_id' => $source_row->getDocument()->getId(),
+      'entity_type' => $entity_type,
+      'entity_id' => entity_id($entity_type, $entity),
+    ];
+
+    $query = new \EntityFieldQuery();
+    $query->entityCondition('entity_type', 'integration_backend_entity')
+      ->propertyCondition('backend_name', $values['backend_name'])
+      ->propertyCondition('entity_type', $values['entity_type'])
+      ->propertyCondition('entity_id', $values['entity_id']);
+
+    if (!$query->count()->execute()) {
+      $backend_entity = entity_create('integration_backend_entity', $values);
+      entity_save('integration_backend_entity', $backend_entity);
+    }
   }
 
 }

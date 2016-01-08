@@ -10,6 +10,8 @@ namespace Drupal\integration_consumer\Migrate;
 /**
  * Class AbstractMigration.
  *
+ * @method \MigrateDestinationEntity getDestination()
+ *
  * @package Drupal\integration_consumer\Migrate
  *
  * Destination class implementing migration into translatable nodes.

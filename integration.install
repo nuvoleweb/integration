@@ -32,7 +32,49 @@ function integration_schema() {
     ],
   ];
 
+  $schema['integration_backend_entities'] = [
+    'description' => 'Mapping between local and remote entities IDs.',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary identifier.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'backend_name' => [
+        'description' => 'Backend configuration machine name.',
+        'type' => 'varchar',
+        'length' => 50,
+        'not null' => TRUE,
+      ],
+      'backend_id' => [
+        'description' => 'Backend remote unique ID.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'entity_type' => [
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'entity_id' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'indexes' => [
+      'search' => ['entity_type', 'entity_id', 'backend_name', 'backend_id'],
+    ],
+    'unique keys' => [
+      'backend_name_backend_id' => ['backend_name', 'backend_id'],
+    ],
+    'primary key' => ['id'],
+  ];
+
   $schema['integration_resource_schema'] = integration_schema_defaults();
+
   return $schema;
 }
 
@@ -112,4 +154,12 @@ function integration_schema_defaults() {
     ],
     'primary key' => ['id'],
   ];
+}
+
+/**
+ * Create "integration_backend_entities" table.
+ */
+function integration_update_7101() {
+  $schema = integration_schema();
+  db_create_table('integration_backend_entities', $schema['integration_backend_entities']);
 }
