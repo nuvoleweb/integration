@@ -21,7 +21,7 @@ function integration_entity_info() {
   $info['integration_backend_entity'] = [
     'label' => t('Backend entities'),
     'base table' => 'integration_backend_entities',
-    'controller class' => 'EntityAPIController',
+    'controller class' => 'Drupal\integration\Backend\Entity\BackendEntityController',
     'entity keys' => [
       'id' => 'id',
     ],
