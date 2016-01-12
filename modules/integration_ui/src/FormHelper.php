@@ -140,11 +140,13 @@ class FormHelper {
    *    Form element label.
    * @param string $name
    *    Form element name.
+   * @param int $weight
+   *    Form element weight.
    *
    * @return array
    *    Form element array as expected by Drupal's Form API.
    */
-  static public function stepSubmit($label, $name = '') {
+  static public function stepSubmit($label, $name = '', $weight = 100) {
     $element = [
       '#type' => 'submit',
       '#value' => $label,
@@ -152,6 +154,7 @@ class FormHelper {
       '#field' => $name,
       '#limit_validation_errors' => [],
       '#submit' => ['integration_ui_entity_form_submit'],
+      '#weight' => $weight,
     ];
     if ($name) {
       $element['#name'] = $name;
@@ -401,7 +404,7 @@ class FormHelper {
    * @return string
    *    First options value.
    */
-  static private function getFirstOption(array $options) {
+  static public function getFirstOption(array $options) {
     if (!empty($options)) {
       $keys = array_keys($options);
       return array_shift($keys);

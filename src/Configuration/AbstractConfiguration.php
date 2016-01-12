@@ -151,7 +151,7 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
    * {@inheritdoc}
    */
   public function setPluginSetting($name, $value) {
-    $this->settings['plugin'] = $this->settings['plugin'] ? $this->settings['plugin'] : [];
+    $this->settings['plugin'] = isset($this->settings['plugin']) ? $this->settings['plugin'] : [];
     $this->setValue($this->settings['plugin'], $name, $value);
   }
 
