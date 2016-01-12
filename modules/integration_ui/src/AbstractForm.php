@@ -120,10 +120,10 @@ abstract class AbstractForm implements FormInterface {
    * Get resource schema label given its machine name.
    *
    * @param string $resource
-   *    Response schema machine name.
+   *    Resource schema machine name.
    *
    * @return string
-   *    Response schema label.
+   *    Resource schema label.
    */
   protected function getResourceSchemaLabel($resource) {
     $resource_schema = ConfigurationFactory::load('integration_resource_schema', $resource);

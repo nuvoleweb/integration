@@ -10,7 +10,6 @@ namespace Drupal\integration\Tests\Backend;
 use Drupal\integration\Backend\Authentication\HttpAuthentication;
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Backend\Formatter\JsonFormatter;
-use Drupal\integration\Backend\Response\HttpJsonResponse;
 use Drupal\integration\Backend\RestBackend;
 use Drupal\integration\Document\Document;
 use Drupal\integration\Document\DocumentInterface;
@@ -106,7 +105,6 @@ class HttpRestBackendTest extends AbstractTest {
     \Mockery::close();
     $backend = \Mockery::mock('Drupal\integration\Backend\RestBackend[doRequest]', [
       $configuration,
-      new HttpJsonResponse(),
       new JsonFormatter(),
       new HttpAuthentication($configuration),
     ]);

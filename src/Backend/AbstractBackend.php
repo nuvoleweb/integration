@@ -26,13 +26,6 @@ abstract class AbstractBackend implements BackendInterface, ConfigurablePluginIn
   private $configuration;
 
   /**
-   * Response handler component.
-   *
-   * @var Response\ResponseInterface
-   */
-  private $response;
-
-  /**
    * Formatter component.
    *
    * @var Formatter\FormatterInterface
@@ -51,16 +44,13 @@ abstract class AbstractBackend implements BackendInterface, ConfigurablePluginIn
    *
    * @param Configuration\BackendConfiguration $configuration
    *    Configuration object.
-   * @param Response\ResponseInterface $response
-   *    Response handler object.
    * @param Formatter\FormatterInterface $formatter
    *    Formatter object.
    * @param AuthenticationInterface $authentication
    *    Authentication handler object.
    */
-  public function __construct(Configuration\BackendConfiguration $configuration, Response\ResponseInterface $response, Formatter\FormatterInterface $formatter, AuthenticationInterface $authentication) {
+  public function __construct(Configuration\BackendConfiguration $configuration, Formatter\FormatterInterface $formatter, AuthenticationInterface $authentication) {
     $this->setConfiguration($configuration);
-    $this->setResponseHandler($response);
     $this->setFormatterHandler($formatter);
     $this->setAuthenticationHandler($authentication);
   }
@@ -77,20 +67,6 @@ abstract class AbstractBackend implements BackendInterface, ConfigurablePluginIn
    */
   public function setConfiguration(AbstractConfiguration $configuration) {
     $this->configuration = $configuration;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getResponseHandler() {
-    return isset($this->response) ? $this->response : '';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setResponseHandler(Response\ResponseInterface $response) {
-    $this->response = $response;
   }
 
   /**

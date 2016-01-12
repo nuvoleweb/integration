@@ -18,22 +18,6 @@ use Drupal\integration\Document\DocumentInterface;
 interface BackendInterface {
 
   /**
-   * Get response object.
-   *
-   * @return Response\ResponseInterface
-   *    Response object instance.
-   */
-  public function getResponseHandler();
-
-  /**
-   * Set response object.
-   *
-   * @param Response\ResponseInterface $response
-   *    Response object instance.
-   */
-  public function setResponseHandler(Response\ResponseInterface $response);
-
-  /**
    * Get formatter object.
    *
    * @return Formatter\FormatterInterface

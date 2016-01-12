@@ -30,9 +30,8 @@ class RestBackend extends AbstractBackend {
     $response = $this->httpRequest($this->getChangeFeedUri($resource_schema), $options);
 
     $return = [];
-    $this->getResponseHandler()->setResponse($response);
-    if (!$this->getResponseHandler()->hasErrors()) {
-      $data = $this->getResponseHandler()->getData();
+    if (!$this->hasErrors($response)) {
+      $data = $this->getData($response);
       foreach ($data->results as $item) {
         if (!isset($item->deleted)) {
           $return[] = $item->id;
@@ -57,9 +56,8 @@ class RestBackend extends AbstractBackend {
       $options['data'] = $this->getFormatterHandler()->encode($document);
       $response = $this->httpRequest($this->getResourceUri($resource_schema), $options);
 
-      $this->getResponseHandler()->setResponse($response);
-      if (!$this->getResponseHandler()->hasErrors()) {
-        return new Document($this->getResponseHandler()->getData());
+      if (!$this->hasErrors($response)) {
+        return new Document($this->getData($response));
       }
     }
   }
@@ -71,9 +69,8 @@ class RestBackend extends AbstractBackend {
     $options['method'] = 'GET';
     $response = $this->httpRequest($this->getResourceUri($resource_schema) . '/' . $id, $options);
 
-    $this->getResponseHandler()->setResponse($response);
-    if (!$this->getResponseHandler()->hasErrors()) {
-      return new Document($this->getResponseHandler()->getData());
+    if (!$this->hasErrors($response)) {
+      return new Document($this->getData($response));
     }
   }
 
@@ -85,9 +82,8 @@ class RestBackend extends AbstractBackend {
     $options['data'] = $this->getFormatterHandler()->encode($document);
     $response = $this->httpRequest($this->getResourceUri($resource_schema) . '/' . $this->getBackendContentId($document), $options);
 
-    $this->getResponseHandler()->setResponse($response);
-    if (!$this->getResponseHandler()->hasErrors()) {
-      return new Document($this->getResponseHandler()->getData());
+    if (!$this->hasErrors($response)) {
+      return new Document($this->getData($response));
     }
   }
 
@@ -98,8 +94,7 @@ class RestBackend extends AbstractBackend {
     $options['method'] = 'DELETE';
     $response = $this->httpRequest($this->getResourceUri($resource_schema) . '/' . $id, $options);
 
-    $this->getResponseHandler()->setResponse($response);
-    if (!$this->getResponseHandler()->hasErrors()) {
+    if (!$this->hasErrors($response)) {
       return TRUE;
     }
   }
@@ -119,9 +114,8 @@ class RestBackend extends AbstractBackend {
       $url = implode('/', $parts);
       $response = $this->httpRequest($url, $options);
 
-      $this->getResponseHandler()->setResponse($response);
-      if (!$this->getResponseHandler()->hasErrors()) {
-        $data = $this->getResponseHandler()->getData();
+      if (!$this->hasErrors($response)) {
+        $data = $this->getData($response);
         return $data->rows[0]->id;
       }
     }
@@ -196,6 +190,37 @@ class RestBackend extends AbstractBackend {
     $base_url = $this->getConfiguration()->getPluginSetting('backend.base_url');
     $endpoint = $this->getConfiguration()->getResourceChangeFeed($resource_schema);
     return "$base_url/$endpoint";
+  }
+
+  /**
+   * Check whereas response has got errors or not.
+   *
+   * @param object $response
+   *    Response object.
+   *
+   * @return bool
+   *    TRUE if errors, FALSE otherwise.
+   */
+  protected function hasErrors($response) {
+    return $response->code != 200;
+  }
+
+  /**
+   * Get response data.
+   *
+   * @param object $response
+   *    Response object.
+   *
+   * @return mixed|null
+   *    Response data if response was successful, NULL otherwise.
+   */
+  protected function getData($response) {
+    if (!$this->hasErrors($response)) {
+      return json_decode($response->data);
+    }
+    else {
+      return NULL;
+    }
   }
 
 }

@@ -19,25 +19,12 @@ class BackendConfiguration extends AbstractConfiguration {
   /**
    * Formatter handler machine name.
    *
-   * @see hook_integration_backend_formatter_handler_info()
-   *
    * @var string
    */
   public $formatter = '';
 
   /**
-   * Response handler machine name.
-   *
-   * @see integration_backend_response_handler_info()
-   *
-   * @var string
-   */
-  public $response = '';
-
-  /**
    * Authentication handler machine name.
-   *
-   * @see integration_backend_authentication_handler_info()
    *
    * @var string
    */
@@ -61,26 +48,6 @@ class BackendConfiguration extends AbstractConfiguration {
    */
   public function setFormatter($formatter) {
     $this->formatter = $formatter;
-  }
-
-  /**
-   * Get response handler name.
-   *
-   * @return string
-   *    Response handler name.
-   */
-  public function getResponse() {
-    return $this->response;
-  }
-
-  /**
-   * Set response handler name.
-   *
-   * @param string $response
-   *    Response handler name.
-   */
-  public function setResponse($response) {
-    $this->response = $response;
   }
 
   /**
@@ -108,9 +75,6 @@ class BackendConfiguration extends AbstractConfiguration {
    */
   public function validate() {
 
-    if (!$this->getResponse()) {
-      $this->errors['response_handler'] = t('Response handler cannot be left empty.');
-    }
     if (!$this->getFormatter()) {
       $this->errors['formatter_handler'] = t('Formatter handler cannot be left empty.');
     }

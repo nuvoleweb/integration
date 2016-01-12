@@ -45,13 +45,11 @@ class BackendFactory {
 
       $plugin_manager = PluginManager::getInstance('backend');
       $backend_class = $plugin_manager->getPlugin($configuration->getPlugin())->getClass();
-      $response_class = $plugin_manager->getComponent($configuration->getResponse())->getClass();
       $formatter_class = $plugin_manager->getComponent($configuration->getFormatter())->getClass();
       $authentication_class = $plugin_manager->getComponent($configuration->getAuthentication())->getClass();
 
       self::$instances[$machine_name] = new $backend_class(
         $configuration,
-        new $response_class(),
         new $formatter_class(),
         new $authentication_class($configuration));
     }

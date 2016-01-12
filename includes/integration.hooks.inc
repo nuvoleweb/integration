@@ -39,18 +39,6 @@ function integration_integration_backend_components_info() {
       'class' => 'Drupal\integration\Backend\Formatter\JsonFormatter',
       'type' => 'formatter_handler',
     ],
-    'http_json_response' => [
-      'label' => t('HTTP JSON response'),
-      'description' => t('Parse JSON response returned by standard, non-overridden, drupal_http_request().'),
-      'class' => 'Drupal\integration\Backend\Response\HttpJsonResponse',
-      'type' => 'response_handler',
-    ],
-    'raw_response' => [
-      'label' => t('Raw response'),
-      'description' => t('Simply passes along whatever returned by the backend in use.'),
-      'class' => 'Drupal\integration\Backend\Response\RawResponse',
-      'type' => 'response_handler',
-    ],
     'http_authentication' => [
       'label' => t('HTTP Authentication'),
       'description' => t('Provide basic HTTP authentication.'),

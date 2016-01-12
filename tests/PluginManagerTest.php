@@ -38,8 +38,6 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
     // Test backend plugin component definitions.
     $expected = [
       'json_formatter',
-      'http_json_response',
-      'raw_response',
       'http_authentication',
       'no_authentication',
     ];

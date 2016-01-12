@@ -83,10 +83,6 @@ class BackendFormController extends AbstractForm {
     // Add component specific forms.
     if ($plugin && $resources) {
       $components = [
-        'response_handler' => [
-          'label' => t('Response handler'),
-          'value' => $configuration->getResponse(),
-        ],
         'formatter_handler' => [
           'label' => t('Formatter handler'),
           'value' => $configuration->getFormatter(),
@@ -142,9 +138,6 @@ class BackendFormController extends AbstractForm {
         break;
     }
 
-    if (isset($input['response_handler'])) {
-      $configuration->setResponse($input['response_handler']);
-    }
     if (isset($input['formatter_handler'])) {
       $configuration->setFormatter($input['formatter_handler']);
     }
