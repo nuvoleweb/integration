@@ -234,6 +234,24 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
   }
 
   /**
+   * Remove backend-entity mapping after completing a rollback.
+   *
+   * @param array $ids
+   *    Array of entity IDs that have been rolled-back.
+   *
+   * @see \MigrateDestinationEntity::completeRollback()
+   */
+  public function completeRollback($ids) {
+    $entity_type = $this->getDestination()->getEntityType();
+    foreach ($ids as $id) {
+      db_delete('integration_backend_entities')
+        ->condition('entity_type', $entity_type)
+        ->condition('entity_id', $id)
+        ->execute();
+    }
+  }
+
+  /**
    * Create a mapping between local and remote ID.
    *
    * @param object $entity
