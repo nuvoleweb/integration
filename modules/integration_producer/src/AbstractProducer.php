@@ -146,10 +146,13 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
       foreach ($this->getEntityWrapper()->getAvailableLanguages() as $language) {
         if (!isset($info['field'])) {
           $this->getDocument()->setCurrentLanguage($language);
-          $this->getDocument()->setField($field_name, $this->getEntityWrapper()->{$field_name}->value());
+          $property_value = $this->getEntityWrapper()->{$field_name}->value();
+          $this->getDocument()->setField($mapping[$field_name], $property_value);
         }
         else {
-          $this->getFieldHandler($field_name, $language)->process();
+          $field_handler = $this->getFieldHandler($field_name, $language);
+          $field_handler->setDestinationField($mapping[$field_name]);
+          $field_handler->process();
         }
       }
     }
@@ -157,7 +160,7 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
     $this->getDocument()->setCurrentLanguage($this->getEntityWrapper()->getDefaultLanguage());
     $entity_wrapper = $this->getEntityWrapper();
     $document = $this->getDocument();
-    drupal_alter('integration_producer_document_build', $entity_wrapper, $document);
+    drupal_alter('integration_producer_document_build', $this, $document);
     return $document;
   }
 
