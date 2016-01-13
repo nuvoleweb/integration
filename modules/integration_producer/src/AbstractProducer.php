@@ -158,7 +158,6 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
     }
 
     $this->getDocument()->setCurrentLanguage($this->getEntityWrapper()->getDefaultLanguage());
-    $entity_wrapper = $this->getEntityWrapper();
     $document = $this->getDocument();
     drupal_alter('integration_producer_document_build', $this, $document);
     return $document;
