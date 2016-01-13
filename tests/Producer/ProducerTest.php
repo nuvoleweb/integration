@@ -82,43 +82,43 @@ class ProducerTest extends AbstractTest {
       $document->setCurrentLanguage($language);
 
       // Assert that title has been imported correctly.
-      $this->assertEquals($node->title_field[$language][0]['value'], $document->getFieldValue('title_field'));
+      $this->assertEquals($node->title_field[$language][0]['value'], $document->getFieldValue('title'));
 
       // Assert that body has been imported correctly.
       $this->assertEquals($node->body[$language][0]['value'], $document->getFieldValue('body'));
 
       // Assert that list field has been imported correctly.
-      foreach ($document->getFieldValue('field_integration_test_text') as $key => $value) {
+      foreach ($document->getFieldValue('text') as $key => $value) {
         $this->assertEquals($node->field_integration_test_text[$language][$key]['value'], $value);
       }
 
       // Assert that images are imported correctly.
-      foreach ($document->getFieldValue('field_integration_test_images_path') as $key => $value) {
+      foreach ($document->getFieldValue('images_path') as $key => $value) {
         if ($value) {
           $this->assertContains($node->field_integration_test_images[$language][$key]['filename'], urldecode($value));
         }
       }
 
       // Assert that image alt field is imported correctly.
-      foreach ($document->getFieldValue('field_integration_test_images_alt') as $key => $value) {
+      foreach ($document->getFieldValue('images_alt') as $key => $value) {
         $this->assertEquals($node->field_integration_test_images[$language][$key]['alt'], $value);
       }
 
       // Assert that image title field is imported correctly.
-      foreach ($document->getFieldValue('field_integration_test_images_title') as $key => $value) {
+      foreach ($document->getFieldValue('images_title') as $key => $value) {
         $this->assertEquals($node->field_integration_test_images[$language][$key]['title'], $value);
       }
 
       // Assert that files are imported correctly.
-      foreach ($document->getFieldValue('field_integration_test_files_path') as $key => $value) {
+      foreach ($document->getFieldValue('files_path') as $key => $value) {
         if ($value) {
           $this->assertContains($node->field_integration_test_files[$language][$key]['filename'], $value);
         }
       }
 
       // Assert that date field has been imported correctly.
-      $this->assertEquals($document->getFieldValue('field_integration_test_dates_start'), $node->field_integration_test_dates[LANGUAGE_NONE][0]['value']);
-      $this->assertEquals($document->getFieldValue('field_integration_test_dates_end'), $node->field_integration_test_dates[LANGUAGE_NONE][0]['value2']);
+      $this->assertEquals($document->getFieldValue('dates_start'), $node->field_integration_test_dates[LANGUAGE_NONE][0]['value']);
+      $this->assertEquals($document->getFieldValue('dates_end'), $node->field_integration_test_dates[LANGUAGE_NONE][0]['value2']);
     }
   }
 

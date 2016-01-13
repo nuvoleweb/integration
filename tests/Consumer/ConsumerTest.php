@@ -51,18 +51,17 @@ class ConsumerTest extends AbstractTest {
    * Test creation of a consumer instance.
    */
   public function testConsumer() {
-
     $migration = ConsumerFactory::getInstance('test_configuration');
-
     $this->assertNotNull($migration);
-
     $mapping = $migration->getFieldMappings();
-    foreach ($migration->getConfiguration()->getMapping() as $destination => $source) {
+    foreach ($migration->getConfiguration()->getMapping() as $source => $destination) {
       $this->assertArrayHasKey($destination, $mapping);
       $this->assertEquals($source, $mapping[$destination]->getSourceField());
     }
-    $this->assertArrayHasKey('title_field', $mapping);
-    $this->assertEquals('title_field', $mapping['title_field']->getSourceField());
+
+    // Check that title mapping handler works correctly.
+    $this->assertEquals('title', $mapping['title']->getSourceField());
+    $this->assertEquals('title', $mapping['title_field']->getSourceField());
   }
 
 }

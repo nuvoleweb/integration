@@ -36,7 +36,7 @@ class IntegrationTest extends AbstractTest {
     // Get backend, producer and consumer instances.
     $backend = BackendFactory::getInstance('test_configuration');
     $consumer = ConsumerFactory::getInstance('test_configuration');
-    $resource_schema = ResourceSchemaFactory::getInstance('test_configuration');
+    $resource_schema = 'test_configuration';
 
     // Push all fixture nodes to given backend.
     foreach ($this->getProducerNodes() as $node) {
@@ -58,7 +58,7 @@ class IntegrationTest extends AbstractTest {
 
       foreach (['en', 'fr'] as $language) {
         $document->setCurrentLanguage($language);
-        $this->assertEquals($document->getFieldValue('title_field'), $node->title_field[$language][0]['value']);
+        $this->assertEquals($document->getFieldValue('title'), $node->title_field[$language][0]['value']);
         $this->assertEquals($document->getFieldValue('body'), $node->body[$language][0]['value']);
       }
     }
