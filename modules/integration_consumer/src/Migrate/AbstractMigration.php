@@ -27,8 +27,10 @@ abstract class AbstractMigration extends \Migration {
    *    Source row, as expected by Migrate class.
    */
   public function complete($entity, \stdClass $source_row) {
-    if (entity_translation_enabled($this->getDestination()->getEntityType())) {
-      $this->saveTranslations($entity, $source_row);
+    if (module_exists('entity_translation')) {
+      if (entity_translation_enabled($this->getDestination()->getEntityType())) {
+        $this->saveTranslations($entity, $source_row);
+      }
     }
   }
 

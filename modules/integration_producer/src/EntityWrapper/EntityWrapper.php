@@ -25,14 +25,6 @@ class EntityWrapper extends \EntityDrupalWrapper implements EntityWrapperInterfa
   const DEFAULT_DATE_FORMAT = 'Y-m-d H:i:s';
 
   /**
-   * Translation handler instance.
-   *
-   * @var \EntityTranslationHandlerInterface
-   *   A class implementing EntityTranslationHandlerInterface.
-   */
-  protected $translationHandler = NULL;
-
-  /**
    * Construct a new EntityDrupalWrapper object.
    *
    * @param string $type
@@ -44,18 +36,7 @@ class EntityWrapper extends \EntityDrupalWrapper implements EntityWrapperInterfa
    */
   public function __construct($type, $data = NULL, $info = []) {
     parent::__construct($type, $data, $info);
-    $this->translationHandler = entity_translation_get_handler($type, $data);
     $this->setUp();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setEntity($data) {
-    parent::setEntity($data);
-    if (is_object($data)) {
-      $this->translationHandler = entity_translation_get_handler($this->type, $data);
-    }
   }
 
   /**
@@ -134,16 +115,23 @@ class EntityWrapper extends \EntityDrupalWrapper implements EntityWrapperInterfa
    * {@inheritdoc}
    */
   public function getAvailableLanguages() {
-    $translations = $this->translationHandler->getTranslations();
-    return $translations->data ? array_keys($translations->data) : [LANGUAGE_NONE];
+    if (module_exists('entity_translation')) {
+      $translations = entity_translation_get_handler($this->type, $this->data)->getTranslations();
+      return $translations->data ? array_keys($translations->data) : [LANGUAGE_NONE];
+    }
+    return [LANGUAGE_NONE];
   }
 
   /**
    * {@inheritdoc}
    */
   public function getDefaultLanguage() {
-    $translations = $this->translationHandler->getTranslations();
-    return $translations->data ? $this->translationHandler->getLanguage() : LANGUAGE_NONE;
+    if (module_exists('entity_translation')) {
+      $translation_handler = entity_translation_get_handler($this->type, $this->data);
+      $translations = $translation_handler->getTranslations();
+      return $translations->data ? $translation_handler->getLanguage() : LANGUAGE_NONE;
+    }
+    return LANGUAGE_NONE;
   }
 
 }

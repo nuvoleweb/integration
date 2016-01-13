@@ -8,6 +8,4 @@ php = 5.4
 
 dependencies[] = entity
 dependencies[] = registry_autoload
-dependencies[] = entity_translation
-dependencies[] = title
 registry_autoload[] = PSR-4
