@@ -75,4 +75,24 @@ interface FieldHandlerInterface {
    */
   public function process();
 
+  /**
+   * Set destination field name used in field processing.
+   *
+   * @param string $field_name
+   *    Destination field name.
+   *
+   * @see FieldHandlerInterface::processField()
+   */
+  public function setDestinationField($field_name);
+
+  /**
+   * Get destination field name, returns source field name is not set.
+   *
+   * @return string
+   *    Destination field name.
+   *
+   * @see FieldHandlerInterface::processField()
+   */
+  public function getDestinationField();
+
 }

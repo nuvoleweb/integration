@@ -33,10 +33,10 @@ class FileFieldHandler extends AbstractFieldHandler {
 
     foreach ($this->getFieldValues() as $value) {
       $value['uri'] = $value['uri'] ? file_create_url($value['uri']) : '';
-      $this->getDocument()->addFieldValue($this->fieldName . '_path', $value['uri']);
-      $this->getDocument()->addFieldValue($this->fieldName . '_size', $value['filesize']);
-      $this->getDocument()->addFieldValue($this->fieldName . '_mime', $value['filemime']);
-      $this->getDocument()->addFieldValue($this->fieldName . '_status', $value['status']);
+      $this->getDocument()->addFieldValue($this->getDestinationField() . '_path', $value['uri']);
+      $this->getDocument()->addFieldValue($this->getDestinationField() . '_size', $value['filesize']);
+      $this->getDocument()->addFieldValue($this->getDestinationField() . '_mime', $value['filemime']);
+      $this->getDocument()->addFieldValue($this->getDestinationField() . '_status', $value['status']);
     }
   }
 

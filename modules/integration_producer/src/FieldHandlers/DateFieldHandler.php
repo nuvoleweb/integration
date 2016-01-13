@@ -48,10 +48,10 @@ class DateFieldHandler extends AbstractFieldHandler {
       }
 
       // Set field values on document.
-      $this->getDocument()->addFieldValue($this->fieldName, $value['value']);
-      $this->getDocument()->addFieldValue($this->fieldName . '_start', $value['value']);
-      $this->getDocument()->addFieldValue($this->fieldName . '_end', $value['value2']);
-      $this->getDocument()->addFieldValue($this->fieldName . '_timezone', $value['timezone']);
+      $this->getDocument()->addFieldValue($this->getDestinationField(), $value['value']);
+      $this->getDocument()->addFieldValue($this->getDestinationField() . '_start', $value['value']);
+      $this->getDocument()->addFieldValue($this->getDestinationField() . '_end', $value['value2']);
+      $this->getDocument()->addFieldValue($this->getDestinationField() . '_timezone', $value['timezone']);
     }
   }
 

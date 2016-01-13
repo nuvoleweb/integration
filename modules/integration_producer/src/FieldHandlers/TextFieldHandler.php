@@ -27,7 +27,7 @@ class TextFieldHandler extends AbstractFieldHandler {
   public function processField() {
 
     foreach ($this->getFieldValues() as $value) {
-      $this->getDocument()->addFieldValue($this->fieldName, $value);
+      $this->getDocument()->addFieldValue($this->getDestinationField(), $value);
     }
   }
 

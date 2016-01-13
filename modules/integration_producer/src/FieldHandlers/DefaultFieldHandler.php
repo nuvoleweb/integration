@@ -29,11 +29,11 @@ class DefaultFieldHandler extends AbstractFieldHandler {
     foreach ($this->getFieldValues() as $value) {
       if (is_array($value)) {
         foreach ($value as $column_name => $column_value) {
-          $this->getDocument()->addFieldValue($this->fieldName . '_' . $column_name, $column_value);
+          $this->getDocument()->addFieldValue($this->getDestinationField() . '_' . $column_name, $column_value);
         }
       }
       else {
-        $this->getDocument()->addFieldValue($this->fieldName, $value);
+        $this->getDocument()->addFieldValue($this->getDestinationField(), $value);
       }
     }
   }

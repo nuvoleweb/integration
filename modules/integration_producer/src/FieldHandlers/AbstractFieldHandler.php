@@ -22,7 +22,14 @@ abstract class AbstractFieldHandler implements FieldHandlerInterface {
    *
    * @var string
    */
-  protected $fieldName = NULL;
+  protected $sourceField = NULL;
+
+  /**
+   * Field name currently being handled.
+   *
+   * @var string
+   */
+  protected $destinationField = NULL;
 
   /**
    * Language to extract values for.
@@ -81,7 +88,7 @@ abstract class AbstractFieldHandler implements FieldHandlerInterface {
    */
   public function __construct($field_name, $language, EntityWrapper $entity_wrapper, DocumentInterface $document) {
     $this->language = $language;
-    $this->fieldName = $field_name;
+    $this->sourceField = $field_name;
     $this->entityWrapper = $entity_wrapper;
     $this->document = $document;
     $this->fieldInfo = field_info_field($field_name);
@@ -91,7 +98,7 @@ abstract class AbstractFieldHandler implements FieldHandlerInterface {
    * {@inheritdoc}
    */
   public function getFieldValues() {
-    $values = $this->getEntityWrapper()->getField($this->fieldName, $this->language);
+    $values = $this->getEntityWrapper()->getField($this->sourceField, $this->language);
     if ($values) {
       // Normalize single-value field to ease value processing.
       return ($this->fieldInfo['cardinality'] == 1) ? [$values] : $values;
@@ -128,6 +135,20 @@ abstract class AbstractFieldHandler implements FieldHandlerInterface {
    */
   public function getDocument() {
     return $this->document;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setDestinationField($field_name) {
+    $this->destinationField = $field_name;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDestinationField() {
+    return $this->destinationField ? $this->destinationField : $this->sourceField;
   }
 
 }

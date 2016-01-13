@@ -31,8 +31,8 @@ class ImageFieldHandler extends FileFieldHandler {
     parent::processField();
 
     foreach ($this->getFieldValues() as $value) {
-      $this->getDocument()->addFieldValue($this->fieldName . '_alt', $value['alt']);
-      $this->getDocument()->addFieldValue($this->fieldName . '_title', $value['title']);
+      $this->getDocument()->addFieldValue($this->getDestinationField() . '_alt', $value['alt']);
+      $this->getDocument()->addFieldValue($this->getDestinationField() . '_title', $value['title']);
     }
   }
 
