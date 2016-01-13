@@ -17,6 +17,22 @@ use Drupal\integration_consumer\AbstractConsumer;
 abstract class AbstractMappingHandler implements MappingHandlerInterface {
 
   /**
+   * Optional source field name.
+   *
+   * @var string
+   *    Source field name.
+   */
+  protected $sourceField = NULL;
+
+  /**
+   * Optional source field name.
+   *
+   * @var string
+   *    Source field name.
+   */
+  protected $destinationField = NULL;
+
+  /**
    * Current consumer object.
    *
    * @var AbstractConsumer
@@ -28,8 +44,14 @@ abstract class AbstractMappingHandler implements MappingHandlerInterface {
    *
    * @param AbstractConsumer $consumer
    *    Consumer object.
+   * @param string $destination_field
+   *    Destination field name.
+   * @param string|null $source_field
+   *    Source field name.
    */
-  public function __construct(AbstractConsumer $consumer) {
+  public function __construct(AbstractConsumer $consumer, $source_field, $destination_field) {
+    $this->sourceField = $source_field;
+    $this->destinationField = $destination_field;
     $this->consumer = $consumer;
   }
 
