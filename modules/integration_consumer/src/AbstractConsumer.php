@@ -64,7 +64,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
     $this->addFieldMapping('language', 'default_language');
 
     // Apply mapping.
-    foreach ($this->getConfiguration()->getMapping() as $destination => $source) {
+    foreach ($this->getConfiguration()->getMapping() as $source => $destination) {
       $this->addFieldMapping($destination, $source);
       $this->processMappingHandlers($destination, $source);
     }
@@ -143,14 +143,14 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
    * @param string|null $source_field
    *    Source field name.
    */
-  protected function processMappingHandlers($destination_field, $source_field = NULL) {
+  protected function processMappingHandlers($destination_field, $source_field) {
     $manager = PluginManager::getInstance('consumer');
 
     $handlers = $manager->getComponentDefinitions('mapping_handler');
     foreach ($handlers as $name => $info) {
       /** @var AbstractMappingHandler $handler */
-      $handler = new $info['class']($this);
-      $handler->process($destination_field, $source_field);
+      $handler = new $info['class']($this, $source_field, $destination_field);
+      $handler->process();
     }
   }
 

@@ -17,10 +17,10 @@ class FileFieldMappingHandler extends AbstractMappingHandler {
   /**
    * {@inheritdoc}
    */
-  public function process($destination_field, $source_field = NULL) {
-    $field_info = field_info_field($destination_field);
+  public function process() {
+    $field_info = field_info_field($this->destinationField);
     if (in_array($field_info['type'], ['image', 'file'])) {
-      $this->getConsumer()->addFieldMapping("$destination_field:file_replace")->defaultValue(FILE_EXISTS_REPLACE);
+      $this->getConsumer()->addFieldMapping("$this->destinationField:file_replace")->defaultValue(FILE_EXISTS_REPLACE);
     }
   }
 

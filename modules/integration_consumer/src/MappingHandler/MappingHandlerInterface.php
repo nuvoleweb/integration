@@ -18,13 +18,8 @@ interface MappingHandlerInterface {
 
   /**
    * Process current mapping.
-   *
-   * @param string $destination_field
-   *    Destination field name.
-   * @param string|null $source_field
-   *    Source field name.
    */
-  public function process($destination_field, $source_field = NULL);
+  public function process();
 
   /**
    * Return consumer object instance the mapping handler was constructed with.
