@@ -229,7 +229,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
   /**
    * {@inheritdoc}
    */
-  public function complete($entity, $source_row) {
+  public function complete($entity, \stdClass $source_row) {
     $controller = $this->getBackendEntityController();
     $entity_type = $this->getDestinationEntityType();
     $values = [

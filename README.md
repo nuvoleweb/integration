@@ -1,5 +1,6 @@
 ### Overview
-The Integration module allows a content Producer to share its resources with multiple Consumers using a shared Backend. Producers, Consumers and Backends will agree on a set of shared Resource Schemas for the data exchange to work.
+The Integration module allows a content Producer to share its resources with multiple Consumers using a shared Backend.
+Producers, Consumers and Backends will agree on a set of shared Resource Schemas for the data exchange to work.
 
 Below a bird-eye view of the interactions between the various components:
 
