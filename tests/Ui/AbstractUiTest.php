@@ -10,6 +10,7 @@ namespace Drupal\integration\Tests\Ui;
 use aik099\PHPUnit\BrowserTestCase;
 use Drupal\Driver\DrupalDriver;
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\Configuration\ConfigurationFactory;
 
 /**
  * Class AbstractUiTest.
@@ -163,8 +164,8 @@ abstract class AbstractUiTest extends BrowserTestCase {
         ],
       ],
     ];
-    $configuration = entity_create('integration_resource_schema', $data);
-    entity_save('integration_resource_schema', $configuration);
+    $configuration = ConfigurationFactory::create('resource_schema', 'test_configuration', $data);
+    $configuration->save();
     $this->resource_schemas[] = $configuration;
     return $configuration;
   }
@@ -180,8 +181,8 @@ abstract class AbstractUiTest extends BrowserTestCase {
       'name' => 'Backend ' . rand(),
       'machine_name' => 'backend_' . rand(),
     ];
-    $configuration = entity_create('integration_backend', $data);
-    entity_save('integration_backend', $configuration);
+    $configuration = ConfigurationFactory::create('backend', 'test_configuration', $data);
+    $configuration->save();
     $this->backends[] = $configuration;
     return $configuration;
   }

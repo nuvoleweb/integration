@@ -8,6 +8,7 @@
 namespace Drupal\integration\Tests;
 
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
+use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration_producer\Configuration\ProducerConfiguration;
@@ -56,19 +57,19 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
     $GLOBALS['base_url'] = 'http://example.com';
 
     $data = $this->getConfigurationFixture('backend', 'test_configuration');
-    $this->backendConfiguration = entity_create('integration_backend', (array) $data);
+    $this->backendConfiguration = ConfigurationFactory::create('backend', 'test_configuration', (array) $data);
     $this->backendConfiguration->save();
 
     $data = $this->getConfigurationFixture('producer', 'test_configuration');
-    $this->producerConfiguration = entity_create('integration_producer', (array) $data);
+    $this->producerConfiguration = ConfigurationFactory::create('producer', 'test_configuration', (array) $data);
     $this->producerConfiguration->save();
 
     $data = $this->getConfigurationFixture('consumer', 'test_configuration');
-    $this->consumerConfiguration = entity_create('integration_consumer', (array) $data);
+    $this->consumerConfiguration = ConfigurationFactory::create('consumer', 'test_configuration', (array) $data);
     $this->consumerConfiguration->save();
 
     $data = $this->getConfigurationFixture('resource_schema', 'test_configuration');
-    $this->resourceSchemaConfiguration = entity_create('integration_resource_schema', (array) $data);
+    $this->resourceSchemaConfiguration = ConfigurationFactory::create('resource_schema', 'test_configuration', (array) $data);
     $this->resourceSchemaConfiguration->save();
   }
 

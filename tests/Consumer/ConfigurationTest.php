@@ -55,7 +55,7 @@ class ConfigurationTest extends AbstractTest {
 
     $this->consumerConfiguration->delete();
     // Should throw \InvalidArgumentException exception.
-    ConfigurationFactory::load('integration_consumer', $machine_name);
+    ConfigurationFactory::load('integration_consumer', $machine_name, TRUE);
   }
 
   /**
@@ -66,7 +66,7 @@ class ConfigurationTest extends AbstractTest {
   public function testExportImport($data) {
 
     /** @var ConsumerConfiguration $configuration */
-    $configuration = entity_create('integration_consumer', (array) $data);
+    $configuration = ConfigurationFactory::create('consumer', 'test_configuration', (array) $data);
 
     $json = entity_export('integration_consumer', $configuration);
     $decoded = json_decode($json);

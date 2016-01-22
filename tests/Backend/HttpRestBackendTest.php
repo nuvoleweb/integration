@@ -11,6 +11,7 @@ use Drupal\integration\Backend\Authentication\HttpAuthentication;
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Backend\Formatter\JsonFormatter;
 use Drupal\integration\Backend\RestBackend;
+use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Document\Document;
 use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration\Tests\AbstractTest;
@@ -76,7 +77,7 @@ class HttpRestBackendTest extends AbstractTest {
    */
   public function testHttpAuthentication() {
     /** @var BackendConfiguration $configuration */
-    $configuration = entity_create('integration_backend', []);
+    $configuration = ConfigurationFactory::create('backend', 'test_configuration');
     $configuration->plugin = 'rest_backend';
     $configuration->setPluginSetting('backend.base_url', 'http://example.com/v1');
     $configuration->setPluginSetting('resource_schema.article.endpoint', 'article');

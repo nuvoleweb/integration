@@ -8,6 +8,7 @@
 namespace Drupal\integration\Tests\Configuration;
 
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Tests\AbstractTest;
 
 /**
@@ -24,7 +25,7 @@ class ConfigurationTest extends AbstractTest {
    */
   public function testSetters() {
     /** @var AbstractConfiguration $configuration */
-    $configuration = entity_create('integration_backend', []);
+    $configuration = ConfigurationFactory::create('backend', 'test');
     $expected_settings = [
       'a' => [
         'b' => [
@@ -54,7 +55,7 @@ class ConfigurationTest extends AbstractTest {
    */
   public function testGetters() {
     /** @var AbstractConfiguration $configuration */
-    $configuration = entity_create('integration_backend', []);
+    $configuration = ConfigurationFactory::create('backend', 'test_configuration');
     $configuration->setPluginSetting('a', [
       'b' => ['c' => 1],
       'd' => ['e' => 2],

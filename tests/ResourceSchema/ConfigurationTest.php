@@ -44,7 +44,7 @@ class ConfigurationTest extends AbstractTest {
 
     $this->resourceSchemaConfiguration->delete();
     // Should throw \InvalidArgumentException exception.
-    ConfigurationFactory::load('integration_resource_schema', $machine_name);
+    ConfigurationFactory::load('integration_resource_schema', $machine_name, TRUE);
   }
 
   /**
@@ -58,7 +58,7 @@ class ConfigurationTest extends AbstractTest {
   public function testExportImport($data) {
 
     /** @var ResourceSchemaConfiguration $configuration */
-    $configuration = entity_create('integration_resource_schema', (array) $data);
+    $configuration = ConfigurationFactory::create('resource_schema', 'test_configuration', (array) $data);
 
     $json = entity_export('integration_resource_schema', $configuration);
     $decoded = json_decode($json);
