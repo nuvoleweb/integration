@@ -31,6 +31,24 @@ class BackendConfiguration extends AbstractConfiguration {
   public $authentication = '';
 
   /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $values = array(), $entityType = NULL) {
+    parent::__construct($values, $entityType);
+
+    // Set defaults.
+    if (!$this->getPlugin()) {
+      $this->setPlugin('memory_backend');
+    }
+    if (!$this->getAuthentication()) {
+      $this->setAuthentication('no_authentication');
+    }
+    if (!$this->getFormatter()) {
+      $this->setFormatter('json_formatter');
+    }
+  }
+
+  /**
    * Get formatter handler name.
    *
    * @return string

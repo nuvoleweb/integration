@@ -84,7 +84,8 @@ class ConfigurationFactory {
     $configuration->machine_name = $machine_name;
     $configuration->enabled = TRUE;
     $configuration->status = ENTITY_CUSTOM;
-    return $configuration;
+    self::$storage[$type][$machine_name] = $configuration;
+    return self::$storage[$type][$machine_name];
   }
 
   /**
@@ -103,4 +104,5 @@ class ConfigurationFactory {
     }
     return $type;
   }
+
 }

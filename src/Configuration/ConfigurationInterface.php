@@ -31,6 +31,16 @@ interface ConfigurationInterface {
   public function getPlugin();
 
   /**
+   * Configuration plugin name.
+   *
+   * @param string $plugin
+   *    Configuration plugin name.
+   *
+   * @see PluginManager
+   */
+  public function setPlugin($plugin);
+
+  /**
    * Get configuration machine name.
    *
    * @return string

@@ -86,6 +86,13 @@ abstract class AbstractConfiguration extends \Entity implements ConfigurationInt
   /**
    * {@inheritdoc}
    */
+  public function setPlugin($plugin) {
+    return $this->plugin = $plugin;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getMachineName() {
     return isset($this->machine_name) ? $this->machine_name : '';
   }
