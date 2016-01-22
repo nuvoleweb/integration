@@ -7,7 +7,6 @@
 
 namespace Drupal\integration\ResourceSchema;
 
-use Drupal\integration\Backend\AbstractBackend;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
@@ -19,6 +18,11 @@ use Drupal\integration\Configuration\AbstractConfiguration;
  * @package Drupal\integration_resource_schema
  */
 class ResourceSchemaFactory {
+
+  /**
+   * Default plugin for a newly created resource schema.
+   */
+  const DEFAULT_PLUGIN = 'raw_resource_schema';
 
   /**
    * Instantiate and return a resource schema object given its configuration.
@@ -62,18 +66,16 @@ class ResourceSchemaFactory {
    *
    * @param string $machine_name
    *    Resource schema configuration machine name.
+   * @param string $plugin
+   *    Plugin machine name.
    *
    * @return AbstractResourceSchema
    *    Resource schema instance.
    */
-  static public function create($machine_name) {
+  static public function create($machine_name, $plugin = self::DEFAULT_PLUGIN) {
     /** @var ResourceSchemaConfiguration $configuration */
     $configuration = ConfigurationFactory::create('resource_schema', $machine_name);
-
-    // Set defaults.
-    if (!$configuration->getPlugin()) {
-      $configuration->setPlugin('raw_resource_schema');
-    }
+    $configuration->setPlugin($plugin);
     return self::getInstance($machine_name);
   }
 

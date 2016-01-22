@@ -21,6 +21,21 @@ use Drupal\integration\Plugins\PluginManager;
 class BackendFactory {
 
   /**
+   * Default plugin for a newly created backend.
+   */
+  const DEFAULT_PLUGIN = 'memory_backend';
+
+  /**
+   * Default authentication plugin for a newly created backend.
+   */
+  const DEFAULT_AUTHENTICATION = 'no_authentication';
+
+  /**
+   * Default formatter plugin for a newly created backend.
+   */
+  const DEFAULT_FORMATTER = 'json_formatter';
+
+  /**
    * Keeps instances of already build backend objects.
    *
    * @var array[AbstractBackend]
@@ -64,24 +79,22 @@ class BackendFactory {
    *
    * @param string $machine_name
    *    Backend configuration machine name.
+   * @param string $plugin
+   *    Plugin machine name.
+   * @param string $authentication
+   *    Authentication plugin machine name.
+   * @param string $formatter
+   *    Formatter plugin machine name.
    *
    * @return AbstractBackend
    *    Backend instance.
    */
-  static public function create($machine_name) {
+  static public function create($machine_name, $plugin = self::DEFAULT_PLUGIN, $authentication = self::DEFAULT_AUTHENTICATION, $formatter = self::DEFAULT_FORMATTER) {
     /** @var BackendConfiguration $configuration */
     $configuration = ConfigurationFactory::create('backend', $machine_name);
-
-    // Set defaults.
-    if (!$configuration->getPlugin()) {
-      $configuration->setPlugin('memory_backend');
-    }
-    if (!$configuration->getAuthentication()) {
-      $configuration->setAuthentication('no_authentication');
-    }
-    if (!$configuration->getFormatter()) {
-      $configuration->setFormatter('json_formatter');
-    }
+    $configuration->setPlugin($plugin);
+    $configuration->setAuthentication($authentication);
+    $configuration->setFormatter($formatter);
     return self::getInstance($machine_name);
   }
 

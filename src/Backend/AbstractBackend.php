@@ -97,4 +97,51 @@ abstract class AbstractBackend implements BackendInterface, ConfigurablePluginIn
     $this->authentication = $authentication;
   }
 
+  /**
+   * Set backend setting value given its name and value.
+   *
+   * @param string $name
+   *    Plugin setting name.
+   * @param mixed $value
+   *    Plugin setting value.
+   *
+   * @return $this
+   */
+  public function setBackendSetting($name, $value) {
+    $this->getConfiguration()->setPluginSetting($name, $value);
+    return $this;
+  }
+
+  /**
+   * Set resource schemas supported by this backend.
+   *
+   * @param string $resource_schema
+   *    Resource schema machine name.
+   *
+   * @return $this
+   */
+  public function setResourceSchema($resource_schema) {
+    $values = $this->getConfiguration()->getPluginSetting('resource_schemas');
+    $values[] = $resource_schema;
+    $this->getConfiguration()->setPluginSetting('resource_schemas', $values);
+    return $this;
+  }
+
+  /**
+   * Ser resource schema setting.
+   *
+   * @param string $resource_schema
+   *    Resource schema machine name.
+   * @param string $name
+   *    Setting name.
+   * @param string $value
+   *    Setting name.
+   *
+   * @return $this
+   */
+  public function setResourceSchemaSetting($resource_schema, $name, $value) {
+    $this->getConfiguration()->setPluginSetting("resource_schema.$resource_schema.$name", $value);
+    return $this;
+  }
+
 }
