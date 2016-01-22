@@ -78,7 +78,7 @@ class HttpRestBackendTest extends AbstractTest {
   public function testHttpAuthentication() {
     /** @var BackendConfiguration $configuration */
     $configuration = ConfigurationFactory::create('backend', 'test_configuration');
-    $configuration->plugin = 'rest_backend';
+    $configuration->setPlugin('rest_backend');
     $configuration->setPluginSetting('backend.base_url', 'http://example.com/v1');
     $configuration->setPluginSetting('resource_schema.article.endpoint', 'article');
     $configuration->setAuthentication('http_authentication');

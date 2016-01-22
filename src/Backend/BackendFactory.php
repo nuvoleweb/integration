@@ -7,11 +7,11 @@
 
 namespace Drupal\integration\Backend;
 
+use Drupal\integration\AbstractFactory;
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Plugins\PluginManager;
-use Drupal\integration\Backend\Authentication\AbstractAuthentication;
 
 /**
  * Interface BackendFactory.
@@ -54,6 +54,35 @@ class BackendFactory {
         new $authentication_class($configuration));
     }
     return self::$instances[$machine_name];
+  }
+
+  /**
+   * Create backend instance.
+   *
+   * Use this method when operating backends pragmatically, i.e. when you
+   * do not have configuration stored in database or code.
+   *
+   * @param string $machine_name
+   *    Backend configuration machine name.
+   *
+   * @return AbstractBackend
+   *    Backend instance.
+   */
+  static public function create($machine_name) {
+    /** @var BackendConfiguration $configuration */
+    $configuration = ConfigurationFactory::create('backend', $machine_name);
+
+    // Set defaults.
+    if (!$configuration->getPlugin()) {
+      $configuration->setPlugin('memory_backend');
+    }
+    if (!$configuration->getAuthentication()) {
+      $configuration->setAuthentication('no_authentication');
+    }
+    if (!$configuration->getFormatter()) {
+      $configuration->setFormatter('json_formatter');
+    }
+    return self::getInstance($machine_name);
   }
 
   /**

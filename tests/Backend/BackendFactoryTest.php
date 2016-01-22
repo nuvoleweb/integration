@@ -35,4 +35,21 @@ class BackendFactoryTest extends AbstractTest {
     $this->assertEquals($backend_class, $reflection->getName());
   }
 
+  /**
+   * Test backend creation.
+   */
+  public function testCreate() {
+    $backend = BackendFactory::create('test');
+    $this->assertNotNull($backend);
+
+    // Test creation defaults.
+    $this->assertEquals('memory_backend', $backend->getConfiguration()->getPlugin());
+    $this->assertEquals('no_authentication', $backend->getConfiguration()->getAuthentication());
+    $this->assertEquals('json_formatter', $backend->getConfiguration()->getFormatter());
+
+    // Test that 'test' configuration object is actually stored.
+    $configuration = BackendFactory::loadConfiguration('test');
+    $this->assertEquals('test', $configuration->getMachineName());
+  }
+
 }

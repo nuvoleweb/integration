@@ -58,4 +58,27 @@ class ProducerFactory {
     return ConfigurationFactory::load('integration_producer', $machine_name);
   }
 
+  /**
+   * Create producer instance.
+   *
+   * Use this method when operating producers pragmatically, i.e. when you
+   * do not have configuration stored in database or code.
+   *
+   * @param string $machine_name
+   *    Producer configuration machine name.
+   *
+   * @return AbstractProducer
+   *    Producer instance.
+   */
+  static public function create($machine_name) {
+    /** @var ProducerConfiguration $configuration */
+    $configuration = ConfigurationFactory::create('producer', $machine_name);
+
+    // Set defaults.
+    if (!$configuration->getPlugin()) {
+      $configuration->setPlugin('node_producer');
+    }
+    return self::getInstance($machine_name);
+  }
+
 }

@@ -7,6 +7,7 @@
 
 namespace Drupal\integration\ResourceSchema;
 
+use Drupal\integration\Backend\AbstractBackend;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Plugins\PluginManager;
 use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
@@ -44,13 +45,36 @@ class ResourceSchemaFactory {
    * Load configuration from database.
    *
    * @param string $machine_name
-   *    ResourceSchema configuration machine name.
+   *    Resource schema configuration machine name.
    *
    * @return AbstractConfiguration
    *    Configuration object.
    */
   static public function loadConfiguration($machine_name) {
     return ConfigurationFactory::load('integration_resource_schema', $machine_name);
+  }
+
+  /**
+   * Create resource schema instance.
+   *
+   * Use this method when operating resource schemas  pragmatically, i.e. when
+   * you do not have configuration stored in database or code.
+   *
+   * @param string $machine_name
+   *    Resource schema configuration machine name.
+   *
+   * @return AbstractResourceSchema
+   *    Resource schema instance.
+   */
+  static public function create($machine_name) {
+    /** @var ResourceSchemaConfiguration $configuration */
+    $configuration = ConfigurationFactory::create('resource_schema', $machine_name);
+
+    // Set defaults.
+    if (!$configuration->getPlugin()) {
+      $configuration->setPlugin('raw_resource_schema');
+    }
+    return self::getInstance($machine_name);
   }
 
 }

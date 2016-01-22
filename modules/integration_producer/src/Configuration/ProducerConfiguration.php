@@ -48,18 +48,6 @@ class ProducerConfiguration extends AbstractConfiguration {
   public $settings = [];
 
   /**
-   * {@inheritdoc}
-   */
-  public function __construct(array $values = array(), $entityType = NULL) {
-    parent::__construct($values, $entityType);
-
-    // Set defaults.
-    if (!$this->getPlugin()) {
-      $this->setPlugin('node_producer');
-    }
-  }
-
-  /**
    * Get current site's producer ID.
    *
    * @return string

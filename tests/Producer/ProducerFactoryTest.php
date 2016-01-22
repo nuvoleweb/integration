@@ -15,6 +15,7 @@ use Drupal\integration_producer\ProducerFactory;
  * Class ProducerFactoryTest.
  *
  * @group producer
+ * @group factory
  *
  * @package Drupal\integration\Tests\Producer
  */
@@ -32,6 +33,21 @@ class ProducerFactoryTest extends AbstractTest {
 
     $reflection = new \ReflectionClass($producer);
     $this->assertEquals($producer_class, $reflection->getName());
+  }
+
+  /**
+   * Test backend creation.
+   */
+  public function testCreate() {
+    $producer = ProducerFactory::create('test');
+    $this->assertNotNull($producer);
+
+    // Test creation defaults.
+    $this->assertEquals('node_producer', $producer->getConfiguration()->getPlugin());
+
+    // Test that 'test' configuration object is actually stored.
+    $configuration = ProducerFactory::loadConfiguration('test');
+    $this->assertEquals('test', $configuration->getMachineName());
   }
 
 }
