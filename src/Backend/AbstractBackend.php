@@ -108,7 +108,7 @@ abstract class AbstractBackend implements BackendInterface, ConfigurablePluginIn
    * @return $this
    */
   public function setBackendSetting($name, $value) {
-    $this->getConfiguration()->setPluginSetting($name, $value);
+    $this->getConfiguration()->setPluginSetting("backend.$name", $value);
     return $this;
   }
 

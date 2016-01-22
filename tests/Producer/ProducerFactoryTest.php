@@ -48,6 +48,22 @@ class ProducerFactoryTest extends AbstractTest {
     // Test that 'test' configuration object is actually stored.
     $configuration = ProducerFactory::loadConfiguration('test');
     $this->assertEquals('test', $configuration->getMachineName());
+
+    $producer
+      ->setBackend('filesystem')
+      ->setEntityBundle('article')
+      ->setResourceSchema('article')
+      ->setMapping('source1', 'destination1')
+      ->setMapping('source2', 'destination2');
+    $this->assertEquals('article', $producer->getConfiguration()->getEntityBundle());
+    $this->assertEquals('article', $producer->getConfiguration()->getResourceSchema());
+    $this->assertEquals('filesystem', $producer->getConfiguration()->getBackend());
+
+    $expected = [
+      'source1' => 'destination1',
+      'source2' => 'destination2',
+    ];
+    $this->assertEquals($expected, $producer->getConfiguration()->getPluginSetting('mapping'));
   }
 
 }

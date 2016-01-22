@@ -163,4 +163,58 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
     return $document;
   }
 
+  /**
+   * Set producer entity bundle.
+   *
+   * @param string $entity_bundle
+   *    Entity bundle.
+   *
+   * @return $this
+   */
+  public function setEntityBundle($entity_bundle) {
+    $this->getConfiguration()->setEntityBundle($entity_bundle);
+    return $this;
+  }
+
+  /**
+   * Set resource backend.
+   *
+   * @param string $backend
+   *    Backend machine name.
+   *
+   * @return $this
+   */
+  public function setBackend($backend) {
+    $this->getConfiguration()->setBackend($backend);
+    return $this;
+  }
+
+  /**
+   * Set resource schema bundle.
+   *
+   * @param string $resource_schema
+   *    Resource schema machine name.
+   *
+   * @return $this
+   */
+  public function setResourceSchema($resource_schema) {
+    $this->getConfiguration()->setResourceSchema($resource_schema);
+    return $this;
+  }
+
+  /**
+   * Set field mapping.
+   *
+   * @param string $source
+   *    Source field machine name.
+   * @param string $destination
+   *    Destination field machine name.
+   *
+   * @return $this
+   */
+  public function setMapping($source, $destination) {
+    $this->getConfiguration()->setMapping($source, $destination);
+    return $this;
+  }
+
 }

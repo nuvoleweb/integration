@@ -67,6 +67,15 @@ class ProducerConfiguration extends AbstractConfiguration {
     return isset($this->entity_bundle) ? $this->entity_bundle : '';
   }
 
+  /**
+   * Set producer entity bundle.
+   *
+   * @param string $entity_bundle
+   *    Entity bundle.
+   */
+  public function setEntityBundle($entity_bundle) {
+    $this->entity_bundle = $entity_bundle;
+  }
 
   /**
    * Get resource schema configuration machine name.
@@ -76,6 +85,50 @@ class ProducerConfiguration extends AbstractConfiguration {
    */
   public function getResourceSchema() {
     return isset($this->resource) ? $this->resource : '';
+  }
+
+  /**
+   * Set resource schema bundle.
+   *
+   * @param string $resource_schema
+   *    Resource schema machine name.
+   */
+  public function setResourceSchema($resource_schema) {
+    $this->resource = $resource_schema;
+  }
+
+  /**
+   * Get backend plugin machine name.
+   *
+   * @return string
+   *    Backend plugin machine name.
+   */
+  public function getBackend() {
+    return $this->backend;
+  }
+
+  /**
+   * Set resource backend.
+   *
+   * @param string $backend
+   *    Backend machine name.
+   */
+  public function setBackend($backend) {
+    $this->backend = $backend;
+  }
+
+  /**
+   * Set field mapping.
+   *
+   * @param string $source
+   *    Source field machine name.
+   * @param string $destination
+   *    Destination field machine name.
+   *
+   * @return $this
+   */
+  public function setMapping($source, $destination) {
+    $this->setPluginSetting("mapping.$source", $destination);
   }
 
 }

@@ -20,7 +20,7 @@ function integration_integration_backend_info() {
       'description' => t('Backend using memory to store data, primarily used for testing.'),
       'class' => 'Drupal\integration\Backend\MemoryBackend',
     ],
-    'file_system_backend' => [
+    'filesystem_backend' => [
       'label' => t('File system backend'),
       'description' => t('Backend using local filesystem as a storage.'),
       'class' => 'Drupal\integration\Backend\FileSystemBackend',
