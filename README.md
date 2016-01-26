@@ -9,7 +9,7 @@ Below a bird-eye view of the interactions between the various components:
 ### Documentation
 1. [Data exchange format](https://github.com/nuvoleweb/integration/wiki/1.-Data-exchange-format)
 2. [Resource schema](https://github.com/nuvoleweb/integration/wiki/2.-Resource-schema)
-3. [Backend](https://github.com/nuvoleweb/integration/wiki/2.-Resource-schema)
+3. [Backend](https://github.com/nuvoleweb/integration/wiki/3.-Backend)
 4. [Producer](https://github.com/nuvoleweb/integration/wiki/4.-Producer)
 5. [Consumer](https://github.com/nuvoleweb/integration/wiki/5.-Consumer)
 6. [Stand alone migrations](https://github.com/nuvoleweb/integration/wiki/6.-Stand-alone-migrations)
