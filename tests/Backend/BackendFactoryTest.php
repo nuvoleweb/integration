@@ -69,8 +69,8 @@ class BackendFactoryTest extends AbstractTest {
 
     $backend->setBackendSetting('name1', 'value1');
     $backend->setBackendSetting('name2', 'value2');
-    $this->assertEquals('value1', $backend->getConfiguration()->getPluginSetting('name1'));
-    $this->assertEquals('value2', $backend->getConfiguration()->getPluginSetting('name2'));
+    $this->assertEquals('value1', $backend->getConfiguration()->getPluginSetting('backend.name1'));
+    $this->assertEquals('value2', $backend->getConfiguration()->getPluginSetting('backend.name2'));
   }
 
 }
