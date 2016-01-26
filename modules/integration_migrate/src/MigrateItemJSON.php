@@ -2,17 +2,17 @@
 
 /**
  * @file
- * Contains \Drupal\integration_consumer\Migrate\MigrateItemJSON.
+ * Contains \Drupal\integration_migrate\MigrateItemJSON.
  */
 
-namespace Drupal\integration_consumer\Migrate;
+namespace Drupal\integration_migrate;
 
 use Drupal\integration\Document\Document;
 
 /**
  * Class MigrateItemJSON.
  *
- * @package Drupal\integration_consumer\Migrate
+ * @package Drupal\integration_migrate
  */
 class MigrateItemJSON extends \MigrateItemJSON {
 

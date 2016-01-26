@@ -8,11 +8,12 @@
 namespace Drupal\integration_consumer\Migrate;
 
 use Drupal\integration\Backend\AbstractBackend;
+use Drupal\integration_migrate\DocumentWrapper;
 
 /**
  * Class MigrateSourceBackend.
  *
- * @package Drupal\integration_consumer\Migrate
+ * @package Drupal\integration_consumer
  */
 class MigrateSourceBackend extends \MigrateSource {
 

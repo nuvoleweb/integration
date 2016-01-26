@@ -12,14 +12,12 @@ use Drupal\integration\Backend\BackendInterface;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
-use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration\Plugins\PluginManager;
+use Drupal\integration\Backend\Entity\BackendEntityController;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration_consumer\MappingHandler\AbstractMappingHandler;
-use Drupal\integration_consumer\Migrate\AbstractMigration;
-use Drupal\integration_consumer\Migrate\DocumentWrapper;
 use Drupal\integration_consumer\Migrate\MigrateSourceBackend;
-use Drupal\integration\Backend\Entity\BackendEntityController;
+use Drupal\integration_migrate\AbstractMigration;
 
 /**
  * Class AbstractConsumer.

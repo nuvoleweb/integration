@@ -8,7 +8,7 @@
 namespace Drupal\integration\Tests\Consumer\Migrate;
 
 use Drupal\integration\Document\Document;
-use Drupal\integration_consumer\Migrate\DocumentWrapper;
+use Drupal\integration_migrate\DocumentWrapper;
 
 /**
  * Class DocumentWrapperTest.

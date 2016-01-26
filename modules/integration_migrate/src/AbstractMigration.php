@@ -2,17 +2,17 @@
 
 /**
  * @file
- * Contains \Drupal\integration_consumer\Migrate\AbstractMigration.
+ * Contains \Drupal\integration_migrate\AbstractMigration.
  */
 
-namespace Drupal\integration_consumer\Migrate;
+namespace Drupal\integration_migrate;
 
 /**
  * Class AbstractMigration.
  *
- * @method \MigrateDestinationEntity getDestination()
+ * @method \MigrateDestinationEntity::getDestination()
  *
- * @package Drupal\integration_consumer\Migrate
+ * @package Drupal\integration_migrate
  *
  * Destination class implementing migration into translatable nodes.
  */
