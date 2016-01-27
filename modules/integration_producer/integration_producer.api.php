@@ -15,6 +15,6 @@
  *
  * @see \Drupal\integration_producer\AbstractProducer::build()
  */
-function hook_integration_producer_document_build($producer, $document) {
+function hook_integration_producer_document_build_alter($producer, $document) {
 
 }

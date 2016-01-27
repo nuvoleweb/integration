@@ -105,7 +105,7 @@ abstract class AbstractMigration extends \Migration {
 
         //Generate aliases for the translations.
         if (module_exists('pathauto') && is_callable('pathauto_' . $entity_type . '_update_alias')) {
-          call_user_func('pathauto_' . $entity_type . '_update_alias', $entity, 'update', array('language' => $language));
+          call_user_func('pathauto_' . $entity_type . '_update_alias', $entity, 'update', ['language' => $language]);
         }
       }
     }

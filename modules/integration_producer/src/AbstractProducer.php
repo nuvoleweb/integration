@@ -9,6 +9,7 @@ namespace Drupal\integration_producer;
 
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\Document\Document;
 use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration\Plugins\PluginManager;
 
@@ -160,6 +161,7 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
     $this->getDocument()->setCurrentLanguage($this->getEntityWrapper()->getDefaultLanguage());
     $document = $this->getDocument();
     drupal_alter('integration_producer_document_build', $this, $document);
+    $this->resetDocument();
     return $document;
   }
 
@@ -215,6 +217,13 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
   public function setMapping($source, $destination) {
     $this->getConfiguration()->setMapping($source, $destination);
     return $this;
+  }
+
+  /**
+   * Reset internal document object to allow subsequent document building.
+   */
+  public function resetDocument() {
+    $this->document = new Document();
   }
 
 }
