@@ -67,7 +67,7 @@ class IntegrationTest extends AbstractTest {
   /**
    * Test interaction with non-translatable entities.
    */
-  public function testNoneTranslatableEntities() {
+  public function testNonTranslatableEntities() {
 
     ResourceSchemaFactory::create('article')
       ->setField('title', 'Title')
