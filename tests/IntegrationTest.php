@@ -85,8 +85,8 @@ class IntegrationTest extends AbstractTest {
       ->setMapping('field_image', 'image')
       ->setMapping('body', 'body');
 
-    $document = $producer->build($node);
     $node = $this->getExportedEntityFixture('node', 'article', 1);
+    $document = $producer->build($node);
     $node_wrapper = entity_metadata_wrapper('node', $node);
     $this->assertEquals($node_wrapper->title->value(), $document->getFieldValue('title'));
     $this->assertEquals($node_wrapper->body->value()['value'], $document->getFieldValue('body'));
