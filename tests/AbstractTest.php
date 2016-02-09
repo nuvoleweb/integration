@@ -137,6 +137,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase {
    */
   public function nodeFixturesDataProvider() {
     return [
+      ['article', 1],
       ['integration_test', 1],
       ['integration_test', 2],
       ['integration_test', 3],

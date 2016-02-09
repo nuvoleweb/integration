@@ -62,7 +62,36 @@ class IntegrationTest extends AbstractTest {
         $this->assertEquals($document->getFieldValue('body'), $node->body[$language][0]['value']);
       }
     }
+  }
 
+  /**
+   * Test interaction with non-translatable entities.
+   */
+  public function testNoneTranslatableEntities() {
+
+    ResourceSchemaFactory::create('article')
+      ->setField('title', 'Title')
+      ->setField('image', 'Image')
+      ->setField('body', 'Body');
+
+    BackendFactory::create('backend')
+      ->setResourceSchema('article');
+
+    $producer = ProducerFactory::create('article')
+      ->setBackend('backend')
+      ->setEntityBundle('article')
+      ->setResourceSchema('article')
+      ->setMapping('title', 'title')
+      ->setMapping('field_image', 'image')
+      ->setMapping('body', 'body');
+
+    foreach ($this->getProducerNodes('article') as $node) {
+      $document = $producer->build($node);
+      $node_wrapper = entity_metadata_wrapper('node', $node);
+      $this->assertEquals($node_wrapper->title->value(), $document->getFieldValue('title'));
+      $this->assertEquals($node_wrapper->body->value()['value'], $document->getFieldValue('body'));
+      $this->assertEquals($node_wrapper->field_image->value()['filesize'], $document->getFieldValue('image_size'));
+    }
   }
 
   /**
@@ -71,10 +100,12 @@ class IntegrationTest extends AbstractTest {
    * @return array
    *    List of node objects.
    */
-  private function getProducerNodes() {
+  private function getProducerNodes($type = 'integration_test') {
     $nodes = [];
     foreach ($this->nodeFixturesDataProvider() as $row) {
-      $nodes[] = $this->getExportedEntityFixture('node', $row[0], $row[1]);
+      if ($row[0] == $type) {
+        $nodes[] = $this->getExportedEntityFixture('node', $row[0], $row[1]);
+      }
     }
     return $nodes;
   }
