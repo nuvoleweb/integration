@@ -59,4 +59,30 @@ class DocumentTest extends AbstractMigrateTest {
     }
   }
 
+  /**
+   * Test empty field handling.
+   */
+  public function testEmptyFieldHandling() {
+
+    $json = '{
+      "default_language": "en",
+      "languages": ["fr", "en"],
+      "fields": {
+        "field_name": {
+          "en": "value",
+          "fr": ""
+        }
+      }
+    }';
+    $raw = json_decode($json);
+    $document = new Document($raw);
+    $this->assertEmpty($document->getFieldValue('field_name', LANGUAGE_NONE));
+    $this->assertEmpty($document->getFieldValue('field_name', 'it'));
+    $this->assertEmpty($document->getFieldValue('field_name', 'fr'));
+    $this->assertNotEmpty($document->getFieldValue('field_name', 'en'));
+
+    $this->assertEquals('value', $document->getFieldValue('field_name'));
+    $this->assertEquals('', $document->setCurrentLanguage('fr')->getFieldValue('field_name'));
+  }
+
 }

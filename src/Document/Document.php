@@ -131,8 +131,14 @@ class Document implements DocumentInterface {
 
     if (isset($fields->$field_name)) {
       $field = $fields->$field_name;
-      $values = isset($field->{$language}) ? $field->{$language} : $field->{LANGUAGE_NONE};
-      return (count($values) <= 1) ? array_shift($values) : $values;
+      $return = '';
+      if (isset($field->{$language})) {
+        $return = $field->{$language};
+      }
+      elseif (isset($field->{LANGUAGE_NONE})) {
+        $return = $field->{LANGUAGE_NONE};
+      }
+      return (is_array($return) && (count($return) <= 1)) ? array_shift($return) : $return;
     }
     else {
       throw new \Exception(t('Field not found: !field_name', ['!field_name' => $field_name]));
