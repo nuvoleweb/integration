@@ -27,9 +27,25 @@ abstract class AbstractMigration extends \Migration {
    *    Source row, as expected by Migrate class.
    */
   public function complete($entity, \stdClass $source_row) {
+    $entity_type = $this->getDestination()->getEntityType();
     if (module_exists('entity_translation')) {
-      if (entity_translation_enabled($this->getDestination()->getEntityType())) {
+      if (entity_translation_enabled($entity_type)) {
         $this->saveTranslations($entity, $source_row);
+      }
+    }
+
+    // Make sure that path aliases are generated for all available languages.
+    // Only works if Migrate field "pathauto" is enabled.
+    // Check PathautoMigrationHandler class for more information.
+    if (module_exists('pathauto')) {
+      $mappings = $this->getFieldMappings();
+      if (isset($mappings['pathauto']) && $mappings['pathauto']->getDefaultValue()) {
+        $function = "pathauto_{$entity_type}_update_alias";
+        if (function_exists($function)) {
+          foreach ($source_row->getAvailableLanguages() as $language) {
+            $function($entity, 'update', ['language' => $language]);
+          }
+        }
       }
     }
   }
@@ -102,11 +118,6 @@ abstract class AbstractMigration extends \Migration {
 
         // Save entity.
         entity_save($entity_type, $entity);
-
-        //Generate aliases for the translations.
-        if (module_exists('pathauto') && is_callable('pathauto_' . $entity_type . '_update_alias')) {
-          call_user_func('pathauto_' . $entity_type . '_update_alias', $entity, 'update', ['language' => $language]);
-        }
       }
     }
   }

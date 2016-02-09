@@ -66,6 +66,7 @@ function integration_test_strongarm() {
   $strongarm->value = [
     'node' => 'node',
     'taxonomy_term' => 'taxonomy_term',
+    'while' => 'while',
     'comment' => 0,
     'user' => 0,
   ];
@@ -246,6 +247,41 @@ function integration_test_strongarm() {
   $strongarm->name = 'node_submitted_integration_test';
   $strongarm->value = 1;
   $export['node_submitted_integration_test'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_integration_test_en_pattern';
+  $strongarm->value = 'content/[node:title]-en';
+  $export['pathauto_node_integration_test_en_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_integration_test_fr_pattern';
+  $strongarm->value = 'content/[node:title]-fr';
+  $export['pathauto_node_integration_test_fr_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_integration_test_pattern';
+  $strongarm->value = '';
+  $export['pathauto_node_integration_test_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_integration_test_und_pattern';
+  $strongarm->value = '';
+  $export['pathauto_node_integration_test_und_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_taxonomy_term_integration_test_pattern';
+  $strongarm->value = '';
+  $export['pathauto_taxonomy_term_integration_test_pattern'] = $strongarm;
 
   return $export;
 }

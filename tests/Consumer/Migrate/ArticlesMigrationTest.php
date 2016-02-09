@@ -97,6 +97,12 @@ class ArticlesMigrationTest extends AbstractMigrateTest {
 
       // Assert that default language has been imported correctly.
       $this->assertEquals($source->getDefaultLanguage(), $node->language);
+
+      // Test pathauto integration.
+      foreach (['en', 'fr'] as $language) {
+        $alias = drupal_get_path_alias('node/' . $node->nid, $language);
+        $this->assertNotFalse(strstr($alias, "-$language"));
+      }
     }
   }
 

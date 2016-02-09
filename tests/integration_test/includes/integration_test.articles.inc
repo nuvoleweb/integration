@@ -61,6 +61,9 @@ class IntegrationTestArticlesMigration extends IntegrationTestAbstractMigration 
 
     $this->addFieldMapping('promote')->defaultValue(FALSE);
     $this->addFieldMapping('status')->defaultValue(NODE_PUBLISHED);
+
+    // Test Pathauto integration.
+    $this->addFieldMapping('pathauto')->defaultValue(1);
   }
 
 }

@@ -55,7 +55,8 @@ function integration_test_field_default_field_instances() {
     ],
   ];
 
-  // Exported field_instance: 'node-integration_test-field_integration_test_dates'
+  // Exported field_instance:
+  // 'node-integration_test-field_integration_test_dates'
   $field_instances['node-integration_test-field_integration_test_dates'] = [
     'bundle' => 'integration_test',
     'deleted' => 0,
@@ -109,7 +110,8 @@ function integration_test_field_default_field_instances() {
     ],
   ];
 
-  // Exported field_instance: 'node-integration_test-field_integration_test_files'
+  // Exported field_instance:
+  // 'node-integration_test-field_integration_test_files'
   $field_instances['node-integration_test-field_integration_test_files'] = [
     'bundle' => 'integration_test',
     'deleted' => 0,
@@ -152,7 +154,8 @@ function integration_test_field_default_field_instances() {
     ],
   ];
 
-  // Exported field_instance: 'node-integration_test-field_integration_test_images'
+  // Exported field_instance:
+  // 'node-integration_test-field_integration_test_images'
   $field_instances['node-integration_test-field_integration_test_images'] = [
     'bundle' => 'integration_test',
     'deleted' => 0,
@@ -243,7 +246,8 @@ function integration_test_field_default_field_instances() {
     ],
   ];
 
-  // Exported field_instance: 'node-integration_test-field_integration_test_terms'
+  // Exported field_instance:
+  // 'node-integration_test-field_integration_test_terms'
   $field_instances['node-integration_test-field_integration_test_terms'] = [
     'bundle' => 'integration_test',
     'default_value' => NULL,
@@ -281,7 +285,8 @@ function integration_test_field_default_field_instances() {
     ],
   ];
 
-  // Exported field_instance: 'node-integration_test-field_integration_test_text'
+  // Exported field_instance:
+  // 'node-integration_test-field_integration_test_text'
   $field_instances['node-integration_test-field_integration_test_text'] = [
     'bundle' => 'integration_test',
     'default_value' => NULL,
