@@ -10,9 +10,9 @@
  */
 function integration_producer_rules_action_info() {
   return [
-    'integration_producer_build_document' => [
-      'label' => t('Build document form a node'),
-      'group' => t('Integration Producer'),
+    'integration_producer_rules_action_build_document' => [
+      'label' => t('Producer: Build document form a node'),
+      'group' => t('Integration'),
       'parameter' => [
         'node' => [
           'type' => 'node',
@@ -26,9 +26,13 @@ function integration_producer_rules_action_info() {
         ],
       ],
       'provides' => [
-        'integration_document' => [
+        'document' => [
           'label' => t('Document'),
           'type' => 'integration_document',
+        ],
+        'resource_schema' => [
+          'label' => t('Resource schema'),
+          'type' => 'integration_resource_schema',
         ],
       ],
       'module' => 'integration_producer',
@@ -47,14 +51,17 @@ function integration_producer_rules_action_info() {
  * @return array
  *    Rules variable consisting of the built Document object.
  */
-function integration_producer_build_document($node, $producer_name) {
-  $producer = \Drupal\integration_producer\ProducerFactory::getInstance($producer_name);
+function integration_producer_rules_action_build_document($node, $producer_name) {
   // @todo: Validate that current bundle is actually supported by the producer.
-  return ['integration_document' => $producer->build($node)];
+  $producer = \Drupal\integration_producer\ProducerFactory::getInstance($producer_name);
+  return [
+    'document' => $producer->build($node),
+    'resource_schema' => $producer->getConfiguration()->getResourceSchema(),
+  ];
 }
 
 /**
- * Return producer lists.
+ * Return producer list.
  *
  * @return array
  *    List of suitable producer plugins.
