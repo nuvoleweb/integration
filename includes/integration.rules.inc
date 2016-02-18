@@ -71,7 +71,7 @@ function integration_rules_action_info() {
  */
 function integration_rules_action_backend_create_document($backend_name, $resource_schema, $document) {
   $backend = \Drupal\integration\Backend\BackendFactory::getInstance($backend_name);
-  $return = $backend->create($resource_schema->getName(), $document);
+  $return = $backend->create($resource_schema->getMachineName(), $document);
   return ['document' => $return];
 }
 
