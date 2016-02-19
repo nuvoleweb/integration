@@ -33,9 +33,14 @@ function integration_consumer_rules_action_info() {
  *    Consumer machine name.
  */
 function integration_consumer_rules_import_content_from_backend($consumer_name) {
-  $consumer = \Drupal\integration_consumer\ConsumerFactory::getInstance($consumer_name);
-  $consumer->prepareUpdate();
-  $consumer->processImport();
+  try {
+    $consumer = \Drupal\integration_consumer\ConsumerFactory::getInstance($consumer_name);
+    $consumer->prepareUpdate();
+    $consumer->processImport();
+  }
+  catch (\Exception $e) {
+    rules_log($e->getMessage(), [], RulesLog::ERROR);
+  }
 }
 
 /**

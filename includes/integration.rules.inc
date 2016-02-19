@@ -70,9 +70,15 @@ function integration_rules_action_info() {
  *    Rules variable consisting of the built Document object.
  */
 function integration_rules_action_backend_create_document($backend_name, $resource_schema, $document) {
-  $backend = \Drupal\integration\Backend\BackendFactory::getInstance($backend_name);
-  $return = $backend->create($resource_schema->getMachineName(), $document);
-  return ['document' => $return];
+  $return = ['document' => NULL];
+  try {
+    $backend = \Drupal\integration\Backend\BackendFactory::getInstance($backend_name);
+    $return = ['document' => $backend->create($resource_schema->getMachineName(), $document)];
+  }
+  catch (\Drupal\integration\Exceptions\BaseException $e) {
+    rules_log($e->getMessage(), [], RulesLog::ERROR);
+  }
+  return $return;
 }
 
 /**

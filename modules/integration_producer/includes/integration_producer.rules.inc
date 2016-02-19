@@ -52,12 +52,19 @@ function integration_producer_rules_action_info() {
  *    Rules variable consisting of the built Document object.
  */
 function integration_producer_rules_action_build_document($node, $producer_name) {
-  // @todo: Validate that current bundle is actually supported by the producer.
-  $producer = \Drupal\integration_producer\ProducerFactory::getInstance($producer_name);
-  return [
-    'document' => $producer->build($node),
-    'resource_schema' => $producer->getConfiguration()->getResourceSchema(),
-  ];
+  $return = ['document' => NULL, 'resource_schema' => NULL];
+  try {
+    // @todo: Validate that current bundle is actually supported by the producer.
+    $producer = \Drupal\integration_producer\ProducerFactory::getInstance($producer_name);
+    $return = [
+      'document' => $producer->build($node),
+      'resource_schema' => $producer->getConfiguration()->getResourceSchema(),
+    ];
+  }
+  catch (\Drupal\integration\Exceptions\BaseException $e) {
+    rules_log($e->getMessage(), [], RulesLog::ERROR);
+  }
+  return $return;
 }
 
 /**
