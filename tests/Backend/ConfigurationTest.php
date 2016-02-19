@@ -9,6 +9,7 @@ namespace Drupal\integration\Tests\Backend;
 
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
+use Drupal\integration\Exceptions\BaseException;
 use Drupal\integration\Tests\AbstractTest;
 
 /**
@@ -26,7 +27,7 @@ class ConfigurationTest extends AbstractTest {
    *
    * @dataProvider configurationProvider
    *
-   * @expectedException \InvalidArgumentException
+   * @expectedException \Drupal\integration\Exceptions\BaseException
    */
   public function testConfigurationEntityCrud($data) {
 
@@ -39,7 +40,7 @@ class ConfigurationTest extends AbstractTest {
     $this->assertNotNull(ConfigurationFactory::load('integration_backend', $machine_name));
 
     $this->backendConfiguration->delete();
-    // Should throw \InvalidArgumentException exception.
+    // Should throw BaseException exception.
     ConfigurationFactory::load('integration_backend', $machine_name, TRUE);
   }
 

@@ -6,6 +6,7 @@
  */
 
 namespace Drupal\integration\Configuration;
+use Drupal\integration\Exceptions\ConfigurationException;
 
 /**
  * Class ConfigurationFactory.
@@ -59,7 +60,7 @@ class ConfigurationFactory {
     }
     else {
       $args = ['@machine_name' => $machine_name, '@type' => $type];
-      throw new \InvalidArgumentException(t('Configuration entity "@machine_name" of type "@type" not found.', $args));
+      throw new ConfigurationException(t('Configuration entity "@machine_name" of type "@type" not found.', $args));
     }
   }
 
@@ -100,7 +101,7 @@ class ConfigurationFactory {
   protected static function getEntityType($type) {
     $type = strstr($type, 'integration_') === FALSE ? 'integration_' . $type : $type;
     if (!in_array($type, self::$entity_types)) {
-      throw new \InvalidArgumentException(t("!type is not a valid configuration entity type", ['!type' => $type]));
+      throw new ConfigurationException(t("!type is not a valid configuration entity type", ['!type' => $type]));
     }
     return $type;
   }

@@ -8,6 +8,7 @@
 namespace Drupal\integration\Tests\ResourceSchema;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
+use Drupal\integration\Exceptions\BaseException;
 use Drupal\integration\ResourceSchema\Configuration\ResourceSchemaConfiguration;
 use Drupal\integration\Tests\AbstractTest;
 
@@ -26,7 +27,7 @@ class ConfigurationTest extends AbstractTest {
    *
    * @dataProvider configurationProvider
    *
-   * @expectedException \InvalidArgumentException
+   * @expectedException \Drupal\integration\Exceptions\BaseException
    */
   public function testConfigurationEntityCrud($data) {
 

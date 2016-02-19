@@ -8,6 +8,7 @@
 namespace Drupal\integration\Tests\Producer;
 
 use Drupal\integration\Configuration\ConfigurationFactory;
+use Drupal\integration\Exceptions\BaseException;
 use Drupal\integration\Tests\AbstractTest;
 use Drupal\integration_producer\Configuration\ProducerConfiguration;
 
@@ -35,7 +36,7 @@ class ConfigurationTest extends AbstractTest {
    *
    * @dataProvider configurationProvider
    *
-   * @expectedException \InvalidArgumentException
+   * @expectedException \Drupal\integration\Exceptions\BaseException
    */
   public function testConfigurationEntityCrud($data) {
     $reflection = new \ReflectionClass($this->producerConfiguration);

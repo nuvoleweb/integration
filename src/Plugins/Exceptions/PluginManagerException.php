@@ -7,13 +7,13 @@
 
 namespace Drupal\integration\Plugins\Exceptions;
 
+use Drupal\integration\Exceptions\BaseException;
+
 /**
  * Class PluginManagerException.
  *
- * Base plugin manager exception, all other exceptions must extend this one.
- *
  * @package Drupal\integration\Plugins\Exceptions
  */
-class PluginManagerException extends \Exception {
+class PluginManagerException extends BaseException {
 
 }

@@ -7,6 +7,8 @@
 
 namespace Drupal\integration\Document;
 
+use Drupal\integration\Exceptions\DocumentException;
+
 /**
  * Class Document.
  *
@@ -154,7 +156,7 @@ class Document implements DocumentInterface {
       return $this;
     }
     else {
-      throw new \Exception(t('Trying to set a not-available language as current language: !language', ['!language' => $language]));
+      throw new DocumentException(t('Trying to set a not-available language as current language: !language', ['!language' => $language]));
     }
   }
 
