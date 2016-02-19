@@ -125,4 +125,14 @@ interface BackendInterface {
    */
   public function getBackendContentId(DocumentInterface $document);
 
+  /**
+   * Make sure a given resource schema is valid.
+   *
+   * A valid resource schema must exists and be supported by the backend.
+   *
+   * @param string $machine_name
+   *    Resource schema configuration.
+   */
+  public function validateResourceSchema($machine_name);
+
 }

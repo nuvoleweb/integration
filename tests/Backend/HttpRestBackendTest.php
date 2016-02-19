@@ -14,6 +14,7 @@ use Drupal\integration\Backend\RestBackend;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Document\Document;
 use Drupal\integration\Document\DocumentInterface;
+use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 use Drupal\integration\Tests\AbstractTest;
 
 /**
@@ -76,10 +77,14 @@ class HttpRestBackendTest extends AbstractTest {
    * Test authentication plugin.
    */
   public function testHttpAuthentication() {
+    // Create empty resource schema in static storage.
+    ResourceSchemaFactory::create('article');
+
     /** @var BackendConfiguration $configuration */
     $configuration = ConfigurationFactory::create('backend', 'test_configuration');
     $configuration->setPlugin('rest_backend');
     $configuration->setPluginSetting('backend.base_url', 'http://example.com/v1');
+    $configuration->setPluginSetting('resource_schemas', ['article']);
     $configuration->setPluginSetting('resource_schema.article.endpoint', 'article');
     $configuration->setAuthentication('http_authentication');
     $configuration->setComponentSetting('authentication_handler', 'username', 'name');

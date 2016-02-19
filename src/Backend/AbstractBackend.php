@@ -10,6 +10,9 @@ namespace Drupal\integration\Backend;
 use Drupal\integration\Backend\Authentication\AuthenticationInterface;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
+use Drupal\integration\Document\DocumentInterface;
+use Drupal\integration\Exceptions\BackendException;
+use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 
 /**
  * Class AbstractBackend.
@@ -142,6 +145,22 @@ abstract class AbstractBackend implements BackendInterface, ConfigurablePluginIn
   public function setResourceSchemaSetting($resource_schema, $name, $value) {
     $this->getConfiguration()->setPluginSetting("resource_schema.$resource_schema.$name", $value);
     return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateResourceSchema($machine_name) {
+    // Load configuration, throws and exception if not found.
+    ResourceSchemaFactory::getInstance($machine_name);
+
+    $values = $this->getConfiguration()->getPluginSetting('resource_schemas');
+    if (!in_array($machine_name, $values)) {
+      throw new BackendException(t('Resource schema "@machine_name" not supported by "@backend" backend.', [
+        '@machine_name' => $machine_name,
+        '@backend' => $this->getConfiguration()->getMachineName(),
+      ]));
+    }
   }
 
 }

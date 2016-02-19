@@ -21,6 +21,8 @@ class FileSystemBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function listDocuments($resource_schema, $max = 0) {
+    $this->validateResourceSchema($resource_schema);
+
     $list = [];
     $path = $this->getResourceStorageDirectory($resource_schema);
     $extension = $this->getFormatterHandler()->getExtension();
@@ -34,6 +36,8 @@ class FileSystemBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function create($resource_schema, DocumentInterface $document) {
+    $this->validateResourceSchema($resource_schema);
+
     $id = $this->getBackendContentId($document);
     $document->setMetadata('_id', $id);
 
@@ -50,6 +54,8 @@ class FileSystemBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function read($resource_schema, $id) {
+    $this->validateResourceSchema($resource_schema);
+
     $filename = $this->getFilename($resource_schema, $id);
 
     if (file_exists($filename)) {
@@ -64,6 +70,8 @@ class FileSystemBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function update($resource_schema, DocumentInterface $document) {
+    $this->validateResourceSchema($resource_schema);
+
     return $this->create($resource_schema, $document);
   }
 
@@ -71,6 +79,8 @@ class FileSystemBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function delete($resource_schema, $id) {
+    $this->validateResourceSchema($resource_schema);
+
     $filename = $this->getFilename($resource_schema, $id);
 
     if (file_exists($filename)) {

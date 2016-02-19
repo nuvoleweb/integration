@@ -28,6 +28,8 @@ class MemoryBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function listDocuments($resource_schema, $max = 0) {
+    $this->validateResourceSchema($resource_schema);
+
     return array_keys($this->storage);
   }
 
@@ -35,6 +37,8 @@ class MemoryBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function create($resource_schema, DocumentInterface $document) {
+    $this->validateResourceSchema($resource_schema);
+
     $document->setMetadata('_id', $this->getBackendContentId($document));
     $this->storage[$document->getId()] = $document->getDocument();
     return $document;
@@ -44,6 +48,8 @@ class MemoryBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function read($resource_schema, $id) {
+    $this->validateResourceSchema($resource_schema);
+
     if (isset($this->storage[$id])) {
       return new Document($this->storage[$id]);
     }
@@ -54,6 +60,8 @@ class MemoryBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function update($resource_schema, DocumentInterface $document) {
+    $this->validateResourceSchema($resource_schema);
+
     $this->storage[$document->getId()] = $document->getDocument();
     return $document;
   }
@@ -62,6 +70,8 @@ class MemoryBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function delete($resource_schema, $id) {
+    $this->validateResourceSchema($resource_schema);
+
     unset($this->storage[$id]);
     return TRUE;
   }

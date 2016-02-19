@@ -13,6 +13,10 @@ $export->plugin = 'memory_backend';
 $export->settings = [
   'plugin' => [
     'base_url' => 'http://example.com',
+    'resource_schemas' => [
+      'test_configuration',
+      'foo',
+    ],
     'resource_schema' => [
       'test_configuration' => [
         'base_path' => 'service',

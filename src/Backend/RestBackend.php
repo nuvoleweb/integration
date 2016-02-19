@@ -26,6 +26,8 @@ class RestBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function listDocuments($resource_schema, $max = 0) {
+    $this->validateResourceSchema($resource_schema);
+
     $options['method'] = 'GET';
     $response = $this->httpRequest($this->getChangeFeedUri($resource_schema), $options);
 
@@ -45,6 +47,7 @@ class RestBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function create($resource_schema, DocumentInterface $document) {
+    $this->validateResourceSchema($resource_schema);
 
     // If document already exists then update it.
     if ($id = $this->getBackendContentId($document)) {
@@ -66,6 +69,8 @@ class RestBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function read($resource_schema, $id) {
+    $this->validateResourceSchema($resource_schema);
+
     $options['method'] = 'GET';
     $response = $this->httpRequest($this->getResourceUri($resource_schema) . '/' . $id, $options);
 
@@ -78,6 +83,8 @@ class RestBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function update($resource_schema, DocumentInterface $document) {
+    $this->validateResourceSchema($resource_schema);
+
     $options['method'] = 'PUT';
     $options['data'] = $this->getFormatterHandler()->encode($document);
     $response = $this->httpRequest($this->getResourceUri($resource_schema) . '/' . $this->getBackendContentId($document), $options);
@@ -91,6 +98,8 @@ class RestBackend extends AbstractBackend {
    * {@inheritdoc}
    */
   public function delete($resource_schema, $id) {
+    $this->validateResourceSchema($resource_schema);
+
     $options['method'] = 'DELETE';
     $response = $this->httpRequest($this->getResourceUri($resource_schema) . '/' . $id, $options);
 
