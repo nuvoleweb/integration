@@ -2,6 +2,9 @@
 
 #### 7.x-1.x-dev
 
+- 2016-02-25: Adding support for Backend query arguments. Now backends can be queried
+              by calling ```$backend->find('article', ['id' => 12345])```.
+              Query arguments implementation are backend specific.
 - 2016-01-08: Stand-alone Migrate components are moved into into a separate
               module called ```integration_migrate``` for more information check
               https://github.com/nuvoleweb/integration/issues/2#issuecomment-174941219

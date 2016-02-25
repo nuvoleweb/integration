@@ -30,6 +30,10 @@ class MemoryBackend extends AbstractBackend {
   public function find($resource_schema, $args = []) {
     $this->validateResourceSchema($resource_schema);
 
+    // Search by remote document id.
+    if (isset($args['id']) && isset($this->storage[$args['id']])) {
+      return [$args['id']];
+    }
     return array_keys($this->storage);
   }
 
