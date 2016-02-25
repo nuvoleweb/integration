@@ -54,13 +54,11 @@ interface BackendInterface {
    *
    * @param string $resource_schema
    *    Machine name of a resource schema configuration object.
-   * @param int $max
-   *    Max number of items IDs to return.
    *
-   * @return array
+   * @return array List of document IDs
    *    List of document IDs
    */
-  public function listDocuments($resource_schema, $max = 0);
+  public function listDocuments($resource_schema);
 
   /**
    * Create a new document and populate its backend ID.

@@ -20,7 +20,7 @@ class FileSystemBackend extends AbstractBackend {
   /**
    * {@inheritdoc}
    */
-  public function listDocuments($resource_schema, $max = 0) {
+  public function listDocuments($resource_schema) {
     $this->validateResourceSchema($resource_schema);
 
     $list = [];
