@@ -45,7 +45,7 @@ class MigrateSourceBackend extends \MigrateSource {
    *
    * @var array
    */
-  protected $documentList = [];
+  protected $documents = [];
 
   /**
    * Index in $documentList array of current document being processed.
@@ -98,15 +98,15 @@ class MigrateSourceBackend extends \MigrateSource {
    *    Number of available records.
    */
   public function computeCount() {
-    return count($this->documentList);
+    return count($this->documents);
   }
 
   /**
    * Reset current document ID so to start a fresh traversal of the source data.
    */
   public function performRewind() {
-    if (!$this->documentList) {
-      $this->documentList = $this->backend->listDocuments($this->resource);
+    if (!$this->documents) {
+      $this->documents = $this->backend->find($this->resource, []);
     }
     $this->currentId = 0;
   }
@@ -120,7 +120,7 @@ class MigrateSourceBackend extends \MigrateSource {
   public function getNextRow() {
 
     if ($this->currentId < $this->computeCount()) {
-      $document = $this->backend->read($this->resource, $this->documentList[$this->currentId]);
+      $document = $this->backend->read($this->resource, $this->documents[$this->currentId]);
       $document_wrapper = new DocumentWrapper($document);
       $this->currentId++;
       return $document_wrapper;

@@ -54,11 +54,13 @@ interface BackendInterface {
    *
    * @param string $resource_schema
    *    Machine name of a resource schema configuration object.
+   * @param array $args
+   *    Backend query arguments.
    *
    * @return array List of document IDs
    *    List of document IDs
    */
-  public function listDocuments($resource_schema);
+  public function find($resource_schema, $args = []);
 
   /**
    * Create a new document and populate its backend ID.

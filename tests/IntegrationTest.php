@@ -51,7 +51,7 @@ class IntegrationTest extends AbstractTest {
     $consumer->processImport();
 
     // Assert that title and body have been imported correctly.
-    foreach ($backend->listDocuments($resource_schema) as $id) {
+    foreach ($backend->find($resource_schema, []) as $id) {
 
       $document = $backend->read($resource_schema, $id);
       $node = $consumer->getDestinationEntity($id);
