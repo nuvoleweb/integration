@@ -7,7 +7,6 @@
 
 namespace Drupal\integration_consumer;
 
-use Drupal\integration\Backend\BackendFactory;
 use Drupal\integration\Backend\BackendInterface;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
@@ -32,13 +31,6 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
    * @var ConsumerConfiguration
    */
   protected $configuration;
-
-  /**
-   * Backend object.
-   *
-   * @var BackendInterface
-   */
-  protected $backend;
 
   /**
    * {@inheritdoc}
@@ -68,8 +60,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
     }
 
     // Set migration source backend.
-    $backend = BackendFactory::getInstance($this->getConfiguration()->getBackend());
-    $this->setSource(new MigrateSourceBackend($backend, $this->getConfiguration()->resource));
+    $this->setSource(new MigrateSourceBackend($this));
   }
 
   /**

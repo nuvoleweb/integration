@@ -8,6 +8,8 @@
 namespace Drupal\integration_consumer\Migrate;
 
 use Drupal\integration\Backend\AbstractBackend;
+use Drupal\integration\Backend\BackendFactory;
+use Drupal\integration_consumer\AbstractConsumer;
 use Drupal\integration_migrate\DocumentWrapper;
 
 /**
@@ -16,6 +18,13 @@ use Drupal\integration_migrate\DocumentWrapper;
  * @package Drupal\integration_consumer
  */
 class MigrateSourceBackend extends \MigrateSource {
+
+  /**
+   * Current consumer.
+   *
+   * @var AbstractConsumer
+   */
+  protected $consumer;
 
   /**
    * Current backend.
@@ -48,17 +57,16 @@ class MigrateSourceBackend extends \MigrateSource {
   /**
    * Constructor.
    *
-   * @param AbstractBackend $backend
-   *    Backend instance.
-   * @param string $resource_schema
-   *    Machine name of a resource schema configuration object.
+   * @param \Drupal\integration_consumer\AbstractConsumer $consumer
+   *    Current consumer object instance.
    * @param array $options
    *    Migrate source options.
    */
-  public function __construct(AbstractBackend $backend, $resource_schema, array $options = []) {
+  public function __construct(AbstractConsumer $consumer, array $options = []) {
     parent::__construct($options);
-    $this->backend = $backend;
-    $this->resource = $resource_schema;
+    $this->consumer = $consumer;
+    $this->resource = $this->consumer->getConfiguration()->resource;
+    $this->backend = BackendFactory::getInstance($this->consumer->getConfiguration()->getBackend());
   }
 
   /**
