@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains ConfigurablePluginInterface.
+ * Contains \Drupal\integration\ConfigurablePluginInterface.
  */
 
 namespace Drupal\integration;

@@ -9,7 +9,6 @@ namespace Drupal\integration\Backend;
 
 use Drupal\integration\Document\Document;
 use Drupal\integration\Document\DocumentInterface;
-use Drupal\integration\Backend\Configuration\BackendConfiguration;
 
 /**
  * Class RestBackend.

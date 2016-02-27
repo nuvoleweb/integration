@@ -53,7 +53,7 @@ abstract class AbstractResourceSchema implements ResourceSchemaInterface, Config
    *
    * @param string $machine_name
    *    Field machine name.
-   * @param $label
+   * @param string $label
    *    Field label.
    *
    * @return $this

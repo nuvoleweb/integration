@@ -16,7 +16,7 @@ use Drupal\integration\ConfigurablePluginInterface;
 interface AuthenticationInterface extends ConfigurablePluginInterface {
 
   /**
-   * Authenticates and provides an authentication result
+   * Authenticates and provides an authentication result.
    *
    * @return bool
    *    TRUE if authenticated, FALSE otherwise

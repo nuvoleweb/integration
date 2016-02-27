@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains ComponentDefinition.
+ * Contains \Drupal\integration\Plugins\ComponentDefinition.
  */
 
 namespace Drupal\integration\Plugins;

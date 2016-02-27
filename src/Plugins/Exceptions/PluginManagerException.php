@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Plugins\Exceptions\PluginManagerException
+ * Contains \Drupal\integration\Plugins\Exceptions\PluginManagerException.
  */
 
 namespace Drupal\integration\Plugins\Exceptions;

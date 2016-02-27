@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Drupal\integration\ResourceSchema\ResourceSchemaInterface.
+ * Contains \Drupal\integration\ResourceSchema\ResourceSchemaInterface.
  */
 
 namespace Drupal\integration\ResourceSchema;

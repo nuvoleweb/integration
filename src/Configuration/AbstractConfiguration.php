@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains AbstractConfiguration.
+ * Contains \Drupal\integration\Configuration\AbstractConfiguration.
  */
 
 namespace Drupal\integration\Configuration;

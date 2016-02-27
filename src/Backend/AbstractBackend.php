@@ -10,7 +10,6 @@ namespace Drupal\integration\Backend;
 use Drupal\integration\Backend\Authentication\AuthenticationInterface;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
-use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration\Exceptions\BackendException;
 use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 

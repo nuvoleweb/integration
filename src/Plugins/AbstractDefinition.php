@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains AbstractDefinition.
+ * Contains \Drupal\integration\Plugins\AbstractDefinition.
  */
 
 namespace Drupal\integration\Plugins;
@@ -68,6 +68,7 @@ abstract class AbstractDefinition {
    *    Plugin or component class.
    *
    * @throws PluginManagerException
+   *    Throws PluginManagerException.
    */
   public function getClass() {
     if (!isset($this->definition['class']) || empty($this->definition['class'])) {

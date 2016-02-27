@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains DocumentInterface.
+ * Contains Drupal\integration\Document\DocumentInterface.
  */
 
 namespace Drupal\integration\Document;

@@ -2,14 +2,11 @@
 
 /**
  * @file
- * Contains BackendFactory.
+ * Contains \Drupal\integration\Backend\BackendFactory.
  */
 
 namespace Drupal\integration\Backend;
 
-use Drupal\integration\AbstractFactory;
-use Drupal\integration\Backend\Configuration\BackendConfiguration;
-use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
 use Drupal\integration\Plugins\PluginManager;
 

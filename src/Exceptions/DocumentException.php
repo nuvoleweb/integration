@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Exceptions\DocumentException
+ * Contains \Drupal\integration\Exceptions\DocumentException.
  */
 
 namespace Drupal\integration\Exceptions;
