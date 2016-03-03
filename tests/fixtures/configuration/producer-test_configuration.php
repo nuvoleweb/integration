@@ -20,6 +20,7 @@ $export->settings = [
       'field_integration_test_images' => 'images',
       'field_integration_test_files' => 'files',
       'field_integration_test_dates' => 'dates',
+      'field_integration_test_date' => 'date',
     ],
   ],
   'components' => [

@@ -36,14 +36,18 @@ class DateFieldHandler extends AbstractFieldHandler {
   public function processField() {
 
     foreach ($this->getFieldValues() as $value) {
+      // Make sure value is an array.
+      $value = !is_array($value) ? ['value' => $value] : $value;
 
       // Set default values if none given.
       $value['value2'] = isset($value['value2']) ? $value['value'] : '';
       $value['timezone'] = isset($value['timezone']) ? $value['timezone'] : '';
 
       // Make sure we convert timestamp into default date format.
-      if ($value['date_type'] == 'datestamp') {
+      if (is_numeric($value['value'])) {
         $value['value'] = date(self::DEFAULT_DATE_FORMAT, $value['value']);
+      }
+      if (is_numeric($value['value2'])) {
         $value['value2'] = date(self::DEFAULT_DATE_FORMAT, $value['value2']);
       }
 

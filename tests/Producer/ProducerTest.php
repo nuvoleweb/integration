@@ -116,9 +116,10 @@ class ProducerTest extends AbstractTest {
         }
       }
 
-      // Assert that date field has been imported correctly.
+      // Assert that date fields has been imported correctly.
       $this->assertEquals($document->getFieldValue('dates_start'), $node->field_integration_test_dates[LANGUAGE_NONE][0]['value']);
       $this->assertEquals($document->getFieldValue('dates_end'), $node->field_integration_test_dates[LANGUAGE_NONE][0]['value2']);
+      $this->assertEquals($document->getFieldValue('date_start'), $node->field_integration_test_date[LANGUAGE_NONE][0]['value']);
     }
   }
 
