@@ -84,5 +84,11 @@ function integration_producer_integration_producer_components_info() {
       'class' => 'Drupal\integration_producer\FieldHandlers\ImageFieldHandler',
       'type' => 'field_handler',
     ],
+    'taxonomy_term_reference' => [
+      'label' => t('Taxonomy term reference field handler'),
+      'description' => t('Handler for "taxonomy_term_reference" field type.'),
+      'class' => 'Drupal\integration_producer\FieldHandlers\TaxonomyTermReferenceFieldHandler',
+      'type' => 'field_handler',
+    ],
   ];
 }
