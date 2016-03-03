@@ -56,6 +56,61 @@ function integration_test_field_default_field_instances() {
   ];
 
   // Exported field_instance:
+  // 'node-integration_test-field_integration_test_date'
+  $field_instances['node-integration_test-field_integration_test_date'] = [
+    'bundle' => 'integration_test',
+    'deleted' => 0,
+    'description' => '',
+    'display' => [
+      'default' => [
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => [
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+        ],
+        'type' => 'date_default',
+        'weight' => 8,
+      ],
+      'teaser' => [
+        'label' => 'above',
+        'settings' => [],
+        'type' => 'hidden',
+        'weight' => 0,
+      ],
+    ],
+    'entity_type' => 'node',
+    'field_name' => 'field_integration_test_date',
+    'label' => 'Single date',
+    'required' => 0,
+    'settings' => [
+      'default_value' => 'now',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ],
+    'widget' => [
+      'active' => 1,
+      'module' => 'date',
+      'settings' => [
+        'increment' => 15,
+        'input_format' => 'm/d/Y - H:i:s',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'text_parts' => [],
+        'year_range' => '-3:+3',
+      ],
+      'type' => 'date_select',
+      'weight' => 31,
+    ],
+  ];
+
+  // Exported field_instance:
   // 'node-integration_test-field_integration_test_dates'
   $field_instances['node-integration_test-field_integration_test_dates'] = [
     'bundle' => 'integration_test',
@@ -584,6 +639,7 @@ function integration_test_field_default_field_instances() {
   t('Images');
   t('Name');
   t('References');
+  t('Single date');
   t('Terms');
   t('Text');
   t('Title');

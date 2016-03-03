@@ -43,6 +43,16 @@ $export = (object) [
       ],
     ],
   ],
+  'field_integration_test_date' => array(
+    'und' => array(
+      array(
+        'value' => '2016-03-03 10:15:00',
+        'timezone' => 'UTC',
+        'timezone_db' => 'UTC',
+        'date_type' => 'datetime',
+      ),
+    ),
+  ),
   'field_integration_test_dates' => [
     'und' => [
       [
@@ -281,61 +291,6 @@ $export = (object) [
   ],
   'title_original' => 'English title article 1',
   'entity_translation_handler_id' => 'node-eid-29-29',
-  'rdf_mapping' => [
-    'rdftype' => [
-      'sioc:Item',
-      'foaf:Document',
-    ],
-    'title' => [
-      'predicates' => [
-        'dc:title',
-      ],
-    ],
-    'created' => [
-      'predicates' => [
-        'dc:date',
-        'dc:created',
-      ],
-      'datatype' => 'xsd:dateTime',
-      'callback' => 'date_iso8601',
-    ],
-    'changed' => [
-      'predicates' => [
-        'dc:modified',
-      ],
-      'datatype' => 'xsd:dateTime',
-      'callback' => 'date_iso8601',
-    ],
-    'body' => [
-      'predicates' => [
-        'content:encoded',
-      ],
-    ],
-    'uid' => [
-      'predicates' => [
-        'sioc:has_creator',
-      ],
-      'type' => 'rel',
-    ],
-    'name' => [
-      'predicates' => [
-        'foaf:name',
-      ],
-    ],
-    'comment_count' => [
-      'predicates' => [
-        'sioc:num_replies',
-      ],
-      'datatype' => 'xsd:integer',
-    ],
-    'last_activity' => [
-      'predicates' => [
-        'sioc:last_activity_date',
-      ],
-      'datatype' => 'xsd:dateTime',
-      'callback' => 'date_iso8601',
-    ],
-  ],
   'cid' => '0',
   'last_comment_timestamp' => '1438074280',
   'last_comment_name' => NULL,

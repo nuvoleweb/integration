@@ -131,6 +131,9 @@ function integration_test_strongarm() {
         'language' => [
           'weight' => '5',
         ],
+        'path' => [
+          'weight' => '30',
+        ],
       ],
       'display' => [],
     ],
