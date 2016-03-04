@@ -91,6 +91,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
       'datestamp',
       'file',
       'image',
+      'taxonomy_term_reference',
     ];
     $this->assertEquals($expected, array_keys($manager->getComponentDefinitions()));
   }
