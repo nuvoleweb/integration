@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Backend\Authentication\AbstractAuthentication
+ * Contains \Drupal\integration\Backend\Authentication\AbstractAuthentication.
  */
 
 namespace Drupal\integration\Backend\Authentication;
@@ -34,6 +34,7 @@ abstract class AbstractAuthentication implements AuthenticationInterface {
    * AbstractAuthentication constructor.
    *
    * @param \Drupal\integration\Configuration\AbstractConfiguration $configuration
+   *    AbstractConfiguration Class instance.
    */
   public function __construct(AbstractConfiguration $configuration) {
     $this->configuration = $configuration;

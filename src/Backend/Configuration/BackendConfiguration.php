@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains BackendConfiguration.
+ * Contains \Drupal\integration\Backend\Configuration\BackendConfiguration.
  */
 
 namespace Drupal\integration\Backend\Configuration;

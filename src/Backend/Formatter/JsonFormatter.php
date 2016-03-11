@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\integration\Backend\Formatter.
+ * Contains \Drupal\integration\Backend\JsonFormatter.
  */
 
 namespace Drupal\integration\Backend\Formatter;

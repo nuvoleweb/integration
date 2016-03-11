@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains ConfigurationInterface.
+ * Contains Drupal\integration\Configuration\ConfigurationInterface.
  */
 
 namespace Drupal\integration\Configuration;

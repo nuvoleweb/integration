@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\integration\Exceptions\BackendException
+ * Contains \Drupal\integration\Exceptions\BackendException.
  */
 
 namespace Drupal\integration\Exceptions;

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains ConfigurationFactory.
+ * Contains \Drupal\integration\Configuration\ConfigurationFactory.
  */
 
 namespace Drupal\integration\Configuration;
@@ -27,7 +27,7 @@ class ConfigurationFactory {
    *
    * @var array
    */
-  private static $entity_types = [
+  private static $entityTypes = [
     'integration_backend',
     'integration_consumer',
     'integration_producer',
@@ -44,10 +44,13 @@ class ConfigurationFactory {
    * @param string $machine_name
    *    Configuration entity machine name.
    * @param bool $reset
-   *   Whether to reset the internal cache for the requested configuration.
+   *    Whether to reset the internal cache for the requested configuration.
    *
-   * @return AbstractConfiguration
+   * @return \Drupal\integration\Configuration\AbstractConfiguration
    *    Loaded configuration entity.
+   *
+   * @throws \Drupal\integration\Exceptions\ConfigurationException
+   *    Throws ConfigurationException.
    */
   public static function load($type, $machine_name, $reset = FALSE) {
     $type = self::getEntityType($type);
@@ -97,10 +100,13 @@ class ConfigurationFactory {
    *
    * @return string
    *    Get normalized entity type name.
+   *
+   * @throws \Drupal\integration\Exceptions\ConfigurationException
+   *    Throws ConfigurationException.
    */
   protected static function getEntityType($type) {
     $type = strstr($type, 'integration_') === FALSE ? 'integration_' . $type : $type;
-    if (!in_array($type, self::$entity_types)) {
+    if (!in_array($type, self::$entityTypes)) {
       throw new ConfigurationException(t("!type is not a valid configuration entity type", ['!type' => $type]));
     }
     return $type;

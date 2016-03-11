@@ -76,6 +76,18 @@ class PluginManager {
   private $plugin;
 
   /**
+   * List of plugin types.
+   *
+   * @var array
+   */
+  private $pluginTypes = [
+    'backend',
+    'consumer',
+    'producer',
+    'resource_schema',
+  ];
+
+  /**
    * Get plugin manager instance.
    *
    * @param string $plugin
@@ -100,7 +112,7 @@ class PluginManager {
   public function __construct($name) {
     $this->plugin = str_replace('integration_', '', $name);
 
-    if (!in_array($this->plugin, ['backend', 'consumer', 'producer', 'resource_schema'])) {
+    if (!in_array($this->plugin, $this->pluginTypes)) {
       throw new PluginManagerException(t("!name is not a valid plugin type", ['!name' => $this->plugin]));
     }
 

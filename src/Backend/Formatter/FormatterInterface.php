@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\integration\Backend\Formatter.
+ * Contains \Drupal\integration\Backend\FormatterInterface.
  */
 
 namespace Drupal\integration\Backend\Formatter;
