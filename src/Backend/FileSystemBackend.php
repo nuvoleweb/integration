@@ -43,7 +43,7 @@ class FileSystemBackend extends AbstractBackend {
 
     $path = $this->getResourceStorageDirectory($resource_schema);
     if (!is_dir($path)) {
-      mkdir($path);
+      mkdir($path, 0777, TRUE);
     }
     $filename = $this->getFilename($resource_schema, $id);
     file_put_contents($filename, $this->getFormatterHandler()->encode($document));
