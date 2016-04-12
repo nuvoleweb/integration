@@ -28,6 +28,17 @@ function integration_drush_command() {
         => 'Exports article 123 using the filesystem backend and the articles producer.',
     ),
   );
+  $items['integration-process-import'] = array(
+    'description' => 'Process a consumer import.',
+    'aliases' => array('ipi'),
+    'arguments' => array(
+      'consumer' => 'The consumer machine name.',
+    ),
+    'examples' => array(
+      'drush integration-process-import articles'
+        => 'Imports documents using the articles consumer.',
+    ),
+  );
   return $items;
 }
 
@@ -36,7 +47,7 @@ function integration_drush_command() {
  */
 function drush_integration_export_document($backend_name, $producer_name) {
   if (!$backend_name || !$producer_name) {
-    return drush_log('Please specify at least a backend and a producer as arguments.', 'error');
+    return drush_log(dt('Please specify at least a backend and a producer as arguments.'), 'error');
   }
 
   $producer = \Drupal\integration_producer\ProducerFactory::getInstance($producer_name);
@@ -59,4 +70,16 @@ function drush_integration_export_document($backend_name, $producer_name) {
   } else {
     drush_log(dt('The document could not be exported.'), 'error');
   }
+}
+
+/**
+ * Callback for the integration-process-import command.
+ */
+function drush_integration_process_import($consumer_name) {
+  if (!$consumer_name) {
+    return drush_log(dt('Please specify a consumer as an argument.'), 'error');
+  }
+
+  $consumer = \Drupal\integration_consumer\ConsumerFactory::getInstance($consumer_name);
+  $consumer->processImport();
 }
