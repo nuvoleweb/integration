@@ -12,11 +12,10 @@ function integration_drush_command() {
   $items = array();
   $items['integration-export-document'] = array(
     'description' => 'Export a document.',
-    'aliases' => array('iexpdoc'),
+    'aliases' => array('ied'),
     'arguments' => array(
       'backend' => 'The backend machine name.',
       'producer' => 'The producer machine name.',
-      'resource_schema' => 'The resource schema machine name.',
     ),
     'options' => array(
       'entity-id' => array(
@@ -25,7 +24,7 @@ function integration_drush_command() {
       ),
     ),
     'examples' => array(
-      'drush integration-export-document filesystem articles article --entity-id=123'
+      'drush integration-export-document filesystem articles --entity-id=123'
         => 'Exports article 123 using the filesystem backend and the articles producer.',
     ),
   );
@@ -35,9 +34,9 @@ function integration_drush_command() {
 /**
  * Callback for the integration-export-document command.
  */
-function drush_integration_export_document($backend_name, $producer_name, $resource_schema) {
-  if (!$backend_name || !$producer_name || !$resource_schema) {
-    return drush_log('Please specify at least a backend, producer and schema as arguments.', 'error');
+function drush_integration_export_document($backend_name, $producer_name) {
+  if (!$backend_name || !$producer_name) {
+    return drush_log('Please specify at least a backend and a producer as arguments.', 'error');
   }
 
   $producer = \Drupal\integration_producer\ProducerFactory::getInstance($producer_name);
@@ -55,9 +54,9 @@ function drush_integration_export_document($backend_name, $producer_name, $resou
 
   if ($document) {
     $backend = \Drupal\integration\Backend\BackendFactory::getInstance($backend_name);
-    $backend->create($resource_schema, $document);
-    drush_log('Command executed.', 'success');
+    $document = $backend->create($producer->getConfiguration()->getResourceSchema(), $document);
+    drush_log(dt('The document !id has been exported.', array('!id' => $document->getId())), 'success');
   } else {
-    drush_log('The document could not be exported.', 'error');
+    drush_log(dt('The document could not be exported.'), 'error');
   }
 }
