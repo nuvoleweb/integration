@@ -36,4 +36,11 @@ class JsonFormatter implements FormatterInterface {
     return 'json';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getContentType() {
+    return 'application/json';
+  }
+
 }

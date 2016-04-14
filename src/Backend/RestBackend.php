@@ -56,6 +56,7 @@ class RestBackend extends AbstractBackend {
     else {
       $options['method'] = 'POST';
       $options['data'] = $this->getFormatterHandler()->encode($document);
+      $options['headers'] = ['Content-Type' => $this->getFormatterHandler()->getContentType()];
       $response = $this->httpRequest($this->getResourceUri($resource_schema), $options);
 
       if (!$this->hasErrors($response)) {
@@ -86,6 +87,7 @@ class RestBackend extends AbstractBackend {
 
     $options['method'] = 'PUT';
     $options['data'] = $this->getFormatterHandler()->encode($document);
+    $options['headers'] = ['Content-Type' => $this->getFormatterHandler()->getContentType()];
     $response = $this->httpRequest($this->getResourceUri($resource_schema) . '/' . $this->getBackendContentId($document), $options);
 
     if (!$this->hasErrors($response)) {

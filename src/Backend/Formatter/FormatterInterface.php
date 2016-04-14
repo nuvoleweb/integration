@@ -45,4 +45,12 @@ interface FormatterInterface {
    */
   public function getExtension();
 
+  /**
+   * Get content-type of formatted files.
+   *
+   * @return string
+   *    Content-type, like: "application/json", "application/xml", etc.
+   */
+  public function getContentType();
+
 }
