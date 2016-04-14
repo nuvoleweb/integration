@@ -9,25 +9,25 @@
  * Implements hook_drush_command().
  */
 function integration_producer_drush_command() {
-  $items = array();
-  $items['integration-export'] = array(
+  $items = [];
+  $items['integration-export'] = [
     'description' => 'Export data.',
-    'aliases' => array('ie'),
-    'arguments' => array(
+    'aliases' => ['ie'],
+    'arguments' => [
       'backend' => 'The backend machine name.',
       'producer' => 'The producer machine name.',
-    ),
-    'options' => array(
-      'entity-id' => array(
+    ],
+    'options' => [
+      'entity-id' => [
         'description' => 'Optional entity ID.',
         'example-value' => '123',
-      ),
-    ),
-    'examples' => array(
+      ],
+    ],
+    'examples' => [
       'drush integration-export filesystem articles --entity-id=123'
         => 'Exports article 123 using the filesystem backend and the articles producer.',
-    ),
-  );
+    ],
+  ];
   return $items;
 }
 
@@ -50,7 +50,7 @@ function drush_integration_producer_integration_export($backend_name, $producer_
           if ($document) {
             $backend = \Drupal\integration\Backend\BackendFactory::getInstance($backend_name);
             $document = $backend->create($producer->getConfiguration()->getResourceSchema(), $document);
-            drush_log(dt('The item !id has been exported.', array('!id' => $document->getId())), 'success');
+            drush_log(dt('The item !id has been exported.', ['!id' => $document->getId()]), 'success');
           } else {
             drush_log(dt('The item could not be exported.'), 'error');
           }

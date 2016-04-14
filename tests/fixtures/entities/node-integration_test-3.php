@@ -43,16 +43,16 @@ $export = (object) [
       ],
     ],
   ],
-  'field_integration_test_date' => array(
-    'und' => array(
-      array(
+  'field_integration_test_date' => [
+    'und' => [
+      [
         'value' => '2016-03-03 10:15:00',
         'timezone' => 'UTC',
         'timezone_db' => 'UTC',
         'date_type' => 'datetime',
-      ),
-    ),
-  ),
+      ],
+    ],
+  ],
   'field_integration_test_dates' => [
     'und' => [
       [

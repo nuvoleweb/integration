@@ -9,18 +9,18 @@
  * Implements hook_drush_command().
  */
 function integration_consumer_drush_command() {
-  $items = array();
-  $items['integration-import'] = array(
+  $items = [];
+  $items['integration-import'] = [
     'description' => 'Import data.',
-    'aliases' => array('ii'),
-    'arguments' => array(
+    'aliases' => ['ii'],
+    'arguments' => [
       'consumer' => 'The consumer machine name.',
-    ),
-    'examples' => array(
+    ],
+    'examples' => [
       'drush integration-import articles'
         => 'Imports data using the articles consumer.',
-    ),
-  );
+    ],
+  ];
   return $items;
 }
 
