@@ -40,25 +40,24 @@ function drush_integration_producer_integration_export($backend_name, $producer_
   }
 
   $producer = \Drupal\integration_producer\ProducerFactory::getInstance($producer_name);
-  switch ($producer->getConfiguration()->getPlugin()) {
-    case 'node_producer':
-      $entity_id = (int) drush_get_option('entity-id', NULL);
-      if ($entity_id) {
-        $node = node_load($entity_id);
-        if ($node) {
-          $document = $producer->build($node);
-          if ($document) {
-            $backend = \Drupal\integration\Backend\BackendFactory::getInstance($backend_name);
-            $document = $backend->create($producer->getConfiguration()->getResourceSchema(), $document);
-            drush_log(dt('The item !id has been exported.', ['!id' => $document->getId()]), 'success');
-          } else {
-            drush_log(dt('The item could not be exported.'), 'error');
-          }
-        }
-      } else {
-        // @todo: export all the data provided by this producer.
+  $entity_id = (int) drush_get_option('entity-id', NULL);
+  $entity_type = $producer->getEntityType();
+
+  if ($entity_id) {
+    $entity = entity_load_single($entity_type, $entity_id);
+    if ($entity) {
+      $document = $producer->build($entity);
+      if ($document) {
+        $backend = \Drupal\integration\Backend\BackendFactory::getInstance($backend_name);
+        $document = $backend->create($producer->getConfiguration()->getResourceSchema(), $document);
+        drush_log(dt('The item !id has been exported.', ['!id' => $document->getId()]), 'success');
       }
-    break;
-    // @todo: handle other plugins.
+      else {
+        drush_log(dt('The item could not be exported.'), 'error');
+      }
+    }
+  }
+  else {
+    // @todo: export all the data provided by this producer.
   }
 }

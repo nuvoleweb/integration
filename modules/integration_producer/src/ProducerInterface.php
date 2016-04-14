@@ -18,6 +18,14 @@ use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 interface ProducerInterface {
 
   /**
+   * Return entity type produced by the current plugin.
+   *
+   * @return string
+   *    Entity type machine name.
+   */
+  public function getEntityType();
+
+  /**
    * Return document type, derived from the current entity.
    *
    * @return string
