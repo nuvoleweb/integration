@@ -39,6 +39,7 @@ function drush_integration_producer_integration_export($backend_name, $producer_
     return drush_log(dt('Please specify at least a backend and a producer as arguments.'), 'error');
   }
 
+  $backend = \Drupal\integration\Backend\BackendFactory::getInstance($backend_name);
   $producer = \Drupal\integration_producer\ProducerFactory::getInstance($producer_name);
   $entity_id = (int) drush_get_option('entity-id', NULL);
   $entity_type = $producer->getEntityType();
@@ -46,18 +47,36 @@ function drush_integration_producer_integration_export($backend_name, $producer_
   if ($entity_id) {
     $entity = entity_load_single($entity_type, $entity_id);
     if ($entity) {
-      $document = $producer->build($entity);
-      if ($document) {
-        $backend = \Drupal\integration\Backend\BackendFactory::getInstance($backend_name);
-        $document = $backend->create($producer->getConfiguration()->getResourceSchema(), $document);
-        drush_log(dt('The item !id has been exported.', ['!id' => $document->getId()]), 'success');
-      }
-      else {
-        drush_log(dt('The item could not be exported.'), 'error');
-      }
+      _drush_integration_producer_integration_export_entity($backend, $producer, $entity);
     }
   }
   else {
-    // @todo: export all the data provided by this producer.
+    $bundle = $producer->getConfiguration()->getEntityBundle();
+    $query = new EntityFieldQuery;
+    $result = $query
+      ->entityCondition('entity_type', $entity_type)
+      ->entityCondition('bundle', $bundle)
+      ->execute();
+    if (!empty($result[$entity_type])) {
+      $ids = array_keys($result[$entity_type]);
+      $entities = entity_load($entity_type, $ids);
+      foreach($entities as $entity) {
+        _drush_integration_producer_integration_export_entity($backend, $producer, $entity);
+      }
+    }
+  }
+}
+
+/**
+ * Export an entity.
+ */
+function _drush_integration_producer_integration_export_entity($backend, $producer, $entity) {
+  $document = $producer->build($entity);
+  if ($document) {
+    $document = $backend->create($producer->getConfiguration()->getResourceSchema(), $document);
+    drush_log(dt('The item !id has been exported.', ['!id' => $document->getId()]), 'success');
+  }
+  else {
+    drush_log(dt('The item could not be exported.'), 'error');
   }
 }
