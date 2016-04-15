@@ -71,7 +71,6 @@ function integration_ui_integration_ui_form_controllers() {
  * Implements hook_integration_backend_info_alter().
  */
 function integration_ui_integration_backend_info_alter(&$items) {
-  $items['rest_backend']['form handler'] = 'Drupal\integration_ui\FormHandlers\Backend\RestBackendFormHandler';
   $items['filesystem_backend']['form handler'] = 'Drupal\integration_ui\FormHandlers\Backend\FileSystemBackendFormHandler';
 }
 

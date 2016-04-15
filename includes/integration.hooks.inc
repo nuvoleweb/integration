@@ -10,11 +10,6 @@
  */
 function integration_integration_backend_info() {
   return [
-    'rest_backend' => [
-      'label' => t('REST backend'),
-      'description' => t('Backend implementing a RESTful calls in order to store data remotely.'),
-      'class' => 'Drupal\integration\Backend\RestBackend',
-    ],
     'memory_backend' => [
       'label' => t('Memory backend'),
       'description' => t('Backend using memory to store data, primarily used for testing.'),
@@ -43,14 +38,13 @@ function integration_integration_backend_components_info() {
       'label' => t('HTTP Authentication'),
       'description' => t('Provide basic HTTP authentication.'),
       'class' => 'Drupal\integration\Backend\Authentication\HttpAuthentication',
-      'plugin types' => ['rest_backend'],
       'type' => 'authentication_handler',
     ],
     'no_authentication' => [
       'label' => t('No authentication'),
       'description' => t('Backend can be accessed without restrictions.'),
       'class' => 'Drupal\integration\Backend\Authentication\NoAuthentication',
-      'plugin types' => ['rest_backend', 'memory_backend'],
+      'plugin types' => ['memory_backend'],
       'type' => 'authentication_handler',
     ],
   ];

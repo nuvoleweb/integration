@@ -29,7 +29,6 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
     // Test backend plugin definitions.
     $manager = PluginManager::getInstance('backend');
     $expected = [
-      'rest_backend',
       'memory_backend',
       'filesystem_backend',
     ];
