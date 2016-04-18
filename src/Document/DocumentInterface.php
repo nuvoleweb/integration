@@ -154,4 +154,15 @@ interface DocumentInterface {
    */
   public function getCurrentLanguage();
 
+  /**
+   * Delete metadata.
+   *
+   * @param string $name
+   *    Metadata name.
+   *
+   * @return DocumentInterface
+   *    Delete metadata and return document object.
+   */
+  public function deleteMetadata($name);
+
 }

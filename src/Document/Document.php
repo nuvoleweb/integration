@@ -67,6 +67,14 @@ class Document implements DocumentInterface {
   /**
    * {@inheritdoc}
    */
+  public function deleteMetadata($name) {
+    unset($this->document->{$name});
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCurrentLanguageFieldsValues() {
     $result = new \stdClass();
     foreach ($this->getFieldMachineNames() as $field_name) {
