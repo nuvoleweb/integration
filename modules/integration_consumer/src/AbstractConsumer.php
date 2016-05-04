@@ -59,8 +59,11 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
       $this->processMappingHandlers($destination, $source);
     }
 
-    // Set migration source backend.
-    $this->setSource(new MigrateSourceBackend($this));
+    // Set migration source backend and enable Migrate track_changes option,
+    // in order to better handle updates.
+    // See https://www.drupal.org/node/1835822
+    $options = array('track_changes' => 1);
+    $this->setSource(new MigrateSourceBackend($this, $options));
   }
 
   /**
