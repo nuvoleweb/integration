@@ -62,7 +62,6 @@ class DocumentWrapper extends \stdClass implements DocumentWrapperInterface {
    * {@inheritdoc}
    */
   public function setSourceValues($language = NULL) {
-
     $language = $language ? $language : $this->getDocument()->getDefaultLanguage();
     $this->getDocument()->setCurrentLanguage($language);
     $this->_id = $this->getDocument()->getId();
