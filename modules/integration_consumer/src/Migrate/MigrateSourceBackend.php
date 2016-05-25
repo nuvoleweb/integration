@@ -9,8 +9,7 @@ namespace Drupal\integration_consumer\Migrate;
 
 use Drupal\integration\Backend\AbstractBackend;
 use Drupal\integration\Backend\BackendFactory;
-use Drupal\integration\Exceptions\FindException;
-use Drupal\integration\Exceptions\ReadException;
+use Drupal\integration\Exceptions\BackendException;
 use Drupal\integration_consumer\AbstractConsumer;
 use Drupal\integration_migrate\DocumentWrapper;
 
@@ -111,13 +110,8 @@ class MigrateSourceBackend extends \MigrateSource {
       try {
         $this->documents = $this->backend->find($this->resource, []);
       }
-      catch(FindException $e){
+      catch(BackendException $e) {
         watchdog_exception('Integration Layer Backend', $e);
-        drupal_set_message(t('Error : %error',
-          array(
-            '%error' => $e->getMessage(),
-          )),
-          'error');
       }
     }
     $this->currentId = 0;
@@ -135,13 +129,8 @@ class MigrateSourceBackend extends \MigrateSource {
       try {
         $document = $this->backend->read($this->resource, $this->documents[$this->currentId]);
       }
-      catch(ReadException $e){
+      catch(BackendException $e) {
         watchdog_exception('Integration Layer Backend', $e);
-        drupal_set_message(t('Error : %error',
-          array(
-            '%error' => $e->getMessage(),
-          )),
-          'error');
       }
       $document_wrapper = new DocumentWrapper($document);
       $this->currentId++;
