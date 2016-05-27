@@ -35,8 +35,7 @@ function integration_consumer_rules_action_info() {
 function integration_consumer_rules_import_content_from_backend($consumer_name) {
   try {
     $consumer = \Drupal\integration_consumer\ConsumerFactory::getInstance($consumer_name);
-    $consumer->prepareUpdate();
-    $consumer->processImport();
+    $consumer->fetchAll();
   }
   catch (\Exception $e) {
     rules_log($e->getMessage(), [], RulesLog::ERROR);

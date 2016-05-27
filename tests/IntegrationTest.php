@@ -40,10 +40,8 @@ class IntegrationTest extends AbstractTest {
 
     // Push all fixture nodes to given backend.
     foreach ($this->getProducerNodes() as $node) {
-      $document = ProducerFactory::getInstance('test_configuration')->build($node);
+      $document = ProducerFactory::getInstance('test_configuration')->push($resource_schema, $node);
       $this->assertNotEmpty($document->getFields());
-      $this->assertNull($document->getId());
-      $document = $backend->create($resource_schema, $document);
       $this->assertNotEmpty($document->getId());
     }
 
