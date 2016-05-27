@@ -122,14 +122,12 @@ interface ProducerInterface {
   /**
    * Push given entity object to producer's backend.
    *
-   * @param $resource_schema
-   *    Resource schema machine name.
    * @param object $entity
    *    Raw Drupal entity object.
    *
    * @return DocumentInterface
    *    Built document object.
    */
-  public function push($resource_schema, $entity);
+  public function push($entity);
 
 }

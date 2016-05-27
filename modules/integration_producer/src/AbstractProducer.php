@@ -169,8 +169,9 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
   /**
    * {@inheritdoc}
    */
-  public function push($resource_schema, $entity) {
+  public function push($entity) {
     $document = $this->build($entity);
+    $resource_schema = $this->getConfiguration()->getResourceSchema();
     $backend = $this->getBackendInstance();
     $backend->create($resource_schema, $document);
     return $document;
