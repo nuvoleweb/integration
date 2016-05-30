@@ -98,20 +98,22 @@ class ProducerConfiguration extends AbstractConfiguration {
   }
 
   /**
-   * Get backend plugin machine name.
+   * Get resource backend machine name.
    *
-   * @return string
-   *    Backend plugin machine name.
+   * @return string $backend
+   *    Backend machine name.
    */
   public function getBackend() {
     return $this->backend;
   }
 
   /**
-   * Set resource backend.
+   * Set resource backend machine name.
    *
    * @param string $backend
    *    Backend machine name.
+   *
+   * @return $this
    */
   public function setBackend($backend) {
     $this->backend = $backend;

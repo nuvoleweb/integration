@@ -7,6 +7,8 @@
 
 namespace Drupal\integration_producer;
 
+use Drupal\integration\Backend\AbstractBackend;
+use Drupal\integration\Backend\BackendInterface;
 use Drupal\integration\Document\DocumentInterface;
 use Drupal\integration_producer\EntityWrapper\EntityWrapper;
 
@@ -82,6 +84,31 @@ interface ProducerInterface {
   public function getDocument();
 
   /**
+   * Set resource backend machine name.
+   *
+   * @param string $backend
+   *    Backend machine name.
+   *
+   * @return $this
+   */
+  public function setBackend($backend);
+
+  /**
+   * Get resource backend machine name.
+   *
+   * @return string
+   */
+  public function getBackend();
+
+  /**
+   * Get resource backend instance.
+   *
+   * @return BackendInterface
+   *    Backend object instance.
+   */
+  public function getBackendInstance();
+
+  /**
    * Build document object using the entity the producer was instantiated with.
    *
    * @param object $entity
@@ -91,5 +118,16 @@ interface ProducerInterface {
    *    Built document object.
    */
   public function build($entity);
+
+  /**
+   * Push given entity object to producer's backend.
+   *
+   * @param object $entity
+   *    Raw Drupal entity object.
+   *
+   * @return DocumentInterface
+   *    Built document object.
+   */
+  public function push($entity);
 
 }

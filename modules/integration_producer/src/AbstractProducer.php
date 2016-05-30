@@ -7,6 +7,7 @@
 
 namespace Drupal\integration_producer;
 
+use Drupal\integration\Backend\BackendFactory;
 use Drupal\integration\ConfigurablePluginInterface;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Document\Document;
@@ -166,6 +167,39 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function push($entity) {
+    $document = $this->build($entity);
+    $resource_schema = $this->getConfiguration()->getResourceSchema();
+    $backend = $this->getBackendInstance();
+    $backend->create($resource_schema, $document);
+    return $document;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getBackend() {
+    return $this->getConfiguration()->getBackend();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setBackend($backend) {
+    $this->getConfiguration()->setBackend($backend);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getBackendInstance() {
+    return BackendFactory::getInstance($this->getBackend());
+  }
+
+  /**
    * Set producer entity bundle.
    *
    * @param string $entity_bundle
@@ -175,19 +209,6 @@ abstract class AbstractProducer implements ProducerInterface, ConfigurablePlugin
    */
   public function setEntityBundle($entity_bundle) {
     $this->getConfiguration()->setEntityBundle($entity_bundle);
-    return $this;
-  }
-
-  /**
-   * Set resource backend.
-   *
-   * @param string $backend
-   *    Backend machine name.
-   *
-   * @return $this
-   */
-  public function setBackend($backend) {
-    $this->getConfiguration()->setBackend($backend);
     return $this;
   }
 

@@ -2,6 +2,8 @@
 
 #### 7.x-1.x-dev
 
+- 2016-05-27: Adding ```ProducerInterface::push()``` which will create the
+              document and push it to the set backend in one shot.
 - 2016-02-25: Adding support for Backend query arguments. Now backends can be queried
               by calling ```$backend->find('article', ['id' => 12345])```.
               Query arguments implementation are backend specific.
