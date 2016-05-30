@@ -37,8 +37,9 @@ function integration_consumer_rules_import_content_from_backend($consumer_name) 
     $consumer = \Drupal\integration_consumer\ConsumerFactory::getInstance($consumer_name);
     $consumer->fetchAll();
   }
-  catch (\Exception $e) {
+  catch (\Drupal\integration\Exceptions\BaseException $e) {
     rules_log($e->getMessage(), [], RulesLog::ERROR);
+    watchdog_exception("Integration Layer",$e);
   }
 }
 

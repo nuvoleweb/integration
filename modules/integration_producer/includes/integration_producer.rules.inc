@@ -63,6 +63,7 @@ function integration_producer_rules_action_build_document($node, $producer_name)
   }
   catch (\Drupal\integration\Exceptions\BaseException $e) {
     rules_log($e->getMessage(), [], RulesLog::ERROR);
+    watchdog_exception("Integration Layer",$e);
   }
   return $return;
 }
@@ -75,11 +76,17 @@ function integration_producer_rules_action_build_document($node, $producer_name)
  */
 function integration_producer_rules_get_node_producer_list() {
   $options = [];
-  foreach (entity_load('integration_producer') as $producer) {
-    /** @var \Drupal\integration\Configuration\AbstractConfiguration $producer */
-    if ($producer->getPlugin() == 'node_producer') {
-      $options[$producer->getMachineName()] = $producer->getName();
+  try {
+    foreach (entity_load('integration_producer') as $producer) {
+      /** @var \Drupal\integration\Configuration\AbstractConfiguration $producer */
+      if ($producer->getPlugin() == 'node_producer') {
+        $options[$producer->getMachineName()] = $producer->getName();
+      }
     }
+  }
+  catch (\Drupal\integration\Exceptions\BaseException $e) {
+    rules_log($e->getMessage(), [], RulesLog::ERROR);
+    watchdog_exception("Integration Layer",$e);
   }
   return $options;
 }

@@ -32,6 +32,12 @@ function drush_integration_consumer_integration_import($consumer_name) {
     return drush_log(dt('Please specify a consumer as an argument.'), 'error');
   }
 
-  $consumer = \Drupal\integration_consumer\ConsumerFactory::getInstance($consumer_name);
-  $consumer->processImport();
+  try {
+    $consumer = \Drupal\integration_consumer\ConsumerFactory::getInstance($consumer_name);
+    $consumer->processImport();
+  }
+  catch (\Drupal\integration\Exceptions\BaseException $e) {
+    drush_log(dt('Item(s) could not be imported.'), 'error');
+    watchdog_exception("Integration Layer",$e);
+  }
 }

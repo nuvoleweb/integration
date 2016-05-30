@@ -9,7 +9,6 @@ namespace Drupal\integration_consumer\Migrate;
 
 use Drupal\integration\Backend\AbstractBackend;
 use Drupal\integration\Backend\BackendFactory;
-use Drupal\integration\Exceptions\BackendException;
 use Drupal\integration_consumer\AbstractConsumer;
 use Drupal\integration_migrate\DocumentWrapper;
 
@@ -107,12 +106,7 @@ class MigrateSourceBackend extends \MigrateSource {
    */
   public function performRewind() {
     if (!$this->documents) {
-      try {
         $this->documents = $this->backend->find($this->resource, []);
-      }
-      catch(BackendException $e) {
-        watchdog_exception('Integration Layer Backend', $e);
-      }
     }
     $this->currentId = 0;
   }
@@ -126,12 +120,7 @@ class MigrateSourceBackend extends \MigrateSource {
   public function getNextRow() {
 
     if ($this->currentId < $this->computeCount()) {
-      try {
-        $document = $this->backend->read($this->resource, $this->documents[$this->currentId]);
-      }
-      catch(BackendException $e) {
-        watchdog_exception('Integration Layer Backend', $e);
-      }
+      $document = $this->backend->read($this->resource, $this->documents[$this->currentId]);
       $document_wrapper = new DocumentWrapper($document);
       $this->currentId++;
       return $document_wrapper;

@@ -72,11 +72,12 @@ function drush_integration_producer_integration_export($backend_name, $producer_
  */
 function _drush_integration_producer_integration_export_entity($backend, $producer, $entity) {
   $document = $producer->build($entity);
-  if ($document) {
+  try {
     $document = $backend->create($producer->getConfiguration()->getResourceSchema(), $document);
     drush_log(dt('The item !id has been exported.', ['!id' => $document->getId()]), 'success');
   }
-  else {
+  catch (\Drupal\integration\Exceptions\BaseException $e) {
     drush_log(dt('The item could not be exported.'), 'error');
+    watchdog_exception("Integration Layer",$e);
   }
 }
