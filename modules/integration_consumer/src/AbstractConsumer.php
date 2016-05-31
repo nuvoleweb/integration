@@ -262,4 +262,36 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
     return entity_get_controller('integration_backend_entity');
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function preImport() {
+    parent::preImport();
+    module_invoke_all('integration_consumer_migrate_pre_import', $this);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postImport() {
+    parent::postImport();
+    module_invoke_all('integration_consumer_migrate_post_import', $this);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preRollback() {
+    parent::preRollback();
+    module_invoke_all('integration_consumer_migrate_pre_rollback', $this);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postRollback() {
+    parent::postRollback();
+    module_invoke_all('integration_consumer_migrate_post_rollback', $this);
+  }
+
 }
