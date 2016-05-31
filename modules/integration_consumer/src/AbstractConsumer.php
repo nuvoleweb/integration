@@ -266,8 +266,8 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
    * {@inheritdoc}
    */
   public function preImport() {
-    parent::preImport();
     module_invoke_all('integration_consumer_migrate_pre_import', $this);
+    parent::preImport();
   }
 
   /**
@@ -282,8 +282,8 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
    * {@inheritdoc}
    */
   public function preRollback() {
-    parent::preRollback();
     module_invoke_all('integration_consumer_migrate_pre_rollback', $this);
+    parent::preRollback();
   }
 
   /**
