@@ -78,6 +78,6 @@ function _drush_integration_producer_integration_export_entity($backend, $produc
   }
   catch (\Drupal\integration\Exceptions\BaseException $e) {
     drush_log(dt('The item could not be exported.'), 'error');
-    watchdog_exception("Integration Layer",$e);
+    watchdog_exception("integration",$e);
   }
 }

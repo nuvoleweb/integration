@@ -39,7 +39,7 @@ function integration_consumer_rules_import_content_from_backend($consumer_name) 
   }
   catch (\Drupal\integration\Exceptions\BaseException $e) {
     rules_log($e->getMessage(), [], RulesLog::ERROR);
-    watchdog_exception("Integration Layer",$e);
+    watchdog_exception("integration",$e);
   }
 }
 

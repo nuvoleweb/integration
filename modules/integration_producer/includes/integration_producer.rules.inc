@@ -63,7 +63,7 @@ function integration_producer_rules_action_build_document($node, $producer_name)
   }
   catch (\Drupal\integration\Exceptions\BaseException $e) {
     rules_log($e->getMessage(), [], RulesLog::ERROR);
-    watchdog_exception("Integration Layer",$e);
+    watchdog_exception("integration",$e);
   }
   return $return;
 }
@@ -86,7 +86,7 @@ function integration_producer_rules_get_node_producer_list() {
   }
   catch (\Drupal\integration\Exceptions\BaseException $e) {
     rules_log($e->getMessage(), [], RulesLog::ERROR);
-    watchdog_exception("Integration Layer",$e);
+    watchdog_exception("integration",$e);
   }
   return $options;
 }

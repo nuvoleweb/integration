@@ -38,6 +38,6 @@ function drush_integration_consumer_integration_import($consumer_name) {
   }
   catch (\Drupal\integration\Exceptions\BaseException $e) {
     drush_log(dt('Item(s) could not be imported.'), 'error');
-    watchdog_exception("Integration Layer",$e);
+    watchdog_exception("integration",$e);
   }
 }
