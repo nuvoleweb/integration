@@ -15,8 +15,3 @@ Below a bird-eye view of the interactions between the various components:
 6. [Stand alone migrations](https://github.com/nuvoleweb/integration/wiki/6.-Stand-alone-migrations)
 7. [Run tests](https://github.com/nuvoleweb/integration/wiki/7.-Run-tests)
 
-### Debug
-Set the following value in your `settings.php` in order to get debug:
-```php
-$conf['integration_debug'] = TRUE;
-```
