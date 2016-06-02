@@ -105,10 +105,15 @@ class MigrateSourceBackend extends \MigrateSource {
    * Reset current document ID so to start a fresh traversal of the source data.
    */
   public function performRewind() {
-    if (!$this->documents) {
-        $this->documents = $this->backend->find($this->resource, []);
+    try{
+      if (!$this->documents) {
+          $this->documents = $this->backend->find($this->resource, []);
+      }
+      $this->currentId = 0;
     }
-    $this->currentId = 0;
+    catch (\Drupal\integration\Exceptions\BaseException $e) {
+      watchdog_exception("integration", $e);
+    }
   }
 
   /**
@@ -118,15 +123,19 @@ class MigrateSourceBackend extends \MigrateSource {
    *    New document instance or FALSE if not more content is available.
    */
   public function getNextRow() {
-
-    if ($this->currentId < $this->computeCount()) {
-      $document = $this->backend->read($this->resource, $this->documents[$this->currentId]);
-      $document_wrapper = new DocumentWrapper($document);
-      $this->currentId++;
-      return $document_wrapper;
+    try{
+      if ($this->currentId < $this->computeCount()) {
+        $document = $this->backend->read($this->resource, $this->documents[$this->currentId]);
+        $document_wrapper = new DocumentWrapper($document);
+        $this->currentId++;
+        return $document_wrapper;
+      }
+      else {
+        return FALSE;
+      }
     }
-    else {
-      return FALSE;
+    catch (\Drupal\integration\Exceptions\BaseException $e) {
+      watchdog_exception("integration", $e);
     }
   }
 
