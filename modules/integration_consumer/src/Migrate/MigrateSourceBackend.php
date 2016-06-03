@@ -106,7 +106,7 @@ class MigrateSourceBackend extends \MigrateSource {
    */
   public function performRewind() {
     if (!$this->documents) {
-        $this->documents = $this->backend->find($this->resource, []);
+      $this->documents = $this->backend->find($this->resource, []);
     }
     $this->currentId = 0;
   }
