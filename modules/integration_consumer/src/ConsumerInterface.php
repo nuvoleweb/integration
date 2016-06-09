@@ -14,6 +14,13 @@ namespace Drupal\integration_consumer;
  * @package Drupal\integration_consumer
  */
 interface ConsumerInterface {
+  /**
+   * Define constants for Rules event names.
+   */
+  const RULES_EVENT_PRE_IMPORT = 'integration_consumer_pre_import';
+  const RULES_EVENT_POST_IMPORT = 'integration_consumer_post_import';
+  const RULES_EVENT_PRE_ROLLBACK = 'integration_consumer_pre_rollback';
+  const RULES_EVENT_POST_ROLLBACK = 'integration_consumer_post_rollback';
 
   /**
    * Define source key, to be used in setMap().

@@ -6,6 +6,46 @@
  */
 
 /**
+ * Implements hook_rules_event_info().
+ */
+function integration_consumer_rules_event_info() {
+  return [
+    'integration_consumer_pre_import' => [
+      'label' => t('Consumer: Before import process'),
+      'group' => t('Integration'),
+      'module' => 'integration',
+      'variables' => [
+        'consumer' => array('type' => 'integration_consumer', 'label' => t('Integration: Consumer')),
+      ],
+    ],
+    'integration_consumer_post_import' => [
+      'label' => t('Consumer: After import process'),
+      'group' => t('Integration'),
+      'module' => 'integration',
+      'variables' => [
+        'consumer' => array('type' => 'integration_consumer', 'label' => t('Integration: Consumer')),
+      ],
+    ],
+    'integration_consumer_pre_rollback' => [
+      'label' => t('Consumer: Before rollback process'),
+      'group' => t('Integration'),
+      'module' => 'integration',
+      'variables' => [
+        'consumer' => array('type' => 'integration_consumer', 'label' => t('Integration: Consumer')),
+      ],
+    ],
+    'integration_consumer_post_rollback' => [
+      'label' => t('Consumer: After rollback process'),
+      'group' => t('Integration'),
+      'module' => 'integration',
+      'variables' => [
+        'consumer' => array('type' => 'integration_consumer', 'label' => t('Integration: Consumer')),
+      ],
+    ],
+  ];
+}
+
+/**
  * Implementation of hook_rules_action_info().
  */
 function integration_consumer_rules_action_info() {

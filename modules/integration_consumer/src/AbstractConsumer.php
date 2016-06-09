@@ -294,4 +294,44 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
     module_invoke_all('integration_consumer_migrate_post_rollback', $this);
   }
 
+  /**
+   * Helper method for invoking given rule event.
+   *
+   * @param string $rules_event_name
+   *    Rules event name.
+   */
+  protected function invokeRulesEvent($rules_event_name) {
+    if (module_exists('rules')) {
+      rules_invoke_event($rules_event_name, $this->configuration);
+    }
+  }
+
+  /**
+   * Invoking Rules event.
+   */
+  public function invokePreImportEvent() {
+    $this->invokeRulesEvent(self::RULES_EVENT_PRE_IMPORT);
+  }
+
+  /**
+   * Invoking Rules event.
+   */
+  public function invokePostImportEvent() {
+    $this->invokeRulesEvent(self::RULES_EVENT_POST_IMPORT);
+  }
+
+  /**
+   * Invoking Rules event.
+   */
+  public function invokePreRollbackEvent() {
+    $this->invokeRulesEvent(self::RULES_EVENT_PRE_ROLLBACK);
+  }
+
+  /**
+   * Invoking Rules event.
+   */
+  public function invokePostRollbackEvent() {
+    $this->invokeRulesEvent(self::RULES_EVENT_POST_ROLLBACK);
+  }
+
 }

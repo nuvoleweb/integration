@@ -5,6 +5,8 @@
  * Contains producer-related hook implementations.
  */
 
+use Drupal\integration_consumer\AbstractConsumer;
+
 /**
  * Implements hook_integration_consumer_info().
  */
@@ -47,3 +49,32 @@ function integration_consumer_integration_consumer_components_info() {
   }
   return $handlers;
 }
+
+/**
+ * Implements hook_integration_consumer_migrate_pre_import().
+ */
+function integration_consumer_integration_consumer_migrate_pre_import(AbstractConsumer $consumer) {
+  $consumer->invokePreImportEvent();
+}
+
+/**
+ * Implements hook_integration_consumer_migrate_post_import().
+ */
+function integration_consumer_integration_consumer_migrate_post_import(AbstractConsumer $consumer) {
+  $consumer->invokePostImportEvent();
+}
+
+/**
+ * Implements hook_integration_consumer_migrate_pre_rollback().
+ */
+function integration_consumer_integration_consumer_migrate_pre_rollback(AbstractConsumer $consumer) {
+  $consumer->invokePreRollbackEvent();
+}
+
+/**
+ * Implements hook_integration_consumer_migrate_post_rollback().
+ */
+function integration_consumer_integration_consumer_migrate_post_rollback(AbstractConsumer $consumer) {
+  $consumer->invokePostRollbackEvent();
+}
+

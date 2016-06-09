@@ -29,7 +29,7 @@ class FileSystemBackend extends AbstractBackend {
     foreach (file_scan_directory($path, '/.*\.' . $extension . '$/') as $file) {
       $list[] = $file->name;
     }
-    return $max <= 0 ? $list : array_chunk($list, $max);
+    return $list;
   }
 
   /**
