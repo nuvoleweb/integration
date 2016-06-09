@@ -11,35 +11,47 @@
 function integration_consumer_rules_event_info() {
   return [
     'integration_consumer_pre_import' => [
-      'label' => t('Consumer: Before import process'),
+      'label' => t('Consumer: Before import'),
       'group' => t('Integration'),
       'module' => 'integration',
       'variables' => [
-        'consumer' => array('type' => 'integration_consumer', 'label' => t('Integration: Consumer')),
+        'consumer' => [
+          'type' => 'integration_consumer',
+          'label' => t('Integration: Consumer'),
+        ],
       ],
     ],
     'integration_consumer_post_import' => [
-      'label' => t('Consumer: After import process'),
+      'label' => t('Consumer: After import'),
       'group' => t('Integration'),
       'module' => 'integration',
       'variables' => [
-        'consumer' => array('type' => 'integration_consumer', 'label' => t('Integration: Consumer')),
+        'consumer' => [
+          'type' => 'integration_consumer',
+          'label' => t('Integration: Consumer'),
+        ],
       ],
     ],
     'integration_consumer_pre_rollback' => [
-      'label' => t('Consumer: Before rollback process'),
+      'label' => t('Consumer: Before rollback'),
       'group' => t('Integration'),
       'module' => 'integration',
       'variables' => [
-        'consumer' => array('type' => 'integration_consumer', 'label' => t('Integration: Consumer')),
+        'consumer' => [
+          'type' => 'integration_consumer',
+          'label' => t('Integration: Consumer'),
+        ],
       ],
     ],
     'integration_consumer_post_rollback' => [
-      'label' => t('Consumer: After rollback process'),
+      'label' => t('Consumer: After rollback'),
       'group' => t('Integration'),
       'module' => 'integration',
       'variables' => [
-        'consumer' => array('type' => 'integration_consumer', 'label' => t('Integration: Consumer')),
+        'consumer' => [
+          'type' => 'integration_consumer',
+          'label' => t('Integration: Consumer'),
+        ],
       ],
     ],
   ];

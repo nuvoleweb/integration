@@ -62,7 +62,7 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
     // Set migration source backend and enable Migrate track_changes option,
     // in order to better handle updates.
     // See https://www.drupal.org/node/1835822
-    $options = array('track_changes' => 1);
+    $options = ['track_changes' => 1];
     $this->setSource(new MigrateSourceBackend($this, $options));
   }
 
@@ -297,12 +297,12 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
   /**
    * Helper method for invoking given rule event.
    *
-   * @param string $rules_event_name
+   * @param string $name
    *    Rules event name.
    */
-  protected function invokeRulesEvent($rules_event_name) {
+  protected function invokeRulesEvent($name) {
     if (module_exists('rules')) {
-      rules_invoke_event($rules_event_name, $this->configuration);
+      rules_invoke_event($name, $this->configuration);
     }
   }
 

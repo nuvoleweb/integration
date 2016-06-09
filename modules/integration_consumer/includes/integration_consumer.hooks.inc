@@ -77,4 +77,3 @@ function integration_consumer_integration_consumer_migrate_pre_rollback(Abstract
 function integration_consumer_integration_consumer_migrate_post_rollback(AbstractConsumer $consumer) {
   $consumer->invokePostRollbackEvent();
 }
-
