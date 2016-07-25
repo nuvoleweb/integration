@@ -45,7 +45,7 @@ function integration_producer_integration_producer_components_info() {
     'text_long' => [
       'label' => t('Long text field handler'),
       'description' => t('Handler for "long text" field type.'),
-      'class' => 'Drupal\integration_producer\FieldHandlers\TextFieldHandler',
+      'class' => 'Drupal\integration_producer\FieldHandlers\TextLongFieldHandler',
       'type' => 'field_handler',
     ],
     'text_with_summary' => [
