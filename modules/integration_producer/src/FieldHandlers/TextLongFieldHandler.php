@@ -27,6 +27,9 @@ class TextLongFieldHandler extends AbstractFieldHandler {
   public function processField() {
 
     foreach ($this->getFieldValues() as $value) {
+      // Make sure value is an array.
+      $value = !is_array($value) ? ['value' => $value] : $value;
+
       // Only add the field value and remove the format.
       // @todo: This should be configurable.
       $this->getDocument()->addFieldValue($this->getDestinationField(), $value['value']);
