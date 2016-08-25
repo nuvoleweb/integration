@@ -68,6 +68,16 @@ class ConsumerConfiguration extends AbstractConfiguration {
   }
 
   /**
+   * Set backend configuration machine name.
+   *
+   * @param string $backend
+   *    Backend configuration machine name.
+   */
+  public function setBackend($backend) {
+    $this->backend = $backend;
+  }
+
+  /**
    * Return wrapped backend configuration entity.
    *
    * @return BackendConfiguration
@@ -85,6 +95,28 @@ class ConsumerConfiguration extends AbstractConfiguration {
    */
   public function getMapping() {
     return $this->getPluginSetting('mapping') ? $this->getPluginSetting('mapping') : [];
+  }
+
+  /**
+   * Set mapping given source and destination.
+   *
+   * @param string $source
+   *    Source field machine name.
+   * @param string $destination
+   *    Destination field machine name.
+   */
+  public function setMapping($source, $destination) {
+    $this->settings['plugin']['mapping'][$source] = $destination;
+  }
+
+  /**
+   * Remove mapping for specified field.
+   *
+   * @param string $source
+   *    Source field machine name.
+   */
+  public function unsetMapping($source) {
+    unset($this->settings['plugin']['mapping'][$source]);
   }
 
   /**
@@ -126,6 +158,16 @@ class ConsumerConfiguration extends AbstractConfiguration {
   }
 
   /**
+   * Set entity bundle machine name.
+   *
+   * @param string $entity_bundle
+   *    Entity bundle machine name.
+   */
+  public function setEntityBundle($entity_bundle) {
+    $this->entity_bundle = $entity_bundle;
+  }
+
+  /**
    * Get resource schema configuration machine name.
    *
    * @return string
@@ -133,6 +175,16 @@ class ConsumerConfiguration extends AbstractConfiguration {
    */
   public function getResourceSchema() {
     return isset($this->resource) ? $this->resource : '';
+  }
+
+  /**
+   * Set resource machine name.
+   *
+   * @param string $resource
+   *    Resource machine name.
+   */
+  public function setResourceSchema($resource) {
+    $this->resource = $resource;
   }
 
 }

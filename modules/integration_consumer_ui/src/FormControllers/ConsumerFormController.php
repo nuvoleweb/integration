@@ -114,18 +114,14 @@ class ConsumerFormController extends AbstractForm {
         break;
 
       case 'add_field_mapping':
-        $source = $input['source'];
-        $destination = $input['destination'];
-        // @todo: expose producer configuration methods dealing with mapping.
-        $configuration->settings['plugin']['mapping'][$source] = $destination;
+        $configuration->setMapping($input['source'], $input['destination']);
         $form_state['rebuild'] = TRUE;
         break;
 
       // Remove field from plugin settings.
       case 'remove_mapping':
         $field_name = $triggering_element['#field'];
-        // @todo: expose producer configuration methods dealing with mapping.
-        unset($configuration->settings['plugin']['mapping'][$field_name]);
+        $configuration->unsetMapping($field_name);
         $form_state['rebuild'] = TRUE;
         break;
     }
