@@ -94,6 +94,60 @@ abstract class AbstractConsumer extends AbstractMigration implements ConsumerInt
   }
 
   /**
+   * Set mapping given source and destination.
+   *
+   * @param string $source
+   *    Source field machine name.
+   * @param string $destination
+   *    Destination field machine name.
+   *
+   * @return $this
+   */
+  public function setMapping($source, $destination) {
+    $this->getConfiguration()->setMapping($source, $destination);
+    return $this;
+  }
+
+  /**
+   * Set backend configuration machine name.
+   *
+   * @param string $backend
+   *    Backend configuration machine name.
+   *
+   * @return $this
+   */
+  public function setBackend($backend) {
+    $this->getConfiguration()->setBackend($backend);
+    return $this;
+  }
+
+  /**
+   * Set entity bundle machine name.
+   *
+   * @param string $entity_bundle
+   *    Entity bundle machine name.
+   *
+   * @return $this
+   */
+  public function setEntityBundle($entity_bundle) {
+    $this->getConfiguration()->setEntityBundle($entity_bundle);
+    return $this;
+  }
+
+  /**
+   * Set resource machine name.
+   *
+   * @param string $resource
+   *    Resource machine name.
+   *
+   * @return $this
+   */
+  public function setResourceSchema($resource) {
+    $this->getConfiguration()->setResourceSchema($resource);
+    return $this;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function register($name) {

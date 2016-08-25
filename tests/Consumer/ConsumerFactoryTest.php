@@ -45,10 +45,10 @@ class ConsumerFactoryTest extends AbstractTest {
     $consumer = ConsumerFactory::create('test', 'test');
     $this->assertNotNull($consumer);
 
-    $consumer->getConfiguration()->setMapping('source1', 'destination1');
-    $consumer->getConfiguration()->setMapping('source2', 'destination2');
-    $consumer->getConfiguration()->setResourceSchema('schema');
-    $consumer->getConfiguration()->setEntityBundle('article');
+    $consumer->setMapping('source1', 'destination1')
+      ->setMapping('source2', 'destination2')
+      ->setResourceSchema('schema')
+      ->setEntityBundle('article');
 
     // Test that 'test' configuration object is actually stored.
     /** @var ConsumerConfiguration $configuration */
