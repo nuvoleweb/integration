@@ -12,6 +12,9 @@ use Drupal\integration\ResourceSchema\ResourceSchemaFactory;
 /**
  * Class ResourceSchemaUiTest.
  *
+ * @group ui
+ * @group resource_schema
+ *
  * @package Drupal\integration\Tests\Ui
  */
 class ResourceSchemaUiTest extends AbstractUiTest {

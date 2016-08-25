@@ -12,6 +12,9 @@ use Drupal\integration_consumer\ConsumerFactory;
 /**
  * Class ConsumerUiTest.
  *
+ * @group ui
+ * @group consumer
+ *
  * @package Drupal\integration\Tests\Ui
  */
 class ConsumerUiTest extends AbstractUiTest {

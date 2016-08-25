@@ -10,6 +10,9 @@ namespace Drupal\integration\Tests\Ui;
 /**
  * Class BackendUiTest.
  *
+ * @group ui
+ * @group backend
+ *
  * @package Drupal\integration\Tests\Ui
  */
 class BackendUiTest extends AbstractUiTest {

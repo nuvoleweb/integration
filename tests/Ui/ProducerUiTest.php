@@ -12,6 +12,9 @@ use Drupal\integration_producer\ProducerFactory;
 /**
  * Class ProducerUiTest.
  *
+ * @group ui
+ * @group producer
+ *
  * @package Drupal\integration\Tests\Ui
  */
 class ProducerUiTest extends AbstractUiTest {
