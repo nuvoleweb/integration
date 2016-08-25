@@ -71,7 +71,7 @@ class ConsumerFactory {
     /** @var ConsumerConfiguration $configuration */
     $configuration = ConfigurationFactory::create('consumer', $machine_name);
     $configuration->setPlugin($plugin);
-    $configuration->setBackend($backend->getName());
+    $configuration->setBackend($backend->getMachineName());
     return self::getInstance($machine_name);
   }
 
