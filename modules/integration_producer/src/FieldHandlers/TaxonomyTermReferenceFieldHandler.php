@@ -25,9 +25,11 @@ class TaxonomyTermReferenceFieldHandler extends AbstractFieldHandler {
    * {@inheritdoc}
    */
   public function processField() {
-    // This should consider translation and reference to another migration.
+    // @todo: This should consider translation and reference to another migration.
     foreach ($this->getFieldValues() as $term) {
-      $this->getDocument()->addFieldValue($this->getDestinationField(), $term->name);
+      if (is_object($term) && !empty($term)) {
+        $this->getDocument()->addFieldValue($this->getDestinationField(), $term->name);
+      }
     }
   }
 
