@@ -21,8 +21,6 @@ class NodeConsumer extends AbstractConsumer {
 
     // @todo: Make the following an option set via UI.
     $this->addFieldMapping('promote')->defaultValue(FALSE);
-    $this->addFieldMapping('status')->defaultValue(NODE_PUBLISHED);
-
     parent::__construct($arguments);
   }
 

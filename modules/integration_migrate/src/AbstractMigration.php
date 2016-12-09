@@ -103,21 +103,15 @@ abstract class AbstractMigration extends \Migration {
 
         // Content based translation.
         if ($entity_type == 'node' && entity_translation_node_supported_type($entity->type)) {
-          $translation['status'] = $entity->status;
           $translation['uid'] = $entity->uid;
           $translation['created'] = $entity->created;
           $translation['changed'] = $entity->changed;
         }
 
         // Add the new translation and store it.
+        // @link https://www.drupal.org/node/1069774#comment-4127006
         $translation_handler->setTranslation($translation, $values);
-
-        // Preserve original language setting.
-        $entity->field_language = $entity->language;
-        $entity->language = $entity->translations->original;
-
-        // Save entity.
-        entity_save($entity_type, $entity);
+        field_attach_update($entity_type, $entity);
       }
     }
   }
