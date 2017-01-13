@@ -1,0 +1,19 @@
+{
+  "_id": "10861",
+  "default_language": "en",
+  "languages": [
+    "en"
+  ],
+  "fields": {
+    "title": {
+      "en": [
+        "Targeted Augmentation of Security Requirements in Somalia Vital to the Continuity of Relief Assistance"
+      ]
+    }
+  },
+  "type": "integration_document_entity_test",
+  "created": "1235583913",
+  "changed": "1329926433",
+  "status": "0",
+  "sticky": "0"
+}

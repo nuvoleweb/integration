@@ -1,0 +1,22 @@
+{
+  "name": "drupal/integration",
+  "description": "Enhancements to core migration support.",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/integration",
+  "authors": [
+    {
+      "name": "Nuvole",
+      "homepage":"https://nuvole.org",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/integration",
+    "source": "https://cgit.drupalcode.org/integration"
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "drupal/migrate_plus": "3.0.0-beta1"
+  }
+}

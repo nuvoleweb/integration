@@ -1,0 +1,6 @@
+name: 'Integration migrate entity test'
+type: module
+description: 'Support module for integration migration.'
+package: Testing
+version: VERSION
+core: 8.x

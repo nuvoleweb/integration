@@ -6,3 +6,4 @@ package: Integration
 
 dependencies:
   - migrate
+  - migrate_plus
