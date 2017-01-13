@@ -1,0 +1,8 @@
+type: module
+name: Integration Migrate
+description: Contains stand-alone components for Migrate integration.
+core: 8.x
+package: Integration
+
+dependencies:
+  - migrate
