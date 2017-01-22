@@ -127,7 +127,7 @@ class MigrateDocumentEntityTest extends KernelTestBase {
     $this->assertEquals(MigrationInterface::RESULT_COMPLETED, $result);
 
     /** @var \Drupal\node\NodeInterface $node */
-    $node = Node::load(10861);
+    $node = Node::load(101337);
 
     // Check that we can load the node.
     $this->assertNotNull($node);
