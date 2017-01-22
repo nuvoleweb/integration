@@ -2,10 +2,10 @@
 
 namespace Drupal\integration_migrate\Plugin\migrate\source;
 
+use Drupal\integration\Document\Document;
 use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
-use Drupal\Tests\user\Kernel\TempStoreDatabaseTest;
 
 /**
  * Source plugin for retrieving data via URLs.
@@ -43,10 +43,14 @@ class IntegrationDocuments extends SourcePluginBase {
    */
   protected function getDocumentsArray() {
     if (empty($this->documentsArray)) {
-      $document = json_decode(file_get_contents($this->dataPath), TRUE);
-      $document['id'] = $document['_id'];
-      $data[$document['_id']] = $document;
-      $this->documentsArray = $data;
+      $document_raw = json_decode(file_get_contents($this->dataPath));
+      $document = new Document($document_raw);
+
+      $this->documentsArray[$document->getId()] = [
+        'id' => $document->getId(),
+        'raw' => $document_raw,
+        'processed' => $document,
+      ];
     }
     return $this->documentsArray;
   }
@@ -54,12 +58,13 @@ class IntegrationDocuments extends SourcePluginBase {
   /**
    * Gets the document.
    *
-   * @return array
+   * @return Document
    *   The array of field data.
    */
   public function getDocument() {
     $documents = $this->getDocumentsArray();
-    return reset($documents);
+    $document = reset($documents);
+    return $document['processed'];
   }
 
   /**
@@ -69,7 +74,7 @@ class IntegrationDocuments extends SourcePluginBase {
    *   The type as string.
    */
   public function getDocumentType() {
-    return $this->getDocument()['type'];
+    return $this->getDocument()->getMetadata('type');
   }
 
   /**
@@ -77,12 +82,28 @@ class IntegrationDocuments extends SourcePluginBase {
    */
   public function prepareRow(Row $row) {
     $language = 'en';
-    foreach ($row->getSourceProperty('fields') as $field_id => $field_data) {
-      $row->setDestinationProperty($field_id, reset($field_data[$language]));
+
+    foreach ($this->getDocument()->getFieldMachineNames() as $field_name) {
+      $row->setDestinationProperty($field_name, $this->getDocument()
+        ->getFieldValue($field_name, $language));
     }
-    $row->setDestinationProperty('id', $row->getSourceProperty('id'));
-    $row->setDestinationProperty('nid', $row->getSourceProperty('id'));
-    $row->setSourceProperty('bundle', $row->getSourceProperty('type'));
+
+    // @todo: Static metadata, this can go into Document I think..
+    $static_metadata = [
+      'nid' => '_id',
+      'bundle' => 'type',
+      'created' => 'created',
+      'changed' => 'changed',
+      'status' => 'status',
+      'sticky' => 'sticky',
+    ];
+
+    foreach ($static_metadata as $destination => $source) {
+      if (!is_null($this->getDocument()->getMetadata($source))) {
+        $row->setDestinationProperty($destination, $this->getDocument()
+          ->getMetadata($source));
+      }
+    }
     return parent::prepareRow($row);
   }
 
@@ -122,7 +143,7 @@ class IntegrationDocuments extends SourcePluginBase {
    *   in field mappings, values are descriptions.
    */
   public function fields() {
-    $b = 'f';
     // TODO: Implement fields() method.
+    return parent::fields();
   }
 }

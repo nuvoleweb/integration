@@ -22,7 +22,7 @@ class IntegrationDocument extends EntityContentBase {
   /**
    * The document.
    *
-   * @var array
+   * @var \Drupal\integration\Document\Document
    */
   protected $document;
 
@@ -49,7 +49,7 @@ class IntegrationDocument extends EntityContentBase {
    *   Whether this destination is for translations.
    */
   protected function isTranslationDestination() {
-    return !empty($this->document['languages']);
+    return !empty($this->document->getAvailableLanguages());
   }
 
   /**

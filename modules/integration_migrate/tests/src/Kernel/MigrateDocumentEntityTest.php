@@ -19,6 +19,7 @@ class MigrateDocumentEntityTest extends KernelTestBase {
     'system',
     'migrate',
     'migrate_plus',
+    'integration',
     'integration_migrate',
     'language',
     'node',
@@ -74,7 +75,18 @@ class MigrateDocumentEntityTest extends KernelTestBase {
     /** @var \Drupal\node\NodeInterface $node */
     $node = Node::load(10861);
 
+    // Check that we can load the node.
     $this->assertNotNull($node);
+
+    // Check field data.
+    $this->assertEquals($node->getTitle(), "Targeted Augmentation of Security Requirements in Somalia Vital to the Continuity of Relief Assistance");
+
+    // Check metadata.
+    $this->assertEquals($node->getType(), 'integration_document_entity_test');
+    $this->assertEquals($node->getCreatedTime(), '1235583913');
+    $this->assertEquals($node->getChangedTime(), '1329926433');
+    $this->assertEquals($node->isPublished(), FALSE);
+    $this->assertEquals($node->isSticky(), FALSE);
   }
 
 }
