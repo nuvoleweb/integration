@@ -2,6 +2,7 @@
 
 namespace Drupal\integration_migrate\Plugin\migrate\destination;
 
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\migrate\MigrateException;
 use Drupal\migrate\Plugin\migrate\destination\EntityContentBase;
 use Drupal\migrate\Row;
@@ -29,7 +30,7 @@ class IntegrationDocument extends EntityContentBase {
   /**
    * The source plugin.
    *
-   * @var \Drupal\migrate\Plugin\MigrateSourceInterface
+   * @var \Drupal\integration_migrate\Plugin\migrate\source\IntegrationDocuments
    */
   private $sourcePlugin;
 
@@ -37,9 +38,22 @@ class IntegrationDocument extends EntityContentBase {
    * {@inheritdoc}
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration, EntityStorageInterface $storage, array $bundles, EntityManagerInterface $entity_manager, FieldTypePluginManagerInterface $field_type_manager) {
+    $configuration['translations'] = TRUE;
     parent::__construct($configuration, $plugin_id, $plugin_definition, $migration, $storage, $bundles, $entity_manager, $field_type_manager);
     $this->sourcePlugin = $this->migration->getSourcePlugin();
-    $this->document = $this->migration->getSourcePlugin()->getDocument();
+  }
+
+  /**
+   * Gets the document we are migrating.
+   *
+   * @return \Drupal\integration\Document\Document
+   *   The document object.
+   */
+  private function getDocument() {
+    if (empty($this->document)) {
+      $this->document = $this->sourcePlugin->getDocument();
+    }
+    return $this->document;
   }
 
   /**
@@ -49,7 +63,25 @@ class IntegrationDocument extends EntityContentBase {
    *   Whether this destination is for translations.
    */
   protected function isTranslationDestination() {
-    return !empty($this->document->getAvailableLanguages());
+    return !empty($this->getDocument()->getAvailableLanguages());
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @todo: This is a strange way of doing this.. need to invest more time.
+   */
+  public function save(ContentEntityInterface $entity, array $old_destination_id_values = array()) {
+    // Go over the available languages.
+    foreach ($this->getDocument()->getAvailableLanguages() as $language) {
+      // The default language is already processed.
+      if ($language !== $this->getDocument()->getDefaultLanguage()) {
+        // Get the field values for the translation.
+        $entity->addTranslation($language, $this->getDocument()->setCurrentLanguage($language)->getCurrentLanguageFieldsValues());
+      }
+    }
+
+    return parent::save($entity, $old_destination_id_values);
   }
 
   /**

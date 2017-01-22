@@ -2,12 +2,16 @@
   "_id": "10861",
   "default_language": "en",
   "languages": [
-    "en"
+    "en",
+    "fr"
   ],
   "fields": {
     "title": {
       "en": [
-        "Test simple document title"
+        "Test multilingual document title"
+      ],
+      "fr": [
+        "Teste le titre du document multilingue"
       ]
     }
   },

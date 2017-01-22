@@ -80,7 +80,7 @@ class Document implements DocumentInterface {
     foreach ($this->getFieldMachineNames() as $field_name) {
       $result->{$field_name} = $this->getFieldValue($field_name);
     }
-    $result->language = $this->getCurrentLanguage();
+    $result->langcode = $this->getCurrentLanguage();
     return (array) $result;
   }
 

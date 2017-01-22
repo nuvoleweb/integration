@@ -46,8 +46,10 @@ class IntegrationDocuments extends SourcePluginBase {
       $document_raw = json_decode(file_get_contents($this->dataPath));
       $document = new Document($document_raw);
 
+      // Add a row for each language.
       $this->documentsArray[$document->getId()] = [
         'id' => $document->getId(),
+        'language' => $document->getDefaultLanguage(),
         'raw' => $document_raw,
         'processed' => $document,
       ];
@@ -81,7 +83,7 @@ class IntegrationDocuments extends SourcePluginBase {
    * {@inheritdoc}
    */
   public function prepareRow(Row $row) {
-    $language = 'en';
+    $language = $row->getSource()['language'];
 
     foreach ($this->getDocument()->getFieldMachineNames() as $field_name) {
       $row->setDestinationProperty($field_name, $this->getDocument()
@@ -96,6 +98,7 @@ class IntegrationDocuments extends SourcePluginBase {
       'changed' => 'changed',
       'status' => 'status',
       'sticky' => 'sticky',
+      'default_langcode' => 'default_langcode',
     ];
 
     foreach ($static_metadata as $destination => $source) {
@@ -104,6 +107,15 @@ class IntegrationDocuments extends SourcePluginBase {
           ->getMetadata($source));
       }
     }
+
+    // We need the language property.
+    $row->setDestinationProperty('language', $language);
+    $row->setDestinationProperty('langcode', $language);
+
+    $bar = $row->getIdMap();
+    $bar['destid2'] = $language;
+    $row->setIdMap($bar);
+
     return parent::prepareRow($row);
   }
 
@@ -118,7 +130,7 @@ class IntegrationDocuments extends SourcePluginBase {
    * {@inheritdoc}
    */
   public function getIds() {
-    // @todo: make dynamic
+    // @todo: make dynamic?
     return [
       'id' => [
         'type' => 'integer',
@@ -143,7 +155,7 @@ class IntegrationDocuments extends SourcePluginBase {
    *   in field mappings, values are descriptions.
    */
   public function fields() {
-    // TODO: Implement fields() method.
     return parent::fields();
   }
+
 }
