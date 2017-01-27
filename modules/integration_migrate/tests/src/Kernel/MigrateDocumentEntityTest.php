@@ -90,7 +90,7 @@ class MigrateDocumentEntityTest extends KernelTestBase {
     $this->assertNotNull($node);
 
     // Check field data.
-    $this->assertEquals($node->getTitle(), "Test simple document title");
+    $this->assertEquals($node->getTitle(), 'Test simple document title');
 
     // Check metadata.
     $this->assertEquals($node->getType(), 'integration_document_entity_test');
@@ -137,7 +137,7 @@ class MigrateDocumentEntityTest extends KernelTestBase {
     $this->assertNotEmpty($node_translated);
 
     // Check en field data.
-    $this->assertEquals($node->getTitle(), "Test multilingual document title");
+    $this->assertEquals($node->getTitle(), 'Test multilingual document title');
 
     // Check fr field data.
     $this->assertEquals($node_translated->getTitle(), 'Teste le titre du document multilingue');
@@ -148,7 +148,40 @@ class MigrateDocumentEntityTest extends KernelTestBase {
     $this->assertEquals($node->getChangedTime(), '1329926433');
     $this->assertEquals($node->isPublished(), FALSE);
     $this->assertEquals($node->isSticky(), FALSE);
-
   }
 
+  /**
+   * Tests migrating a folder instead of a specific file.
+   */
+  public function testFolderDocumentImport() {
+    $this->enableModules(['integration_migrate_entity']);
+
+    $definition = [
+      'source' => [
+        'plugin' => 'integration_documents',
+        'data_path' => drupal_get_path('module', 'integration_migrate_entity') . '/data',
+      ],
+      'destination' => [
+        'plugin' => 'integration_document',
+      ],
+    ];
+
+    $migration = \Drupal::service('plugin.manager.migration')
+      ->createStubMigration($definition);
+    $executable = new MigrateExecutable($migration, new MigrateMessage());
+
+    $result = $executable->import();
+    $this->assertEquals(MigrationInterface::RESULT_COMPLETED, $result);
+
+    /** @var \Drupal\node\NodeInterface $node1 */
+    $node1 = Node::load(10861);
+    // Check that we can load the node.
+    $this->assertNotNull($node1);
+    $this->assertEquals($node1->getTitle(), 'Test simple document title');
+    /** @var \Drupal\node\NodeInterface $node2 */
+    $node2 = Node::load(101337);
+    // Check that we can load the node.
+    $this->assertNotNull($node2);
+    $this->assertEquals($node2->getTitle(), 'Test multilingual document title');
+  }
 }

@@ -43,16 +43,32 @@ class IntegrationDocuments extends SourcePluginBase {
    */
   protected function getDocumentsArray() {
     if (empty($this->documentsArray)) {
-      $document_raw = json_decode(file_get_contents($this->dataPath));
-      $document = new Document($document_raw);
+      if (is_dir($this->dataPath)) {
+        foreach (file_scan_directory($this->dataPath, '/.*\.json$/') as $file) {
+          $document_raw = json_decode(file_get_contents($file->uri));
+          $document = new Document($document_raw);
 
-      // Add a row for each language.
-      $this->documentsArray[$document->getId()] = [
-        'id' => $document->getId(),
-        'language' => $document->getDefaultLanguage(),
-        'raw' => $document_raw,
-        'processed' => $document,
-      ];
+          // Add a row for each language.
+          $this->documentsArray[$document->getId()] = [
+            'id' => $document->getId(),
+            'language' => $document->getDefaultLanguage(),
+            'raw' => $document_raw,
+            'processed' => $document,
+          ];
+        }
+      }
+      else {
+        $document_raw = json_decode(file_get_contents($this->dataPath));
+        $document = new Document($document_raw);
+
+        // Add a row for each language.
+        $this->documentsArray[$document->getId()] = [
+          'id' => $document->getId(),
+          'language' => $document->getDefaultLanguage(),
+          'raw' => $document_raw,
+          'processed' => $document,
+        ];
+      }
     }
     return $this->documentsArray;
   }
@@ -86,7 +102,7 @@ class IntegrationDocuments extends SourcePluginBase {
     $language = $row->getSource()['language'];
 
     foreach ($this->getDocument()->getFieldMachineNames() as $field_name) {
-      $row->setDestinationProperty($field_name, $this->getDocument()
+      $row->setDestinationProperty($field_name, $row->getSource()['processed']
         ->getFieldValue($field_name, $language));
     }
 
@@ -103,7 +119,7 @@ class IntegrationDocuments extends SourcePluginBase {
 
     foreach ($static_metadata as $destination => $source) {
       if (!is_null($this->getDocument()->getMetadata($source))) {
-        $row->setDestinationProperty($destination, $this->getDocument()
+        $row->setDestinationProperty($destination, $row->getSource()['processed']
           ->getMetadata($source));
       }
     }
