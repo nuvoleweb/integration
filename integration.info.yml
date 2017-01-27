@@ -3,3 +3,7 @@ type: module
 description: Integration Layer plugin.
 core: 8.x
 package: Integration
+
+dependencies:
+  - migrate
+  - migrate_plus
