@@ -30,6 +30,13 @@ class IntegrationDocuments extends SourcePluginBase {
   private $documentsArray = [];
 
   /**
+   * Contains mapping data.
+   *
+   * @var array
+   */
+  private $mappingData;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration) {
@@ -97,42 +104,60 @@ class IntegrationDocuments extends SourcePluginBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @todo: This does a bit to much at the moment and needs some cleanup to
+   * avoid unwanted results..
    */
   public function prepareRow(Row $row) {
     $language = $row->getSource()['language'];
 
-    foreach ($this->getDocument()->getFieldMachineNames() as $field_name) {
-      $row->setDestinationProperty($field_name, $row->getSource()['processed']
-        ->getFieldValue($field_name, $language));
-    }
-
-    // @todo: Static metadata, this can go into Document I think..
-    $static_metadata = [
-      'nid' => '_id',
-      'bundle' => 'type',
-      'created' => 'created',
-      'changed' => 'changed',
-      'status' => 'status',
-      'sticky' => 'sticky',
-      'default_langcode' => 'default_langcode',
-    ];
-
-    foreach ($static_metadata as $destination => $source) {
+    foreach ($this->getMappingData() as $destination => $source) {
       if (!is_null($this->getDocument()->getMetadata($source))) {
         $row->setDestinationProperty($destination, $row->getSource()['processed']
           ->getMetadata($source));
+        $row->setSourceProperty($destination, $row->getSource()['processed']
+          ->getMetadata($source));
       }
+    }
+
+    // Map the remaining data, but exclude fields with custom mapping.
+    foreach ($this->getDocument()->getFieldMachineNames() as $field_name) {
+      $source = $field_name;
+      $destination = $field_name;
+      // Exclude already mapped data.
+      if (array_key_exists($field_name, $this->getMappingData())) { $destination = $this->getMappingData()[$field_name]; }
+      $row->setDestinationProperty($destination, $row->getSource()['processed']
+        ->getFieldValue($source, $language));
+      $row->setSourceProperty($destination, $row->getSource()['processed']
+        ->getFieldValue($source, $language));
     }
 
     // We need the language property.
     $row->setDestinationProperty('language', $language);
     $row->setDestinationProperty('langcode', $language);
 
-    $bar = $row->getIdMap();
-    $bar['destid2'] = $language;
-    $row->setIdMap($bar);
-
     return parent::prepareRow($row);
+  }
+
+  /**
+   * Gets the mapping data as an array.
+   *
+   * @return array
+   *   The mapping data destination=>source.
+   */
+  private function getMappingData() {
+    if (empty($this->mappingData)) {
+      $this->mappingData = [
+        'nid' => '_id',
+        'bundle' => 'type',
+        'created' => 'created',
+        'changed' => 'changed',
+        'status' => 'status',
+        'sticky' => 'sticky',
+        'default_langcode' => 'default_langcode',
+      ];
+    }
+    return $this->mappingData;
   }
 
   /**

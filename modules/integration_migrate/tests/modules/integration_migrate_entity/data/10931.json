@@ -1,0 +1,31 @@
+{
+  "_id": "10931",
+  "default_language": "en",
+  "languages": [
+    "en"
+  ],
+  "fields": {
+    "title": {
+      "en": [
+        "Test simple document title"
+      ]
+    },
+    "tags": {
+      "en": [
+        "Tag 1",
+        "Tag 2"
+      ]
+    },
+    "multi_data": {
+      "en": [
+        "List item 1",
+        "List item 2"
+      ]
+    }
+  },
+  "type": "integration_document_entity_test",
+  "created": "1235583913",
+  "changed": "1329926433",
+  "status": "0",
+  "sticky": "0"
+}
