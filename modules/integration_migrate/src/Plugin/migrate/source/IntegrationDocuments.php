@@ -42,7 +42,12 @@ class IntegrationDocuments extends SourcePluginBase {
   public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration) {
     $this->dataPath = $configuration['data_path'];
     $configuration['default_bundle'] = $this->getDocumentType();
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $migration);
+    parent::__construct(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $migration
+    );
   }
 
   /**
@@ -104,19 +109,16 @@ class IntegrationDocuments extends SourcePluginBase {
 
   /**
    * {@inheritdoc}
-   *
-   * @todo: This does a bit to much at the moment and needs some cleanup to
-   * avoid unwanted results..
    */
   public function prepareRow(Row $row) {
     $language = $row->getSource()['language'];
 
     foreach ($this->getMappingData() as $destination => $source) {
       if (!is_null($row->getSource()['processed']->getMetadata($source))) {
-        $row->setDestinationProperty($destination, $row->getSource()['processed']
-          ->getMetadata($source));
-        $row->setSourceProperty($destination, $row->getSource()['processed']
-          ->getMetadata($source));
+        $row->setSourceProperty(
+          $destination,
+          $row->getSource()['processed']->getMetadata($source)
+        );
       }
     }
 
@@ -125,16 +127,14 @@ class IntegrationDocuments extends SourcePluginBase {
       $source = $field_name;
       $destination = $field_name;
       // Exclude already mapped data.
-      if (array_key_exists($field_name, $this->getMappingData())) { $destination = $this->getMappingData()[$field_name]; }
-      $row->setDestinationProperty($destination, $row->getSource()['processed']
-        ->getFieldValue($source, $language));
-      $row->setSourceProperty($destination, $row->getSource()['processed']
-        ->getFieldValue($source, $language));
+      if (array_key_exists($field_name, $this->getMappingData())) {
+        $destination = $this->getMappingData()[$field_name];
+      }
+      $row->setSourceProperty(
+        $destination,
+        $row->getSource()['processed']->getFieldValue($source, $language)
+      );
     }
-
-    // We need the language property.
-    $row->setDestinationProperty('language', $language);
-    $row->setDestinationProperty('langcode', $language);
 
     return parent::prepareRow($row);
   }
