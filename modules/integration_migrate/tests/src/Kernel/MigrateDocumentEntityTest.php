@@ -81,6 +81,9 @@ class MigrateDocumentEntityTest extends KernelTestBase {
         'plugin' => 'integration_documents',
         'data_path' => drupal_get_path('module', 'integration_migrate_entity') . '/data/10861.json',
       ],
+      'process' => [
+        'title' => 'title',
+      ],
       'destination' => [
         'plugin' => 'entity:node',
         'default_bundle' => 'integration_document_entity_test',
@@ -122,6 +125,9 @@ class MigrateDocumentEntityTest extends KernelTestBase {
       'source' => [
         'plugin' => 'integration_documents',
         'data_path' => drupal_get_path('module', 'integration_migrate_entity') . '/data/101337.json',
+      ],
+      'process' => [
+        'title' => 'title',
       ],
       'destination' => [
         'plugin' => 'entity:node',
@@ -168,6 +174,9 @@ class MigrateDocumentEntityTest extends KernelTestBase {
       'source' => [
         'plugin' => 'integration_documents',
         'data_path' => drupal_get_path('module', 'integration_migrate_entity') . '/data',
+      ],
+      'process' => [
+        'title' => 'title',
       ],
       'destination' => [
         'plugin' => 'entity:node',
@@ -232,6 +241,7 @@ class MigrateDocumentEntityTest extends KernelTestBase {
         'data_path' => drupal_get_path('module', 'integration_migrate_entity') . '/data/10931.json',
       ],
       'process' => [
+        'title' => 'title',
         'field_tags' => [
           'plugin' => 'tag_to_id',
           'source' => 'tags',
@@ -286,6 +296,7 @@ class MigrateDocumentEntityTest extends KernelTestBase {
         'data_path' => drupal_get_path('module', 'integration_migrate_entity') . '/data/10931.json',
       ],
       'process' => [
+        'title' => 'title',
         'field_multi_data' => 'multi_data',
       ],
       'destination' => [
