@@ -82,7 +82,8 @@ class MigrateDocumentEntityTest extends KernelTestBase {
         'data_path' => drupal_get_path('module', 'integration_migrate_entity') . '/data/10861.json',
       ],
       'destination' => [
-        'plugin' => 'integration_document',
+        'plugin' => 'entity:node',
+        'default_bundle' => 'integration_document_entity_test',
       ],
     ];
 
@@ -123,7 +124,8 @@ class MigrateDocumentEntityTest extends KernelTestBase {
         'data_path' => drupal_get_path('module', 'integration_migrate_entity') . '/data/101337.json',
       ],
       'destination' => [
-        'plugin' => 'integration_document',
+        'plugin' => 'entity:node',
+        'default_bundle' => 'integration_document_entity_test',
       ],
     ];
 
@@ -168,7 +170,8 @@ class MigrateDocumentEntityTest extends KernelTestBase {
         'data_path' => drupal_get_path('module', 'integration_migrate_entity') . '/data',
       ],
       'destination' => [
-        'plugin' => 'integration_document',
+        'plugin' => 'entity:node',
+        'default_bundle' => 'integration_document_entity_test',
       ],
     ];
 
@@ -192,8 +195,7 @@ class MigrateDocumentEntityTest extends KernelTestBase {
   }
 
   /**
-   * Tests that we can process data so that we can still map taxonomy to their
-   * respective database id.
+   * Tests that we can map taxonomy data.
    */
   public function testMappingTaxonomyDocumentImport() {
     // Create a vocabulary named "Tags".
@@ -236,7 +238,8 @@ class MigrateDocumentEntityTest extends KernelTestBase {
         ],
       ],
       'destination' => [
-        'plugin' => 'integration_document',
+        'plugin' => 'entity:node',
+        'default_bundle' => 'integration_document_entity_test',
       ],
     ];
 
@@ -264,19 +267,18 @@ class MigrateDocumentEntityTest extends KernelTestBase {
    */
   public function testMappingMultiDataDocumentImport() {
 
-    FieldStorageConfig::create(array(
+    FieldStorageConfig::create([
       'field_name' => 'field_multi_data',
       'entity_type' => 'node',
-      'type' => 'text'
-    ))
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      'type' => 'text',
+    ])->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->save();
 
-    FieldConfig::create(array(
+    FieldConfig::create([
       'field_name' => 'field_multi_data',
       'entity_type' => 'node',
       'bundle' => 'integration_document_entity_test',
-    ))->save();
+    ])->save();
 
     $definition = [
       'source' => [
@@ -287,7 +289,8 @@ class MigrateDocumentEntityTest extends KernelTestBase {
         'field_multi_data' => 'multi_data',
       ],
       'destination' => [
-        'plugin' => 'integration_document',
+        'plugin' => 'entity:node',
+        'default_bundle' => 'integration_document_entity_test',
       ],
     ];
 

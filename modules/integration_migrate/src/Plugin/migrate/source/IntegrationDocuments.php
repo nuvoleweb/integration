@@ -51,7 +51,10 @@ class IntegrationDocuments extends SourcePluginBase {
   }
 
   /**
-   * {@inheritdoc}
+   * Gets the documents to migrate.
+   *
+   * @return array
+   *   Array of documents.
    */
   protected function getDocumentsArray() {
     if (empty($this->documentsArray)) {
@@ -62,7 +65,7 @@ class IntegrationDocuments extends SourcePluginBase {
 
           // Add a row for each language.
           $this->documentsArray[$document->getId()] = [
-            'id' => $document->getId(),
+            'nid' => $document->getId(),
             'language' => $document->getDefaultLanguage(),
             'raw' => $document_raw,
             'processed' => $document,
@@ -75,7 +78,7 @@ class IntegrationDocuments extends SourcePluginBase {
 
         // Add a row for each language.
         $this->documentsArray[$document->getId()] = [
-          'id' => $document->getId(),
+          'nid' => $document->getId(),
           'language' => $document->getDefaultLanguage(),
           'raw' => $document_raw,
           'processed' => $document,
@@ -119,11 +122,16 @@ class IntegrationDocuments extends SourcePluginBase {
           $destination,
           $row->getSource()['processed']->getMetadata($source)
         );
+        $row->setDestinationProperty(
+          $destination,
+          $row->getSource()['processed']->getMetadata($source)
+        );
       }
     }
 
     // Map the remaining data, but exclude fields with custom mapping.
-    foreach ($row->getSource()['processed']->getFieldMachineNames() as $field_name) {
+    foreach ($row->getSource()['processed']->getFieldMachineNames(
+    ) as $field_name) {
       $source = $field_name;
       $destination = $field_name;
       // Exclude already mapped data.
@@ -171,9 +179,8 @@ class IntegrationDocuments extends SourcePluginBase {
    * {@inheritdoc}
    */
   public function getIds() {
-    // @todo: make dynamic?
     return [
-      'id' => [
+      'nid' => [
         'type' => 'integer',
         'unsigned' => FALSE,
         'size' => 'big',
