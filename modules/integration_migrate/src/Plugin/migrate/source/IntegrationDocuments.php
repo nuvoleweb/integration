@@ -203,7 +203,7 @@ class IntegrationDocuments extends SourcePluginBase {
    *   in field mappings, values are descriptions.
    */
   public function fields() {
-    return parent::fields();
+    return [];
   }
 
 }
