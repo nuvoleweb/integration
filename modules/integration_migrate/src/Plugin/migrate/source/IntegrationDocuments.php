@@ -65,7 +65,7 @@ class IntegrationDocuments extends SourcePluginBase {
 
           // Add a row for each language.
           $this->documentsArray[$document->getId()] = [
-            'nid' => $document->getId(),
+            'id' => $document->getId(),
             'language' => $document->getDefaultLanguage(),
             'raw' => $document_raw,
             'processed' => $document,
@@ -78,7 +78,7 @@ class IntegrationDocuments extends SourcePluginBase {
 
         // Add a row for each language.
         $this->documentsArray[$document->getId()] = [
-          'nid' => $document->getId(),
+          'id' => $document->getId(),
           'language' => $document->getDefaultLanguage(),
           'raw' => $document_raw,
           'processed' => $document,
@@ -156,7 +156,6 @@ class IntegrationDocuments extends SourcePluginBase {
   private function getMappingData() {
     if (empty($this->mappingData)) {
       $this->mappingData = [
-        'nid' => '_id',
         'bundle' => 'type',
         'created' => 'created',
         'changed' => 'changed',
@@ -180,10 +179,9 @@ class IntegrationDocuments extends SourcePluginBase {
    */
   public function getIds() {
     return [
-      'nid' => [
-        'type' => 'integer',
-        'unsigned' => FALSE,
-        'size' => 'big',
+      'id' => [
+        'type' => 'string',
+        'is_ascii' => TRUE,
       ],
     ];
   }
