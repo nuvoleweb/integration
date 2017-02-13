@@ -73,9 +73,54 @@ class MigrateDocumentEntityTest extends KernelTestBase {
   }
 
   /**
-   * Tests document import using migrate.
+   * Tests document import using migrate without an id.
    */
   public function testSimpleDocumentImport() {
+    $definition = [
+      'source' => [
+        'plugin' => 'integration_documents',
+        'data_path' => drupal_get_path('module', 'integration_migrate_entity') . '/data/10861.json',
+      ],
+      'process' => [
+        'created' => 'created',
+        'changed' => 'changed',
+        'status' => 'status',
+        'title' => 'title',
+      ],
+      'destination' => [
+        'plugin' => 'entity:node',
+        'default_bundle' => 'integration_document_entity_test',
+      ],
+    ];
+
+    $migration = \Drupal::service('plugin.manager.migration')
+      ->createStubMigration($definition);
+    $executable = new MigrateExecutable($migration, new MigrateMessage());
+
+    $result = $executable->import();
+    $this->assertEquals(MigrationInterface::RESULT_COMPLETED, $result);
+
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = Node::load(1);
+
+    // Check that we can load the node.
+    $this->assertNotNull($node);
+
+    // Check field data.
+    $this->assertEquals('Test simple document title', $node->getTitle());
+
+    // Check metadata.
+    $this->assertEquals('integration_document_entity_test', $node->getType());
+    $this->assertEquals('1235583913', $node->getCreatedTime());
+    $this->assertEquals('1329926433', $node->getChangedTime());
+    $this->assertEquals(FALSE, $node->isPublished());
+    $this->assertEquals(FALSE, $node->isSticky());
+  }
+
+  /**
+   * Tests document import using migrate with an id.
+   */
+  public function testSimpleDocumentIdImport() {
     $definition = [
       'source' => [
         'plugin' => 'integration_documents',
