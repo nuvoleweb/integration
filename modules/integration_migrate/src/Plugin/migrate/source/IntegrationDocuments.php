@@ -65,7 +65,7 @@ class IntegrationDocuments extends SourcePluginBase {
 
           // Add a row for each language.
           $this->documentsArray[$document->getId()] = [
-            'nid' => $document->getId(),
+            'id' => $document->getId(),
             'language' => $document->getDefaultLanguage(),
             'raw' => $document_raw,
             'processed' => $document,
@@ -78,7 +78,7 @@ class IntegrationDocuments extends SourcePluginBase {
 
         // Add a row for each language.
         $this->documentsArray[$document->getId()] = [
-          'nid' => $document->getId(),
+          'id' => $document->getId(),
           'language' => $document->getDefaultLanguage(),
           'raw' => $document_raw,
           'processed' => $document,
@@ -117,12 +117,8 @@ class IntegrationDocuments extends SourcePluginBase {
     $language = $row->getSource()['language'];
 
     foreach ($this->getMappingData() as $destination => $source) {
-      if (!is_null($row->getSource()['processed']->getMetadata($source))) {
+      if (NULL !== $row->getSource()['processed']->getMetadata($source)) {
         $row->setSourceProperty(
-          $destination,
-          $row->getSource()['processed']->getMetadata($source)
-        );
-        $row->setDestinationProperty(
           $destination,
           $row->getSource()['processed']->getMetadata($source)
         );
@@ -130,8 +126,7 @@ class IntegrationDocuments extends SourcePluginBase {
     }
 
     // Map the remaining data, but exclude fields with custom mapping.
-    foreach ($row->getSource()['processed']->getFieldMachineNames(
-    ) as $field_name) {
+    foreach ($row->getSource()['processed']->getFieldMachineNames() as $field_name) {
       $source = $field_name;
       $destination = $field_name;
       // Exclude already mapped data.
@@ -156,7 +151,6 @@ class IntegrationDocuments extends SourcePluginBase {
   private function getMappingData() {
     if (empty($this->mappingData)) {
       $this->mappingData = [
-        'nid' => '_id',
         'bundle' => 'type',
         'created' => 'created',
         'changed' => 'changed',
@@ -180,10 +174,9 @@ class IntegrationDocuments extends SourcePluginBase {
    */
   public function getIds() {
     return [
-      'nid' => [
-        'type' => 'integer',
-        'unsigned' => FALSE,
-        'size' => 'big',
+      'id' => [
+        'type' => 'string',
+        'is_ascii' => TRUE,
       ],
     ];
   }
