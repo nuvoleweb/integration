@@ -117,12 +117,8 @@ class IntegrationDocuments extends SourcePluginBase {
     $language = $row->getSource()['language'];
 
     foreach ($this->getMappingData() as $destination => $source) {
-      if (!is_null($row->getSource()['processed']->getMetadata($source))) {
+      if (NULL !== $row->getSource()['processed']->getMetadata($source)) {
         $row->setSourceProperty(
-          $destination,
-          $row->getSource()['processed']->getMetadata($source)
-        );
-        $row->setDestinationProperty(
           $destination,
           $row->getSource()['processed']->getMetadata($source)
         );
@@ -130,8 +126,7 @@ class IntegrationDocuments extends SourcePluginBase {
     }
 
     // Map the remaining data, but exclude fields with custom mapping.
-    foreach ($row->getSource()['processed']->getFieldMachineNames(
-    ) as $field_name) {
+    foreach ($row->getSource()['processed']->getFieldMachineNames() as $field_name) {
       $source = $field_name;
       $destination = $field_name;
       // Exclude already mapped data.
