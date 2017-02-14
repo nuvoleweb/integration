@@ -65,7 +65,7 @@ class IntegrationDocuments extends SourcePluginBase {
 
           // Add a row for each language.
           $this->documentsArray[$document->getId()] = [
-            'id' => $document->getId(),
+            '_id' => $document->getId(),
             'language' => $document->getDefaultLanguage(),
             'raw' => $document_raw,
             'processed' => $document,
@@ -78,7 +78,7 @@ class IntegrationDocuments extends SourcePluginBase {
 
         // Add a row for each language.
         $this->documentsArray[$document->getId()] = [
-          'id' => $document->getId(),
+          '_id' => $document->getId(),
           'language' => $document->getDefaultLanguage(),
           'raw' => $document_raw,
           'processed' => $document,
@@ -174,7 +174,7 @@ class IntegrationDocuments extends SourcePluginBase {
    */
   public function getIds() {
     return [
-      'id' => [
+      '_id' => [
         'type' => 'string',
         'is_ascii' => TRUE,
       ],
