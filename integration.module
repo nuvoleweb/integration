@@ -9,6 +9,9 @@ include_once 'includes/integration.entity.inc';
 include_once 'includes/integration.hooks.inc';
 include_once 'includes/integration.rules.inc';
 
+// Explicitly include controller class in order to be compatible with drush rr.
+// @link https://www.drupal.org/node/2859552
+include_once 'src/Backend/Entity/BackendEntityController.php';
 
 /**
  * Implements hook_permission().
