@@ -57,3 +57,10 @@ function integration_consumer_load_consumer($machine_name) {
 function integration_consumer_access($op, $consumer, $account, $entity_type) {
   return user_access('administer consumers');
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function integration_consumer_integration_consumer_delete(ConsumerConfiguration $entity) {
+  \MigrationBase::deregisterMigration($entity->getMachineName());
+}

@@ -35,6 +35,17 @@ function integration_consumer_schema() {
 }
 
 /**
+ * Implements hook_disable().
+ */
+function integration_consumer_disable() {
+  /** @var \Drupal\integration_consumer\Configuration\ConsumerConfiguration[] $consumers */
+  $consumers = entity_load('integration_consumer');
+  foreach ($consumers as $consumer) {
+    \MigrationBase::deregisterMigration($consumer->getMachineName());
+  }
+}
+
+/**
  * Enable integration_migrate module.
  */
 function integration_consumer_update_7101() {
