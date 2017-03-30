@@ -29,13 +29,20 @@ class ConsumerFactory {
    *
    * @param string $machine_name
    *    Consumer configuration machine name.
+   * @param bool $reset
+   *    Whether to reset the internal cache or not.
    *
    * @return AbstractConsumer
    *    Consumer instance.
    */
-  static public function getInstance($machine_name) {
+  static public function getInstance($machine_name, $reset = FALSE) {
+    // Reset Drupal static cache in \MigrationBase::getInstance().
+    if ($reset) {
+      drupal_static_reset('getInstance');
+    }
+
     /** @var ConsumerConfiguration $configuration */
-    $configuration = self::loadConfiguration($machine_name);
+    $configuration = ConfigurationFactory::load('integration_consumer', $machine_name, $reset);
 
     $plugin_manager = PluginManager::getInstance('consumer');
     $plugin = $configuration->getPlugin();

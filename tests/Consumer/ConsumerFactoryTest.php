@@ -8,6 +8,7 @@
 namespace Drupal\integration\Tests\Consumer;
 
 use Drupal\integration\Backend\BackendFactory;
+use Drupal\integration_consumer\AbstractConsumer;
 use Drupal\integration_consumer\Configuration\ConsumerConfiguration;
 use Drupal\integration_consumer\ConsumerFactory;
 use Drupal\integration\Plugins\PluginManager;
@@ -41,7 +42,7 @@ class ConsumerFactoryTest extends AbstractTest {
    * Test consumer creation.
    */
   public function testCreate() {
-    BackendFactory ::create('test');
+    BackendFactory::create('test');
     $consumer = ConsumerFactory::create('test', 'test');
     $this->assertNotNull($consumer);
 
@@ -64,6 +65,8 @@ class ConsumerFactoryTest extends AbstractTest {
       'source1' => 'destination1',
       'source2' => 'destination2',
     ], $configuration->getMapping());
+
+    AbstractConsumer::deregisterMigration('test');
   }
 
 }

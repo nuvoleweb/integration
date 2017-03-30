@@ -20,22 +20,12 @@ use Drupal\integration_producer\ProducerFactory;
 class IntegrationTest extends AbstractTest {
 
   /**
-   * {@inheritdoc}
-   */
-  public function tearDown() {
-    $consumer = ConsumerFactory::getInstance('test_configuration');
-    $consumer->processRollback();
-    parent::tearDown();
-  }
-
-  /**
    * Test producer-consumer workflow.
    */
   public function testProducerConsumerWorkflow() {
-
     // Get backend, producer and consumer instances.
     $backend = BackendFactory::getInstance('test_configuration');
-    $consumer = ConsumerFactory::getInstance('test_configuration');
+    $consumer = ConsumerFactory::getInstance('test_configuration', TRUE);
     $resource_schema = 'test_configuration';
 
     // Push all fixture nodes to given backend.

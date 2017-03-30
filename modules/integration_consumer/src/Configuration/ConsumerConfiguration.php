@@ -10,6 +10,7 @@ namespace Drupal\integration_consumer\Configuration;
 use Drupal\integration\Backend\Configuration\BackendConfiguration;
 use Drupal\integration\Configuration\AbstractConfiguration;
 use Drupal\integration\Configuration\ConfigurationFactory;
+use Drupal\integration_consumer\AbstractConsumer;
 
 /**
  * Class ConsumerConfiguration.
@@ -185,6 +186,22 @@ class ConsumerConfiguration extends AbstractConfiguration {
    */
   public function setResourceSchema($resource) {
     $this->resource = $resource;
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public function save() {
+    parent::save();
+    AbstractConsumer::register($this->getMachineName());
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public function delete() {
+    parent::delete();
+    AbstractConsumer::deregisterMigration($this->getMachineName());
   }
 
 }
