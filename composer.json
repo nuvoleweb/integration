@@ -17,6 +17,6 @@
   },
   "minimum-stability": "dev",
   "require": {
-    "drupal/migrate_plus": "3.0.0-beta1"
+    "drupal/migrate_plus": "~3.0|~4.0"
   }
 }
