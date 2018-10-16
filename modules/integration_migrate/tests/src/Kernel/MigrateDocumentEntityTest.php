@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\integration_migrate\tests\Kernel;
+namespace Drupal\Tests\integration_migrate\Kernel;
 
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Language\LanguageInterface;
@@ -19,6 +19,8 @@ use Drupal\taxonomy\Entity\Vocabulary;
 
 /**
  * Tests Migration of Documents using Integration.
+ *
+ * @group integration_migrate
  */
 class MigrateDocumentEntityTest extends KernelTestBase {
 
@@ -93,6 +95,7 @@ class MigrateDocumentEntityTest extends KernelTestBase {
       ],
     ];
 
+    /** @var MigrationInterface $migration */
     $migration = \Drupal::service('plugin.manager.migration')
       ->createStubMigration($definition);
     $executable = new MigrateExecutable($migration, new MigrateMessage());
@@ -101,6 +104,7 @@ class MigrateDocumentEntityTest extends KernelTestBase {
     $this->assertEquals(MigrationInterface::RESULT_COMPLETED, $result);
 
     /** @var \Drupal\node\NodeInterface $node */
+    // @TODO: This may not be node 1.
     $node = Node::load(1);
 
     // Check that we can load the node.
